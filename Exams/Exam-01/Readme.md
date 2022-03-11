@@ -90,7 +90,8 @@ En la solucion **NetBank** adicione el proyecto para crear la API.
 
 1. Adicione el proyecto **NetBank.Models** de tipo **Class Library** para crear la entidad **ReportedCard** basandose en la estructura de la misma tabla.
 2. Adiciones el proyecto **NetBank.BusinessLogic** de tipo **Class Library** para crear la entidad **CreditCardBL**, para incluir la validacion de la tarjeta.
-3. Adicione el proyecto **NetBank.Api** de tipo ASP.NET Core Web Api para crear la API con los siguientes endpoints:
+3. Adicione el proyecto **NetBank.DataAccess** de tipo **Class Library** para incluir la logica de Acceso a los datos.
+4. Adicione el proyecto **NetBank.Api** de tipo ASP.NET Core Web Api para crear la API con los siguientes endpoints:
 
 ### Endpoints
 
