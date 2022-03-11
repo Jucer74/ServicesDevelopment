@@ -335,7 +335,7 @@ Retorna la lista de las tarjetas reportadas para la red emisora, con la siguient
 }]
 ```
 ---
-#### GET /api/v1.0/ReportedCards/{CardNumber}
+#### GET /api/v1.0/ReportedCards/{creditCardNumbwer}
 Obtiene los datos de la tarjeta por su numero
 
 ##### Request
@@ -373,7 +373,7 @@ Retorna el registro un solo registro con los datos de la tarjeta
 }
 ```
 ---
-#### PUT /api/v1.0/ReportedCards/{CardNumber}
+#### PUT /api/v1.0/ReportedCards/{creditCardNumbwer}
 Reactiva la tarjeta y la marca como recuperada
 
 ##### Request
@@ -387,7 +387,7 @@ El Numero de la tarjeta se recipe por parametro.
 Retorna el estado Success (Status Code 200) con el texto **Card Recovered**.
 
 ---
-#### POST /api/v1.0/ReportedCards/{CardNumber}
+#### POST /api/v1.0/ReportedCards/{creditCardNumbwer}
 Validar si el Numero de una tarjeta es valido por su codigo de verificacion, utilizando el algoritmo de [Luhn](https://www.pcihispano.com/el-algoritmo-de-luhn-y-su-importancia-para-la-validacion-de-tarjetas-de-pago/#:~:text=El%20d%C3%ADgito%20de%20verificaci%C3%B3n%20es,el%20siguiente%20m%C3%BAltiplo%20de%2010.).
 
 Revise este [link](https://www.freeformatter.com/credit-card-number-generator-validator.html) par determinar lsa condiciones sobre los tipos de tarjetas.
