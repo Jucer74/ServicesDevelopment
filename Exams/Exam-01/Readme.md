@@ -15,7 +15,16 @@ Implemente una aplicacion Web que permita :
 ## Base de datos
 Cree la base de datos **NetBakDB** ejecutando los siguientes pasos:
 
-1. Inice sesion en la base de datos con Autenticacion Windows
+1. Inice sesion en la base de datos con Autenticacion Windows <br>
+
 ![](https://github.com/Jucer74/ServicesDevelopment/blob/main/Exams/Exam-01/Images/Image-01.jpg)
 
-2. aa
+2. Abra el archivo **01_Create_Database.sql** que se encuentra en la ruta **Exams/Exam-01/Scripts** <br>
+
+![](https://github.com/Jucer74/ServicesDevelopment/blob/main/Exams/Exam-01/Images/Image-01.jpg)
+
+
+
+  
+3. Ejecute el script
+4.  
