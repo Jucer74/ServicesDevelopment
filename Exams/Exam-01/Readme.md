@@ -85,4 +85,37 @@ Utilizando la herramienta **GitHub Desktop** sincronice su rama con la rama **ma
 
 ![](https://github.com/Jucer74/ServicesDevelopment/blob/main/Exams/Exam-01/Images/Image-17.jpg)
 
+## Web API
+En la solucion **NetBank** adicione el proyecto para crear la API.
+
+1. Adicione el proyecto **NetBank.Models** de tipo **Class Library** para crear la entidad **ReportedCard** basandose en la estructura de la misma tabla.   
+2. Adicione el proyecto **NetBank.Api** de tipo ASP.NET Core Web Api para crear la API con los siguientes endpoints:
+
+### Endpoints
+
+#### GET /api/v1.0/ReportedCards
+Obtener la lista de todas las tarjetas reportadas
+
+##### Request
+No tiene
+
+##### Response
+| Property         | Type     | Description                                                                                      |
+|------------------|----------|--------------------------------------------------------------------------------------------------|
+| Id               | int      | Identificador del registro                                                                       |
+| IssuingNetwork   | string   | Nombre de la red emisora                                                                         |
+| CreditCardNumber | string   | Numero de la tarjeta de credito (sin caracteres ni separadores)                                  |
+| FirstName        | string   | Nombre del propietario de la tarjeta                                                             |
+| LastName         | string   | Apellido del propietario de la tarjeta                                                           |
+| StatusCard       | string   | Estado de la tarjeta (Stolen, Recovered), or defecto es Stolen                                   |
+| ReportedDate     | DateTime | Fecha cuando se reporta la tarjeta                                                               |
+| LastUpdatedDate  | DateTime | Fecha de la ultima actualizacion del registro. Inicialmente es igual a la misma fecha de reporte |
+
  
+- 
+- /api/v1.0/ReportedCards/IssuingNetwork/{issuingNetworkName}
+- /api/v1.0/ReportedCard/{CardNumber}
+- /api/v1.0/ReportedCard/{CardNumber}
+- /api/v1.0/ReportedCard/{CardNumber}
+
+3. aaa 
