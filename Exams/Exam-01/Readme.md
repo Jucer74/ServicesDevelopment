@@ -66,4 +66,7 @@ GO
 
 SELECT * 
 FROM ReportedCards
+GO
 ```
+
+![](https://github.com/Jucer74/ServicesDevelopment/blob/main/Exams/Exam-01/Images/Image-14.jpg)
