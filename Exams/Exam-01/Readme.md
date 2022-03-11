@@ -209,9 +209,10 @@ Retorna la lista de las tarjetas reportadas, con la siguiente estructura.<br>
 }]
 
 ``` 
-
+---
 #### GET /api/v1.0/ReportedCards/IssuingNetwork/{issuingNetworkName}
 Obtiene la lista de tarjetas reportadas por una entidad emisora
+
 ##### Request
 El Nombre de la red emisora se recibe por parametro
 
@@ -328,14 +329,77 @@ Retorna la lista de las tarjetas reportadas para la red emisora, con la siguient
   "lastUpdatedDate": "10/04/2021"
 }]
 ```
-
+---
 #### GET /api/v1.0/ReportedCard/{CardNumber}
 Obtiene los datos de la tarjeta por su numero
 
+##### Request
+El Numero de la tarjeta se recipe por parametro.
+
+| Property          | Type   | Description          |
+|-------------------|--------|----------------------|
+| CreditCardNumbwer | string | Numero de la tarjeta |
+
+##### Response
+Retorna el registro un solo registro con los datos de la tarjeta
+
+| Property         | Type     | Description                                                                                      |
+|------------------|----------|--------------------------------------------------------------------------------------------------|
+| Id               | int      | Identificador del registro                                                                       |
+| IssuingNetwork   | string   | Nombre de la red emisora                                                                         |
+| CreditCardNumber | string   | Numero de la tarjeta de credito (sin caracteres ni separadores)                                  |
+| FirstName        | string   | Nombre del propietario de la tarjeta                                                             |
+| LastName         | string   | Apellido del propietario de la tarjeta                                                           |
+| StatusCard       | string   | Estado de la tarjeta (Stolen, Recovered), or defecto es Stolen                                   |
+| ReportedDate     | DateTime | Fecha cuando se reporta la tarjeta                                                               |
+| LastUpdatedDate  | DateTime | Fecha de la ultima actualizacion del registro. Inicialmente es igual a la misma fecha de reporte |
+
+##### Sample Response
+```json
+{
+  "id": 1,
+  "issuingNetwork": "mastercard",
+  "creditCardNumber": "5010120742586830",
+  "firstName": "Hammerman",
+  "lastName": "Blitzer",
+  "statusCard": "Stolen",
+  "reportedDate": "12/30/2021",
+  "lastUpdatedDate": "12/30/2021"
+}
+```
+---
 #### PUT /api/v1.0/ReportedCard/{CardNumber}
 Reactiva la tarjeta y la marca como recuperada
 
-#### POST /api/v1.0/ReportedCard/{CardNumber}
-Validar si el Numero de una tarjeta es valido por su codigo de verificacion, utilizando el algoritmo de Luhn
+##### Request
+El Numero de la tarjeta se recipe por parametro.
 
-3. aaa 
+| Property          | Type   | Description          |
+|-------------------|--------|----------------------|
+| CreditCardNumbwer | string | Numero de la tarjeta |
+
+##### Response
+Retorna el estado Success (Status Code 200) con el texto **Card Recovered**.
+
+---
+#### POST /api/v1.0/ReportedCard/{CardNumber}
+Validar si el Numero de una tarjeta es valido por su codigo de verificacion, utilizando el algoritmo de [Luhn](https://www.pcihispano.com/el-algoritmo-de-luhn-y-su-importancia-para-la-validacion-de-tarjetas-de-pago/#:~:text=El%20d%C3%ADgito%20de%20verificaci%C3%B3n%20es,el%20siguiente%20m%C3%BAltiplo%20de%2010.).
+
+[Algoritmo de Luhn en C#](https://github.com/marcrabadan/blog/tree/main/luhn/LuhnAlgorithm)
+
+##### Request
+El Numero de la tarjeta se recibe por parametro.
+
+| Property          | Type   | Description          |
+|-------------------|--------|----------------------|
+| CreditCardNumbwer | string | Numero de la tarjeta |
+
+##### Response
+Retorna el estado Success (Status Code 200) con el texto:
+- **Valid Card**: Si el numero de la tarjeta es valido
+- **Invalid Card**: Si el Numero de la tarjeta no es valido.
+
+#### Codigos de Respuesta
+
+
+
