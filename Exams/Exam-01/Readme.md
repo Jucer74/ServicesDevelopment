@@ -401,5 +401,13 @@ Retorna el estado Success (Status Code 200) con el texto:
 
 #### Codigos de Respuesta
 
+| HTTP Code | Description           | Scenarios                                                                                                                      |
+|-----------|-----------------------|--------------------------------------------------------------------------------------------------------------------------------|
+| 200       | Success               | Aplica para todas las respuestas positivas y sin error de todos los endpoints                                                  |
+| 400       | Bad Request           | Aplica para los endpoints que reciben el numero de la tarjeta pero  que su digito de verificacion no es valido                 |
+| 404       | Not Found             | Aplica para los endpoints que reciben parametros y estos valores  no existen en la base de datos                               |
+| 500       | Internal Server Error | Aplica para todos los endpoints cuando se presenta un error no controlado,  por ejemplo no se pudo conectar a la base de datos |
 
 
+# NOTA
+RECUERDE SUBIR SU SOLUCIÓN A SU RAMA DE ESTE REPOSITORIO.
