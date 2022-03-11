@@ -386,6 +386,22 @@ Retorna el estado Success (Status Code 200) con el texto **Card Recovered**.
 #### POST /api/v1.0/ReportedCard/{CardNumber}
 Validar si el Numero de una tarjeta es valido por su codigo de verificacion, utilizando el algoritmo de [Luhn](https://www.pcihispano.com/el-algoritmo-de-luhn-y-su-importancia-para-la-validacion-de-tarjetas-de-pago/#:~:text=El%20d%C3%ADgito%20de%20verificaci%C3%B3n%20es,el%20siguiente%20m%C3%BAltiplo%20de%2010.).
 
+Revise este [link](https://www.freeformatter.com/credit-card-number-generator-validator.html) par determinar lsa condiciones sobre los tipos de tarjetas.
+
+| Credit Card Issuer          | Starts With ( IIN Range )                                | Length ( Number of digits ) |
+|-----------------------------|----------------------------------------------------------|-----------------------------|
+| American Express            | 34, 37                                                   | 15                          |
+| Diners Club - Carte Blanche | 300, 301, 302, 303, 304, 305                             | 14                          |
+| Diners Club - International | 36                                                       | 14                          |
+| Diners Club - USA & Canada  | 54                                                       | 16                          |
+| Discover                    | 6011, 622126 to 622925, 644, 645, 646, 647, 648, 649, 65 | 16-19                       |
+| InstaPayment                | 637, 638, 639                                            | 16                          |
+| JCB                         | 3528 to 3589                                             | 16-19                       |
+| Maestro                     | 5018, 5020, 5038, 5893, 6304, 6759, 6761, 6762, 6763     | 16-19                       |
+| MasterCard                  | 51, 52, 53, 54, 55, 222100-272099                        | 16                          |
+| Visa                        | 4                                                        | 13-16-19                    |
+| Visa Electron               | 4026, 417500, 4508, 4844, 4913, 4917                     | 16                          |
+
 [Algoritmo de Luhn en C#](https://github.com/marcrabadan/blog/tree/main/luhn/LuhnAlgorithm)
 
 ##### Request
