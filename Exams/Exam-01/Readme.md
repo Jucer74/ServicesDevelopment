@@ -100,6 +100,8 @@ Obtener la lista de todas las tarjetas reportadas
 No tiene
 
 ##### Response
+Retorna la lista de las tarjetas reportadas, con la siguiente estructura.<br> 
+
 | Property         | Type     | Description                                                                                      |
 |------------------|----------|--------------------------------------------------------------------------------------------------|
 | Id               | int      | Identificador del registro                                                                       |
@@ -111,11 +113,113 @@ No tiene
 | ReportedDate     | DateTime | Fecha cuando se reporta la tarjeta                                                               |
 | LastUpdatedDate  | DateTime | Fecha de la ultima actualizacion del registro. Inicialmente es igual a la misma fecha de reporte |
 
- 
-- 
-- /api/v1.0/ReportedCards/IssuingNetwork/{issuingNetworkName}
-- /api/v1.0/ReportedCard/{CardNumber}
-- /api/v1.0/ReportedCard/{CardNumber}
-- /api/v1.0/ReportedCard/{CardNumber}
+##### Sample Response
+
+```json
+[{
+  "id": 1,
+  "issuingNetwork": "visa",
+  "creditCardNumber": "4041379326358",
+  "firstName": "Ovendale",
+  "lastName": "McLaughlan",
+  "statusCard": "Stolen",
+  "reportedDate": "05/05/2021",
+  "lastUpdatedDate": "05/05/2021"
+}, {
+  "id": 2,
+  "issuingNetwork": "maestro",
+  "creditCardNumber": "5020049452926487504",
+  "firstName": "Brewin",
+  "lastName": "Mallindine",
+  "statusCard": "Stolen",
+  "reportedDate": "04/19/2021",
+  "lastUpdatedDate": "04/19/2021"
+}, {
+  "id": 3,
+  "issuingNetwork": "americanexpress",
+  "creditCardNumber": "374622152415484",
+  "firstName": "Morehall",
+  "lastName": "Cantera",
+  "statusCard": "Recovered",
+  "reportedDate": "06/01/2021",
+  "lastUpdatedDate": "06/02/2021"
+}, {
+  "id": 4,
+  "issuingNetwork": "jcb",
+  "creditCardNumber": "3565051407123466",
+  "firstName": "Frenchum",
+  "lastName": "Bailes",
+  "statusCard": "Stolen",
+  "reportedDate": "06/17/2021",
+  "lastUpdatedDate": "06/17/2021"
+}, {
+  "id": 5,
+  "issuingNetwork": "mastercard",
+  "creditCardNumber": "5197866564889976",
+  "firstName": "Assard",
+  "lastName": "Teacy",
+  "statusCard": "Stolen",
+  "reportedDate": "04/10/2021",
+  "lastUpdatedDate": "04/10/2021"
+}, {
+  "id": 6,
+  "issuingNetwork": "mastercard",
+  "creditCardNumber": "5527460598288123",
+  "firstName": "Hlavecek",
+  "lastName": "Glabach",
+  "statusCard": "Stolen",
+  "reportedDate": "02/14/2022",
+  "lastUpdatedDate": "02/14/2022"
+}, {
+  "id": 7,
+  "issuingNetwork": "jcb",
+  "creditCardNumber": "3573205851843629",
+  "firstName": "MacConnechie",
+  "lastName": "Guwer",
+  "statusCard": "Recovered",
+  "reportedDate": "07/31/2021",
+  "lastUpdatedDate": "08/02/2021"
+}, {
+  "id": 8,
+  "issuingNetwork": "jcb",
+  "creditCardNumber": "3589587616567128",
+  "firstName": "Noot",
+  "lastName": "Del Castello",
+  "statusCard": "Recovered",
+  "reportedDate": "07/28/2021",
+  "lastUpdatedDate": "08/02/2021"
+}, {
+  "id": 9,
+  "issuingNetwork": "diners-club-us-ca",
+  "creditCardNumber": "5448056326734523",
+  "firstName": "Robbey",
+  "lastName": "MacArte",
+  "statusCard": "Recovered",
+  "reportedDate": "08/12/2021",
+  "lastUpdatedDate": "08/16/2021"
+}, {
+  "id": 10,
+  "issuingNetwork": "jcb",
+  "creditCardNumber": "3562580544482081",
+  "firstName": "Myner",
+  "lastName": "Petrowsky",
+  "statusCard": "Stolen",
+  "reportedDate": "07/14/2021",
+  "lastUpdatedDate": "07/14/2021"
+}]
+
+``` 
+
+#### GET /api/v1.0/ReportedCards/IssuingNetwork/{issuingNetworkName}
+Obtiene la lista de tarjetas reportadas por una entidad emisora
+
+#### GET /api/v1.0/ReportedCard/{CardNumber}
+Obtiene los datos de la tarjeta por su numero
+
+#### PUT /api/v1.0/ReportedCard/{CardNumber}
+Reactiva la tarjeta y la marca como recuperada
+
+#### POST /api/v1.0/ReportedCard/{CardNumber}
+Validar si el Numero de una tarjeta es valido por su codigo de verificacion, utilizando el algoritmo de Luhn
 
 3. aaa 
