@@ -13,7 +13,7 @@ Implemente una Web API que permita :
 # Pasos
 
 ## Base de datos
-Cree la base de datos **NetBakDB** ejecutando los siguientes pasos:
+Cree la base de datos **NetBankDB** ejecutando los siguientes pasos:
 
 1. Inice sesion en la base de datos con Autenticacion Windows <br>
 
@@ -212,6 +212,122 @@ Retorna la lista de las tarjetas reportadas, con la siguiente estructura.<br>
 
 #### GET /api/v1.0/ReportedCards/IssuingNetwork/{issuingNetworkName}
 Obtiene la lista de tarjetas reportadas por una entidad emisora
+##### Request
+El Nombre de la red emisora se recibe por parametro
+
+| Property           | Type   | Description              |
+|--------------------|--------|--------------------------|
+| IssuingNetworkName | string | Nombre de la red emisora |
+
+##### Response
+Retorna la lista de las tarjetas reportadas para la red emisora, con la siguiente estructura.<br> 
+
+| Property         | Type     | Description                                                                                      |
+|------------------|----------|--------------------------------------------------------------------------------------------------|
+| Id               | int      | Identificador del registro                                                                       |
+| IssuingNetwork   | string   | Nombre de la red emisora                                                                         |
+| CreditCardNumber | string   | Numero de la tarjeta de credito (sin caracteres ni separadores)                                  |
+| FirstName        | string   | Nombre del propietario de la tarjeta                                                             |
+| LastName         | string   | Apellido del propietario de la tarjeta                                                           |
+| StatusCard       | string   | Estado de la tarjeta (Stolen, Recovered), or defecto es Stolen                                   |
+| ReportedDate     | DateTime | Fecha cuando se reporta la tarjeta                                                               |
+| LastUpdatedDate  | DateTime | Fecha de la ultima actualizacion del registro. Inicialmente es igual a la misma fecha de reporte |
+
+
+##### Sample Response
+```json
+[{
+  "id": 1,
+  "issuingNetwork": "mastercard",
+  "creditCardNumber": "5100178996051746",
+  "firstName": "Beston",
+  "lastName": "Roj",
+  "statusCard": "Stolen",
+  "reportedDate": "10/11/2021",
+  "lastUpdatedDate": "10/11/2021"
+}, {
+  "id": 2,
+  "issuingNetwork": "mastercard",
+  "creditCardNumber": "5048379452725766",
+  "firstName": "Epton",
+  "lastName": "MacAne",
+  "statusCard": "Stolen",
+  "reportedDate": "08/02/2021",
+  "lastUpdatedDate": "08/02/2021"
+}, {
+  "id": 3,
+  "issuingNetwork": "mastercard",
+  "creditCardNumber": "5178589816288416",
+  "firstName": "Ogelbe",
+  "lastName": "Berisford",
+  "statusCard": "Stolen",
+  "reportedDate": "05/03/2021",
+  "lastUpdatedDate": "05/03/2021"
+}, {
+  "id": 4,
+  "issuingNetwork": "mastercard",
+  "creditCardNumber": "5002356268783019",
+  "firstName": "Stangroom",
+  "lastName": "Petlyura",
+  "statusCard": "Stolen",
+  "reportedDate": "03/28/2021",
+  "lastUpdatedDate": "03/28/2021"
+}, {
+  "id": 5,
+  "issuingNetwork": "mastercard",
+  "creditCardNumber": "5226107894299742",
+  "firstName": "Haster",
+  "lastName": "Blaisdale",
+  "statusCard": "Stolen",
+  "reportedDate": "03/03/2022",
+  "lastUpdatedDate": "03/03/2022"
+}, {
+  "id": 6,
+  "issuingNetwork": "mastercard",
+  "creditCardNumber": "5007663038297591",
+  "firstName": "Ciric",
+  "lastName": "Schanke",
+  "statusCard": "Recovered",
+  "reportedDate": "06/28/2021",
+  "lastUpdatedDate": "07/02/2021"
+}, {
+  "id": 7,
+  "issuingNetwork": "mastercard",
+  "creditCardNumber": "5108755268505103",
+  "firstName": "Tesseyman",
+  "lastName": "Shadwick",
+  "statusCard": "Stolen",
+  "reportedDate": "06/13/2021",
+  "lastUpdatedDate": "06/13/2021"
+}, {
+  "id": 8,
+  "issuingNetwork": "mastercard",
+  "creditCardNumber": "5108753057854592",
+  "firstName": "McLeary",
+  "lastName": "Cosstick",
+  "statusCard": "Recovered",
+  "reportedDate": "02/02/2022",
+  "lastUpdatedDate": "02/03/2022"
+}, {
+  "id": 9,
+  "issuingNetwork": "mastercard",
+  "creditCardNumber": "5100175647837036",
+  "firstName": "Gerrish",
+  "lastName": "Walster",
+  "statusCard": "Stolen",
+  "reportedDate": "04/04/2021",
+  "lastUpdatedDate": "04/04/2021"
+}, {
+  "id": 10,
+  "issuingNetwork": "mastercard",
+  "creditCardNumber": "5100132246802267",
+  "firstName": "Kaas",
+  "lastName": "Bortoloni",
+  "statusCard": "Recovered",
+  "reportedDate": "09/27/2021",
+  "lastUpdatedDate": "10/04/2021"
+}]
+```
 
 #### GET /api/v1.0/ReportedCard/{CardNumber}
 Obtiene los datos de la tarjeta por su numero
