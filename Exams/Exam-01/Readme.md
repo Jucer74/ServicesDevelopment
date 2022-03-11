@@ -70,3 +70,19 @@ FROM ReportedCards
 
 ![](https://github.com/Jucer74/ServicesDevelopment/blob/main/Exams/Exam-01/Images/Image-14.jpg)
 
+## Preparación de Ambiente
+Utilizando la herramienta **GitHub Desktop** sincronice su rama con la rama **main**.
+
+1. Seleccione su Rama y escoja la opcion de hacer **merge** con su rama<br>
+
+![](https://github.com/Jucer74/ServicesDevelopment/blob/main/Exams/Exam-01/Images/Image-15.jpg)
+
+2. Seleccione la rama **main**, resuelva los posibles conflictos y realice el merge.<br>
+
+![](https://github.com/Jucer74/ServicesDevelopment/blob/main/Exams/Exam-01/Images/Image-16.jpg)
+
+3. Realice el **Push** de sus cambios para sincronizar su rama.<br>
+
+![](https://github.com/Jucer74/ServicesDevelopment/blob/main/Exams/Exam-01/Images/Image-17.jpg)
+
+ 
