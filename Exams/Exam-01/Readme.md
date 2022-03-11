@@ -2,7 +2,7 @@
 **NetBank** es una empresa reguladora de tarjetas de credito ala cual todos los bancos le reportan las tarjetas robadas.
 
 # Ejercicio
-Implemente una aplicacion Web que permita :
+Implemente una Web API que permita :
 
 1. Obtener la lista de todas las tarjetas
 2. Obtener la lista de las tarjetas por la red emisora
@@ -66,7 +66,7 @@ GO
 
 SELECT * 
 FROM ReportedCards
-GO
 ```
 
 ![](https://github.com/Jucer74/ServicesDevelopment/blob/main/Exams/Exam-01/Images/Image-14.jpg)
+
