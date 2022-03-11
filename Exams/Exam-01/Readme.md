@@ -86,7 +86,9 @@ Utilizando la herramienta **GitHub Desktop** sincronice su rama con la rama **ma
 ![](https://github.com/Jucer74/ServicesDevelopment/blob/main/Exams/Exam-01/Images/Image-17.jpg)
 
 ## Web API
-En la solucion **NetBank** adicione el proyecto para crear la API.
+En la solucion **NetBank** adicione el proyecto para crear la API basandose en la siguiente Vista Logica:
+
+
 
 1. Adicione el proyecto **NetBank.Models** de tipo **Class Library** para crear la entidad **ReportedCard** basandose en la estructura de la misma tabla.
 2. Adiciones el proyecto **NetBank.BusinessLogic** de tipo **Class Library** para crear la entidad **CreditCardBL**, para incluir la validacion de la tarjeta.
