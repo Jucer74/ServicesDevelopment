@@ -384,7 +384,7 @@ El Numero de la tarjeta se recipe por parametro.
 | CreditCardNumbwer | string | Numero de la tarjeta |
 
 ##### Response
-Retorna el estado Success (Status Code 200) con el texto **Card Recovered**.
+Retorna el estado Success (Status Code 200) con el texto **Credit Card Recovered**.
 
 ---
 #### POST /api/v1.0/ReportedCards/{creditCardNumber}
@@ -417,8 +417,8 @@ El Numero de la tarjeta se recibe por parametro.
 
 ##### Response
 Retorna el estado Success (Status Code 200) con el texto:
-- **Valid Card**: Si el numero de la tarjeta es valido
-- **Invalid Card**: Si el Numero de la tarjeta no es valido.
+- **Credit Card is Valid**: Si el numero de la tarjeta es valido
+- **Credit Card is NOT Valid**: Si el Numero de la tarjeta no es valido.
 
 #### Codigos de Respuesta
 
@@ -432,3 +432,8 @@ Retorna el estado Success (Status Code 200) con el texto:
 
 # NOTA
 RECUERDE SUBIR SU SOLUCIÓN A SU RAMA DE ESTE REPOSITORIO.
+
+En la creacion de la API incluir la Ruta en el startup
+para adicionar el Swagger ,incluir el MVC
+Adicionar el controller como read, write
+Cambiar la firma de los metodos del controlador a async Task<Actionresult> 
