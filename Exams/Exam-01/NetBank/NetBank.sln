@@ -3,9 +3,53 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{74D0C14C-AA5A-4C2F-ADF0-F0AFE2D7B697}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Business Logic", "Business Logic", "{28594A19-F492-4292-9F74-FE03BB99BA4B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Models", "Models", "{D99E49BD-FDCD-45AC-AE93-EDF9F8163356}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data Access", "Data Access", "{F38C0E05-00A6-4FFB-B546-C808081868A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetBank.Models", "NetBank.Models\NetBank.Models.csproj", "{35AB76B4-DFBD-4A7C-9FBD-55B42C96ED60}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetBank.BusinessLogic", "NetBank.BusinessLogic\NetBank.BusinessLogic.csproj", "{F06C06AA-B05F-4F64-AED5-3F8945DDDA0E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetBank.DataAccess", "NetBank.DataAccess\NetBank.DataAccess.csproj", "{305AB004-1435-461C-B5E7-3F96664125E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetBank.Api", "NetBank.Api\NetBank.Api.csproj", "{7C5D64F7-EE8A-44D5-8A4C-F969E93504E7}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{35AB76B4-DFBD-4A7C-9FBD-55B42C96ED60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35AB76B4-DFBD-4A7C-9FBD-55B42C96ED60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35AB76B4-DFBD-4A7C-9FBD-55B42C96ED60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35AB76B4-DFBD-4A7C-9FBD-55B42C96ED60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F06C06AA-B05F-4F64-AED5-3F8945DDDA0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F06C06AA-B05F-4F64-AED5-3F8945DDDA0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F06C06AA-B05F-4F64-AED5-3F8945DDDA0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F06C06AA-B05F-4F64-AED5-3F8945DDDA0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{305AB004-1435-461C-B5E7-3F96664125E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{305AB004-1435-461C-B5E7-3F96664125E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{305AB004-1435-461C-B5E7-3F96664125E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{305AB004-1435-461C-B5E7-3F96664125E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C5D64F7-EE8A-44D5-8A4C-F969E93504E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C5D64F7-EE8A-44D5-8A4C-F969E93504E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C5D64F7-EE8A-44D5-8A4C-F969E93504E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C5D64F7-EE8A-44D5-8A4C-F969E93504E7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{35AB76B4-DFBD-4A7C-9FBD-55B42C96ED60} = {D99E49BD-FDCD-45AC-AE93-EDF9F8163356}
+		{F06C06AA-B05F-4F64-AED5-3F8945DDDA0E} = {28594A19-F492-4292-9F74-FE03BB99BA4B}
+		{305AB004-1435-461C-B5E7-3F96664125E5} = {F38C0E05-00A6-4FFB-B546-C808081868A3}
+		{7C5D64F7-EE8A-44D5-8A4C-F969E93504E7} = {74D0C14C-AA5A-4C2F-ADF0-F0AFE2D7B697}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {030BB926-20C1-4D4C-8819-53F2DAE48877}
