@@ -1,11 +1,4 @@
-<<<<<<< Updated upstream
-﻿namespace Netbank.DataAccess
-{
-    using Microsoft.EntityFrameworkCore;
-    using NetBank.Models;
-
-=======
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using NetBank.Models;
 using System;
 using System.Collections.Generic;
@@ -15,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace NetBank.DataAccess
 {
->>>>>>> Stashed changes
     public class AppDbContext : DbContext
     {
         public AppDbContext()
