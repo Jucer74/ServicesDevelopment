@@ -3,19 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32228.430
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetBank.Api", "NetBank\NetBank.Api.csproj", "{25F62D20-E123-4092-AC05-4C0D62B42874}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetBank.Api", "NetBank\NetBank.Api.csproj", "{25F62D20-E123-4092-AC05-4C0D62B42874}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data Acces", "Data Acces", "{B090822C-98E8-4C49-B765-B6A2B780EF1C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetBank.DataAccess", "NetBank.DataAccess\NetBank.DataAccess.csproj", "{2CBE42B9-FBBC-4250-9F8A-D97BC1997D48}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetBank.DataAccess", "NetBank.DataAccess\NetBank.DataAccess.csproj", "{2CBE42B9-FBBC-4250-9F8A-D97BC1997D48}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Business Logic", "Business Logic", "{D50A3B82-74DE-4645-966D-E680C7EE096C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetBank.BusinessLogic", "NetBank.BusinessLogic\NetBank.BusinessLogic.csproj", "{188355DB-AE61-4F7F-8B28-59A8A5E86D0B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetBank.BusinessLogic", "NetBank.BusinessLogic\NetBank.BusinessLogic.csproj", "{188355DB-AE61-4F7F-8B28-59A8A5E86D0B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Models", "Models", "{B8827CA9-4076-4778-8339-5EF31DB61B41}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetBank.Models", "NetBank.Models\NetBank.Models.csproj", "{12567568-8120-4693-BA5A-993974E4F3CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetBank.Models", "NetBank.Models\NetBank.Models.csproj", "{12567568-8120-4693-BA5A-993974E4F3CA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{EC327B49-5BCF-40CE-9642-E785D4EC14F5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,6 +46,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{25F62D20-E123-4092-AC05-4C0D62B42874} = {EC327B49-5BCF-40CE-9642-E785D4EC14F5}
 		{2CBE42B9-FBBC-4250-9F8A-D97BC1997D48} = {B090822C-98E8-4C49-B765-B6A2B780EF1C}
 		{188355DB-AE61-4F7F-8B28-59A8A5E86D0B} = {D50A3B82-74DE-4645-966D-E680C7EE096C}
 		{12567568-8120-4693-BA5A-993974E4F3CA} = {B8827CA9-4076-4778-8339-5EF31DB61B41}
