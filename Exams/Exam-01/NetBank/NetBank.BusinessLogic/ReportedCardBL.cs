@@ -14,7 +14,7 @@ namespace NetBank.BusinessLogic
 
         public async Task<List<ReportedCard>> GetAllReportedCards()
         {
-            return (List<ReportedCard>)await _ReportedCardDA.GetAllReportedCards();
+            return await _ReportedCardDA.GetAllReportedCards();
         }
 
         public async Task<List<ReportedCard>> GetAllReportedCardsByIssuingNetworkName(string issuingNetwork)
