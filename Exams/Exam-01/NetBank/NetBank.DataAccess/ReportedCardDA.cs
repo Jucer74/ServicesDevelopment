@@ -1,37 +1,21 @@
-﻿using Microsoft.EntityFrameworkCore;
-<<<<<<< Updated upstream
+using Microsoft.EntityFrameworkCore;
 using Netbank.Api.Context;
 using Netbank.DataAccess;
-=======
 using NetBank.DataAccess;
->>>>>>> Stashed changes
 using NetBank.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-<<<<<<< Updated upstream
-=======
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
->>>>>>> Stashed changes
+
 
 
 namespace NetBank.DataAccess
 {
     public class ReportedCardDA
     {
-<<<<<<< Updated upstream
-        private readonly AppDbContext _context;
-        public ReportedCardDA(AppDbContext context)
-        {
-            _context = context;
-        }
-
-        public async Task<IList<ReportedCard>> GetAllReportedCards()
-        {
-            return await _context.ReportedCards.ToListAsync();
-=======
         private readonly AppDbContext _DBcontext;
 
         public ReportedCardDA(AppDbContext context)
@@ -42,12 +26,10 @@ namespace NetBank.DataAccess
         public async Task<List<ReportedCard>> GetAllReportedCards()
         {
             return await _DBcontext.ReportedCards.ToListAsync();
->>>>>>> Stashed changes
         }
 
         public async Task<List<ReportedCard>> GetAllReportedCardsByIssuingNetworkName(string issuingNetwork)
         {
-<<<<<<< Updated upstream
             return await _context.ReportedCards.Where(e => e.IssuingNetwork == issuingNetwork).ToListAsync();
         }
 
@@ -72,8 +54,6 @@ namespace NetBank.DataAccess
                 return "Recovered";
             }
         }
-
-=======
             return await _DBcontext.ReportedCards.Where(e => e.IssuingNetwork == issuingNetwork).ToListAsync();
         }
 
@@ -98,6 +78,5 @@ namespace NetBank.DataAccess
                 return "Tarjeta de credito recuperada";
             }
         }
->>>>>>> Stashed changes
     }
 }
