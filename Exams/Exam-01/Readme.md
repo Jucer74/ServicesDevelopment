@@ -552,4 +552,75 @@ En el Proyecto **NetBank.Api**:
 # NOTA
 RECUERDE SUBIR SU SOLUCIÓN A SU RAMA DE ESTE REPOSITORIO.
 
+---
+
+# Revision
+
+## General (10 pts)
+- Proyecto Bien Organizado y en carpetas (1 pt)
+- Compila (0 Errors, 0 Warnings) (2pt)
+- Funciona y hace lo que debe sin errores (7 pt)
+  ReportedCards
+  - GetAllReportedCards = 1
+  - GetAllReportedCardsByIssuingNetworkName = 1
+  - GetReportedCard = 1
+  - PutCreditCardReactivated = 2 (Reactivated y Not Found)
+  CreditCard
+  - IsValid = 2 (Valid , Invalid)
+
+## Models (2pts)
+- ReportedCard 
+  - Estructura = 1
+  - Campos Requeridos = 1
+  
+## Data Access (10 pts)
+- AppDbContext (4 pts)
+  - Constructor
+    - Default = 1
+    - Options = 1
+  - DbSet (singular class, Plural Entidad)  = 2
+- ReportedCardDA (6 pts)
+  - Constructor con Inyeccion de Context Object = 1
+  - GetAllReportedCards = 1
+  - GetAllReportedCardsByIssuingNetworkName = 1
+  - GetReportedCard = 1
+  - PutCreditCardReactivated = 2 (Reactivated y Not Found)
+
+## Business Logic (15 pts)
+- CreditCardBL (10 pts)
+  - Clase y Metodo IsValid, estaticos (2 pts)
+  - Constantes y no Numeros (5 pts)
+    - MAX_ADDEND = 9;
+    - MAX_CREDIT_CARD_LENGTH = 19;
+    - MIN_CREDIT_CARD_LENGTH = 13;
+    - MOD_10 = 10;
+    - MULTIPLY_NUMBER = 2;
+  - Min y Max length (13-19) = 2 
+  - GetDigits (1 pts)
+    - Refactor usando Where
+- ReportedCardBL (5 pts)
+  - Constructor con Inyeccion de DA Object = 1
+  - GetAllReportedCards = 1
+  - GetAllReportedCardsByIssuingNetworkName = 1
+  - GetReportedCard = 1
+  - PutCreditCardReactivated = 1
+    
+## API (13 pts)
+- ReportedCardsController (8 pts)
+  - Inclusin de version en la Ruta = 1
+  - Inyeccion del BL Object = 1
+  - GetAllReportedCards = 1
+  - GetAllReportedCardsByIssuingNetworkName = 1
+  - GetReportedCard = 1
+  - PostCheckCreditCardDigit = 2 ( Valid, Not Valid)
+  - PutCreditCardReactivated = 1
+- StartUp (5 pts)
+  - Referencia a Swagger = 1
+  - Adicion del AppDbContext Object = 1
+  - Adicion de los Scopes (2 pts)
+    - ReportedCardDA = 1
+    - ReportedCardBL = 1
+  - Limpieza de otras referencias (Weather) = 1
+  
+
  
