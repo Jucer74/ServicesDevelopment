@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Reminder.Api
+namespace ReminderApp.Api
 {
    public class Program
    {

@@ -1,6 +1,6 @@
 using System;
 
-namespace Reminder.Api
+namespace ReminderApp.Api
 {
    public class WeatherForecast
    {

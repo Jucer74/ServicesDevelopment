@@ -11,13 +11,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{A9099660-8087-40C9-A0E3-575B30FD5600}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reminder.Domain", "Reminder.Domain\Reminder.Domain.csproj", "{A6989159-6C25-4C21-91B2-0D65236D36BA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReminderApp.Domain", "ReminderApp.Domain\ReminderApp.Domain.csproj", "{A6989159-6C25-4C21-91B2-0D65236D36BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reminder.Application", "Reminder.Application\Reminder.Application.csproj", "{53065976-E129-4CB3-AB58-EED466A49DD8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReminderApp.Application", "ReminderApp.Application\ReminderApp.Application.csproj", "{53065976-E129-4CB3-AB58-EED466A49DD8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reminder.Infrastructure", "Reminder.Infrastructure\Reminder.Infrastructure.csproj", "{69813800-D194-4624-ACCB-93B8E117F3FC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReminderApp.Infrastructure", "ReminderApp.Infrastructure\ReminderApp.Infrastructure.csproj", "{69813800-D194-4624-ACCB-93B8E117F3FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reminder.Api", "Reminder.Api\Reminder.Api.csproj", "{96F0A620-ECE5-4198-84C1-B5EA9F231F92}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReminderApp.Api", "ReminderApp.Api\ReminderApp.Api.csproj", "{96F0A620-ECE5-4198-84C1-B5EA9F231F92}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

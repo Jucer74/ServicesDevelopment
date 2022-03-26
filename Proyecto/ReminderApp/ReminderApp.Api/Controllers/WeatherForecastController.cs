@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Reminder.Api.Controllers
+namespace ReminderApp.Api.Controllers
 {
    [ApiController]
    [Route("[controller]")]
