@@ -1,11 +1,12 @@
-﻿using System;
+﻿using ReminderApp.Domain.Common;
+using System;
 using System.Collections.Generic;
 
 #nullable disable
 
 namespace ReminderApp.Domain.Entities
 {
-    public partial class Reminder
+    public partial class Reminder : EntityBase
     {
         public int Id { get; set; }
         public int CategoryId { get; set; }

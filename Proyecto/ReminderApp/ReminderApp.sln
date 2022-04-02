@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.1.32210.238
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32126.315
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{66DF1965-C3D3-4B77-8225-EA42AC7FF3F2}"
 EndProject
@@ -11,13 +11,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{A9099660-8087-40C9-A0E3-575B30FD5600}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReminderApp.Domain", "ReminderApp.Domain\ReminderApp.Domain.csproj", "{A6989159-6C25-4C21-91B2-0D65236D36BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReminderApp.Domain", "ReminderApp.Domain\ReminderApp.Domain.csproj", "{A6989159-6C25-4C21-91B2-0D65236D36BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReminderApp.Application", "ReminderApp.Application\ReminderApp.Application.csproj", "{53065976-E129-4CB3-AB58-EED466A49DD8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReminderApp.Application", "ReminderApp.Application\ReminderApp.Application.csproj", "{53065976-E129-4CB3-AB58-EED466A49DD8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReminderApp.Infrastructure", "ReminderApp.Infrastructure\ReminderApp.Infrastructure.csproj", "{69813800-D194-4624-ACCB-93B8E117F3FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReminderApp.Infrastructure", "ReminderApp.Infrastructure\ReminderApp.Infrastructure.csproj", "{69813800-D194-4624-ACCB-93B8E117F3FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReminderApp.Api", "ReminderApp.Api\ReminderApp.Api.csproj", "{96F0A620-ECE5-4198-84C1-B5EA9F231F92}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReminderApp.Api", "ReminderApp.Api\ReminderApp.Api.csproj", "{96F0A620-ECE5-4198-84C1-B5EA9F231F92}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
