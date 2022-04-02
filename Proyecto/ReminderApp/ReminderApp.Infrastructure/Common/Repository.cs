@@ -21,22 +21,22 @@ namespace ReminderApp.Infrastructure.Common
         public void Add(T entity)
         {
             _appDbContext.Set<T>().Add(entity);
-            _appDbCOntext.SaveChanges();
+            _appDbContext.SaveChanges();
         }
 
         public IEnumerable<T> Find(Expression<Func<T, bool>> predicate)
         {
-            throw new NotImplementedException();
+            return _appDbContext.Set<T>().Where(predicate).AsEnumerable();
         }
 
         public IEnumerable<T> GetAll()
         {
-            throw new NotImplementedException();
+            return _appDbContext.Set<T>().AsEnumerable();
         }
 
-        public IEnumerable<T> GetById(int id)
+        public T GetById(int id)
         {
-            throw new NotImplementedException();
+            return _appDbContext.Set<T>().Find(id);
         }
 
         public void Remove(T entity)

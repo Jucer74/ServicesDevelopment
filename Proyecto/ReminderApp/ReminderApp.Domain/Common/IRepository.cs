@@ -12,7 +12,7 @@ namespace ReminderApp.Domain.Common
 
         void Add(T entity);
         IEnumerable<T> GetAll();
-        IEnumerable<T> GetById(int id);
+        T GetById(int id);
         IEnumerable<T> Find(Expression<Func<T, bool>> predicate);
 
         void Update(T entity);
