@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ReminderApp.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace ReminderApp.Domain.interfaces
 {
     public interface IAddCategoryUseCase
     {
-      int Execute(IAddCategoryUseCase category)
+        int Execute(Category category);
     }
 }
