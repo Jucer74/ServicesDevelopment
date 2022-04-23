@@ -1,23 +1,20 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
-using ReminderApp.Domain;
+﻿using Microsoft.EntityFrameworkCore;
 using ReminderApp.Domain.Entities;
 
 namespace ReminderApp.Infrastructure.Context
 {
-    public partial class AppDbcontext : DbContext
-    {
-        public AppDbcontext()
-        {
-        }
+   public class AppDbContext : DbContext
+   {
+      public AppDbContext()
+      {
+      }
 
-        public AppDbcontext(DbContextOptions<AppDbcontext> options)
-            : base(options)
-        {
-        }
+      public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+      {
+      }
 
-        public virtual DbSet<Category> Categories { get; set; }
-        public virtual DbSet<Reminder> Users { get; set; }
-    }
+      public DbSet<Category> Categories { get; set; }
+
+      public DbSet<Reminder> Concepts { get; set; }
+   }
 }

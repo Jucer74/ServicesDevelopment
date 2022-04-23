@@ -1,18 +1,19 @@
-﻿using System;
-using ReminderApp.Domain.Common;
-using ReminderApp.Domain.Entities;
-namespace ReminderApp.Domain
+﻿using ReminderApp.Domain.Common;
+using System;
+
+namespace ReminderApp.Domain.Entities
 {
    public class Reminder : EntityBase
-    {
-        public int categoryid { get; set; }
-        public string Descripcion { get; set; }
-        public DateTime StartDate { get; set; }
-        public string cronEpression { get; set; }
-        public int NumberOfTimies { get; set; }
-        public bool Enabled { get; set; }
-        public virtual Category Category { get; set; }
+   {
+      //public int Ind { get; set; }
+      public int CategoryId { get; set; }
 
+      public string Description { get; set; }
+      public DateTime StartDate { get; set; }
+      public string CronExpression { get; set; }
+      public int? NumberOfTimes { get; set; }
+      public bool? Enabled { get; set; }
 
-    }
+      public virtual Category Category { get; set; }
+   }
 }
