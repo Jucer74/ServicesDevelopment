@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ReminderApp.Domain.Common;
-using ReminderApp.Domain.Interfaces.Repository;
+using ReminderApp.Domain.Repository;
 using ReminderApp.Infrastructure.Context;
 using System;
 using System.Collections.Generic;
