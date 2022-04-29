@@ -1,8 +1,6 @@
 ﻿using ReminderApp.Domain.Common;
 using System;
-using System.Collections.Generic;
 
-#nullable disable
 
 namespace ReminderApp.Domain.Entities
 {
