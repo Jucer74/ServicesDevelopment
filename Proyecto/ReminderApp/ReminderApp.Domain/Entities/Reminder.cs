@@ -14,7 +14,5 @@ namespace ReminderApp.Domain.Entities
         public string CronExpression { get; set; }
         public int? NumberOfTimes { get; set; }
         public bool? Enabled { get; set; }
-
-        public virtual Category Category { get; set; }
     }
 }

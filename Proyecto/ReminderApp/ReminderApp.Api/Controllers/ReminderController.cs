@@ -3,6 +3,8 @@ using ReminderApp.Application.Interfaces;
 using ReminderApp.Domain.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ReminderApp.Application.Interfaces;
+using ReminderApp.Domain.Entities;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,9 +15,11 @@ namespace ReminderApp.Api.Controllers
     public class ReminderController : ControllerBase
     {
         private readonly IReminderService _reminderService;
-        public ReminderController(IReminderService reminderService)
+        private readonly ICategoryService _categoryService;
+        public ReminderController(IReminderService reminderService, ICategoryService categoryService)
         {
             _reminderService = reminderService;
+            _categoryService = categoryService;
         }
 
         // GET: api/<PeopleController>
@@ -49,6 +53,14 @@ namespace ReminderApp.Api.Controllers
         }
 
         // DELETE api/<PeopleController>/5
+        [HttpDelete("Category/{id}")]
+        public async Task<IActionResult> DeleteAll(int id)
+        {
+            await _categoryService.RemoveAsync(id);
+            return Ok();
+        }
+
+        //DELETE api/<PeopleController/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

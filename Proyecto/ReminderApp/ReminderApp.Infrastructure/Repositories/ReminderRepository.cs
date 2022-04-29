@@ -11,10 +11,5 @@ namespace ReminderApp.Infrastructure.Repositories
       public ReminderRepository(AppDbContext appDbContext) : base(appDbContext)
       {
       }
-
-      public IEnumerable<Reminder> FindRemindersByCategory(Category category)
-      {
-         return (IEnumerable<Reminder>)base.FindAsync(c => c.Category.Equals(category));
-      }
    }
 }
