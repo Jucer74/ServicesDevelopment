@@ -31,4 +31,4 @@ Implemente la API para la aplicacion de Reminders, desarrollando los siguientes 
 # Modelo
 El modelo Asociado a esta Web APi es el siguiente:
 
-![Entidades](https://github.com/Jucer74//blob/main/Exams/Exam-02/img/ER-Diagram.jpg)
+![Entidades](https://github.com/Jucer74/ServicesDevelopment/blob/main/Exams/Exam-02/img/ER-Diagram.jpg)
