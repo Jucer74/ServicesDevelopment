@@ -1,4 +1,5 @@
 ﻿using ReminderApp.Domain.Common;
+using ReminderApp.Domain.Enumerations;
 using System;
 using System.Collections.Generic;
 
@@ -12,8 +13,7 @@ namespace ReminderApp.Domain.Entities
         {
             Reminders = new HashSet<Reminder>();
         }
-
-        public string Description { get; set; }
+        public CategoryType Description { get; set; }
 
         public virtual ICollection<Reminder> Reminders { get; set; }
     }
