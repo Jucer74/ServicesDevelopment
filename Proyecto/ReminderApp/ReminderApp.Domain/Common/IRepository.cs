@@ -1,21 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Linq.Expressions; 
 
 namespace ReminderApp.Domain.Common
 {
-   public interface IRepository<T> where T : EntityBase
-   {
-      void Add(T entity);
+    public interface IRepository<T> where T : EntityBase
+    {
 
-      IEnumerable<T> GetAll();
+        public Task Add(T entity);
 
-      T GetById(int id);
+        public Task<IEnumerable<T>> GetAll();
 
-      IEnumerable<T> Find(Expression<Func<T, bool>> predicate);
+        public Task<T> GetById(int id);
 
-      void Update(T entity);
+        public Task<IEnumerable<T>> Find(Expression<Func<T, bool>> predicate);
 
-      void Remove(T entity);
-   }
+        public Task Update(T entity);
+
+        public Task Remove(T entity);
+
+    }
 }

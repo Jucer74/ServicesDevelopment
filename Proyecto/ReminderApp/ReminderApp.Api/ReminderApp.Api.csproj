@@ -8,4 +8,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ReminderApp.Application\ReminderApp.Application.csproj" />
+    <ProjectReference Include="..\ReminderApp.Infrastructure\ReminderApp.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

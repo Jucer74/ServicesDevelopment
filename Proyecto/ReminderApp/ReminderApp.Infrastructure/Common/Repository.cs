@@ -5,49 +5,53 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace ReminderApp.Infrastructure.Common
 {
-   public class Repository<T> : IRepository<T> where T : EntityBase
+    public class Repository<T> : IRepository<T> where T : EntityBase
    {
       private readonly AppDbContext _appDbContext;
 
-      public Repository(AppDbContext appDbContext)
+
+        public Repository(AppDbContext appDbContext)
       {
          _appDbContext = appDbContext;
       }
 
-      public void Add(T entity)
+      public async Task Add(T entity)
       {
          _appDbContext.Set<T>().Add(entity);
-         _appDbContext.SaveChanges();
+         await _appDbContext.SaveChangesAsync();
       }
 
-      public IEnumerable<T> Find(Expression<Func<T, bool>> predicate)
+      public async Task<IEnumerable<T>> Find(Expression<Func<T, bool>> predicate)
       {
-         return _appDbContext.Set<T>().Where(predicate).AsEnumerable();
+         return await _appDbContext.Set<T>().Where(predicate).ToListAsync<T>();
       }
 
-      public IEnumerable<T> GetAll()
+
+      public async Task<IEnumerable<T>> GetAll()
       {
-         return _appDbContext.Set<T>().AsEnumerable();
+         return await _appDbContext.Set<T>().ToListAsync<T>();
       }
 
-      public T GetById(int id)
+      public async Task<T> GetById(int id)
       {
-         return _appDbContext.Set<T>().Find(id);
+         return await _appDbContext.Set<T>().FindAsync(id);
       }
 
-      public void Remove(T entity)
+      public async Task Remove(T entity)
       {
          _appDbContext.Set<T>().Remove(entity);
-         _appDbContext.SaveChanges();
+         await _appDbContext.SaveChangesAsync();
       }
 
-      public void Update(T entity)
+      public async Task Update(T entity)
       {
          _appDbContext.Entry(entity).State = EntityState.Modified;
-         _appDbContext.SaveChanges();
+         await _appDbContext.SaveChangesAsync();
       }
-   }
+      
+    }
 }
