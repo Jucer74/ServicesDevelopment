@@ -27,3 +27,8 @@ Implemente la API para la aplicacion de Reminders, desarrollando los siguientes 
 - DeleteAllByCategoryId: [DELETE] /api/v1/reminders/category/{id}
 
 **Nota:** El borrado de los recordatorios por id de categoria debe eliminar todos los recordatorios , sin eliminar la categoria.
+
+# Modelo
+El modelo Asociado a esta Web APi es el siguiente:
+
+![Entidades](https://github.com/Jucer74//blob/main/Exams/Exam-02/img/ER-Diagram.jpg)
