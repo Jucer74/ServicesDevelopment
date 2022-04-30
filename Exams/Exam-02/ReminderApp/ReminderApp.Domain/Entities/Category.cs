@@ -13,7 +13,7 @@ namespace ReminderApp.Domain.Entities
         {
          
         }
-        public CategoryType Description { get; set; }
+        public string Description { get; set; }
 
      
     }

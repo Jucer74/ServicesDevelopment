@@ -14,6 +14,7 @@ namespace ReminderApp.Infrastructure.Repositories
         private readonly AppDbContext _appDbContext;
         public ReminderRepository(AppDbContext appDbContext) : base(appDbContext)
         {
+            _appDbContext=appDbContext; 
         }
         public async Task  DeleteAllByCategoryId(int id)
         {
@@ -24,10 +25,6 @@ namespace ReminderApp.Infrastructure.Repositories
         public Task<List<Reminder>> GetAllBycategoryId(int id)
         {
             return Task.FromResult(_appDbContext.Reminders.Where(x => x.CategoryId == id).ToList());
-        }
-        public IEnumerable<Reminder> FindRemindersByCategory(Category category)
-        {
-            return (IEnumerable<Reminder>)base.Find(c => c.Category.Equals(category));
         }
     }
 }

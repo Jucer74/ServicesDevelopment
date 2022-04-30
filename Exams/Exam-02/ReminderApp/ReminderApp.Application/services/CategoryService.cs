@@ -66,14 +66,8 @@ namespace ReminderApp.Application.Services
         public async Task Update( Category entity)
         {
             
-            if (entity != null)
-            {
                 await _categoryRepository.Update(entity);
-            }
-            else
-            {
-                throw new Exceptions("invalido");
-            }
+       
             
         }
       
