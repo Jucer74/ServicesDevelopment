@@ -3,8 +3,7 @@ using ReminderApp.Application.Interfaces;
 using ReminderApp.Domain.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ReminderApp.Application.Interfaces;
-using ReminderApp.Domain.Entities;
+
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
