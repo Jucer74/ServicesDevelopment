@@ -53,5 +53,9 @@ namespace ReminderApp.Application.Services
             // Validate if Exist
             await _reminderRepository.UpdateAsync(entity);
         }
+        public Task<IEnumerable<Reminder>> GetAllByCategoryId(int id)
+        {
+            return _reminderRepository.FindReminderCategory(id);
+        }
     }
 }

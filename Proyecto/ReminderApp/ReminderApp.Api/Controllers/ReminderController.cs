@@ -67,5 +67,12 @@ namespace ReminderApp.Api.Controllers
             await _reminderService.RemoveAsync(id);
             return Ok();
         }
+
+        //Get api/<PeopleController/5
+        [HttpGet("Category/{id}")]
+        public async Task<IActionResult> GetAllByCategory(int id)
+        {
+            return Ok(await _reminderService.GetAllByCategoryId(id));
+        }
     }
 }
