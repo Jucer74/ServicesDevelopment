@@ -23,7 +23,7 @@ namespace People.Api
       public void ConfigureServices(IServiceCollection services)
       {
 
-         services.AddDbContext<AppDbContext>(options => options.UseSqlite("Name=PeopleDB"));
+         services.AddDbContext<AppDbContext>(options => options.UseMySql(Configuration.GetConnectionString("PeopleDB"),ServerVersion.AutoDetect(Configuration.GetConnectionString("PeopleDB"))));
 
          services.AddControllers();
          services.AddSwaggerGen(c =>
