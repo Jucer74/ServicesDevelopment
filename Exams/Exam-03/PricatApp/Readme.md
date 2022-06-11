@@ -6,4 +6,4 @@ Deje aqui el enlace de la imagen a descargar.
 
 [PricatApp-Nickname] docker pull daniellr0/pricatapp
 
-link: https://hub.docker.com/r/daniellr0/pricatapp/
+link: https://hub.docker.com/r/daniellr0/pricatapp
