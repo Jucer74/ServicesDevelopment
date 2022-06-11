@@ -17,4 +17,8 @@
     <ProjectReference Include="..\Pricat.Infrastructure\Pricat.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Middlewate\" />
+  </ItemGroup>
+
 </Project>
