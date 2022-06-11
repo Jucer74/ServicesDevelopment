@@ -307,18 +307,26 @@ Utilice la solucion **PricatApp** como base e implemente la API que soporte las 
 # Base de datos
 Utilizando una version de MySQL ejecutandose dentro de un contenedor por el puerto 3307, ejecute los scripts necesarios para crear la estructura de base de datos y tablas necesarias para almacenar la informacion de Categorias y Productos.
 
+Asegurese de ejecutar la imagen del docker de la base de datos de la sigueinte forma:
+
+```
+docker run -d -p 3307:3306 --name mysql -e MYSQL_ROOT_PASSWORD=password*01 MySqlDB
+```
+
 **Scripts:**
 - 01_Create_Database.sql
 - 02_Tab_Categories.sql
 - 03_Tab_Products.sql
 - 04_Pricat_User.sql
+- 05_INS_Categories.sql
+- 06_INS_Products.sql
 
 ## Conexion
 Adicione la nueva cadena de conexion al archivo **AppSettings**
 
 ```json
 "ConnectionStrings": {
-      "CnnStr": "server=localhost;uid=PricatUSer;pwd=Pr1c4tUs3r;database=pricatdb"
+      "CnnStr": "server=localhost;uid=pricatuser;pwd=Pr1c4tUs3r;database=pricatdb"
    }
 ```
 
