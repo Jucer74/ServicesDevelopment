@@ -1,4 +1,4 @@
-CREATE TABLE `pricatdb`.`products` (
+CREATE TABLE `pricatdb`.`Products` (
   `Id` INT NOT NULL AUTO_INCREMENT,
   `CategoryId` INT NOT NULL,
   `EanCode` VARCHAR(13) NOT NULL,
@@ -8,5 +8,5 @@ CREATE TABLE `pricatdb`.`products` (
   PRIMARY KEY (`Id`),
   UNIQUE INDEX `EanCode_UNIQUE` (`EanCode` ASC) VISIBLE,
   INDEX `FX_Products_Categories_idx` (`CategoryId` ASC) VISIBLE,
-  CONSTRAINT `FX_Products_Categories` FOREIGN KEY (`CategoryId`)  REFERENCES `pricatdb`.`categories` (`Id`)
+  CONSTRAINT `FX_Products_Categories` FOREIGN KEY (`CategoryId`)  REFERENCES `pricatdb`.`Categories` (`Id`)
 );
