@@ -171,14 +171,14 @@ Utilice la solucion **PricatApp** como base e implemente la API que soporte las 
       "CategoryId": 4,
       "EanCode": "7707548427902",
       "Description": "Pantalon",
-      "Unit": "CC",
+      "Unit": "Und",
       "Price": 42500.00
     },
     {
       "Id": 9,
       "CategoryId": 5,
       "EanCode": "7707548799412",
-      "Description": "Camisa",
+      "Description": "Jarabe para la Tos",
       "Unit": "Und",
       "Price": 32500.00
     },
@@ -186,8 +186,8 @@ Utilice la solucion **PricatApp** como base e implemente la API que soporte las 
       "Id": 10,
       "CategoryId": 5,
       "EanCode": "7707548861546",
-      "Description": "Pantalon",
-      "Unit": "CC",
+      "Description": "Aspirina 500 mg x 20 Unidades",
+      "Unit": "Caja",
       "Price": 42500.00
     }
   ]
