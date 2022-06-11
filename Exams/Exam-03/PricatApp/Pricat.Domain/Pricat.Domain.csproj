@@ -4,4 +4,16 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Class1.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Common\NewFile1.txt" />
+    <None Remove="Entities\Category.cd" />
+    <None Remove="Entities\NewFile1.txt" />
+    <None Remove="Interfaces\NewFile1.txt" />
+    <None Remove="Interfaces\Repositories\NewFile1.txt" />
+  </ItemGroup>
+
 </Project>
