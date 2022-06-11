@@ -364,4 +364,4 @@ RECUERDE SUBIR SU SOLUCIÓN A SU RAMA DE ESTE REPOSITORIO.
 Deje aqui el enlace de la imagen a descargar.
 
 [PricatApp-Nickname]
-
+https://stackoverflow.com/questions/41984399/denied-requested-access-to-the-resource-is-denied-docker
