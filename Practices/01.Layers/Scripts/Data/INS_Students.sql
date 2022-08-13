@@ -1,0 +1,15 @@
+insert into Students (id, FirstName, LastName, DateOfBirth, gender) values (1, 'Dov', 'O'' Mullane', '12/09/2013', 'M');
+insert into Students (id, FirstName, LastName, DateOfBirth, gender) values (2, 'Aguie', 'Karlolczak', '11/16/1991', 'M');
+insert into Students (id, FirstName, LastName, DateOfBirth, gender) values (3, 'Byrann', 'Gerhold', '05/06/1991', 'M');
+insert into Students (id, FirstName, LastName, DateOfBirth, gender) values (4, 'Franni', 'Tomkies', '05/09/2015', 'F');
+insert into Students (id, FirstName, LastName, DateOfBirth, gender) values (5, 'Hildy', 'Tyght', '01/04/2000', 'F');
+insert into Students (id, FirstName, LastName, DateOfBirth, gender) values (6, 'Innis', 'Gilkes', '07/23/1999', 'M');
+insert into Students (id, FirstName, LastName, DateOfBirth, gender) values (7, 'Alla', 'Donalson', '07/08/2000', 'F');
+insert into Students (id, FirstName, LastName, DateOfBirth, gender) values (8, 'Fara', 'Cockman', '05/26/2001', 'F');
+insert into Students (id, FirstName, LastName, DateOfBirth, gender) values (9, 'Ragnar', 'Izard', '09/25/2017', 'M');
+insert into Students (id, FirstName, LastName, DateOfBirth, gender) values (10, 'Lara', 'Astill', '08/03/2008', 'F');
+insert into Students (id, FirstName, LastName, DateOfBirth, gender) values (11, 'Clerissa', 'Smeuin', '09/27/2002', 'F');
+insert into Students (id, FirstName, LastName, DateOfBirth, gender) values (12, 'Sarette', 'Dearnly', '06/28/2019', 'F');
+insert into Students (id, FirstName, LastName, DateOfBirth, gender) values (13, 'Ozzie', 'Dunnan', '10/19/2021', 'M');
+insert into Students (id, FirstName, LastName, DateOfBirth, gender) values (14, 'Edan', 'Forrington', '04/10/2016', 'M');
+insert into Students (id, FirstName, LastName, DateOfBirth, gender) values (15, 'Christye', 'Hellcat', '06/16/1992', 'F');
