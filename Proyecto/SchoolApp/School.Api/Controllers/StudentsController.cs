@@ -1,57 +1,124 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using School.Api.Context;
 using School.Entities;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace School.Api.Controllers
 {
-   [Route("api/v1.0/[controller]")]
-   [ApiController]
-   public class StudentsController : ControllerBase
-   {
-      // GET: api/<StudentsController>
-      [HttpGet]
-      public IEnumerable<Student> Get()
-      {
-         var students = new List<Student>()
-         {
-            new Student()
+    [Route("api/[controller]")]
+    [ApiController]
+    public class StudentsController : ControllerBase
+    {
+        private readonly SchoolDBContext _context;
+
+        public StudentsController(SchoolDBContext context)
+        {
+            _context = context;
+        }
+
+        // GET: api/Students
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Student>>> GetStudents()
+        {
+          if (_context.Students == null)
+          {
+              return NotFound();
+          }
+            return await _context.Students.ToListAsync();
+        }
+
+        // GET: api/Students/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Student>> GetStudent(int id)
+        {
+          if (_context.Students == null)
+          {
+              return NotFound();
+          }
+            var student = await _context.Students.FindAsync(id);
+
+            if (student == null)
             {
-               Id = 1,
-               FirstName = "John",
-               LastName = "Doe",
-               DateOfBirth = DateTime.Parse("10-08-1974"),
-               Sex = 'M'
+                return NotFound();
             }
-         };
 
-         return students;
-         //return new string[] { "value1", "value2" };
-      }
+            return student;
+        }
 
-      // GET api/<StudentsController>/5
-      [HttpGet("{id}")]
-      public string Get(int id)
-      {
-         return "value";
-      }
+        // PUT: api/Students/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutStudent(int id, Student student)
+        {
+            if (id != student.Id)
+            {
+                return BadRequest();
+            }
 
-      // POST api/<StudentsController>
-      [HttpPost]
-      public void Post([FromBody] string value)
-      {
-      }
+            _context.Entry(student).State = EntityState.Modified;
 
-      // PUT api/<StudentsController>/5
-      [HttpPut("{id}")]
-      public void Put(int id, [FromBody] string value)
-      {
-      }
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!StudentExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
-      // DELETE api/<StudentsController>/5
-      [HttpDelete("{id}")]
-      public void Delete(int id)
-      {
-      }
-   }
+            return NoContent();
+        }
+
+        // POST: api/Students
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost]
+        public async Task<ActionResult<Student>> PostStudent(Student student)
+        {
+          if (_context.Students == null)
+          {
+              return Problem("Entity set 'SchoolDBContext.Students'  is null.");
+          }
+            _context.Students.Add(student);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetStudent", new { id = student.Id }, student);
+        }
+
+        // DELETE: api/Students/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteStudent(int id)
+        {
+            if (_context.Students == null)
+            {
+                return NotFound();
+            }
+            var student = await _context.Students.FindAsync(id);
+            if (student == null)
+            {
+                return NotFound();
+            }
+
+            _context.Students.Remove(student);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        private bool StudentExists(int id)
+        {
+            return (_context.Students?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+    }
 }
