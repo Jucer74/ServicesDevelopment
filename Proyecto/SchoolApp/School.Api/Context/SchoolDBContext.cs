@@ -33,22 +33,22 @@ namespace School.Api.Context
             entity.Property(e => e.Description).HasMaxLength(50);
          });
 
-         modelBuilder.Entity<CoursesStudent>(entity =>
-         {
-            entity.HasKey(e => new { e.CourseId, e.StudentId });
+         //modelBuilder.Entity<CoursesStudent>(entity =>
+         //{
+         //   entity.HasKey(e => new { e.CourseId, e.StudentId });
 
-            entity.HasOne(d => d.Course)
-                .WithMany(p => p.CoursesStudents)
-                .HasForeignKey(d => d.CourseId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_CoursesStudents_Courses");
+         //   entity.HasOne(d => d.Course)
+         //       .WithMany(p => p.CoursesStudents)
+         //       .HasForeignKey(d => d.CourseId)
+         //       .OnDelete(DeleteBehavior.ClientSetNull)
+         //       .HasConstraintName("FK_CoursesStudents_Courses");
 
-            entity.HasOne(d => d.Student)
-                .WithMany(p => p.CoursesStudents)
-                .HasForeignKey(d => d.StudentId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_CoursesStudents_Students");
-         });
+         //   entity.HasOne(d => d.Student)
+         //       .WithMany(p => p.CoursesStudents)
+         //       .HasForeignKey(d => d.StudentId)
+         //       .OnDelete(DeleteBehavior.ClientSetNull)
+         //       .HasConstraintName("FK_CoursesStudents_Students");
+         //});
 
          modelBuilder.Entity<Student>(entity =>
          {
@@ -62,7 +62,18 @@ namespace School.Api.Context
                 .HasMaxLength(1)
                 .IsUnicode(false)
                 .IsFixedLength();
+
          });
+
+         modelBuilder.Entity<Student>()
+            .HasMany(c => c.Courses)
+            .WithMany(s => s.Students)
+            .Map(cs =>
+            {
+               cs.MapLeftKey("StudentId");
+               cs.MapRightKey("CouseId");
+               cs.ToTable("CoursesStudents");
+            });
 
          OnModelCreatingPartial(modelBuilder);
       }
