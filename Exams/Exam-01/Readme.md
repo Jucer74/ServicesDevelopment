@@ -6,6 +6,4 @@ Responda las preguntas del siguiente Enlace:
 # Ejercicio (60%)
 Realizar y completar la API par el manejo de estudiantes y Cursos
 
-### Codigo
-recuerde Subir los cambios a su rama en esta misma ruta.
-**.../Exams/Exam-01**
+
