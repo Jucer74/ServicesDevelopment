@@ -31,8 +31,13 @@ namespace Person.DAL.DataAccess
 
       public void Update(Entities.Models.Person entity)
       {
-         _dbContext.Entry(entity).State = EntityState.Modified;
-         _dbContext.SaveChanges();
+         var original = _dbContext.Persons.Find(entity.Id);
+         if (original is not null)
+         {
+            _dbContext.Entry(original).State = EntityState.Modified;
+            _dbContext.Entry(original).CurrentValues.SetValues(entity);
+            _dbContext.SaveChanges();
+         }
       }
 
       public void Delete(Entities.Models.Person entity)
