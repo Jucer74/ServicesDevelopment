@@ -34,11 +34,10 @@ namespace Employee.DAL.DataAccess
             var original = _dbContext.Employees.Find(entity.Id);
             if (original is not null)
             {
-                _dbContext.Entry(entity).State = EntityState.Modified;
+                _dbContext.Entry(original).State = EntityState.Modified;
                 _dbContext.Entry(original).CurrentValues.SetValues(entity);
                 _dbContext.SaveChanges();
             }
-
         }
 
         public void Delete(Entities.Models.Employee entity)
