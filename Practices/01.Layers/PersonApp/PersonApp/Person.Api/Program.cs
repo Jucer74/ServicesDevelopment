@@ -1,13 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using School.Api.Context;
-using System.Configuration;
+using Microsoft.EntityFrameworkCore;
+using Person.DAL.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("CnxStr")));
 builder.Services.AddControllers();
-builder.Services.AddDbContext<SchoolDBContext>(options => options.UseSqlServer("Server=localhost;Database=SchoolDB;Trusted_Connection=True;"));
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
