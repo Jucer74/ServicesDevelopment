@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Employee.Domain.Common
+namespace EmployeeApp.Domain.Common
 {
    public abstract class EntityBase
    {

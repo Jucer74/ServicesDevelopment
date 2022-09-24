@@ -1,4 +1,4 @@
-﻿namespace Employee.Infrastructure
+﻿namespace EmployeeApp.Infrastructure
 {
    public class Class1
    {

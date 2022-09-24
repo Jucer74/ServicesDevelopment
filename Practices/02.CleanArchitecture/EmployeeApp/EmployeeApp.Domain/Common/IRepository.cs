@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace Employee.Domain.Common
+namespace EmployeeApp.Domain.Common
 {
    public interface IRepository<T> where T : EntityBase
    {

@@ -1,7 +1,7 @@
-﻿using Employee.Domain.Common;
-using Employee.Domain.Entities;
+﻿using EmployeeApp.Domain.Common;
+using EmployeeApp.Domain.Entities;
 
-namespace Employee.Domain.Interfaces.Repositories
+namespace EmployeeApp.Domain.Interfaces.Repositories
 {
    public interface IEmployeeRepository : IRepository<Employee>
    {

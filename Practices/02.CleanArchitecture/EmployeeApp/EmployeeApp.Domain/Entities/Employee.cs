@@ -1,7 +1,7 @@
-﻿using Employee.Domain.Common;
+﻿using EmployeeApp.Domain.Common;
 using System.ComponentModel.DataAnnotations;
 
-namespace Employee.Domain.Entities
+namespace EmployeeApp.Domain.Entities
 {
    public class Employee : EntityBase
    {
