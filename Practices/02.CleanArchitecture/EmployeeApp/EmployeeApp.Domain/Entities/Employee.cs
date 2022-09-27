@@ -1,20 +1,23 @@
 ﻿using EmployeeApp.Domain.Common;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace EmployeeApp.Domain.Entities
 {
-   public class NotFoundException: EntityBase
-   {
+    public class Employee : EntityBase
+    {
 
-      [Required]
-      public string FirstName { get; set; }
 
-      [Required]
-      public string LastName { get; set; }
+        [Required]
+        public string FirstName { get; set; }
 
-      public DateTime HireDate { get; set; }
+        [Required]
+        public string LastName { get; set; }
 
-      [Required]
-      public string Departament { get; set; }
-   }
+        public DateTime HireDate { get; set; }
+        [Required]
+
+        [RegularExpression("IT|Finance|Audit", ErrorMessage = "Invalid Department")]
+        public string Department { get; set; }
+    }
 }

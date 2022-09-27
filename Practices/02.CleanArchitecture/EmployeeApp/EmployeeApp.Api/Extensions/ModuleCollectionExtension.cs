@@ -7,25 +7,25 @@ using EmployeeApp.Domain.Interfaces.Repositories;
 using EmployeeApp.Infrastructure.Common;
 using EmployeeApp.Infrastructure.Repositories;
 
-namespace PeoEmployeeAppple.Api.Extensions
+namespace EmployeeApp.Api.Extensions
 {
-   public static class ModuleCollectionExtension
-   {
-      public static IServiceCollection AddCoreModules(this IServiceCollection services)
-      {
-         // Services / Use Cases
-         services.AddScoped<IEmployeeService, EmployeeService>();
+    public static class ModuleCollectionExtension
+    {
+        public static IServiceCollection AddCoreModules(this IServiceCollection services)
+        {
+            // Services / Use Cases
+            services.AddScoped<IEmployeeService, EmployeeService>();
 
-         return services;
-      }
+            return services;
+        }
 
-      public static IServiceCollection AddInfrastructureModules(this IServiceCollection services)
-      {
-         // Repositories
-         services.AddScoped<IEmployeeRepository, EmployeeRepository>();
-         
+        public static IServiceCollection AddInfrastructureModules(this IServiceCollection services)
+        {
+            // Repositories
+            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 
-         return services;
-      }
-   }
+
+            return services;
+        }
+    }
 }

@@ -1,10 +1,12 @@
-﻿using Application.Exceptions;
-using EmployeeApp.Application.Interfaces;
+﻿using EmployeeApp.Application.Interfaces;
 using EmployeeApp.Domain.Entities;
 using EmployeeApp.Domain.Exceptions;
 using EmployeeApp.Domain.Interfaces.Repositories;
-
+using Microsoft.IdentityModel.SecurityTokenService;
+using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace EmployeeApp.Application.Services
 {
@@ -36,11 +38,7 @@ namespace EmployeeApp.Application.Services
         {
             var employee = await _employeeRepository.GetByIdAsync(id);
 
-            if (employee is null)
-            {
-                throw new NotFoundException($"Employee with Id={id} Not Found");
-            }
-
+            // Validte If Exist
             return employee;
         }
 
@@ -60,17 +58,16 @@ namespace EmployeeApp.Application.Services
         {
             if (id != entity.Id)
             {
+
                 throw new BadRequestException($"The Id={id} not corresponding with Entity.Id={entity.Id}");
             }
+            var employee = await _employeeRepository.GetByIdAsync(id);
 
-            var person = await _employeeRepository.GetByIdAsync(id);
-
-            if (person is null)
+            if (employee is null)
             {
                 throw new NotFoundException($"Employee with Id={id} Not Found");
             }
-
-            return await _employeeRepository.UpdateAsync(entity);
+            return (await _employeeRepository.UpdateAsync(entity));
         }
     }
 }

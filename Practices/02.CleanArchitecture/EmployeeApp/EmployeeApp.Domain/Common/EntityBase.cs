@@ -2,9 +2,9 @@
 
 namespace EmployeeApp.Domain.Common
 {
-   public abstract class EntityBase
-   {
-      [Key]
-      public int Id { get; set; }
-   }
+    public abstract class EntityBase
+    {
+        [Key]
+        public int Id { get; set; }
+    }
 }

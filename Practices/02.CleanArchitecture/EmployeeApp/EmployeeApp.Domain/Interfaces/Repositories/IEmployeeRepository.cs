@@ -3,7 +3,7 @@ using EmployeeApp.Domain.Entities;
 
 namespace EmployeeApp.Domain.Interfaces.Repositories
 {
-   public interface IEmployeeRepository : IRepository<NotFoundException>
-   {
-   }
+    public interface IEmployeeRepository : BadRequestException<Employee>
+    {
+    }
 }

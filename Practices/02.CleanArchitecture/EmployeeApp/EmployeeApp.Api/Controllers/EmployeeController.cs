@@ -2,6 +2,10 @@
 using EmployeeApp.Application.Interfaces;
 using EmployeeApp.Domain.Entities;
 using EmployeeApp.Domain.Exceptions;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.IdentityModel.SecurityTokenService;
+
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -12,41 +16,33 @@ namespace EmployeeApp.Api.Controllers
     public class EmployeeController : ControllerBase
     {
         private readonly IEmployeeService _employeeService;
-
         public EmployeeController(IEmployeeService employeeService)
         {
             _employeeService = employeeService;
         }
 
-        // GET: api/<EmployeeController>
+        // GET: api/<PeopleController>
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             return Ok(await _employeeService.GetAllAsync());
         }
 
-        // GET api/<EmployeeController>/5
+        // GET api/<PeopleController>/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            try
-            {
-                return Ok(await _employeeService.GetByIdAsync(id));
-            }
-            catch (NotFoundException ex)
-            {
-                return NotFound(ex.Message);
-            }
+            return Ok(await _employeeService.GetByIdAsync(id));
         }
 
-        // POST api/<EmployeeController>
+        // POST api/<PeopleController>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Employee employee)
         {
             return Ok(await _employeeService.AddAsync(employee));
         }
 
-        // PUT api/<EmployeeController>/5
+        // PUT api/<PeopleController>/5
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] Employee employee)
         {
@@ -64,19 +60,12 @@ namespace EmployeeApp.Api.Controllers
             }
         }
 
-        // DELETE api/<EmployeeController>/5
+        // DELETE api/<PeopleController>/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            try
-            {
-                await _employeeService.RemoveAsync(id);
-                return Ok();
-            }
-            catch (NotFoundException ex)
-            {
-                return NotFound(ex.Message);
-            }
+            await _employeeService.RemoveAsync(id);
+            return Ok();
         }
     }
 }
