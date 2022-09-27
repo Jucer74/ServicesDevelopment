@@ -1,8 +1,5 @@
 ﻿using EmployeeApp.Domain.Entities;
-using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace EmployeeApp.Application.Interfaces
 {

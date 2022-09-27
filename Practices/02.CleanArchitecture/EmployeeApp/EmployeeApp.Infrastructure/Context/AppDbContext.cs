@@ -13,6 +13,6 @@ namespace EmployeeApp.Infrastructure.Context
         {
         }
 
-        public DbSet<BadRequestException> Employees { get; set; }
+        public DbSet<Employee> Employees { get; set; }
     }
 }

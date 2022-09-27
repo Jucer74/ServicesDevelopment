@@ -5,8 +5,6 @@ namespace EmployeeApp.Domain.Entities
 {
     public class Employee : EntityBase
     {
-
-
         [Required]
         public string? FirstName { get; set; }
 
@@ -14,8 +12,8 @@ namespace EmployeeApp.Domain.Entities
         public string? LastName { get; set; }
 
         public DateTime HireDate { get; set; }
-        [Required]
 
+        [Required]
         [RegularExpression("IT|Finance|Audit", ErrorMessage = "Invalid Department")]
         public string? Department { get; set; }
     }

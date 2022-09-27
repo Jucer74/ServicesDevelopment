@@ -1,8 +1,8 @@
 ﻿using EmployeeApp.Application.Interfaces;
+using EmployeeApp.Domain.Entities;
 using EmployeeApp.Domain.Exceptions;
 using EmployeeApp.Domain.Interfaces.Repositories;
 using System.Linq.Expressions;
-
 
 namespace EmployeeApp.Application.Services
 {
@@ -15,26 +15,30 @@ namespace EmployeeApp.Application.Services
             _employeeRepository = employeeRepository;
         }
 
-        public async Task<BadRequestException> AddAsync(BadRequestException entity)
+        public async Task<Employee> AddAsync(Employee entity)
         {
             return await _employeeRepository.AddAsync(entity);
         }
 
-        public async Task<IEnumerable<BadRequestException>> FindAsync(Expression<Func<BadRequestException, bool>> predicate)
+        public async Task<IEnumerable<Employee>> FindAsync(Expression<Func<Employee, bool>> predicate)
         {
             return await _employeeRepository.FindAsync(predicate);
         }
 
-        public async Task<IEnumerable<BadRequestException>> GetAllAsync()
+        public async Task<IEnumerable<Employee>> GetAllAsync()
         {
             return await _employeeRepository.GetAllAsync();
         }
 
-        public async Task<BadRequestException> GetByIdAsync(int id)
+        public async Task<Employee> GetByIdAsync(int id)
         {
             var employee = await _employeeRepository.GetByIdAsync(id);
 
-            // Validte If Exist
+            if (employee is null)
+            {
+                throw new NotFoundException($"Employee with Id={id} Not Found");
+            }
+
             return employee;
         }
 
@@ -50,13 +54,13 @@ namespace EmployeeApp.Application.Services
             await _employeeRepository.RemoveAsync(employee);
         }
 
-        public async Task<BadRequestException> UpdateAsync(int id, BadRequestException entity)
+        public async Task<Employee> UpdateAsync(int id, Employee entity)
         {
             if (id != entity.Id)
             {
-
                 throw new BadRequestException($"The Id={id} not corresponding with Entity.Id={entity.Id}");
             }
+
             var employee = await _employeeRepository.GetByIdAsync(id);
 
             if (employee is null)
