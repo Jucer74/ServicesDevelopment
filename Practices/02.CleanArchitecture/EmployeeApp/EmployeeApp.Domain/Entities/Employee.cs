@@ -1,5 +1,4 @@
 ﻿using EmployeeApp.Domain.Common;
-using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace EmployeeApp.Domain.Entities
@@ -9,15 +8,15 @@ namespace EmployeeApp.Domain.Entities
 
 
         [Required]
-        public string FirstName { get; set; }
+        public string? FirstName { get; set; }
 
         [Required]
-        public string LastName { get; set; }
+        public string? LastName { get; set; }
 
         public DateTime HireDate { get; set; }
         [Required]
 
         [RegularExpression("IT|Finance|Audit", ErrorMessage = "Invalid Department")]
-        public string Department { get; set; }
+        public string? Department { get; set; }
     }
 }

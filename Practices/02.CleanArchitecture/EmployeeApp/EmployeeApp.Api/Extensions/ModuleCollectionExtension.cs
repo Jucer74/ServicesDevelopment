@@ -1,10 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using EmployeeApp.Application.Interfaces;
+﻿using EmployeeApp.Application.Interfaces;
 using EmployeeApp.Application.Services;
-using EmployeeApp.Domain.Common;
-using EmployeeApp.Domain.Entities;
 using EmployeeApp.Domain.Interfaces.Repositories;
-using EmployeeApp.Infrastructure.Common;
 using EmployeeApp.Infrastructure.Repositories;
 
 namespace EmployeeApp.Api.Extensions

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
+﻿using System.Linq.Expressions;
 
 namespace EmployeeApp.Domain.Common
 {
-    public interface BadRequestException<T> where T : EntityBase
+    public interface IRepository<T> where T : EntityBase
     {
         public Task<T> AddAsync(T entity);
 

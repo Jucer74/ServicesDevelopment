@@ -1,6 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using EmployeeApp.Domain.Entities;
-using System.Collections.Generic;
+﻿using EmployeeApp.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeApp.Infrastructure.Context
 {
@@ -14,16 +13,6 @@ namespace EmployeeApp.Infrastructure.Context
         {
         }
 
-        public DbSet<Employee> Employees { get; set; }
-
-        internal Task SaveChangesAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        internal object Set<T>()
-        {
-            throw new NotImplementedException();
-        }
+        public DbSet<BadRequestException> Employees { get; set; }
     }
 }

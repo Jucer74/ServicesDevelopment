@@ -1,12 +1,8 @@
 ﻿using EmployeeApp.Application.Interfaces;
-using EmployeeApp.Domain.Entities;
 using EmployeeApp.Domain.Exceptions;
 using EmployeeApp.Domain.Interfaces.Repositories;
-using Microsoft.IdentityModel.SecurityTokenService;
-using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
+
 
 namespace EmployeeApp.Application.Services
 {
@@ -19,22 +15,22 @@ namespace EmployeeApp.Application.Services
             _employeeRepository = employeeRepository;
         }
 
-        public async Task<Employee> AddAsync(Employee entity)
+        public async Task<BadRequestException> AddAsync(BadRequestException entity)
         {
             return await _employeeRepository.AddAsync(entity);
         }
 
-        public async Task<IEnumerable<Employee>> FindAsync(Expression<Func<Employee, bool>> predicate)
+        public async Task<IEnumerable<BadRequestException>> FindAsync(Expression<Func<BadRequestException, bool>> predicate)
         {
             return await _employeeRepository.FindAsync(predicate);
         }
 
-        public async Task<IEnumerable<Employee>> GetAllAsync()
+        public async Task<IEnumerable<BadRequestException>> GetAllAsync()
         {
             return await _employeeRepository.GetAllAsync();
         }
 
-        public async Task<Employee> GetByIdAsync(int id)
+        public async Task<BadRequestException> GetByIdAsync(int id)
         {
             var employee = await _employeeRepository.GetByIdAsync(id);
 
@@ -54,7 +50,7 @@ namespace EmployeeApp.Application.Services
             await _employeeRepository.RemoveAsync(employee);
         }
 
-        public async Task<Employee> UpdateAsync(int id, Employee entity)
+        public async Task<BadRequestException> UpdateAsync(int id, BadRequestException entity)
         {
             if (id != entity.Id)
             {

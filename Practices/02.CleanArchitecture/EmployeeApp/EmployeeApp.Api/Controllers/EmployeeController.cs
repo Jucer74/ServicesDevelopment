@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using EmployeeApp.Application.Interfaces;
+﻿using EmployeeApp.Application.Interfaces;
 using EmployeeApp.Domain.Entities;
 using EmployeeApp.Domain.Exceptions;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.IdentityModel.SecurityTokenService;
+using Microsoft.AspNetCore.Mvc;
+
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -37,14 +35,14 @@ namespace EmployeeApp.Api.Controllers
 
         // POST api/<PeopleController>
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Employee employee)
+        public async Task<IActionResult> Post([FromBody] BadRequestException employee)
         {
             return Ok(await _employeeService.AddAsync(employee));
         }
 
         // PUT api/<PeopleController>/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] Employee employee)
+        public async Task<IActionResult> Put(int id, [FromBody] BadRequestException employee)
         {
             try
             {

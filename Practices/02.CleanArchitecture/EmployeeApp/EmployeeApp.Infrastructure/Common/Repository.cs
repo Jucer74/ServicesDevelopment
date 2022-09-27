@@ -1,13 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using EmployeeApp.Domain.Common;
+﻿using EmployeeApp.Domain.Common;
 using EmployeeApp.Domain.Exceptions;
 using EmployeeApp.Infrastructure.Context;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
-
 
 namespace EmployeeApp.Infrastructure.Common
 {

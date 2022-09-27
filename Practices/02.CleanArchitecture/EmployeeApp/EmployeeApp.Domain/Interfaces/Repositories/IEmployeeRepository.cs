@@ -3,7 +3,7 @@ using EmployeeApp.Domain.Entities;
 
 namespace EmployeeApp.Domain.Interfaces.Repositories
 {
-    public interface IEmployeeRepository : BadRequestException<Employee>
+    public interface IEmployeeRepository : IRepository<BadRequestException>
     {
     }
 }
