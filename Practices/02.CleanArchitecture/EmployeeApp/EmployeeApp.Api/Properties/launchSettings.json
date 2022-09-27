@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "Employee.Api": {
+    "EmployeeApp.Api": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
