@@ -2,7 +2,7 @@
 # Evaluación Teórica (40%)
 Responda las preguntas del siguiente Enlace:
 
-[Examen](https://forms.gle/eP8kEvxouTXvJYLG9)
+[Examen]()
 
 
 # Ejercicio (60%)
