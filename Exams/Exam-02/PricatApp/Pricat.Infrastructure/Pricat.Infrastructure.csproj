@@ -7,9 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Common\" />
-    <Folder Include="Context\" />
-    <Folder Include="Repsitories\" />
+    <Compile Remove="Repsitories\**" />
+    <EmbeddedResource Remove="Repsitories\**" />
+    <None Remove="Repsitories\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,6 +19,10 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Pricat.Application\Pricat.Application.csproj" />
   </ItemGroup>
 
 </Project>
