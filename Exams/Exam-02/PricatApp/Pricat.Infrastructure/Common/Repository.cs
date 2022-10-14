@@ -54,9 +54,7 @@ namespace PricatApp.Infrastructure.Common
                 throw new NotFoundException($"element with Id={id} Not Found");
             }
 
-#pragma warning disable CS8604 // Possible null reference argument.
             _appDbContext.Set<T>().Remove(entity);
-#pragma warning restore CS8604 // Possible null reference argument.
             await _appDbContext.SaveChangesAsync();
 
         }
@@ -71,9 +69,7 @@ namespace PricatApp.Infrastructure.Common
                 throw new NotFoundException($"Employee with Id={id} Not Found");
             }
 
-#pragma warning disable CS8604 // Possible null reference argument.
             _appDbContext.Entry(original).CurrentValues.SetValues(entity);
-#pragma warning restore CS8604 // Possible null reference argument.
             await _appDbContext.SaveChangesAsync();
 
             return entity;

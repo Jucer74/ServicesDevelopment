@@ -1,9 +1,8 @@
-using PricatApp.Infrastructure.Context;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
-using PricatApp.Api.Extensions;
-using Pricat.Api.Middleware;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Pricat.Api.Middleware;
+using PricatApp.Api.Extensions;
+using PricatApp.Infrastructure.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
