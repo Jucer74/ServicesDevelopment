@@ -371,5 +371,5 @@ RECUERDE SUBIR SU SOLUCIÓN A SU RAMA DE ESTE REPOSITORIO.
 # DockerHub 
 Deje aqui el enlace de la imagen a descargar.
 
-[PricatApp-Nickname]
-
+docker pull juanchez0/pricatapi
+https://hub.docker.com/r/juanchez0/pricatapi
