@@ -1,0 +1,10 @@
+INSERT INTO employees (FirstName, LastName, HireDate, Department) VALUES ('Benedick', 'Felten', 10/19/1913, 'auditoria');
+INSERT INTO employees (FirstName, LastName, HireDate, Department) VALUES ('Emmet', 'Gimlet', 10/7/1909, 'finance');
+INSERT INTO employees (FirstName, LastName, HireDate, Department) VALUES ('Rosina', 'Chatainier', 7/21/1995, 'IT');
+INSERT INTO employees (FirstName, LastName, HireDate, Department) VALUES ('Kordula', 'Glancey', 6/11/1940, 'auditoria');
+INSERT INTO employees (FirstName, LastName, HireDate, Department) VALUES ('Brannon', 'Rothermel', 1/28/1941, 'finance');
+INSERT INTO employees (FirstName, LastName, HireDate, Department) VALUES ('Sebastien', 'Sindall', 1/7/1964, 'IT');
+INSERT INTO employees (FirstName, LastName, HireDate, Department) VALUES ('Myrilla', 'Alpe', 4/21/2014, 'finance');
+INSERT INTO employees (FirstName, LastName, HireDate, Department) VALUES ('Selie', 'covino', 6/27/1992, 'auditoria');
+INSERT INTO employees (FirstName, LastName, HireDate, Department) VALUES ('Trudy', 'Kinnin', 6/9/1985, 'IT');
+INSERT INTO employees (FirstName, LastName, HireDate, Department) VALUES ('Jayne', 'Arends', 8/16/1960, 'auditoria');
