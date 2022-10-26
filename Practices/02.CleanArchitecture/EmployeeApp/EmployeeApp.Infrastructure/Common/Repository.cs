@@ -48,5 +48,5 @@ namespace EmployeeApp.Infrastructure.Common
          await _appDbContext.SaveChangesAsync();
          return entity;
       }
-   }
+    }
 }
