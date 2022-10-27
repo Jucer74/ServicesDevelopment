@@ -7,12 +7,12 @@ using PricatApp.Domain.Exceptions;
 namespace PricatApp.Api.Controllers
 {
 
-    [Route("api/v1/[controller]")]
+    [Route("api/v1.0/[controller]")]
     [ApiController]
-    public class ProductController : ControllerBase
+    public class ProductsController : ControllerBase
     {
         private readonly IProductService _productService;
-        public ProductController(IProductService productService)
+        public ProductsController(IProductService productService)
         {
             _productService = productService;
         }
