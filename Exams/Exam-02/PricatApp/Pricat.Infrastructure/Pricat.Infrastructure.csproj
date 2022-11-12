@@ -7,7 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\.editorconfig" Link=".editorconfig" />
+    <Folder Include="Common\" />
+    <Folder Include="Context\" />
+    <Folder Include="Repsitories\" />
   </ItemGroup>
 
 </Project>
