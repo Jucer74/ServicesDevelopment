@@ -17,7 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arepas.Application", "Arepa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arepas.Infrasctructure", "Arepas.Infrasctructure\Arepas.Infrasctructure.csproj", "{E4264588-2CF4-426E-93E8-31253B9103F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arepas.Domain", "Areas.Domain\Arepas.Domain.csproj", "{F3C15EEF-6050-42EA-B7D3-34E55F741AAE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arepas.Domain", "Arepas.Domain\Arepas.Domain.csproj", "{F3C15EEF-6050-42EA-B7D3-34E55F741AAE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
