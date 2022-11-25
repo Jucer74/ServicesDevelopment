@@ -5,5 +5,6 @@ namespace People.Domain.Interfaces.Repositories
 {
    public interface IPersonRepository : IRepository<Person>
    {
+        // GetByPage
    }
 }

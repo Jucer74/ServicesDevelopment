@@ -11,13 +11,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{7CFA10B4-2376-445F-A3C3-EDEB54325D62}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "People.Api", "People.Api\People.Api.csproj", "{1CC7F3AA-4E9C-4C12-AF6D-7409778A38DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "People.Api", "People.Api\People.Api.csproj", "{1CC7F3AA-4E9C-4C12-AF6D-7409778A38DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "People.Application", "People.Application\People.Application.csproj", "{B420858F-4E69-4174-B629-BFEFB2D9B197}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "People.Application", "People.Application\People.Application.csproj", "{B420858F-4E69-4174-B629-BFEFB2D9B197}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "People.Domain", "People.Domain\People.Domain.csproj", "{58F8FD5B-B107-45F5-A19B-566072795187}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "People.Domain", "People.Domain\People.Domain.csproj", "{58F8FD5B-B107-45F5-A19B-566072795187}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "People.Infrastructure", "People.Infrastructure\People.Infrastructure.csproj", "{B47E75FB-FB09-41CF-9540-229295BF23D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "People.Infrastructure", "People.Infrastructure\People.Infrastructure.csproj", "{B47E75FB-FB09-41CF-9540-229295BF23D8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
