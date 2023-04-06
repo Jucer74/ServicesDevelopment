@@ -7,6 +7,6 @@ CREATE TABLE `pricatdb`.`Products` (
   `Price` DECIMAL(13,2) NOT NULL,
   PRIMARY KEY (`Id`),
   UNIQUE INDEX `EanCode_UNIQUE` (`EanCode` ASC) VISIBLE,
-  INDEX `FX_Products_Categories_idx` (`CategoryId` ASC) VISIBLE,
-  CONSTRAINT `FX_Products_Categories` FOREIGN KEY (`CategoryId`)  REFERENCES `pricatdb`.`Categories` (`Id`)
+  INDEX `FK_Products_Categories_idx` (`CategoryId` ASC) VISIBLE,
+  CONSTRAINT `FK_Products_Categories` FOREIGN KEY (`CategoryId`)  REFERENCES `pricatdb`.`Categories` (`Id`)
 );

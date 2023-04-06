@@ -13,7 +13,6 @@ Realice una Web API que permita Gestionar, las Asignaturas, los estudiantes  y l
 |-------------|-------------|-----------|-------------------------------------------------------------------|
 | Id          | Int         | Not Null  | Identificador, Primary Key, Autoincremental                       | 
 | Name        | Varchar(50) | Not Null  | Nombre de la Asignatura (ej: Calculo I, Ingles II, Fisica III)    |
-| Description | Varchar(300)| Null      | Description corta de la asignatura                                |
 | Room        | Varchar(10) | Not Null  | Numero del Salon, Ej 101A                                         |
 | Professor   | Varchar(50) | Not Null  | Nombre completo del Profesor                                      |
 
@@ -24,7 +23,7 @@ Realice una Web API que permita Gestionar, las Asignaturas, los estudiantes  y l
 | Id          | Int         | Not Null  | Identificador, Primary Key, Autoincremental  | 
 | FirstName   | Varchar(50) | Not Null  | Nombre del Estudiante                        |
 | LastName    | Varchar(50) | Not Null  | Apellido del Estudiante                      |
-| BirthOfDate | DateTime    | Not Null  | Fecha de Nacimiento                          |
+| DateOfBirth | DateTime    | Not Null  | Fecha de Nacimiento                          |
 | Sex         | Varchar(1)  | Not Null  | Sexo (solo los valores M o F son permitidos) | 
 
 - SubjectsAndStudents (Asignaturas y Estudiantes)

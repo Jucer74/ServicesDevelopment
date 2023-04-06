@@ -1,0 +1,7 @@
+CREATE TABLE `schooldb`.`Subjects` (
+  `Id` INT NOT NULL AUTO_INCREMENT,
+  `Name` VARCHAR(50) NOT NULL,
+  `Room` VARCHAR(10) NOT NULL,
+  `Professor` VARCHAR(50) NOT NULL,
+  PRIMARY KEY (`Id`));
+
