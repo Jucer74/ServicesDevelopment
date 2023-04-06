@@ -305,13 +305,7 @@ Utilice la solucion **PricatApp** como base e implemente la API que soporte las 
     - 500: Internal Server Error: In case an unexpeted problem
 
 # Base de datos
-Utilizando una version de MySQL ejecutandose dentro de un contenedor por el puerto 3307, ejecute los scripts necesarios para crear la estructura de base de datos y tablas necesarias para almacenar la informacion de Categorias y Productos.
-
-Asegurese de ejecutar la imagen del docker de la base de datos de la sigueinte forma:
-
-```
-docker run -d -p 3307:3306 --name mysql -e MYSQL_ROOT_PASSWORD=password*01 MySqlDB
-```
+Utilice MySQL como motor de base de datos, y ejecute los scripts necesarios para crear la estructura de base de datos y tablas necesarias para almacenar la informacion de Categorias y Productos.
 
 **Scripts:**<br>
 - 01_Create_Database.sql<br>
@@ -330,46 +324,14 @@ Adicione la nueva cadena de conexion al archivo **AppSettings**
    }
 ```
 
-# Container
-Genere el contenedor de su aplicacion (PricatApp) utilizando el archivo **DockerFile**
-
-## Cree la Imagen
-En la ruta donde este el archivo **DockerFile**, ejecute el siguiente comando para construir la imagen.
-```
-docker build -t pricatapp .
-```
-para mas información puede consultar la siguiente [Guia](https://docs.docker.com/samples/dotnetcore/).
-
-## Ejecute la Imagen 
-Ejecute la imageny pruebe que funcionan los EndPoints configurados.
-
-```
-docker run -d -p 8080:80 --name Pricat pricatapp
-```
-## Publicar Imagen
-- Cree una cuenta en [DockerHub](https://hub.docker.com/) y adicione su nuevo repositorio.
-- Publique su imagen y suba su version de la API a **DockerHub** , para ello puede seguir esta [Guia](https://docs.docker.com/docker-hub/).
-
----
-
 # Reglas
 - Se debe validar que los Ids Existan antes de Efectuar la actualizacion o el borrado, en caso de no existir, debe retornar una excepcion de tipo 404-Not Found (Aplica para Categorias y Productos)
 - Se debe Validar el EAN Code utilizando la verificacion de [digito de chequeo](https://en.wikipedia.org/wiki/International_Article_Number) para EAN 13 y en caso de no ser valido debe retornar una Exception de tipo 400-Bad Request. Puede implementar el algoritmo
 - Valide los campos requeridos y sus longitudes en las entidades, para ello puede utilizar **Annotations** (Required, StringLength).
 - Implemente el pattern, [Exception Middleware Handler](https://github.com/Jucer74/ExceptionHandler), para facilitar el control de errores y manejo de Excepciones de Negocio, pudiendo retornar estructuras de tipo **ErrorDetails** para estandarizar las respuestas de los errores.
 
-# NOTA
-RECUERDE SUBIR SU SOLUCIÓN A SU RAMA DE ESTE REPOSITORIO.
-
 # Revision
-1. Validar que todos EndPoints funcionan correctamente 
-2. Los casos especiales y el manejo de los erroes y las excepciones
-3. Revisar el Codigo
-4. Descargar contenedor y probrar que funciona correctamente.
-5. Verificar la Adherencia de la arquitecura y del patron Exception Ahndler.
-
-# DockerHub 
-Deje aqui el enlace de la imagen a descargar.
-
-[PricatApp-Nickname]
+1. Validar que todos EndPoints funcionan correctamente. 
+2. Validar Los casos especiales y el manejo de los erroes y las excepciones.
+4. Verificar la Adherencia de la arquitecura y del patron Exception Ahndler.
 
