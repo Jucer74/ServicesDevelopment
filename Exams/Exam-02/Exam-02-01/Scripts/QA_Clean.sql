@@ -1,4 +1,5 @@
-DELETE FROM `pricatdb`.`Products` WHERE Id >= 0;
-ALTER TABLE `pricatdb`.`Products` AUTO_INCREMENT = 1;
-DELETE FROM `pricatdb`.`Categories` WHERE Id >= 0;
-ALTER TABLE `pricatdb`.`Categories` AUTO_INCREMENT = 1;
+DELETE FROM `schooldb`.`SubjectsAndStudents` WHERE SubjectId >= 0;
+DELETE FROM `schooldb`.`Subjects` WHERE Id >= 0;
+ALTER TABLE `schooldb`.`Subjects` AUTO_INCREMENT = 1;
+DELETE FROM `schooldb`.`Students` WHERE Id >= 0;
+ALTER TABLE `schooldb`.`Students` AUTO_INCREMENT = 1;
