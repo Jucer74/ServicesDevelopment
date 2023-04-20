@@ -217,7 +217,7 @@ Utilice la solucion **PricatApp** como base e implemente la API que soporte las 
     - 404: Nort Found: In case the Id not found
     - 500: Internal Server Error: In case an unexpeted problem
 
-3. **GET /api/v1.0/Products/Category/{categoryId}** : Obtener la lista de productos por identificador de categoria
+3. **GET /api/v1.0/Category/{categoryId}/Products** : Obtener la lista de productos por identificador de categoria
   - **Request**: Empty
   - **Response**: Example
   ```json
