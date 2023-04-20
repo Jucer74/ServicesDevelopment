@@ -248,7 +248,7 @@ Utilice la solucion **PricatApp** como base e implemente la API que soporte las 
 
 
 4. **POST /api/v1.0/Products** : Adicionar un nuevo producto
-  - **Request**: Empty
+  - **Request**: Example
   ```json
   {
     "Id": 0,
