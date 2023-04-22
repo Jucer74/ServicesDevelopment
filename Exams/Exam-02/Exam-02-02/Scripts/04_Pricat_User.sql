@@ -1,4 +1,4 @@
 /*DROP USER 'pricatuser'@'localhost' ;*/
-CREATE USER 'pricatuser'@'172.17.0.1' IDENTIFIED BY 'Pr1c4tUs3r';
-GRANT ALL PRIVILEGES ON *.* TO 'pricatuser'@'172.17.0.1' WITH GRANT OPTION;
+CREATE USER 'pricatuser'@'localhost' IDENTIFIED BY 'Pr1c4tUs3r';
+GRANT ALL PRIVILEGES ON *.* TO 'pricatuser'@'localhost' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
