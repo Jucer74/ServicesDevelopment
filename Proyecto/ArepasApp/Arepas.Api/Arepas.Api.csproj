@@ -18,6 +18,7 @@
     <Folder Include="Middleware\" />
     <Folder Include="Mapping\" />
     <Folder Include="Dtos\" />
+    <Folder Include="Validators\" />
   </ItemGroup>
 
 </Project>
