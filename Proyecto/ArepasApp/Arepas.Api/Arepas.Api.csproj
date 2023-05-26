@@ -16,6 +16,8 @@
   <ItemGroup>
     <Folder Include="Extensions\" />
     <Folder Include="Middleware\" />
+    <Folder Include="Mapping\" />
+    <Folder Include="Dtos\" />
   </ItemGroup>
 
 </Project>
