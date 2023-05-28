@@ -3,6 +3,6 @@ using Arepas.Domain.Models;
 
 namespace Arepas.Domain.Interfaces.Repositories;
 
-internal interface IOrderDetailRepository : IRepository<OrderDetail>
+public interface IOrderDetailRepository : IRepository<OrderDetail>
 {
 }

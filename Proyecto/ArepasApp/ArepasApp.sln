@@ -11,13 +11,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{BA7DDF
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{1656F0E3-520D-4084-9F0D-557C999E9C9D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arepas.Api", "Arepas.Api\Arepas.Api.csproj", "{E18FFA46-854B-45AA-8C6D-2044F8C4D523}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arepas.Api", "Arepas.Api\Arepas.Api.csproj", "{E18FFA46-854B-45AA-8C6D-2044F8C4D523}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arepas.Application", "Arepas.Application\Arepas.Application.csproj", "{43B40937-32BE-4E5C-9415-D382297E2C43}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arepas.Application", "Arepas.Application\Arepas.Application.csproj", "{43B40937-32BE-4E5C-9415-D382297E2C43}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arepas.Domain", "Arepas.Domain\Arepas.Domain.csproj", "{5D570C30-10AA-4361-9633-0EA1C41D4BCA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arepas.Domain", "Arepas.Domain\Arepas.Domain.csproj", "{5D570C30-10AA-4361-9633-0EA1C41D4BCA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arepas.Infrastructure", "Arepas.Infrastructure\Arepas.Infrastructure.csproj", "{77F9ACC2-6C76-4075-921B-D90EDA909631}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arepas.Infrastructure", "Arepas.Infrastructure\Arepas.Infrastructure.csproj", "{77F9ACC2-6C76-4075-921B-D90EDA909631}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6E75172F-A7EC-46D6-9A02-C68148009D7E}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

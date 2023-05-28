@@ -9,7 +9,6 @@
   <ItemGroup>
     <Folder Include="Common\" />
     <Folder Include="Context\" />
-    <Folder Include="Repositories\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,6 +22,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="MySql.EntityFrameworkCore" Version="7.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Arepas.Domain\Arepas.Domain.csproj" />
   </ItemGroup>
 
 </Project>

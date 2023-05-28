@@ -5,9 +5,9 @@ using Arepas.Infrastructure.Context;
 
 namespace Arepas.Infrastructure.Repositories;
 
-public class ProductRepository : Repository<Product>, IProductRepository
+public class CustomerRepository : Repository<Customer>, ICustomerRepository
 {
-    public ProductRepository(AppDbContext appDbContext) : base(appDbContext)
+    public CustomerRepository(AppDbContext appDbContext) : base(appDbContext)
     {
     }
 }

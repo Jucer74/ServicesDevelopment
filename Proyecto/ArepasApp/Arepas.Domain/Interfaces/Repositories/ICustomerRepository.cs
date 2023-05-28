@@ -3,6 +3,6 @@ using Arepas.Domain.Models;
 
 namespace Arepas.Domain.Interfaces.Repositories;
 
-internal interface ICustomerRepository : IRepository<Customer>
+public interface ICustomerRepository : IRepository<Customer>
 {
 }
