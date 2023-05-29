@@ -35,6 +35,9 @@ builder.Services.AddMappinmg();
 builder.Services.AddApplicationRepositories();
 builder.Services.AddApplicationServices();
 
+// Add CORS
+builder.Services.AddCors();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -52,5 +55,13 @@ app.UseExceptionMiddleware();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseCors(options => {
+    options.WithOrigins("http://localhost:3000");
+    options.WithOrigins("https://localhost:3001");
+    options.AllowAnyMethod();
+    options.AllowAnyHeader();
+    options.WithExposedHeaders("X-Pagination");
+});
 
 app.Run();
