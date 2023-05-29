@@ -1,4 +1,5 @@
 ﻿using Arepas.Domain.Common;
+using Arepas.Domain.Dtos;
 using Arepas.Domain.Exceptions;
 using Arepas.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
@@ -62,6 +63,23 @@ namespace Arepas.Infrastructure.Common
         {
             _appDbContext.Set<T>().RemoveRange(entityList);
             await _appDbContext.SaveChangesAsync();
+        }
+
+        public async Task<ResponseData<T>> GetByQueryParamsAsync(QueryParams queryParams)
+        {
+            var entityData = _appDbContext.Set<T>().OrderBy(x => x.Id);
+
+            var totalCount = entityData.Count();
+
+            PaginationData xPagination = new PaginationData(totalCount, queryParams.Page, queryParams.Limit);
+
+            var items = await entityData.Skip((queryParams.Page - 1) * queryParams.Limit)
+                                        .Take(queryParams.Limit)
+                                        .ToListAsync();
+
+            var responseData = new ResponseData<T>() { Items = items, XPagination = xPagination };
+
+            return responseData;
         }
     }
 }

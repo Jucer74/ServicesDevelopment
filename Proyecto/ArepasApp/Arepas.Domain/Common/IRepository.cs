@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿using Arepas.Domain.Dtos;
+using System.Linq.Expressions;
 
 namespace Arepas.Domain.Common
 {
@@ -17,5 +18,7 @@ namespace Arepas.Domain.Common
         public Task RemoveAsync(T entity);
 
         public Task RemoveRangeAsync(IEnumerable<T> entityList);
+
+        public Task<ResponseData<T>> GetByQueryParamsAsync(QueryParams queryParams);
     }
 }

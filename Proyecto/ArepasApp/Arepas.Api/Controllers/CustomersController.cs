@@ -1,8 +1,10 @@
 ﻿using Arepas.Api.Dtos;
 using Arepas.Application.Interfaces;
+using Arepas.Domain.Dtos;
 using Arepas.Domain.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -24,9 +26,18 @@ namespace Arepas.Api.Controllers
 
         // GET: api/<CustomersController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IActionResult> GetAll([FromQuery] QueryParams queryParams)
         {
-            return new string[] { "value1", "value2" };
+            if (queryParams.Page == 0 && queryParams.Limit == 0)
+            {
+                return Ok(await _customerService.GetAllAsync());
+            }
+
+            var responseData = await _customerService.GetByQueryParamsAsync(queryParams);
+
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(responseData.XPagination));
+
+            return Ok(responseData.Items);
         }
 
         // GET api/<CustomersController>/5
