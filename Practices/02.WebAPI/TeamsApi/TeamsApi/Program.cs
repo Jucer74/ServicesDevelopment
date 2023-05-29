@@ -1,14 +1,11 @@
-using System.Text.Json.Serialization;
+using FluentValidation.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 //Add Mvc options
-builder.Services.AddMvc(options => options.Filters.Add(new ValidateModelStateAttribute()))
-                                          .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>())
-                                          .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
-
+builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

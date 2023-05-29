@@ -1,11 +1,19 @@
+using Arepas.Api.Extensions;
 using Arepas.Api.Middleware;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddServices();
+//builder.Services.AddMappinmg();
+builder.Services.AddValidators();
 
 builder.Services.AddControllers();
+
+// Add Fluent Validation
+builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
 
 // Custom error handler for http BadRequest response
 builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
