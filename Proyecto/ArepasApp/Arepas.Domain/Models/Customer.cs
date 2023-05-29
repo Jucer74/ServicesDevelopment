@@ -6,7 +6,7 @@ namespace Arepas.Domain.Models;
 public class Customer: EntityBase
 {
     [Required(ErrorMessage ="El UserEmail es Requerido")]
-    [EmailAddress(ErrorMessage ="El Campo User Email Debe Ser un Email Valido")]
+    [EmailAddress(ErrorMessage ="El Campo UserEmail Debe Ser un Email Valido")]
     [StringLength(250, ErrorMessage ="La Longitud Maxima para el Campo UserEmail es de 250 Caracteres")]
     public string UserEmail { get; set; } = null!;
 
@@ -23,7 +23,7 @@ public class Customer: EntityBase
     public string PhoneNumber { get; set; } = null!;
 
     [Required(ErrorMessage = "La Contraseña del Cliente es Requerida")]
-    [StringLength(250, ErrorMessage = "La Longitud Maxima para La Contraseña es de 50 Caracteres")]
+    [StringLength(50, ErrorMessage = "La Longitud Maxima para La Contraseña es de 50 Caracteres")]
     public string Password { get; set; } = null!;
 
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();

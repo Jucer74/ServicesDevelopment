@@ -1,14 +1,27 @@
 ﻿using Arepas.Api.Dtos;
+using Arepas.Application.Interfaces;
+using Arepas.Domain.Models;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Arepas.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1.0/[controller]")]
     [ApiController]
     public class CustomersController : ControllerBase
     {
+        private readonly ICustomerService _customerService;
+        private readonly IMapper _mapper;
+
+        public CustomersController(IMapper mapper, ICustomerService customerService)
+        {
+            _mapper = mapper;
+            _customerService = customerService;
+        }
+
+
         // GET: api/<CustomersController>
         [HttpGet]
         public IEnumerable<string> Get()
@@ -27,7 +40,7 @@ namespace Arepas.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CustomerDto customerDto)
         {
-            return Ok();
+            return Ok(await _customerService.AddAsync(_mapper.Map<CustomerDto, Customer>(customerDto)));
         }
 
         // PUT api/<CustomersController>/5
