@@ -11,4 +11,8 @@
     <Folder Include="Services\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Arepas.Domain\Arepas.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

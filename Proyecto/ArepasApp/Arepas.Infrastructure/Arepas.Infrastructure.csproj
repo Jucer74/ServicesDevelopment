@@ -25,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Arepas.Domain\Arepas.Domain.csproj" />
+    <ProjectReference Include="..\Arepas.Application\Arepas.Application.csproj" />
   </ItemGroup>
 
 </Project>

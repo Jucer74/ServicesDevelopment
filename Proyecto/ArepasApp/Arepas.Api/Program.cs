@@ -1,8 +1,22 @@
+using Arepas.Api.Middleware;
+using Microsoft.AspNetCore.Mvc;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+// Custom error handler for http BadRequest response
+builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
+{
+    options.InvalidModelStateResponseFactory = context =>
+    {
+        var errorDetails = context.ConstructErrorMessages();
+        return new BadRequestObjectResult(errorDetails);
+    };
+});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -17,6 +31,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// Add the Exception Middleware Handler
+app.UseExceptionMiddleware();
 
 app.UseAuthorization();
 
