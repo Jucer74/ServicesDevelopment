@@ -1,7 +1,9 @@
 ﻿using Arepas.Application.Interfaces;
 using Arepas.Domain.Dtos;
+using Arepas.Domain.Exceptions;
 using Arepas.Domain.Interfaces.Repositories;
 using Arepas.Domain.Models;
+using System;
 using System.Linq.Expressions;
 
 namespace Arepas.Application.Services
@@ -15,39 +17,67 @@ namespace Arepas.Application.Services
             _customerRepository = customerRepository;
         }
 
-        public Task<Customer> AddAsync(Customer entity)
+        public async Task<Customer> AddAsync(Customer entity)
         {
-            throw new NotImplementedException();
+            return await _customerRepository.AddAsync(entity);
         }
 
-        public Task<IEnumerable<Customer>> FindAsync(Expression<Func<Customer, bool>> predicate)
+        public async Task<IEnumerable<Customer>> FindAsync(Expression<Func<Customer, bool>> predicate)
         {
-            throw new NotImplementedException();
+            return await _customerRepository.FindAsync(predicate);
         }
 
-        public Task<IEnumerable<Customer>> GetAllAsync()
+        public async Task<IEnumerable<Customer>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _customerRepository.GetAllAsync();
         }
 
-        public Task<Customer> GetByIdAsync(int id)
+        public async Task<Customer> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var entity = await _customerRepository.GetByIdAsync(id);
+
+            if (entity is null)
+            {
+                throw new NotFoundException($"Registro con Id={id} No Encontrado");
+            }
+
+            return entity;
         }
 
-        public Task<ResponseData<Customer>> GetByQueryParamsAsync(QueryParams queryParams)
+        public async Task<ResponseData<Customer>> GetByQueryParamsAsync(QueryParams queryParams)
         {
-            throw new NotImplementedException();
+            return await _customerRepository.GetByQueryParamsAsync(queryParams);
         }
 
-        public Task RemoveAsync(int id)
+        public async Task RemoveAsync(int id)
         {
-            throw new NotImplementedException();
+            var entity = await _customerRepository.GetByIdAsync(id);
+
+            if (entity is null)
+            {
+                throw new NotFoundException($"Registro con Id={id} No Encontrado");
+            }
+
+            await _customerRepository.RemoveAsync(entity);
         }
 
-        public Task<Customer> UpdateAsync(int id, Customer entity)
+        public async Task<Customer> UpdateAsync(int id, Customer entity)
         {
-            throw new NotImplementedException();
+            if (id != entity.Id)
+            {
+                throw new BadRequestException($"El Id={id} No Corresponde con el Id={entity.Id} del Registro");
+            }
+
+            var student = await _customerRepository.GetByIdAsync(id);
+
+            if (entity is null)
+            {
+                throw new NotFoundException($"Registro con Id={id} No Encontrado");
+            }
+
+            await _customerRepository.UpdateAsync(entity);
+
+            return entity;
         }
     }
 }

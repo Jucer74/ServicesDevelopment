@@ -1,6 +1,7 @@
 using Arepas.Api.Extensions;
 using Arepas.Api.Middleware;
 using Arepas.Infrastructure.Context;
+using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

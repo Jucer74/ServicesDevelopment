@@ -23,47 +23,49 @@ namespace Arepas.Api.Controllers
             _customerService = customerService;
         }
 
-
         // GET: api/<CustomersController>
         [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] QueryParams queryParams)
         {
             if (queryParams.Page == 0 && queryParams.Limit == 0)
             {
-                return Ok(await _customerService.GetAllAsync());
+                return Ok(_mapper.Map<IEnumerable<Customer>, IEnumerable<CustomerDto>>(await _customerService.GetAllAsync()));
             }
 
             var responseData = await _customerService.GetByQueryParamsAsync(queryParams);
 
             Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(responseData.XPagination));
 
-            return Ok(responseData.Items);
+            return Ok(_mapper.Map<IEnumerable<CustomerDto>>(responseData.Items));
         }
 
         // GET api/<CustomersController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<IActionResult> GetById(int id)
         {
-            return "value";
+            return Ok(_mapper.Map<CustomerDto>(await _customerService.GetByIdAsync(id)));
         }
 
         // POST api/<CustomersController>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CustomerDto customerDto)
         {
-            return Ok(await _customerService.AddAsync(_mapper.Map<CustomerDto, Customer>(customerDto)));
+            return Ok(_mapper.Map<CustomerDto>(await _customerService.AddAsync(_mapper.Map<Customer>(customerDto))));
         }
 
         // PUT api/<CustomersController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> Put(int id, [FromBody] CustomerDto customerDto)
         {
+            return Ok(_mapper.Map<CustomerDto>(await _customerService.UpdateAsync(id, _mapper.Map<Customer>(customerDto))));
         }
 
         // DELETE api/<CustomersController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
+            await _customerService.RemoveAsync(id);
+            return Ok();
         }
     }
 }
