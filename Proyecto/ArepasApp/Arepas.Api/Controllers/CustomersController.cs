@@ -67,5 +67,13 @@ namespace Arepas.Api.Controllers
             await _customerService.RemoveAsync(id);
             return Ok();
         }
+
+        // GET api/<CustomersController>/5
+        [HttpGet("{id}/orders")]
+        public async Task<IActionResult> GetOrdersByCustomerId(int id)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }
