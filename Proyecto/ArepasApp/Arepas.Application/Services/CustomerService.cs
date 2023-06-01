@@ -68,9 +68,9 @@ namespace Arepas.Application.Services
                 throw new BadRequestException($"El Id={id} No Corresponde con el Id={entity.Id} del Registro");
             }
 
-            var student = await _customerRepository.GetByIdAsync(id);
+            var currentEntity = await _customerRepository.GetByIdAsync(id);
 
-            if (entity is null)
+            if (currentEntity is null)
             {
                 throw new NotFoundException($"Registro con Id={id} No Encontrado");
             }
@@ -79,5 +79,11 @@ namespace Arepas.Application.Services
 
             return entity;
         }
+
+        public Task<Customer> GetOrdersByCustomerId(int id)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }

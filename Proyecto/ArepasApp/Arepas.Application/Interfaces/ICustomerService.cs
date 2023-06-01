@@ -19,4 +19,6 @@ public interface ICustomerService
     public Task RemoveAsync(int id);
 
     public Task<Customer> UpdateAsync(int id, Customer entity);
+
+    public Task<Customer> GetOrdersByCustomerId(int id);
 }

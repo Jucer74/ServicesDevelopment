@@ -19,4 +19,6 @@ public interface IOrderService
     public Task RemoveAsync(int id);
 
     public Task<Order> UpdateAsync(int id, Order entity);
+    
+    public Task<Order> GetOrderDetailsByOrderId(int id);
 }

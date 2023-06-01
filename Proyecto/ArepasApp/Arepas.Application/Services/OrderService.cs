@@ -41,4 +41,10 @@ public class OrderService : IOrderService
     {
         throw new NotImplementedException();
     }
+
+    public Task<Order> GetOrderDetailsByOrderId(int id)
+    {
+        throw new NotImplementedException();
+    }
+
 }

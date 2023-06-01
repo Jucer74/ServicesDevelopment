@@ -72,6 +72,7 @@ namespace Arepas.Api.Controllers
         [HttpGet("{id}/orders")]
         public async Task<IActionResult> GetOrdersByCustomerId(int id)
         {
+            // Return OK (CustomerOrderDto)
             throw new NotImplementedException();
         }
 

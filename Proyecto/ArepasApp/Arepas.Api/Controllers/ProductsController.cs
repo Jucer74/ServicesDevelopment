@@ -1,43 +1,48 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Arepas.Api.Dtos;
+using Arepas.Domain.Dtos;
+using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Arepas.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1.0/[controller]")]
     [ApiController]
     public class ProductsController : ControllerBase
     {
         // GET: api/<ProductsController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IActionResult> GetAll([FromQuery] QueryParams queryParams)
         {
-            return new string[] { "value1", "value2" };
+            throw new NotImplementedException();
         }
 
         // GET api/<ProductsController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<IActionResult> GetById(int id)
         {
-            return "value";
+            throw new NotImplementedException();
         }
 
         // POST api/<ProductsController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> Post([FromBody] ProductDto productDto)
         {
+            throw new NotImplementedException();
         }
 
         // PUT api/<ProductsController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> Put(int id, [FromBody] ProductDto productDto)
         {
+            throw new NotImplementedException();
         }
 
         // DELETE api/<ProductsController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
+            throw new NotImplementedException();
         }
     }
 }

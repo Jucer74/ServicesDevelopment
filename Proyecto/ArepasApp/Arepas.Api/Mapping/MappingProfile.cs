@@ -10,5 +10,16 @@ public class MappingProfile : Profile
     {
         CreateMap<CustomerDto, Customer>();
         CreateMap<Customer, CustomerDto>();
+        
+        // Add the Other Mappings
+        // Product <-> ProductDto
+        // Order <-> OrderDto
+        // OrderDetail <-> OrderDetailDto
+        // Customer -> CustomerOrderDto
+        //              (Mebers Customer -> CustomerDto)
+        //              (Mebers Orders -> OrdersDto)
+        // OrderDetail ->  OrderDetailProductDto
+        // Order -> OrderOrderDetailDto>
+
     }
 }
