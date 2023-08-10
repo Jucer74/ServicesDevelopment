@@ -1,0 +1,140 @@
+{
+	"info": {
+		"_postman_id": "f55c5151-f3d0-44c8-a25b-15203f32406b",
+		"name": "Students",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20667306"
+	},
+	"item": [
+		{
+			"name": "GetAllStudents",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BaseUrl}}/students/",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"students",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetStudentById",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{StudentById}}1000",
+					"host": [
+						"{{StudentById}}1000"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostStudent",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"David\",\r\n    \"lastName\": \"Herrera\",\r\n    \"dateOfBirth\": \"1982-12-02\",\r\n    \"sex\": \"M\"\r\n}"
+				},
+				"url": {
+					"raw": "{{BaseStudents}}",
+					"host": [
+						"{{BaseStudents}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PutStudent",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1002,\r\n    \"firstName\": \"Tania\",\r\n    \"lastName\": \"Montero\",\r\n    \"dateOfBirth\": \"1982-12-02\",\r\n    \"sex\": \"F\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{StudentById}}1002",
+					"host": [
+						"{{StudentById}}1002"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteStudent",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{StudentById}}1002",
+					"host": [
+						"{{StudentById}}1002"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BaseUrl",
+			"value": "http://localhost:3000",
+			"type": "string"
+		},
+		{
+			"key": "StudentById",
+			"value": "http://localhost:3000/students/",
+			"type": "string"
+		},
+		{
+			"key": "BaseStudents",
+			"value": "http://localhost:3000/students/",
+			"type": "string"
+		}
+	]
+}
