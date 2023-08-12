@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using STUDENTS.Models;
+using STUDENTS.Config;
+using Microsoft.Extensions.Options;
 
 namespace STUDENTS.Controllers
 {
@@ -10,10 +12,14 @@ namespace STUDENTS.Controllers
     {
         // Aquí inyectamos la dependencia de HttpClientFactory
         private readonly HttpClient _httpClient;
-        public StudentsController(IHttpClientFactory httpClientFactory)
+        // Aquie inyectamos la dependencia de ApiSettings
+        private readonly string? _baseUrl;
+
+        public StudentsController(IHttpClientFactory httpClientFactory, IOptions<ApiSettings> apiSettings)
         {
             _httpClient = httpClientFactory.CreateClient();
-            _httpClient.BaseAddress = new Uri("http://localhost:3000/");
+            _baseUrl = apiSettings.Value.BaseUrl ?? string.Empty;
+            _httpClient.BaseAddress = new Uri(_baseUrl);
         }
 
         // Aquí definimos los métodos de la API
@@ -35,7 +41,7 @@ namespace STUDENTS.Controllers
 
         // POST: api/students
         [HttpPost]
-        public async Task<Students> CreateStudent(Students student)
+        public async Task<Students> AddStudent(Students student)
         {
             var response = await _httpClient.PostAsJsonAsync("students", student);
             response.EnsureSuccessStatusCode();

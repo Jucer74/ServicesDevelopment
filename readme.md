@@ -57,6 +57,12 @@ dotnet add package System.Net.Http.Json --version 7.0.1
 dotnet add package Microsoft.AspNetCore.Mvc.NewtonsoftJson --version 7.0.9
 ```
 
+## Install Microsoft.Extensions.Options
+
+```
+dotnet add package Microsoft.Extensions.Options --version 7.0.1
+```
+
 ## Packs nuget used
 
 ```
@@ -65,6 +71,7 @@ Project 'Students' has the following package references
    Top-level Package                              Requested   Resolved
    > Microsoft.AspNetCore.Mvc.NewtonsoftJson      7.0.9       7.0.9
    > Microsoft.AspNetCore.OpenApi                 7.0.9       7.0.9
+   > Microsoft.Extensions.Options                 7.0.1       7.0.1
    > Newtonsoft.Json                              13.0.3      13.0.3
    > Swashbuckle.AspNetCore                       6.5.0       6.5.0
    > System.Net.Http.Json                         7.0.1       7.0.1

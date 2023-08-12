@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using STUDENTS.Config;
 
 namespace STUDENTS
 {
@@ -15,6 +16,9 @@ namespace STUDENTS
         // Aquí se configura el servicio de NewtonSoftJson
         public void ConfigureServices(IServiceCollection services)
         {
+            // Inyectamos la dependencia de ApiSettings
+            services.Configure<ApiSettings>(Configuration.GetSection("ApiSettings"));
+            // Configuramos el servicio de NewtonSoftJson
             services.AddControllers()
                     .AddNewtonsoftJson(options =>
                     {

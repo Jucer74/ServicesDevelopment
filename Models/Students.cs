@@ -1,14 +1,20 @@
+using Newtonsoft.Json;
 
 namespace STUDENTS.Models;
 
 // Aquí se define el modelo de datos
 public class Students
 {
-    public int Id { get; set; }
-    public string? FirstName { get; set; }
-    public string? LastName { get; set; }
-    public DateTime DateTime { get; set; }
-    public string? Sex { get; set; }
+    [JsonProperty("id")]
+    public int id { get; set; }
+    [JsonProperty("firstName")]
+    public string? firstName { get; set; }
+    [JsonProperty("lastName")]
+    public string? lastName { get; set; }
+    [JsonProperty("dateTime")]
+    public DateTime dateTime { get; set; }
+    [JsonProperty("sex")]
+    public string? sex { get; set; }
 }
 
 
