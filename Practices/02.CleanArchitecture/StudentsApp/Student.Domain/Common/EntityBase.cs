@@ -1,11 +1,10 @@
 ﻿
 using System.ComponentModel.DataAnnotations;
 
-namespace Student.Domain.Common
+namespace Student.Domain.Common;
+
+public abstract class EntityBase
 {
-    public abstract class EntityBase
-    {
-        [Key]
-        public int Id { get; set; }
-    }
+    [Key]
+    public int Id { get; set; }
 }

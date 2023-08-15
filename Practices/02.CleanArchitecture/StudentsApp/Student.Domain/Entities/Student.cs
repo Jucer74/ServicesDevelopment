@@ -1,12 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Student.Domain.Common;
+using System.ComponentModel.DataAnnotations;
 
-namespace Student.Domain.Entities
+namespace Student.Domain.Entities;
+
+public class Student : EntityBase
 {
-    internal class Class1
-    {
-    }
+    [Required]
+    public string FirstName { get; set; }
+
+    [Required]
+    public string LastName { get; set; }
+
+    public DateTime DateOfBirth { get; set; }
+
+    [Required]
+    [RegularExpression(@"[M|F]", ErrorMessage = "Invalid Sex Value")]
+    public char sex { get; set; }
+
+
 }
