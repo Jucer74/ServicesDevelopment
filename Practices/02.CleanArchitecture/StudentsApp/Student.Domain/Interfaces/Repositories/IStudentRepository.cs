@@ -1,9 +1,8 @@
-﻿using Student.Domain.Common;
+﻿using Students.Domain.Common;
+using Students.Domain.Entities;
+namespace Students.Domain.Interfaces.Repositories;
 
-namespace Student.Domain.Interfaces.Repositories
+public interface IStudentRepository:IRepository<Student>
 {
-    public interface IStudentRepository:IRepository<EntityBase>
-    {
 
-    }
 }

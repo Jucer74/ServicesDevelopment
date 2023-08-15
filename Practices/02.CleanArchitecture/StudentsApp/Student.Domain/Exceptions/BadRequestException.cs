@@ -1,21 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.Serialization;
 
-namespace Student.Domain.Exceptions
+
+namespace Students.Domain.Exceptions;
+
+[Serializable]
+public class BadRequestException:Exception
 {
-    [Serializable]
-    public class BadRequestException:Exception
-    {
-        public BadRequestException() { }
+    public BadRequestException() { }
 
-        public BadRequestException(string message) : base(message) { }
+    public BadRequestException(string message) : base(message) { }
 
-        public BadRequestException(string message, Exception innerException) : base(message, innerException) {}
+    public BadRequestException(string message, Exception innerException) : base(message, innerException) {}
 
-        public BadRequestException(SerializationInfo info, StreamingContext context) : base(info, context) { }
-    }
+    public BadRequestException(SerializationInfo info, StreamingContext context) : base(info, context) { }
 }

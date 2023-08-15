@@ -1,7 +1,7 @@
 ﻿
 using System.ComponentModel.DataAnnotations;
 
-namespace Student.Domain.Common;
+namespace Students.Domain.Common;
 
 public abstract class EntityBase
 {

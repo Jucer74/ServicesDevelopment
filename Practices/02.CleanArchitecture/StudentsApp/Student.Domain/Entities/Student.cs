@@ -1,7 +1,8 @@
 ﻿using Student.Domain.Common;
+using Students.Domain.Common;
 using System.ComponentModel.DataAnnotations;
 
-namespace Student.Domain.Entities;
+namespace Students.Domain.Entities;
 
 public class Student : EntityBase
 {
