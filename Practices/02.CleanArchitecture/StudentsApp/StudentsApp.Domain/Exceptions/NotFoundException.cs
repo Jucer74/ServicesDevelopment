@@ -1,12 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.Serialization;
 
-namespace StudentsApp.Domain.Exceptions
+namespace StudentsApp.Domain.Exceptions;
+
+[Serializable]
+public class NotFoundException : Exception
 {
-    internal class NotFoundException
+    public NotFoundException()
+    {
+    }
+
+    public NotFoundException(string message) : base(message)
+    {
+    }
+
+    public NotFoundException(string message, Exception innerException)
+        : base(message, innerException)
+    {
+    }
+
+    // Without this constructor, deserialization will fail
+    protected NotFoundException(SerializationInfo info, StreamingContext context)
+        : base(info, context)
     {
     }
 }

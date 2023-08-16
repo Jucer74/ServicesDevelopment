@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using StudentsApp.Domain.Common;
+using StudentsApp.Domain.Entities;
 
-namespace StudentsApp.Domain.Interfaces.Repositories
+namespace StudentsApp.Domain.Interfaces.Repositories;
 {
-    internal interface IStudentRepository
-    {
-    }
+    public interface IStudentRepository : IRepository<Student>
+{
+}
 }

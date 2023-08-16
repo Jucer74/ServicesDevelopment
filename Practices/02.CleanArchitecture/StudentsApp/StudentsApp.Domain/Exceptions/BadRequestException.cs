@@ -1,12 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.Serialization;
 
-namespace StudentsApp.Domain.Exceptions
+namespace StudentsApp.Domain.Exceptions;
+
+[Serializable]
+public class BadRequestException : Exception
 {
-    internal class BadRequestException
+    public BadRequestException()
+    {
+    }
+
+    public BadRequestException(string message) : base(message)
+    {
+    }
+
+    public BadRequestException(string message, Exception innerException)
+        : base(message, innerException)
+    {
+    }
+
+    // Without this constructor, deserialization will fail
+    protected BadRequestException(SerializationInfo info, StreamingContext context)
+        : base(info, context)
     {
     }
 }
