@@ -1,4 +1,5 @@
-﻿using StudentsApp.Domain.Common;
+﻿using Microsoft.EntityFrameworkCore;
+using StudentsApp.Domain.Common;
 using StudentsApp.Domain.Exceptions;
 using StudentsApp.Infrastructure.Context;
 using System.Linq.Expressions;

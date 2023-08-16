@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace StudentsApp.Application.Services;
 
-internal class StudentService : IStudentService
+public class StudentService : IStudentService
 {
     public readonly IStudentRepository _studentRepository;
 

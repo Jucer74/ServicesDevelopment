@@ -5,9 +5,9 @@ using StudentsApp.Infrastructure.Context;
 
 namespace StudentsApp.Infrastructure.Repositories;
 
-public class PersonRepository : Repository<Student>, IStudentRepository
+public class StudentRepository : Repository<Student>, IStudentRepository
 {
-    public PersonRepository(AppDbContext appDbContext) : base(appDbContext)
+    public StudentRepository(AppDbContext appDbContext) : base(appDbContext)
     {
     }
 }
