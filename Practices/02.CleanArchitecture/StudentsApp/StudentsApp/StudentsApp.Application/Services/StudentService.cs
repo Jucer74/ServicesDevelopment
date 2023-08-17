@@ -1,43 +1,41 @@
-﻿using People.Application.Interfaces;
-using People.Domain.Entities;
-using People.Domain.Exceptions;
-using People.Domain.Interfaces.Repositories;
+﻿using StudentsApp.Application.Interfaces;
 using StudentsApp.Domain.Entities;
 using StudentsApp.Domain.Exceptions;
-using System;
+using StudentsApp.Domain.Interfaces.Repositories;
 using System.Collections.Generic;
+using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace People.Application.Services
+namespace StudentsApp.Application.Services
 {
     public class StudentService : IStudentService
     {
-        private readonly IStudentRepository _personRepository;
+        public readonly IStudentRepository _studentRepository;
 
-        public PersonService(IPersonRepository personRepository)
+        public StudentService(IStudentRepository studentRepository)
         {
-            _personRepository = personRepository;
+            _studentRepository = studentRepository;
         }
 
-        public async Task<Person> AddAsync(Person entity)
+        public async Task<Student> AddAsync(Student entity)
         {
-            return await _personRepository.AddAsync(entity);
+            return await _studentRepository.AddAsync(entity);
         }
 
-        public async Task<IEnumerable<Person>> FindAsync(Expression<Func<Person, bool>> predicate)
+        public async Task<IEnumerable<Student>> FindAsync(Expression<Func<Student, bool>> predicate)
         {
-            return await _personRepository.FindAsync(predicate);
+            return await _studentRepository.FindAsync(predicate);
         }
 
-        public async Task<IEnumerable<Person>> GetAllAsync()
+        public async Task<IEnumerable<Student>> GetAllAsync()
         {
-            return await _personRepository.GetAllAsync();
+            return await _studentRepository.GetAllAsync();
         }
 
-        public async Task<Person> GetByIdAsync(int id)
+        public async Task<Student> GetByIdAsync(int id)
         {
-            var person = await _personRepository.GetByIdAsync(id);
+            var person = await _studentRepository.GetByIdAsync(id);
 
             if (person is null)
             {
@@ -49,14 +47,14 @@ namespace People.Application.Services
 
         public async Task RemoveAsync(int id)
         {
-            var person = await _personRepository.GetByIdAsync(id);
+            var person = await _studentRepository.GetByIdAsync(id);
 
             if (person is null)
             {
                 throw new NotFoundException($"Person with Id={id} Not Found");
             }
 
-            await _personRepository.RemoveAsync(person);
+            await _studentRepository.RemoveAsync(person);
         }
 
         public async Task<Student> UpdateAsync(int id, Student entity)
@@ -66,14 +64,14 @@ namespace People.Application.Services
                 throw new BadRequestException($"The Id={id} not corresponding with Entity.Id={entity.Id}");
             }
 
-            var person = await _personRepository.GetByIdAsync(id);
+            var person = await _studentRepository.GetByIdAsync(id);
 
             if (person is null)
             {
                 throw new NotFoundException($"Person with Id={id} Not Found");
             }
 
-            return (await _personRepository.UpdateAsync(entity));
+            return (await _studentRepository.UpdateAsync(entity));
         }
     }
 }

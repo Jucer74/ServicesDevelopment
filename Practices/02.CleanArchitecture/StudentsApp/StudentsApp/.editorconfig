@@ -1,0 +1,4 @@
+﻿[*.cs]
+
+# IDE0160: Convertir en namespace con ámbito de bloque
+csharp_style_namespace_declarations = block_scoped
