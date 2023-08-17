@@ -9,7 +9,7 @@ namespace StudentsApp.Api.Controllers
     {
         private readonly IStudentService _StudentService;
 
-        public PeopleController(IStudentService StudentService)
+        public StudentController(IStudentService StudentService)
         {
             _StudentService = StudentService;
         }
