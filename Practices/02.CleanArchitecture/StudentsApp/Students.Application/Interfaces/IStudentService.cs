@@ -4,7 +4,7 @@ using System;
 
 namespace Students.Application.Interfaces;
 
-internal interface IStudentService
+public interface IStudentService
 {
     public Task<Student> AddAsync(Student entity);
     public Task<IEnumerable<Student>> GetAllAsync();
