@@ -3,6 +3,6 @@ using Students.Domain.Entities;
 
 namespace Students.Domain.Interfaces.Repositories;
 
-public interface IStudentRepository : IRepostitory<Student>
+public interface IStudentRepository : IRepository<Student>
 {
 }
