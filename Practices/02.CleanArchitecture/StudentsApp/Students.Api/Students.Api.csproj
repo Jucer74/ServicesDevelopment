@@ -7,9 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-	<ProjectReference Include="..\Students.Application\Students.Application.csproj"/>
-	  <ProjectReference Include="..\Students.Domain\Students.Domain.csproj"/>
+	<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.10" />
+	<ProjectReference Include="..\Students.Application\Students.Application.csproj" />
+	<ProjectReference Include="..\Students.Domain\Students.Domain.csproj" />
+	<ProjectReference Include="..\Students.Infrastructure\Students.Infrastructure.csproj" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Database\" />
   </ItemGroup>
 
 </Project>
