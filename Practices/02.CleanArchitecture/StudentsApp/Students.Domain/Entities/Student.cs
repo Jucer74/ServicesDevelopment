@@ -6,10 +6,10 @@ namespace Students.Domain.Entities;
 public class Student : EntityBase
 {
     [Required]
-    public string FirstName { get; set; }
+    public string FirstName { get; set; } = null!;
 
     [Required]
-    public string LastName { get; set; }
+    public string LastName { get; set; } = null!;
 
     public DateTime DateOfBirth { get; set; }
 
