@@ -1,0 +1,14 @@
+# .dockerignore
+
+Dockerfile
+[b|B]in
+[O|o]bj
+.dockerignore
+.env
+.git
+.gitignore
+.vs
+.vscode
+*/bin
+*/obj
+**/.toolstarget
