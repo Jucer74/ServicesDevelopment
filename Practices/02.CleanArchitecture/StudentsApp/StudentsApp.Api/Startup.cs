@@ -5,8 +5,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using StudentApp.Api.Extensions;
-using StudentApp.Infrastructure.Context;
 using StudentsApp.Api.Extensions;
 using StudentsApp.Infrastructure.Context;
 
