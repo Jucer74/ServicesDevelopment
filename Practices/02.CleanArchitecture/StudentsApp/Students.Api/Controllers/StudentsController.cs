@@ -18,6 +18,12 @@ public class StudentsController : ControllerBase
     }
 
     [HttpGet]
+    public async Task<IActionResult>GetAll()
+    {
+        return Ok(await _studentService.GetAllAsync());
+    }
+
+    [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)
     {
         try 
