@@ -1,7 +1,7 @@
 ﻿using Students.Application.Interfaces;
 using Students.Application.Services;
 
-namespace People.Api.Extensions;
+namespace Students.Api.Extensions;
 
 public static class ModuleCollectionExtension
 {
