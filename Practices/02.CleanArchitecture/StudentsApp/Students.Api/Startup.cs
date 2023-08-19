@@ -1,8 +1,7 @@
 using Microsoft.OpenApi.Models;
 using Students.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
-using Students.Api.;
-
+using Students.Api.Extensions;
 
 namespace Students.Api
 {
@@ -30,7 +29,34 @@ namespace Students.Api
             services.AddCoreModules();
             services.AddInfrastructureModules();
 
+
             services.AddCors();
+        }
+
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json","Students.Api v1")})
+            }
+
+            app.UseHttpsRedirection();
+
+            app.UseRouting();
+
+            app.UseAuthorization();
+
+            app.UseCors(options =>{
+                options.WithOrigins("http://localhost:3000");
+                options.AllowAnyMethod();
+                options.AllowAnyHeader();
+            });
+
+            app.UseEndpoints(endpoints => {
+                endpoints.MapControllers();
+            });
         }
     }
 }
