@@ -6,13 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="EntityFramework" Version="6.4.4" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.10" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\StudentsApp.Domain\StudentsApp.Domain.csproj" />
-  </ItemGroup>
-
 </Project>
