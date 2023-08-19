@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace People.Domain.Exceptions
+namespace Student.Domain.Exceptions
 {
    [Serializable]
    public class BadRequestException : Exception

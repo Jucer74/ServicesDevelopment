@@ -1,38 +1,38 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using People.Application.Interfaces;
-using People.Domain.Entities;
-using People.Domain.Exceptions;
+using Student.Application.Interfaces;
+using Student.Domain.Entities;
+using Student.Domain.Exceptions;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace People.Api.Controllers
+namespace Student.Api.Controllers
 {
    [Route("api/v1/[controller]")]
    [ApiController]
-   public class PeopleController : ControllerBase
+   public class StudentController : ControllerBase
    {
-      private readonly IPersonService _personService;
+      private readonly IStudentService _StudentService;
 
-      public PeopleController(IPersonService personService)
+      public StudentController(IStudentService StudentService)
       {
-         _personService = personService;
+         _StudentService = StudentService;
       }
 
-      // GET: api/<PeopleController>
+      // GET: api/<StudentController>
       [HttpGet]
       public async Task<IActionResult> GetAll()
       {
-         return Ok(await _personService.GetAllAsync());
+         return Ok(await _StudentService.GetAllAsync());
       }
 
-      // GET api/<PeopleController>/5
+      // GET api/<StudentController>/5
       [HttpGet("{id}")]
       public async Task<IActionResult> GetById(int id)
       {
          try
          {
-            return Ok(await _personService.GetByIdAsync(id));
+            return Ok(await _StudentService.GetByIdAsync(id));
          }
          catch (NotFoundException ex)
          {
@@ -40,20 +40,20 @@ namespace People.Api.Controllers
          }
       }
 
-      // POST api/<PeopleController>
+      // POST api/<StudentController>
       [HttpPost]
-      public async Task<IActionResult> Post([FromBody] Person person)
+      public async Task<IActionResult> Post([FromBody] Student Student)
       {
-         return Ok(await _personService.AddAsync(person));
+         return Ok(await _StudentService.AddAsync(Student));
       }
 
-      // PUT api/<PeopleController>/5
+      // PUT api/<StudentController>/5
       [HttpPut("{id}")]
-      public async Task<IActionResult> Put(int id, [FromBody] Person person)
+      public async Task<IActionResult> Put(int id, [FromBody] Student Student)
       {
          try
          {
-            return Ok(await _personService.UpdateAsync(id, person));
+            return Ok(await _StudentService.UpdateAsync(id, Student));
          }
          catch (BadRequestException ex)
          {
@@ -65,13 +65,13 @@ namespace People.Api.Controllers
          }
       }
 
-      // DELETE api/<PeopleController>/5
+      // DELETE api/<StudentController>/5
       [HttpDelete("{id}")]
       public async Task<IActionResult> Delete(int id)
       {
          try
          {
-            await _personService.RemoveAsync(id);
+            await _StudentService.RemoveAsync(id);
             return Ok();
          }
          catch (NotFoundException ex)

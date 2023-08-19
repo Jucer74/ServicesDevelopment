@@ -1,20 +1,20 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using People.Application.Interfaces;
-using People.Application.Services;
-using People.Domain.Common;
-using People.Domain.Entities;
-using People.Domain.Interfaces.Repositories;
-using People.Infrastructure.Common;
-using People.Infrastructure.Repositories;
+using Student.Application.Interfaces;
+using Student.Application.Services;
+using Student.Domain.Common;
+using Student.Domain.Entities;
+using Student.Domain.Interfaces.Repositories;
+using Student.Infrastructure.Common;
+using Student.Infrastructure.Repositories;
 
-namespace People.Api.Extensions
+namespace Student.Api.Extensions
 {
    public static class ModuleCollectionExtension
    {
       public static IServiceCollection AddCoreModules(this IServiceCollection services)
       {
          // Services / Use Cases
-         services.AddScoped<IPersonService, PersonService>();
+         services.AddScoped<IStudentService, StudentService>();
 
          return services;
       }
@@ -22,8 +22,7 @@ namespace People.Api.Extensions
       public static IServiceCollection AddInfrastructureModules(this IServiceCollection services)
       {
          // Repositories
-         services.AddScoped<IPersonRepository, PersonRepository>();
-         
+         services.AddScoped<IStudentRepository, PersonStudent
 
          return services;
       }

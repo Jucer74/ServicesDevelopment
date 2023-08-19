@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace People.Domain.Common
+namespace Student.Domain.Common
 {
    public interface IRepository<T> where T : EntityBase
    {

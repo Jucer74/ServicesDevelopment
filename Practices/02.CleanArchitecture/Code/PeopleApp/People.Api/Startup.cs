@@ -5,10 +5,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using People.Api.Extensions;
-using People.Infrastructure.Context;
+using Student.Api.Extensions;
+using Student.Infrastructure.Context;
 
-namespace People.Api
+namespace Student.Api
 {
    public class Startup
    {

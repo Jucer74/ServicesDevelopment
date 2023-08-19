@@ -11,12 +11,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\People.Application\People.Application.csproj" />
-    <ProjectReference Include="..\People.Infrastructure\People.Infrastructure.csproj" />
+    <ProjectReference Include="..\Student.Application\Student.Application.csproj" />
+    <ProjectReference Include="..\Student.Infrastructure\Student.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Database\PeopleDB.db">
+    <None Update="Database\StudentDB.db">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

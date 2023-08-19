@@ -1,10 +1,10 @@
-﻿using People.Domain.Common;
+﻿using Student.Domain.Common;
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace People.Domain.Entities
+namespace Student.Domain.Entities
 {
-   public class Person: EntityBase
+   public class Student: EntityBase
    {
 
       [Required]
