@@ -15,6 +15,6 @@ namespace Students.Infrastructure.Context
 
         }
 
-        public DbSet<Student> Student { get; set; }
+        public DbSet<Student> Students { get; set; }
     }
 }
