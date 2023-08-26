@@ -3,6 +3,7 @@ using NetBank.Domain.Define;
 using NetBank.Domain.Dto;
 using NetBank.Domain.Models;
 using Pricat.Domain.Interfaces.Repositories;
+using System.Collections.Generic;
 
 namespace Netbank.Application.Services;
 
@@ -13,6 +14,8 @@ public class CreditCardService: ICreditCardService
     private readonly IIssuingNetworkRepository _issuingNetworkRepository;
 
     private const string NUMBER_REGEX = "^[0-9]*$";
+
+    // List<IssuingNetworkData> issuingNetworkDataList = await LoadIssuingNetworkData();
 
     #endregion Loval-Vars
 
@@ -29,7 +32,6 @@ public class CreditCardService: ICreditCardService
 
     public async Task<ValidationResultType> Validate(string creditCardNumber)
     {
-        // List<IssuingNetworkData> issuingNetworkDataList = await LoadIssuingNetworkData();
 
         throw new NotImplementedException();
     }
