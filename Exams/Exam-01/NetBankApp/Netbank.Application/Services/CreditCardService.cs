@@ -15,8 +15,6 @@ public class CreditCardService: ICreditCardService
 
     private const string NUMBER_REGEX = "^[0-9]*$";
 
-    // List<IssuingNetworkData> issuingNetworkDataList = await LoadIssuingNetworkData();
-
     #endregion Loval-Vars
 
     #region Properties
@@ -32,6 +30,7 @@ public class CreditCardService: ICreditCardService
 
     public async Task<ValidationResultType> Validate(string creditCardNumber)
     {
+        // List<IssuingNetworkData> issuingNetworkDataList = await LoadIssuingNetworkData();
 
         throw new NotImplementedException();
     }
