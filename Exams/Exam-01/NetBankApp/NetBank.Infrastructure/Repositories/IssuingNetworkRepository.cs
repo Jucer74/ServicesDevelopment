@@ -1,7 +1,8 @@
-﻿using NetBank.Domain.Models;
+﻿using NetBank.Domain.Interfaces.Repositories;
+using NetBank.Domain.Models;
 using NetBank.Infrastructure.Common;
 using NetBank.Infrastructure.Context;
-using Pricat.Domain.Interfaces.Repositories;
+
 
 namespace NetBank.Infrastructure.Repositories
 {

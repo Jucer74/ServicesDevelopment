@@ -34,34 +34,38 @@ namespace NetBank.Infrastructure.Common
 
         public async Task<T> GetByIdAsync(int id)
         {
-            return await _appDbContext.Set<T>().FindAsync(id);
+            var entity = await _appDbContext.Set<T>().FindAsync(id);
+            return entity!;
         }
 
         public async Task RemoveAsync(T entity)
         {
-            _appDbContext.Set<T>().Remove(entity);
-            await _appDbContext.SaveChangesAsync();
-        }
-
-        public async Task UpdateAsync(T entity)
-        {
-            var id = entity.Id;
+            var id = entity?.Id;
             var original = await _appDbContext.Set<T>().FindAsync(id);
 
             if (original is null)
             {
-                var entityType = entity.GetType().Name;
-                throw new NotFoundException($"{entityType} [{id}] Not Found");
+                throw new NotFoundException($"IssuingNetwork with Id={id} Not Found");
             }
 
-            _appDbContext.Entry(original).CurrentValues.SetValues(entity);
+            _appDbContext.Set<T>().Remove(entity!);
             await _appDbContext.SaveChangesAsync();
         }
 
-        public async Task RemoveRangeAsync(IEnumerable<T> entityList)
+        public async Task<T> UpdateAsync(T entity)
         {
-            _appDbContext.Set<T>().RemoveRange(entityList);
+            var id = entity?.Id;
+            var original = await _appDbContext.Set<T>().FindAsync(id);
+
+            if (original is null)
+            {
+                throw new NotFoundException($"IssuingNetwork with Id={id} Not Found");
+            }
+
+            _appDbContext.Entry(original).CurrentValues.SetValues(entity!);
             await _appDbContext.SaveChangesAsync();
+
+            return entity!;
         }
     }
 }
