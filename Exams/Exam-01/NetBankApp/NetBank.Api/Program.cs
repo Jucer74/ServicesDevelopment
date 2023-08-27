@@ -1,9 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Netbank.Application.Interfaces;
 using Netbank.Application.Services;
+using NetBank.Domain.Interfaces.Repositories;
 using NetBank.Infrastructure.Context;
 using NetBank.Infrastructure.Repositories;
-using Pricat.Domain.Interfaces.Repositories;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
