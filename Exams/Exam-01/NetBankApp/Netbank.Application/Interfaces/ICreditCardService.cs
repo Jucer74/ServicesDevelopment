@@ -9,3 +9,5 @@ namespace Netbank.Application.Interfaces
         public CreditCardResult Result { get; set; }
     }
 }
+
+

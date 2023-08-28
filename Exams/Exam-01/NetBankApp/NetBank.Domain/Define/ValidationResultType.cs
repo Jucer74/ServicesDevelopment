@@ -1,9 +1,11 @@
-﻿namespace NetBank.Domain.Define;
-
-public enum ValidationResultType
+﻿namespace NetBank.Domain.Define
 {
-    Ok,
-    BadRequest,
-    NotFound,
-    InternalServerEror
+    public enum ValidationResultType
+    {
+        Ok,
+        BadRequest,
+        NotFound,
+        InternalServerError, 
+        ValidationSuccess
+    }
 }
