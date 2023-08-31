@@ -3,7 +3,7 @@ using Netbank.Application.Interfaces;
 using Netbank.Application.Services;
 using NetBank.Infrastructure.Context;
 using NetBank.Infrastructure.Repositories;
-using Pricat.Domain.Interfaces.Repositories;
+using NetBank.Domain.Interfaces.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
