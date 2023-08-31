@@ -31,11 +31,61 @@ public class CreditCardService : ICreditCardService
 
     public async Task<ValidationResultType> Validate(string creditCardNumber)
     {
-        // List<IssuingNetworkData> issuingNetworkDataList = await LoadIssuingNetworkData();
+        // Check if the number is only digits
+        if (!long.TryParse(creditCardNumber, out long creditCardNumberAsLong))
+        {
+            return ValidationResultType.BadRequest;
+        }
 
-        // Call the Individual Validations
+        // Check if the number has the correct length
+        int creditCardLength = creditCardNumber.Length;
+        if (creditCardLength < 13 || creditCardLength > 19)
+        {
+            return ValidationResultType.BadRequest;
+        }
 
-        throw new NotImplementedException();
+        // Check the Luhn checksum
+        int checksum = 0;
+        for (int i = creditCardLength - 1; i >= 0; i--)
+        {
+            int digit = creditCardNumber[i] - '0';
+
+            if ((creditCardLength - i) % 2 == 0)
+            {
+                digit *= 2;
+                if (digit > 9)
+                {
+                    digit -= 9;
+                }
+            }
+
+            checksum += digit;
+        }
+
+        if (checksum % 10 != 0)
+        {
+            return ValidationResultType.BadRequest;
+        }
+
+        // Check the issuing network
+        List<IssuingNetworkData> issuingNetworkDataList = await LoadIssuingNetworkData();
+        bool isValidNetwork = false;
+        foreach (var issuingNetworkData in issuingNetworkDataList)
+        {
+            if (creditCardNumber.StartsWith(issuingNetworkData.IssuerPrefix))
+            {
+                isValidNetwork = true;
+                break;
+            }
+        }
+
+        if (!isValidNetwork)
+        {
+            return ValidationResultType.NotFound;
+        }
+
+        // The card is valid
+        return ValidationResultType.Ok;
     }
 
     private async Task<List<IssuingNetworkData>> LoadIssuingNetworkData()
@@ -48,5 +98,6 @@ public class CreditCardService : ICreditCardService
     {
         // Load Data From DataBase
         throw new NotImplementedException();
+
     }
 }

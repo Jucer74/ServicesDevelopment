@@ -5,5 +5,6 @@ public enum ValidationResultType
     Ok,
     BadRequest,
     NotFound,
-    InternalServerEror
+    InternalServerEror,
+    Invalid
 }
