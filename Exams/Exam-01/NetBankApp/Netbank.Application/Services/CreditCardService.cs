@@ -3,7 +3,6 @@ using NetBank.Domain.Define;
 using NetBank.Domain.Dto;
 using NetBank.Domain.Interfaces.Repositories;
 using NetBank.Domain.Models;
-using Netbank.Application.Mappers;
 using System.Linq;
 
 namespace Netbank.Application.Services;
