@@ -1,17 +1,19 @@
 ﻿using Netbank.Application.Interfaces;
 using NetBank.Domain.Define;
 using NetBank.Domain.Dto;
+using NetBank.Domain.Interfaces.Repositories;
 using NetBank.Domain.Models;
-using Pricat.Domain.Interfaces.Repositories;
-using Netbank.Application.Mappers;
+using System.Linq;
+
 namespace Netbank.Application.Services;
 
-public class CreditCardService: ICreditCardService
+public class CreditCardService : ICreditCardService
 {
     #region Loval-Vars
 
     private readonly IIssuingNetworkRepository _issuingNetworkRepository;
 
+    // Regular Expression To Validate Only Numbers
     private const string NUMBER_REGEX = "^[0-9]*$";
 
     #endregion Loval-Vars
@@ -29,22 +31,22 @@ public class CreditCardService: ICreditCardService
 
     public async Task<ValidationResultType> Validate(string creditCardNumber)
     {
-        //List<IssuingNetworkData> issuingNetworkDataList = await LoadIssuingNetworkData();
+        // List<IssuingNetworkData> issuingNetworkDataList = await LoadIssuingNetworkData();
+
+        // Call the Individual Validations
 
         throw new NotImplementedException();
     }
 
     private async Task<List<IssuingNetworkData>> LoadIssuingNetworkData()
     {
+        // Convert Data to List Data
         throw new NotImplementedException();
     }
 
     private async Task<List<IssuingNetwork>> GetIssuingNetworks()
     {
+        // Load Data From DataBase
         throw new NotImplementedException();
-    }
-    public IssuingNetworkData GetIssuingNetworkData(IssuingNetwork issuingNetwork)
-    {
-        return CreditCardMapper.MapToDto(issuingNetwork);
     }
 }
