@@ -6,4 +6,5 @@ public class IssuingNetworkData
     public List<int>? StartsWithNumbers { get; set; } = null!;
     public RangeNumber? InRange { get; set; } = null!;
     public List<int> AllowedLengths { get; set; } = null!;
+    public char IssuerPrefix { get; set; }
 }
