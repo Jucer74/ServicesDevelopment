@@ -11,13 +11,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{83CD804E-549E-4ABD-B966-97FD31AB891B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentsApp.Api", "StudentsApp.Api\StudentsApp.Api.csproj", "{2A791D64-5D2F-43CC-BA6B-B06C7F6AF66D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentsApp.Api", "StudentsApp.Api\StudentsApp.Api.csproj", "{2A791D64-5D2F-43CC-BA6B-B06C7F6AF66D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentsApp.Application", "StudentsApp.Application\StudentsApp.Application.csproj", "{D1FD18DD-B8F3-47CC-BE62-2AABE29A5D8F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentsApp.Application", "StudentsApp.Application\StudentsApp.Application.csproj", "{D1FD18DD-B8F3-47CC-BE62-2AABE29A5D8F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentsApp.Domain", "StudentsApp.Domain\StudentsApp.Domain.csproj", "{7815B0BA-7023-48B8-9BF8-BBFE0CBC85B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentsApp.Domain", "StudentsApp.Domain\StudentsApp.Domain.csproj", "{7815B0BA-7023-48B8-9BF8-BBFE0CBC85B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentsApp.Infrastructure", "StudentsApp.Infrastructure\StudentsApp.Infrastructure.csproj", "{DE51595A-207E-43F6-BDE0-6DE26FCCB876}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentsApp.Infrastructure", "StudentsApp.Infrastructure\StudentsApp.Infrastructure.csproj", "{DE51595A-207E-43F6-BDE0-6DE26FCCB876}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

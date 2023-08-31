@@ -1,11 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
-using StudentsApp.Domain.Entities;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace StudentsApp.Infrastructure.Context;
-
-public class AppDbContext : DbContext
+namespace StudentsApp.Infrastructure.Context
 {
+    public class AppDbContext : DbContext
+    {
         public AppDbContext()
         {
         }
@@ -14,5 +16,6 @@ public class AppDbContext : DbContext
         {
         }
 
-        public DbSet<Student> Students { get; set; }
+        public DbSet<Person> Persons { get; set; }
     }
+}

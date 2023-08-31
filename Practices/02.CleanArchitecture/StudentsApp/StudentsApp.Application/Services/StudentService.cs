@@ -1,73 +1,79 @@
 ﻿using StudentsApp.Application.Interfaces;
 using StudentsApp.Domain.Entities;
 using StudentsApp.Domain.Exceptions;
-using StudentsApp.Domain.Interfaces.Repositories;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace StudentsApp.Application.Services;
-
-public class StudentService : IStudentService
+namespace StudentsApp.Application.Services
 {
-    public readonly IStudentRepository _studentRepository;
-
-    public StudentService(IStudentRepository studentRepository)
+    public class StudentService : IStudentService
     {
-        _studentRepository = studentRepository;
-    }
+       
+      private readonly Domain.Interfaces.Repositories.IStudentRepository _studentRepository;
 
-    public async Task<Student> AddAsync(Student entity)
-    {
-        return await _studentRepository.AddAsync(entity);
-    }
-
-    public async Task<IEnumerable<Student>> FindAsync(Expression<Func<Student, bool>> predicate)
-    {
-        return await _studentRepository.FindAsync(predicate);
-    }
-
-    public async Task<IEnumerable<Student>> GetAllAsync()
-    {
-        return await _studentRepository.GetAllAsync();
-    }
-
-    public async Task<Student> GetByIdAsync(int id)
-    {
-        var person = await _studentRepository.GetByIdAsync(id);
-
-        if (person is null)
+        public StudentService(Domain.Interfaces.Repositories.IStudentRepository studentRepository)
         {
-            throw new NotFoundException($"Person with Id={id} Not Found");
+            _studentRepository = studentRepository;
         }
 
-        return person;
-    }
-
-    public async Task RemoveAsync(int id)
-    {
-        var person = await _studentRepository.GetByIdAsync(id);
-
-        if (person is null)
+        public async Task<Student> AddAsync(Student entity)
         {
-            throw new NotFoundException($"Person with Id={id} Not Found");
+            return await _studentRepository.AddAsync(entity);
         }
 
-        await _studentRepository.RemoveAsync(person);
-    }
-
-    public async Task<Student> UpdateAsync(int id, Student entity)
-    {
-        if (id != entity.Id)
+        public async Task<IEnumerable<Student>> FindAsync(Expression<Func<Student, bool>> predicate)
         {
-            throw new BadRequestException($"The Id={id} not corresponding with Entity.Id={entity.Id}");
+            return await _studentRepository.FindAsync(predicate);
         }
 
-        var person = await _studentRepository.GetByIdAsync(id);
-
-        if (person is null)
+        public async Task<IEnumerable<Student>> GetAllAsync()
         {
-            throw new NotFoundException($"Person with Id={id} Not Found");
+            return await _studentRepository.GetAllAsync();
         }
 
-        return (await _studentRepository.UpdateAsync(entity));
+        public async Task<Student> GetByIdAsync(int id)
+        {
+            var student = await _studentRepository.GetByIdAsync(id);
+
+            if (student is null)
+            {
+                throw new NotFoundException($"Student with Id={id} Not Found");
+            }
+
+            return student;
+        }
+
+        public async Task RemoveAsync(int id)
+        {
+            var student = await _studentRepository.GetByIdAsync(id);
+
+            if (student is null)
+            {
+                throw new NotFoundException($"Student with Id={id} Not Found");
+            }
+
+            await _studentRepository.RemoveAsync(student);
+        }
+
+        public async Task<Student> UpdateAsync(int id, Student entity)
+        {
+            if (id != entity.Id)
+            {
+                throw new BadRequestException($"The Id={id} not corresponding with Entity.Id={entity.Id}");
+            }
+
+            var student = await _studentRepository.GetByIdAsync(id);
+
+            if (student is null)
+            {
+                throw new NotFoundException($"Student with Id={id} Not Found");
+            }
+
+            return (await _studentRepository.UpdateAsync(entity));
+        }
     }
 }
