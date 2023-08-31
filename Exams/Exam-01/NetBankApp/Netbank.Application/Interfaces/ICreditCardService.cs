@@ -7,5 +7,6 @@ namespace Netbank.Application.Interfaces
     {
         public Task<ValidationResultType> Validate(string creditCardNumber);
         public CreditCardResult Result { get; set; }
+        public Task<ValidationResultType> GetAll();
     }
 }
