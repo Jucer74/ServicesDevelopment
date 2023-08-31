@@ -3,7 +3,7 @@ using NetBank.Domain.Define;
 using NetBank.Domain.Dto;
 using NetBank.Domain.Models;
 using Pricat.Domain.Interfaces.Repositories;
-
+using Netbank.Application.Mappers;
 namespace Netbank.Application.Services;
 
 public class CreditCardService: ICreditCardService
@@ -29,7 +29,7 @@ public class CreditCardService: ICreditCardService
 
     public async Task<ValidationResultType> Validate(string creditCardNumber)
     {
-        // List<IssuingNetworkData> issuingNetworkDataList = await LoadIssuingNetworkData();
+        //List<IssuingNetworkData> issuingNetworkDataList = await LoadIssuingNetworkData();
 
         throw new NotImplementedException();
     }
@@ -42,5 +42,9 @@ public class CreditCardService: ICreditCardService
     private async Task<List<IssuingNetwork>> GetIssuingNetworks()
     {
         throw new NotImplementedException();
+    }
+    public IssuingNetworkData GetIssuingNetworkData(IssuingNetwork issuingNetwork)
+    {
+        return CreditCardMapper.MapToDto(issuingNetwork);
     }
 }
