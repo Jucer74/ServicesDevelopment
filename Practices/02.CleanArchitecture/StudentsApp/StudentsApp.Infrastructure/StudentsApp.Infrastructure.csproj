@@ -10,4 +10,8 @@
     <ProjectReference Include="..\StudentsApp.Application\StudentsApp.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.10" />
+  </ItemGroup>
+
 </Project>

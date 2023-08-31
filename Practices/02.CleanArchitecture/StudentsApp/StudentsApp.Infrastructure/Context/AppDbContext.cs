@@ -1,21 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
+using StudentsApp.Domain.Entities;
 
-namespace StudentsApp.Infrastructure.Context
+namespace StudentsApp.Infrastructure.Context;
+
+public class AppDbContext : DbContext
 {
-    public class AppDbContext : DbContext
+    public AppDbContext()
     {
-        public AppDbContext()
-        {
-        }
-
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
-        {
-        }
-
-        public DbSet<Person> Persons { get; set; }
     }
+
+    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+    {
+    }
+
+    public DbSet<Student> Students { get; set; }
 }
