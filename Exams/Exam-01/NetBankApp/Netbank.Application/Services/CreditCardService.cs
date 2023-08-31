@@ -49,4 +49,39 @@ public class CreditCardService : ICreditCardService
         // Load Data From DataBase
         throw new NotImplementedException();
     }
+    public IssuingNetworkData GetIssuingNetworkData(IssuingNetwork issuingNetwork)
+    {
+        return CreditCardMapper.MapToDto(issuingNetwork);
+    }
+    public string IdentifyIssuingNetwork(string creditCardNumber)
+    {
+        var issuingNetworks = _issuingNetworkRepository.GetAllIssuingNetworks();
+
+        foreach (var network in issuingNetworks)
+        {
+            // Comprobar si el número de tarjeta comienza con alguno de los números especificados para esta red emisora
+            var startsWithNumbers = network.StartsWithNumbers.Split(',').ToList();
+            if (startsWithNumbers.Any(num => creditCardNumber.StartsWith(num)))
+            {
+                return network.Name;
+            }
+
+            // Comprobar si el número de tarjeta está dentro del rango especificado para esta red emisora
+            if (!string.IsNullOrEmpty(network.InRange))
+            {
+                var range = network.InRange.Split('-');
+                var minValue = int.Parse(range[0]);
+                var maxValue = int.Parse(range[1]);
+
+                var cardNumberInt = int.Parse(creditCardNumber.Substring(0, range[0].Length)); // Tomar la misma cantidad de dígitos que el rango
+                if (cardNumberInt >= minValue && cardNumberInt <= maxValue)
+                {
+                    return network.Name;
+                }
+            }
+        }
+
+        return "Unknown";
+    }
+
 }

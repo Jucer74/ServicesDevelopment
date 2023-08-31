@@ -37,4 +37,11 @@ public class CreditCardController : ControllerBase
                 return StatusCode(StatusCodes.Status500InternalServerError, new CreditCardResult("Internal Server Error", false));
         }
     }
+    [HttpGet("identify/{creditcardNumber}")]
+    public IActionResult IdentifyIssuingNetwork(string creditcardNumber)
+    {
+        var issuingNetwork = _creditCardService.IdentifyIssuingNetwork(creditcardNumber);
+        return Ok(issuingNetwork);
+    }
+
 }
