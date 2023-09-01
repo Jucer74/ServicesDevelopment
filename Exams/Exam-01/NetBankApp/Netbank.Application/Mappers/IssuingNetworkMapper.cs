@@ -1,4 +1,4 @@
-﻿using Netbank.Application.Utils;
+﻿using NetBank.Domain;
 using NetBank.Domain.Dto;
 using NetBank.Domain.Models;
 using System;
@@ -11,7 +11,7 @@ namespace Netbank.Application.Mappers
 {
     public class IssuingNetworkMapper
     {
-        public IssuingNetworkData ToIssuingNetworkData(IssuingNetwork issuignNetwork)
+        public static IssuingNetworkData ToIssuingNetworkData(IssuingNetwork issuignNetwork)
         {
             IssuingNetworkData issuingNetworkData = new();
             issuingNetworkData.Name = issuignNetwork.Name;
@@ -22,6 +22,14 @@ namespace Netbank.Application.Mappers
 
         }
 
-
+        public static List<IssuingNetworkData> ToIssuingNetworkDataList(List<IssuingNetwork> issuingNetworks) {
+            List<IssuingNetworkData> issuingNetworkDataList = new();
+            foreach(IssuingNetwork issuingNetwork in issuingNetworks)
+            {
+                IssuingNetworkData issuignNetworkData = ToIssuingNetworkData(issuingNetwork);
+                issuingNetworkDataList.Add(issuignNetworkData);
+            }
+            return issuingNetworkDataList;
+        }
     }
 }

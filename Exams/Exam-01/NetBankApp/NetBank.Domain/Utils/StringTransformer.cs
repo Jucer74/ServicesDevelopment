@@ -5,29 +5,36 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Netbank.Application.Utils
+namespace NetBank.Domain
 {
     public class StringTransformer
     {
         public static List<int>? ComaSeparatedValuesToIntList(string csv)
         {
             List<int>? intList = null;
-            if(csv != null) {
-                intList = new List<int>(); 
+            if (csv != null)
+            {
+                intList = new List<int>();
                 List<string> stringList = SeparatedValuesToStringList(csv, ',');
                 foreach (var str in stringList)
                 {
-                    intList.Add(StringToInt(str));
+                    int? intValue = StringToInt(str);
+                    if (intValue != null)
+                    {
+                        intList.Add(intValue.Value);
+                    }
                 }
             }
             return intList;
         }
 
-        public static RangeNumber? HyphenSeparatedValuesToRangeNumber(string hsv) {
+        public static RangeNumber? HyphenSeparatedValuesToRangeNumber(string hsv)
+        {
             RangeNumber? rangeNumber = null;
-            if(hsv != null)
+            if (hsv != null)
             {
                 List<int> intList = HyphenSeparatedValuesToIntList(hsv);
+                
                 if (intList.Count == 2)
                 {
                     rangeNumber = new RangeNumber();
@@ -44,7 +51,11 @@ namespace Netbank.Application.Utils
             List<string> stringList = SeparatedValuesToStringList(hsv, '-');
             foreach (var str in stringList)
             {
-                intList.Add(StringToInt(str));
+                int? num = StringToInt(str);
+                if (num != null)
+                {
+                    intList.Add(num.Value);
+                }
             }
             return intList;
         }
@@ -55,10 +66,34 @@ namespace Netbank.Application.Utils
             return stringList;
         }
 
-        public static int StringToInt(string str)
+        public static int? StringToInt(string str)
         {
-            return int.Parse(str);
+            int? num;
+            try
+            {
+                num = int.Parse(str);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                num = null;
+            }
+            return num;
         }
 
+        public static Double? StringToDoble(string str)
+        {
+            Double? num;
+            try
+            {
+                num = Double.Parse(str);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                num = null;
+            }
+            return num;
+        }
     }
 }

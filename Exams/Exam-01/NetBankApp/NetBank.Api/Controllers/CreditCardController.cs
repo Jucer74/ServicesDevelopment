@@ -12,7 +12,6 @@ namespace NetBank.Api.Controllers;
 public class CreditCardController : ControllerBase
 {
     private readonly ICreditCardService _creditCardService;
-    private readonly IIssuingNetworkRepository _issuingNetworkRepository;
 
     public CreditCardController(ICreditCardService creditCardService)
     {
@@ -22,10 +21,9 @@ public class CreditCardController : ControllerBase
     [HttpGet("{creditcardNumber}")]
     public async Task<IActionResult> GetCreditCarDatad(string creditcardNumber)
     {
-        return Ok(await this._issuingNetworkRepository.GetAllAsync());
+
         var validateResult = await _creditCardService.Validate(creditcardNumber);
         var result = _creditCardService.Result;
-
 
         switch (validateResult)
         {
