@@ -5,7 +5,7 @@ public class IssuingNetworkData
     public string Name { get; set; } = null!;
     public List<int>? StartsWithNumbers { get; set; } = null!;
     public RangeNumber? InRange { get; set; } = null!;
-    public List<int> AllowedLengths { get; set; } = null!;
+    public List<int>? AllowedLengths { get; set; } = null!;
 
     public Boolean ValidateCreditCard(string creditCardNumber)
     {
@@ -19,17 +19,18 @@ public class IssuingNetworkData
         return isIdentified;
     }
 
-    private Boolean ValidateAllowedLengths(string creditCardNumber)
+    public bool ValidateAllowedLengths(string creditCardNumber)
     {
-        Boolean isValid = false;
-        if (this.AllowedLengths.Contains(creditCardNumber.Length))
+        bool isValid = false;
+
+        if (this.AllowedLengths != null && this.AllowedLengths.Contains(creditCardNumber.Length))
         {
             isValid = true;
         }
+
         return isValid;
-
-
     }
+
 
     private Boolean ValidateInRange(string creditCardNumber)
     {
@@ -68,7 +69,7 @@ public class IssuingNetworkData
         return isValid;
     }
 
-    public class Convertidor
+    public static class Convertidor
     {
         public static List<int>? ConvertCommaSeparatedToIntList(string coma)
         {
@@ -123,7 +124,7 @@ public class IssuingNetworkData
 
         public static List<string> ConvertSeparatedValuesToStringList(string sv, char separator)
         {
-            List<string> stringList = sv.Split(new char[] { separator }).ToList();
+            List<string> stringList = sv.Split(separator).ToList();
             return stringList;
         }
 
