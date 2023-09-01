@@ -30,7 +30,7 @@ public class CreditCardController : ControllerBase
             case ValidationResultType.BadRequest:
                 return BadRequest(result);
 
-            case ValidationResultType.NotFound:
+            case ValidationResultType.ok:
                 return NotFound(result);
 
             default:
