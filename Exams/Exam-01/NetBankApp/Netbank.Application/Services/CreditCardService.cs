@@ -1,12 +1,10 @@
 ﻿using Netbank.Application.Interfaces;
 using Netbank.Application.Mappers;
-using NetBank.Domain;
 using NetBank.Domain.Define;
 using NetBank.Domain.Dto;
 using NetBank.Domain.Interfaces.Repositories;
 using NetBank.Domain.Models;
 using NetBank.Utilities;
-using System.Linq;
 using static NetBank.Domain.Dto.IssuingNetworkData;
 
 namespace Netbank.Application.Services;

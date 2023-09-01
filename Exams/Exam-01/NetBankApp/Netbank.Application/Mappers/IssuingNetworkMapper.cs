@@ -1,11 +1,5 @@
-﻿using NetBank.Domain;
-using NetBank.Domain.Dto;
+﻿using NetBank.Domain.Dto;
 using NetBank.Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static NetBank.Domain.Dto.IssuingNetworkData;
 
 namespace Netbank.Application.Mappers
@@ -23,9 +17,10 @@ namespace Netbank.Application.Mappers
 
         }
 
-        public static List<IssuingNetworkData> ToIssuingNetworkDataList(List<IssuingNetwork> issuingNetworks) {
+        public static List<IssuingNetworkData> ToIssuingNetworkDataList(List<IssuingNetwork> issuingNetworks)
+        {
             List<IssuingNetworkData> issuingNetworkDataList = new();
-            foreach(IssuingNetwork issuingNetwork in issuingNetworks)
+            foreach (IssuingNetwork issuingNetwork in issuingNetworks)
             {
                 IssuingNetworkData issuignNetworkData = ToIssuingNetworkData(issuingNetwork);
                 issuingNetworkDataList.Add(issuignNetworkData);

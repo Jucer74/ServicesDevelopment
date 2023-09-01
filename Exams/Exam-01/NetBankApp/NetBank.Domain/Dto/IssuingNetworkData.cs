@@ -1,8 +1,4 @@
-﻿using NetBank.Domain;
-using NetBank.Domain.Define;
-using System;
-
-namespace NetBank.Domain.Dto;
+﻿namespace NetBank.Domain.Dto;
 
 public class IssuingNetworkData
 {
@@ -26,7 +22,7 @@ public class IssuingNetworkData
     private Boolean ValidateAllowedLengths(string creditCardNumber)
     {
         Boolean isValid = false;
-        if(this.AllowedLengths.Contains(creditCardNumber.Length))
+        if (this.AllowedLengths.Contains(creditCardNumber.Length))
         {
             isValid = true;
         }
@@ -146,12 +142,12 @@ public class IssuingNetworkData
             return num;
         }
 
-        public static double? ConvertStringToDouble(string str)
+        public static Double? ConvertStringToDouble(string str)
         {
-            double? num;
+            Double? num;
             try
             {
-                num = double.Parse(str);
+                num = Double.Parse(str);
             }
             catch (Exception e)
             {
@@ -161,5 +157,4 @@ public class IssuingNetworkData
             return num;
         }
     }
-
 }
