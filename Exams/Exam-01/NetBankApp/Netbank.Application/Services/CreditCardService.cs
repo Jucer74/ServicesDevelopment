@@ -1,11 +1,12 @@
 ﻿using Netbank.Application.Interfaces;
+using NetBank.Application.Mapping;
 using NetBank.Domain.Define;
 using NetBank.Domain.Dto;
 using NetBank.Domain.Interfaces.Repositories;
 using NetBank.Domain.Models;
-using System.Linq;
-
 namespace Netbank.Application.Services;
+using NetBank.Domain;
+using NetBank.Utilities;
 
 public class CreditCardService : ICreditCardService
 {
@@ -13,7 +14,6 @@ public class CreditCardService : ICreditCardService
 
     private readonly IIssuingNetworkRepository _issuingNetworkRepository;
 
-    // Regular Expression To Validate Only Numbers
     private const string NUMBER_REGEX = "^[0-9]*$";
 
     #endregion Loval-Vars
@@ -31,73 +31,64 @@ public class CreditCardService : ICreditCardService
 
     public async Task<ValidationResultType> Validate(string creditCardNumber)
     {
-        // Check if the number is only digits
-        if (!long.TryParse(creditCardNumber, out long creditCardNumberAsLong))
-        {
-            return ValidationResultType.BadRequest;
-        }
-
-        // Check if the number has the correct length
-        int creditCardLength = creditCardNumber.Length;
-        if (creditCardLength < 13 || creditCardLength > 19)
-        {
-            return ValidationResultType.BadRequest;
-        }
-
-        // Check the Luhn checksum
-        int checksum = 0;
-        for (int i = creditCardLength - 1; i >= 0; i--)
-        {
-            int digit = creditCardNumber[i] - '0';
-
-            if ((creditCardLength - i) % 2 == 0)
-            {
-                digit *= 2;
-                if (digit > 9)
-                {
-                    digit -= 9;
-                }
-            }
-
-            checksum += digit;
-        }
-
-        if (checksum % 10 != 0)
-        {
-            return ValidationResultType.BadRequest;
-        }
-
-        // Check the issuing network
+        ValidationResultType validationResultType;
+        Boolean isValidCreditCard = false;
+        string? foundIssuingNetworkDataName;
         List<IssuingNetworkData> issuingNetworkDataList = await LoadIssuingNetworkData();
-        bool isValidNetwork = false;
-        foreach (var issuingNetworkData in issuingNetworkDataList)
+        if (!NumberConverter.StringToDouble(creditCardNumber).HasValue)
         {
-            if (creditCardNumber.StartsWith(issuingNetworkData.IssuerPrefix))
+            validationResultType = ValidationResultType.BadRequest;
+            foundIssuingNetworkDataName = "Bad Request";
+        }
+        else
+        {
+            // Call the Individual Validations
+            isValidCreditCard = CreditCardValidator.IsValid(creditCardNumber);
+            foundIssuingNetworkDataName = FindIssuingNetworkOwnerName(issuingNetworkDataList, creditCardNumber);
+            if (foundIssuingNetworkDataName != null)
             {
-                isValidNetwork = true;
-                break;
+                validationResultType = ValidationResultType.Ok;
+            }
+            else
+            {
+                validationResultType = ValidationResultType.NotFound;
+                foundIssuingNetworkDataName = "Not Found";
             }
         }
-
-        if (!isValidNetwork)
-        {
-            return ValidationResultType.NotFound;
-        }
-
-        // The card is valid
-        return ValidationResultType.Ok;
-    }
-
-    private async Task<List<IssuingNetworkData>> LoadIssuingNetworkData()
-    {
-        // Convert Data to List Data
-        throw new NotImplementedException();
+        this.Result = new CreditCardResult(foundIssuingNetworkDataName, isValidCreditCard);
+        return validationResultType;
     }
 
     private async Task<List<IssuingNetwork>> GetIssuingNetworks()
     {
         // Load Data From DataBase
-        throw new NotImplementedException();
-
+        IEnumerable<IssuingNetwork> issuingNetworks = await this._issuingNetworkRepository.GetAllAsync();
+        return issuingNetworks.ToList();
     }
+
+    private static string? FindIssuingNetworkOwnerName(List<IssuingNetworkData> issuingNetworkDataList, string creditCardNumber)
+    {
+        string? foundIssuingNetworkDataName = null;
+        foreach (IssuingNetworkData issuingNetworkData in issuingNetworkDataList)
+        {
+            if (issuingNetworkData.ValidateCreditCard(creditCardNumber))
+            {
+                foundIssuingNetworkDataName ??= issuingNetworkData.Name;
+                break;
+            }
+        }
+        return foundIssuingNetworkDataName;
+    }
+
+    #region 
+
+    public async Task<List<IssuingNetworkData>> LoadIssuingNetworkData()
+    {
+        List<IssuingNetwork> issuingNetworks = await this.GetIssuingNetworks();
+        List<IssuingNetworkData> issuingNetworkDataList = IssuingNetworkMapping.ToIssuingNetworkDataList(issuingNetworks);
+        // Convert Data to List Data
+        return issuingNetworkDataList;
+    }
+
+    #endregion 
 }
