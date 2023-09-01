@@ -76,7 +76,7 @@ public class CreditCardService : ICreditCardService
         return foundIssuingNetworkDataName;
     }
 
-    private async Task<List<IssuingNetworkData>> LoadIssuingNetworkData()
+    public async Task<List<IssuingNetworkData>> LoadIssuingNetworkData()
     {
         List<IssuingNetwork> issuingNetworks = await this.GetIssuingNetworks();
         List<IssuingNetworkData> issuingNetworkDataList = IssuingNetworkMapper.ToIssuingNetworkDataList(issuingNetworks);

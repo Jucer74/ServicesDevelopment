@@ -15,13 +15,17 @@ public class IssuingNetworkData
     {
         Boolean isValid = false;
  
-        if (this.ValidateAllowedLengths(creditCardNumber))
+        /*if (this.ValidateAllowedLengths(creditCardNumber))
         {
             if (this.ValidateStartsNumbers(creditCardNumber) || this.ValidateInRange(creditCardNumber))
             {
                 isValid = true;
 
             }
+        }*/
+        if(this.ValidateInRange(creditCardNumber))
+        {
+            isValid = true;
         }
         return isValid;
     }
@@ -41,16 +45,14 @@ public class IssuingNetworkData
     private Boolean ValidateInRange(string creditCardNumber)
     {
         Boolean isValid = false;
+        Boolean prueba = this.InRange != null;
         if (this.InRange != null)
         {
             string numString = this.InRange.MinValue.ToString();
             int numLength = numString.Length;
-            string cuttedCreditCard = creditCardNumber.Substring(0, numLength);
+            string cuttedCreditCard = creditCardNumber.Substring(0, numLength - 1);
             int? doubleCreditCard = StringTransformer.StringToInt(cuttedCreditCard);
-            if (doubleCreditCard >= this.InRange.MinValue && doubleCreditCard <= this.InRange.MaxValue)
-            {
-                isValid = true;
-            }
+            isValid = true;
         }
         return isValid;
     }

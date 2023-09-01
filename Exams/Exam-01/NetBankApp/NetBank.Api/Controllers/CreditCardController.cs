@@ -11,17 +11,19 @@ namespace NetBank.Api.Controllers;
 [ApiController]
 public class CreditCardController : ControllerBase
 {
+    private readonly IIssuingNetworkRepository _issuingNetworkRepository;
     private readonly ICreditCardService _creditCardService;
 
-    public CreditCardController(ICreditCardService creditCardService)
+    public CreditCardController(ICreditCardService creditCardService, IIssuingNetworkRepository issuingNetworkRepository)
     {
+        _issuingNetworkRepository = issuingNetworkRepository;
         _creditCardService = creditCardService;
     }
 
     [HttpGet("{creditcardNumber}")]
     public async Task<IActionResult> GetCreditCarDatad(string creditcardNumber)
     {
-
+        List<IssuingNetworkData> issuingNetworkDataList = await this._creditCardService.LoadIssuingNetworkData();
         var validateResult = await _creditCardService.Validate(creditcardNumber);
         var result = _creditCardService.Result;
 
