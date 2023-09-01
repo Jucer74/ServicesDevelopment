@@ -17,7 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utilities", "Utilities", "{
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetBank.Utilities", "NetBank.Utilities\NetBank.Utilities.csproj", "{DA5B1C56-5E3A-4A5F-A12A-567FCF78E62D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetBank.Domain", ".\NetBank.Domain\NetBank.Domain.csproj", "{AFE56C2F-7187-4676-AC6A-1F43D9A41588}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetBank.Domain", "NetBank.Domain\NetBank.Domain.csproj", "{AFE56C2F-7187-4676-AC6A-1F43D9A41588}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Netbank.Application", "Netbank.Application\Netbank.Application.csproj", "{3618056F-4F3D-4515-8E7D-DEBDFE98E160}"
 EndProject
