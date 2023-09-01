@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\NetBank.Domain\NetBank.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

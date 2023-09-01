@@ -7,7 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="NewFolder\**" />
+    <EmbeddedResource Remove="NewFolder\**" />
+    <None Remove="NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\NetBank.Domain\NetBank.Domain.csproj" />
+    <ProjectReference Include="..\NetBank.Utilities\NetBank.Utilities.csproj" />
   </ItemGroup>
 
 </Project>
