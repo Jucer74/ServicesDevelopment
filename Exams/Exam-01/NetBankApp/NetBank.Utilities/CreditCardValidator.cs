@@ -1,4 +1,6 @@
 ﻿using System.Text;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace NetBank.Utilities;
 
@@ -41,11 +43,11 @@ public static class CreditCardValidator
     private static StringBuilder GetDigits(string creditCardNumber)
     {
         var digitsOnly = new StringBuilder();
-        foreach (var character in creditCardNumber)
+        foreach (var character in creditCardNumber.Where(character => char.IsDigit(character)))
         {
-            if (char.IsDigit(character))
-                digitsOnly.Append(character);
+            digitsOnly.Append(character);
         }
+
         return digitsOnly;
     }
 }
