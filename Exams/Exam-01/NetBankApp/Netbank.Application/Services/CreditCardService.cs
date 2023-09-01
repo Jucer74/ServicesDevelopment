@@ -52,7 +52,7 @@ public class CreditCardService : ICreditCardService
 
         issuingNetworkDataList = await LoadIssuingNetworkDataAsync();
 
-        issuingNetworkName = FindIssuingNetwork(creditCardNumber, issuingNetworkDataList);
+        issuingNetworkName = CreditCardValidator.FindIssuingNetwork(creditCardNumber, issuingNetworkDataList);
 
         //Checks if the issuing network was not found
         if (string.IsNullOrEmpty(issuingNetworkName))
@@ -64,7 +64,7 @@ public class CreditCardService : ICreditCardService
         }
 
 
-        isValidCreditCardLength = IsValidCreditCardLength(creditCardNumber, issuingNetworkDataList, issuingNetworkName);
+        isValidCreditCardLength = CreditCardValidator.IsValidCreditCardLength(creditCardNumber, issuingNetworkDataList, issuingNetworkName);
         isCreditCardNumberValid = CreditCardValidator.IsValid(creditCardNumber);
 
         if (isValidCreditCardLength && isCreditCardNumberValid)//As the issuing network was found, it checks if the credit number is valid and if it has the appropriate length
@@ -141,70 +141,5 @@ public class CreditCardService : ICreditCardService
 
         return rangeNumber;
 
-    }
-
-    private static bool StartsWithNumberFromList(string creditCardNumber, List<int> numberList)
-    {
-        //Checks if the creadit card number starts with any number inside a particular list of numbers
-        int numberLength;
-        int initalCreditCardDigits;
-
-        foreach (int number in numberList)
-        {
-            numberLength = number.ToString().Length;
-            initalCreditCardDigits = int.Parse(creditCardNumber.Substring(0, numberLength));//Takes the initial digits of the credit card 
-
-            if (initalCreditCardDigits == number)//Compares the inital digits of the credit card with each element of the list
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private static bool StartsWithNumberInRange(string creditCardNumber, RangeNumber rangeNumber)
-    {
-        int numberLength = rangeNumber.MinValue.ToString().Length;
-        int initalCreditCardDigits = int.Parse(creditCardNumber[..numberLength]);
-
-        //Checks if the initial digits of the credit card number are between a range
-        return (initalCreditCardDigits >= rangeNumber.MinValue) && (initalCreditCardDigits <= rangeNumber.MaxValue);
-    }
-
-    private static string FindIssuingNetwork(string creditCardNumber, List<IssuingNetworkData> issuingNetworkDataList)
-    {
-        string issuingNetworkName = "";
-        bool startsWithNumbers = false;
-        bool startsWithNumbersInRange = false;
-
-        foreach (IssuingNetworkData issuingNetworkData in issuingNetworkDataList)
-        {
-            if (issuingNetworkData.StartsWithNumbers?.Any() ?? false)
-            {
-                startsWithNumbers = StartsWithNumberFromList(creditCardNumber, issuingNetworkData.StartsWithNumbers);
-            }
-
-            if (issuingNetworkData.InRange != null)
-            {
-                startsWithNumbersInRange = StartsWithNumberInRange(creditCardNumber, issuingNetworkData.InRange);
-            }
-
-            if (startsWithNumbers || startsWithNumbersInRange)
-            {
-                issuingNetworkName = issuingNetworkData.Name;
-                break;
-            }
-        }
-
-        return issuingNetworkName;
-    }
-
-    private static bool IsValidCreditCardLength(string creditCardNumber, List<IssuingNetworkData> issuingNetworkDataList, string issuingNetworkName)
-    {
-        IssuingNetworkData issuingNetworkData = issuingNetworkDataList.Single(issuingNetworkData => issuingNetworkData.Name.Trim() == issuingNetworkName.Trim());//Finds the data of the issuing network
-        int creditCardNumberLength = creditCardNumber.Trim().Length;
-
-        return issuingNetworkData.AllowedLengths.Contains(creditCardNumberLength);
     }
 }
