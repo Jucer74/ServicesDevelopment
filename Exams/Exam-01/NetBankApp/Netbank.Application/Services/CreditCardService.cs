@@ -47,6 +47,8 @@ public class CreditCardService : ICreditCardService
     private async Task<List<IssuingNetwork>> GetIssuingNetworks()
     {
         // Load Data From DataBase
-        throw new NotImplementedException();
+        IEnumerable<IssuingNetwork> issuingNetworks = await this._issuingNetworkRepository.GetAllAsync();
+
+        return issuingNetworks.ToList();
     }
 }

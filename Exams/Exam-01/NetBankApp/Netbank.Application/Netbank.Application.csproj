@@ -10,4 +10,8 @@
     <ProjectReference Include="..\NetBank.Domain\NetBank.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="NewFolder\" />
+  </ItemGroup>
+
 </Project>
