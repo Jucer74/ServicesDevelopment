@@ -1,0 +1,81 @@
+[
+    {
+        "Name":"American Express",
+        "StartsWithNumbers":[34, 37],
+        "InRange":null,
+        "AllowedLengths":""
+
+    },
+    {
+        "Name":"Diners Club",
+        "StartsWithNumbers":[300, 301, 302, 303, 304, 305],
+        "InRange":null,
+        "AllowedLengths":""
+
+    },
+    {
+        "Name":"Diners Club - International",
+        "StartsWithNumbers":[36],
+        "InRange":null,
+        "AllowedLengths":""
+
+    },
+    {
+        "Name":"Discover",
+        "StartsWithNumbers":[6011, 644, 645, 646, 647, 648, 649, 65],
+        "InRange":{
+            "minValue": 622126,
+            "maxValue":622925
+        },
+        "AllowedLengths":""
+
+    },
+    {
+        "Name":"InstaPayment",
+        "StartsWithNumbers":[637, 638, 639],
+        "InRange":null,
+        "AllowedLengths":""
+
+    },
+    {
+        "Name":"JCB",
+        "StartsWithNumbers":[],
+        "InRange":{
+            "minValue":3528,
+            "maxValue":3589
+        },
+        "AllowedLengths":""
+
+    },
+    {
+        "Name":"Maestro",
+        "StartsWithNumbers":[5018, 5020, 5038, 5893, 6304, 6759, 6761, 6762, 6763],
+        "InRange":null,
+        "AllowedLengths":""
+
+    },
+    {
+        "Name":"MasterCard",
+        "StartsWithNumbers":[51, 52, 53, 54, 55],
+        "InRange":{
+            "minValue":222100,
+            "maxValue":272099
+        },
+        "AllowedLengths":""
+
+    },
+    {
+        "Name":"Visa",
+        "StartsWithNumbers":[4],
+        "InRange":null,
+        "AllowedLengths":""
+
+    },
+    {
+        "Name":"Visa Electron",
+        "StartsWithNumbers":[4026, 417500, 4508, 4844, 4913, 4917],
+        "InRange":null,
+        "AllowedLengths":""
+
+    }
+]

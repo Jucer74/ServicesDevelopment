@@ -10,4 +10,5 @@ public class CreditCardResult
         IssuingNetwork = issuingNetworkName;
         Valid = valid;
     }
+
 }
