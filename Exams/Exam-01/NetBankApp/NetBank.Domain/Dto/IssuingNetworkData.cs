@@ -2,8 +2,8 @@
 
 public class IssuingNetworkData
 {
-    public string Name { get; set; } = null!;
-    public List<int>? StartsWithNumbers { get; set; } = null!;
-    public RangeNumber? InRange { get; set; } = null!;
-    public List<int> AllowedLengths { get; set; } = null!;
+    public string? Name { get; set; } 
+    public List<int>? StartsWithNumbers { get; set; } 
+    public RangeNumber? InRange { get; set; } 
+    public List<int>? AllowedLengths { get; set; }
 }
