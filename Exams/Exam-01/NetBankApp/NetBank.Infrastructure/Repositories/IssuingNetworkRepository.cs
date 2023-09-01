@@ -3,7 +3,6 @@ using NetBank.Domain.Models;
 using NetBank.Infrastructure.Common;
 using NetBank.Infrastructure.Context;
 
-
 namespace NetBank.Infrastructure.Repositories
 {
     public class IssuingNetworkRepository : Repository<IssuingNetwork>, IIssuingNetworkRepository

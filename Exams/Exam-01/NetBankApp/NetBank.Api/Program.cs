@@ -5,7 +5,6 @@ using NetBank.Domain.Interfaces.Repositories;
 using NetBank.Infrastructure.Context;
 using NetBank.Infrastructure.Repositories;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.

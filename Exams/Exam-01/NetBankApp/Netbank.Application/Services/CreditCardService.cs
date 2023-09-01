@@ -1,12 +1,11 @@
 ﻿using Netbank.Application.Interfaces;
 using Netbank.Application.Mappers;
-using NetBank.Domain;
+using NetBank.Domain.Common;
 using NetBank.Domain.Define;
 using NetBank.Domain.Dto;
 using NetBank.Domain.Interfaces.Repositories;
 using NetBank.Domain.Models;
 using NetBank.Utilities;
-using System.Linq;
 
 namespace Netbank.Application.Services;
 
@@ -15,9 +14,6 @@ public class CreditCardService : ICreditCardService
     #region Loval-Vars
 
     private readonly IIssuingNetworkRepository _issuingNetworkRepository;
-
-    // Regular Expression To Validate Only Numbers
-    private const string NUMBER_REGEX = "^[0-9]*$";
 
     #endregion Loval-Vars
 
@@ -37,9 +33,11 @@ public class CreditCardService : ICreditCardService
         ValidationResultType validationResultType;
         Boolean isValidCreditCard = false;
         string? foundIssuingNetworkDataName;
-        List<IssuingNetworkData> issuingNetworkDataList = await LoadIssuingNetworkData();
 
-        if (StringTransformer.StringToDoble(creditCardNumber) != null)
+        // Usar LoadData en lugar de LoadIssuingNetworkData
+        List<IssuingNetworkData> issuingNetworkDataList = await LoadData();
+
+        if (DataTransformer.StringToDoble(creditCardNumber) != null)
         {
             // Identifica la red emisora primero.
             foundIssuingNetworkDataName = FindIssuingNetworkOwnerName(issuingNetworkDataList, creditCardNumber);
@@ -67,25 +65,19 @@ public class CreditCardService : ICreditCardService
         return validationResultType;
     }
 
-
     private static string? FindIssuingNetworkOwnerName(List<IssuingNetworkData> issuingNetworkDataList, string creditCardNumber)
     {
-        string? foundIssuingNetworkDataName = null;
-        foreach (IssuingNetworkData issuingNetworkData in issuingNetworkDataList)
-        {
-            if (issuingNetworkData.ValidateCreditCard(creditCardNumber))
-            {
-                foundIssuingNetworkDataName ??= issuingNetworkData.Name;
-                break;
-            }
-        }
-        return foundIssuingNetworkDataName;
+        var foundIssuingNetworkData = issuingNetworkDataList
+            .Find(issuingNetworkData => issuingNetworkData.IsCardFromThisNetwork(creditCardNumber));
+
+        return foundIssuingNetworkData?.Name;
     }
 
     private async Task<List<IssuingNetworkData>> LoadIssuingNetworkData()
     {
         List<IssuingNetwork> issuingNetworks = await this.GetIssuingNetworks();
-        List<IssuingNetworkData> issuingNetworkDataList = CreditCardMapper.ToIssuingNetworkDataList(issuingNetworks);
+        List<IssuingNetworkData> issuingNetworkDataList = CreditCardMapper.ConvertToNetworkDataList(issuingNetworks);
+
         // Convert Data to List Data
         return issuingNetworkDataList;
     }
@@ -95,5 +87,11 @@ public class CreditCardService : ICreditCardService
         // Load Data From DataBase
         IEnumerable<IssuingNetwork> issuingNetworks = await this._issuingNetworkRepository.GetAllAsync();
         return issuingNetworks.ToList();
+    }
+
+    private async Task<List<IssuingNetworkData>> LoadData()
+    {
+        // Cargar datos de la red emisora
+        return await LoadIssuingNetworkData();
     }
 }

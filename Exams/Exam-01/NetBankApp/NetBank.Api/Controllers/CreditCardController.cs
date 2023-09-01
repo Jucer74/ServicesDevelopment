@@ -2,8 +2,6 @@
 using Netbank.Application.Interfaces;
 using NetBank.Domain.Define;
 using NetBank.Domain.Dto;
-using NetBank.Domain.Interfaces.Repositories;
-using NetBank.Infrastructure.Repositories;
 
 namespace NetBank.Api.Controllers;
 
@@ -19,9 +17,8 @@ public class CreditCardController : ControllerBase
     }
 
     [HttpGet("{creditcardNumber}")]
-    public async Task<IActionResult> GetCreditCarDatad(string creditcardNumber)
+    public async Task<IActionResult> ValidateCreditCard(string creditcardNumber)
     {
-
         var validateResult = await _creditCardService.Validate(creditcardNumber);
         var result = _creditCardService.Result;
 

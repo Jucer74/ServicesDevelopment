@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace NetBank.Domain.Models;
 
-public class IssuingNetwork:EntityBase
+public class IssuingNetwork : EntityBase
 {
     [Required]
     public string Name { get; set; } = null!;

@@ -1,13 +1,8 @@
 ﻿using NetBank.Domain.Dto;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace NetBank.Domain
+namespace NetBank.Domain.Common
 {
-    public class StringTransformer
+    public static class DataTransformer
     {
         public static List<int>? ComaSeparatedValuesToIntList(string csv)
         {
@@ -34,7 +29,7 @@ namespace NetBank.Domain
             if (hsv != null)
             {
                 List<int> intList = HyphenSeparatedValuesToIntList(hsv);
-                
+
                 if (intList.Count == 2)
                 {
                     rangeNumber = new RangeNumber();
@@ -62,7 +57,8 @@ namespace NetBank.Domain
 
         public static List<string> SeparatedValuesToStringList(string sv, char separator)
         {
-            List<string> stringList = sv.Split(new char[] { separator }).ToList();
+            List<string> stringList = sv.Split(separator).ToList();
+
             return stringList;
         }
 
@@ -81,12 +77,12 @@ namespace NetBank.Domain
             return num;
         }
 
-        public static Double? StringToDoble(string str)
+        public static double? StringToDoble(string str)
         {
-            Double? num;
+            double? num;
             try
             {
-                num = Double.Parse(str);
+                num = double.Parse(str);
             }
             catch (Exception e)
             {

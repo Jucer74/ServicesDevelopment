@@ -40,12 +40,17 @@ public static class CreditCardValidator
 
     private static StringBuilder GetDigits(string creditCardNumber)
     {
-        var digitsOnly = new StringBuilder();
-        foreach (var character in creditCardNumber)
+        var digitsOnly = new string(creditCardNumber.Where(char.IsDigit).ToArray());
+        return new StringBuilder(digitsOnly);
+    }
+
+    public static bool IsValidLength(string creditCardNumber, List<int> allowedLengths)
+    {
+        Boolean isValid = false;
+        if (allowedLengths.Contains(creditCardNumber.Length))
         {
-            if (char.IsDigit(character))
-                digitsOnly.Append(character);
+            isValid = true;
         }
-        return digitsOnly;
+        return isValid;
     }
 }
