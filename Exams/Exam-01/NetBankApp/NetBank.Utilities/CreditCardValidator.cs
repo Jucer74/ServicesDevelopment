@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using System.Text.RegularExpressions;
 
 namespace NetBank.Utilities;
 
@@ -47,5 +48,21 @@ public static class CreditCardValidator
                 digitsOnly.Append(character);
         }
         return digitsOnly;
+    }
+    public static class ErrorMessageFormatter
+    {
+        public static string AddSpaceBetweenLowerAndCapitalLetter(string input)
+        {
+            if (string.IsNullOrEmpty(input))
+            {
+                return input;
+            }
+
+            string pattern = @"(?=\p{Lu})(?<=\p{Ll})";
+
+            string result = Regex.Replace(input, pattern, " ");
+
+            return result;
+        }
     }
 }
