@@ -1,9 +1,13 @@
 ﻿using System.Linq.Expressions;
+using NetBank.Domain.Common;
+using NetBank.Domain.Exceptions;
+
 
 namespace NetBank.Domain.Common
 {
     public interface IRepository<T> where T : EntityBase
     {
+        
         public Task<T> AddAsync(T entity);
 
         public Task<IEnumerable<T>> GetAllAsync();

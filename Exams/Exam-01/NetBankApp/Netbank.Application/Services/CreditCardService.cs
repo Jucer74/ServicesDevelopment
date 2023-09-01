@@ -1,130 +1,100 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Netbank.Application.Interfaces;
+﻿using Netbank.Application.Interfaces;
 using NetBank.Domain.Define;
 using NetBank.Domain.Dto;
+using NetBank.Domain.Models;
+using NetBank.Utilities;
+using NetBank.Domain.Interfaces.Repositories;
+using Netbank.Application.Map;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Netbank.Application.Services
 {
     public class CreditCardService : ICreditCardService
     {
-        public CreditCardResult Result { get; set; } = new CreditCardResult("", false);
+        private readonly IIssuingNetworkRepository _issuingNetworkRepository;
+
+        // Expresión regular para validar solo números
+        public const string NUMBER_REGEX = "^[0-9]*$";
+
+        public CreditCardResult Result { get; set; } = null!;
+
+        public CreditCardService(IIssuingNetworkRepository issuingNetworkRepository)
+        {
+            _issuingNetworkRepository = issuingNetworkRepository;
+        }
 
         public async Task<ValidationResultType> Validate(string creditCardNumber)
         {
-            creditCardNumber = new string(creditCardNumber.Where(char.IsDigit).ToArray());
+            ValidationResultType validationResultType;
+            bool isValidCreditCard = false;
+            string? foundIssuingNetworkDataName;
+            List<IssuingNetworkData> issuingNetworkDataList = await LoadIssuingNetworkData();
 
-            if (!IsValidLuhn(creditCardNumber))
+            // Comprobar si el número de tarjeta es numérico
+            if (IsNumeric(creditCardNumber))
             {
-                Result = new CreditCardResult("Bad Request", false);
-                return ValidationResultType.BadRequest;
-            }
+                // Identificar la red emisora primero
+                foundIssuingNetworkDataName = FindIssuingNetworkOwnerName(issuingNetworkDataList, creditCardNumber);
 
-            var issuingNetwork = GetIssuingNetwork(creditCardNumber);
-            if (issuingNetwork == null)
-            {
-                Result = new CreditCardResult("Not Found", false);
-                return ValidationResultType.NotFound;
-            }
+                // Luego verificar si el número de tarjeta es válido
+                isValidCreditCard = CreditCardValidator.IsValid(creditCardNumber);
 
-            Result = new CreditCardResult(issuingNetwork, true);
-            return ValidationResultType.ValidationSuccess;
-        }
-
-        private bool IsValidLuhn(string creditCardNumber)
-        {
-            int sum = 0;
-            bool alternate = false;
-
-            for (int i = creditCardNumber.Length - 1; i >= 0; i--)
-            {
-                int digit = int.Parse(creditCardNumber[i].ToString());
-
-                if (alternate)
+                if (foundIssuingNetworkDataName != null)
                 {
-                    digit *= 2;
-                    if (digit > 9)
-                    {
-                        digit -= 9;
-                    }
+                    validationResultType = ValidationResultType.Ok;
                 }
-
-                sum += digit;
-                alternate = !alternate;
-            }
-
-            return sum % 10 == 0;
-        }
-
-
-        private string GetIssuingNetwork(string creditCardNumber)
-        {
-            var networks = new Dictionary<string, string>
-            {
-                {"34", "American Express"},
-                {"37", "American Express"},
-                {"300", "Diners Club"},
-                {"301", "Diners Club"},
-                {"302", "Diners Club"},
-                {"303", "Diners Club"},
-                {"304", "Diners Club"},
-                {"305", "Diners Club"},
-                {"36", "Diners Club - International"},
-                {"6011", "Discover"},
-                {"622126-622925", "Discover"},
-                {"644", "Discover"},
-                {"645", "Discover"},
-                {"646", "Discover"},
-                {"647", "Discover"},
-                {"648", "Discover"},
-                {"649", "Discover"},
-                {"65", "Discover"},
-                {"637", "InstaPayment"},
-                {"638", "InstaPayment"},
-                {"639", "InstaPayment"},
-                {"3528", "JCB"},
-                {"3589", "JCB"},
-                {"5018", "Maestro"},
-                {"5020", "Maestro"},
-                {"5038", "Maestro"},
-                {"5893", "Maestro"},
-                {"6304", "Maestro"},
-                {"6759", "Maestro"},
-                {"6761", "Maestro"},
-                {"6762", "Maestro"},
-                {"6763", "Maestro"},
-                {"51", "MasterCard"},
-                {"52", "MasterCard"},
-                {"53", "MasterCard"},
-                {"54", "MasterCard"},
-                {"55", "MasterCard"},
-                {"4", "Visa"},
-                {"4026", "Visa Electron"},
-                {"417500", "Visa Electron"},
-                {"4508", "Visa Electron"},
-                {"4844", "Visa Electron"},
-                {"4913", "Visa Electron"},
-                {"4917", "Visa Electron"}
-
-              };
-
-            foreach (var kvp in networks)
-            {
-                if (creditCardNumber.StartsWith(kvp.Key) &&
-                    creditCardNumber.Length >= kvp.Key.Length)
+                else
                 {
-                    return kvp.Value;
+                    validationResultType = ValidationResultType.NotFound;
+                    foundIssuingNetworkDataName = "Not Found";
                 }
             }
+            else
+            {
+                // El número de tarjeta no es numérico
+                validationResultType = ValidationResultType.BadRequest;
+                foundIssuingNetworkDataName = "Bad Request";
+            }
 
-            return "";
+            // Establecer el resultado y devolver el tipo de validación
+            Result = new CreditCardResult(foundIssuingNetworkDataName, isValidCreditCard);
+            return validationResultType;
         }
 
+        // Método para verificar si una cadena es numérica
+        private bool IsNumeric(string input)
+        {
+            return !string.IsNullOrEmpty(input) && input.All(char.IsDigit);
+        }
 
+        // Método para encontrar el nombre del propietario de la red emisora
+        private static string? FindIssuingNetworkOwnerName(List<IssuingNetworkData> issuingNetworkDataList, string creditCardNumber)
+        {
+            var foundIssuingNetworkData = issuingNetworkDataList.Find(issuingNetworkData => issuingNetworkData.ValidateCreditCard(creditCardNumber));
+            return foundIssuingNetworkData?.Name;
+        }
+
+        // Método para cargar datos de la red emisora
+        private async Task<List<IssuingNetworkData>> LoadIssuingNetworkData()
+        {
+            List<IssuingNetwork> issuingNetworks = await GetIssuingNetworks();
+            List<IssuingNetworkData> issuingNetworkDataList = IMapp.ToIssuingNetworkDataList(issuingNetworks);
+            // Convertir datos a lista de datos
+            return issuingNetworkDataList;
+        }
+
+        // Método para obtener redes emisoras
+        private async Task<List<IssuingNetwork>> GetIssuingNetworks()
+        {
+            // Cargar datos desde la base de datos
+            IEnumerable<IssuingNetwork> issuingNetworks = await _issuingNetworkRepository.GetAllAsync();
+            return issuingNetworks.ToList();
+        }
     }
 }
+
 
 
 

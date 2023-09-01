@@ -1,4 +1,4 @@
-﻿using NetBank.Domain.Define;
+﻿    using NetBank.Domain.Define;
 using NetBank.Domain.Dto;
 
 namespace Netbank.Application.Interfaces
@@ -9,5 +9,3 @@ namespace Netbank.Application.Interfaces
         public CreditCardResult Result { get; set; }
     }
 }
-
-

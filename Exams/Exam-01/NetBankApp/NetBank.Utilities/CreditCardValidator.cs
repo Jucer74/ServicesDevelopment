@@ -2,13 +2,13 @@
 
 namespace NetBank.Utilities;
 
-public static class CreditCardValidator
+public  class CreditCardValidator 
 {
     private const int MAX_VALUE_DIGIT = 9;
     private const int MIN_LENGTH = 13;
     private const int MAX_LENGTH = 19;
 
-    public static bool IsValid(string creditCardNumber)
+    public static bool IsValid(string creditCardNumber) 
     {
         int sum = 0;
         int digit = 0;
