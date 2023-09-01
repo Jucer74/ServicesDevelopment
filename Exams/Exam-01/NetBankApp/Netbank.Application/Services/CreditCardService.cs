@@ -1,4 +1,5 @@
 ﻿using Netbank.Application.Interfaces;
+using Netbank.Application.Mappers;
 using NetBank.Domain.Define;
 using NetBank.Domain.Dto;
 using NetBank.Domain.Interfaces.Repositories;
@@ -82,21 +83,8 @@ public class CreditCardService : ICreditCardService
         // Convert Data to List Data
         List<IssuingNetwork> issuingNetworkList = await this.GetIssuingNetworksAsync();
 
-        List<IssuingNetworkData> issuingNetworkDataList = new();
-
-        foreach (IssuingNetwork issuingNetwork in issuingNetworkList)
-        {
-            IssuingNetworkData issuingNetworkData = new()
-            {
-                Name = issuingNetwork.Name,
-                StartsWithNumbers = ConvertNumbersToList(issuingNetwork.StartsWithNumbers),
-                InRange = CreateRangeNumberObject(issuingNetwork.InRange),
-                AllowedLengths = ConvertNumbersToList(issuingNetwork.AllowedLengths)
-            };
-
-            issuingNetworkDataList.Add(issuingNetworkData);
-        }
-
+        List<IssuingNetworkData> issuingNetworkDataList = IssuingNetworkDataMapper.MapsFromIssuingNetworkToIssuingNetworkData(issuingNetworkList);
+        
         return issuingNetworkDataList;
     }
 
@@ -106,40 +94,5 @@ public class CreditCardService : ICreditCardService
         IEnumerable<IssuingNetwork> issuingNetwork = await _issuingNetworkRepository.GetAllAsync();
 
         return issuingNetwork.ToList();
-    }
-
-    private static List<int> ConvertNumbersToList(string? numbers)
-    {
-        if (string.IsNullOrEmpty(numbers))
-        {
-            return new List<int>();
-        }
-
-        //Creates a list of strings using the Split method
-        List<string> numbersStringList = numbers.Split(",").Select(num => num.Trim()).ToList();
-
-        //Parses every string of the list to an integer
-        List<int> numbersIntList = numbersStringList.Select(int.Parse).ToList();
-
-        return numbersIntList;
-    }
-
-    private static RangeNumber? CreateRangeNumberObject(string? inRange)
-    {
-        RangeNumber rangeNumber = new();
-
-        if (string.IsNullOrEmpty(inRange))
-        {
-            return null;
-        }
-
-        //Separates the minimun and maximun number by the '-' char
-        string[] rangeParts = inRange.Trim().Split('-');
-
-        rangeNumber.MinValue = int.Parse(rangeParts[0]);
-        rangeNumber.MaxValue = int.Parse(rangeParts[1]);
-
-        return rangeNumber;
-
     }
 }
