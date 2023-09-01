@@ -3,6 +3,7 @@ using NetBank.Domain.Define;
 using NetBank.Domain.Dto;
 using NetBank.Domain.Interfaces.Repositories;
 using NetBank.Domain.Models;
+using NetBank.Utilities;
 using System.Linq;
 
 namespace Netbank.Application.Services;
@@ -31,12 +32,23 @@ public class CreditCardService : ICreditCardService
 
     public async Task<ValidationResultType> Validate(string creditCardNumber)
     {
-        // List<IssuingNetworkData> issuingNetworkDataList = await LoadIssuingNetworkData();
+        //List<IssuingNetworkData> issuingNetworkDataList = await LoadIssuingNetworkData();
 
-        // Call the Individual Validations
+        // Validar usando el algoritmo de Luhn
+        bool isValid = CreditCardValidator.IsValid(creditCardNumber);
+        if (!isValid)
+        {
+            return ValidationResultType.BadRequest;
+        }
 
-        throw new NotImplementedException();
+        // Aquí puedes agregar otras validaciones si las necesitas
+
+        return ValidationResultType.Ok;
     }
+
+
+
+
 
     private async Task<List<IssuingNetworkData>> LoadIssuingNetworkData()
     {

@@ -8,7 +8,7 @@ namespace NetBank.Infrastructure.Common
 {
     public class Repository<T> : IRepository<T> where T : EntityBase
     {
-        private readonly AppDbContext _appDbContext;
+        protected readonly AppDbContext _appDbContext;
 
         public Repository(AppDbContext appDbContext)
         {

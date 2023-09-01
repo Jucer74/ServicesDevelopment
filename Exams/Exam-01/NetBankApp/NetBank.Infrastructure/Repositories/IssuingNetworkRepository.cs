@@ -2,7 +2,8 @@
 using NetBank.Domain.Models;
 using NetBank.Infrastructure.Common;
 using NetBank.Infrastructure.Context;
-
+using System.Collections.Generic;
+using System.Linq;
 
 namespace NetBank.Infrastructure.Repositories
 {
@@ -10,6 +11,11 @@ namespace NetBank.Infrastructure.Repositories
     {
         public IssuingNetworkRepository(AppDbContext appDbContext) : base(appDbContext)
         {
+        }
+
+        public List<IssuingNetwork> GetAllIssuingNetworks()
+        {
+            return _appDbContext.IssuingNetworks.ToList();
         }
     }
 }
