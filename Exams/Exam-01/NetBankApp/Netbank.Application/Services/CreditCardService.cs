@@ -4,7 +4,6 @@ using NetBank.Domain.Define;
 using NetBank.Domain.Dto;
 using NetBank.Domain.Interfaces.Repositories;
 using NetBank.Domain.Models;
-namespace Netbank.Application.Services;
 using NetBank.Domain;
 using NetBank.Utilities;
 
@@ -73,8 +72,7 @@ public class CreditCardService : ICreditCardService
         {
             if (issuingNetworkData.ValidateCreditCard(creditCardNumber))
             {
-                foundIssuingNetworkDataName ??= issuingNetworkData.Name;
-                break;
+                
             }
         }
         return foundIssuingNetworkDataName;
