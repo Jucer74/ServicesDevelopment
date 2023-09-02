@@ -57,6 +57,10 @@ public static class CreditCardValidator
     {   
         // Check if range is valid
         int numberLength = range.MinValue.ToString().Length;
+
+        // If length is menor than range min value ignore range
+        if (creditCardNumber.Length < numberLength) return false;
+
         int initialDigists = int.Parse(creditCardNumber.Substring(0, numberLength));
             
         //  Validate if initial digits are in range
