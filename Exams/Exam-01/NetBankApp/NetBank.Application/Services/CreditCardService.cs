@@ -84,8 +84,12 @@ namespace NetBank.Application.Services
             // Cache issuing network data
             IssuingNetwork? issuingNetwork = await _issuingNetworkRepository.GetByIdAsync(id);
 
-            // Interface result
-            Result = new CreditCardResult(issuingNetwork.Name, true);
+             // If issuing network is null, throw exception
+            if (issuingNetwork != null)
+            {
+                // Interface result
+                Result = new CreditCardResult(issuingNetwork.Name, true);
+            }
         }
 
         // Load issuing network data from database
