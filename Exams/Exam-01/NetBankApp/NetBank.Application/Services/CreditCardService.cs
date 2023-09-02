@@ -27,48 +27,57 @@ namespace NetBank.Application.Services
                 // Load issuing network data from database
                 List<IssuingNetworkData> issuingNetworkDataList = await LoadIssuingNetworkData();
 
+                // Get credit card length
+                int cardLength = creditCardNumber.Length;
+                // Invalid network name
+                string? invalidNetwork = null;
                 // Check if credit card number is valid
                 bool isValid = CreditCardValidator.IsValid(creditCardNumber);
-                
+
                 // Check if there is any letter in credit card number
                 if (!Regex.IsMatch(creditCardNumber, NumberRegex))
                 {
                     Result = new CreditCardResult("Bad Request", isValid);
                     return ValidationResultType.BadRequest;
                 }
-                
-                // If credit card number is not valid, return invalid
-                if (!isValid)
-                {
-                    foreach (var network in issuingNetworkDataList)
-                    {
-                        if (network.StartsWithNumbers?.Exists(number => creditCardNumber.StartsWith(number.ToString())) ==
-                            true ||
-                            (network.InRange != null &&
-                             CreditCardValidator.IsInRange(creditCardNumber, network.InRange)))
-                        {
-                            await GetIssuingNetworkData(network.Id);
-                            Result = new CreditCardResult(network.Name, isValid);
-                            return ValidationResultType.Ok;
-                        }
-                    }
-                }
-                
-                // Credit card number is valid, check if it is in range and return result
+
+                // Loop through each issuing network
                 foreach (var network in issuingNetworkDataList)
                 {
-                    if (network.StartsWithNumbers?.Exists(number => creditCardNumber.StartsWith(number.ToString())) ==
-                        true ||
-                        (network.InRange != null && CreditCardValidator.IsInRange(creditCardNumber, network.InRange)))
+                    // Check if the card starts with any of the numbers in the list
+                    bool startsWithNumberMatch =
+                        network.StartsWithNumbers?.Exists(number => creditCardNumber.StartsWith(number.ToString())) ==
+                        true;
+                    // Check if the card is in range
+                    bool isInRange = network.InRange != null &&
+                                     CreditCardValidator.IsInRange(creditCardNumber, network.InRange);
+                    // Check if the card length is allowed
+                    bool hasAllowedLength = network.AllowedLengths.Contains(cardLength);
+
+                    // Check if the card matches this network's criteria
+                    if ((startsWithNumberMatch || isInRange) && hasAllowedLength)
                     {
+                        // Card is valid for this network
                         await GetIssuingNetworkData(network.Id);
                         Result = new CreditCardResult(network.Name, isValid);
                         return ValidationResultType.Ok;
                     }
+                    else if (!hasAllowedLength)
+                    {
+                        // Card length is not allowed for this network
+                        invalidNetwork = network.Name;
+                    }
                 }
-                
-                // Credit card number is not valid and not in range, return not found
-                Result = new CreditCardResult("Not Found", isValid);
+
+                if (!string.IsNullOrEmpty(invalidNetwork))
+                {
+                    // Card length is invalid for the specified network
+                    Result = new CreditCardResult($"{invalidNetwork}", false);
+                    return ValidationResultType.Ok;
+                }
+
+                // Credit card number is not in range or doesn't have an allowed length, mark as not valid
+                Result = new CreditCardResult("Not Found", false); // Mark as not valid
                 return ValidationResultType.NotFound;
             }
             catch (Exception ex)
@@ -84,7 +93,8 @@ namespace NetBank.Application.Services
             // Cache issuing network data
             IssuingNetwork? issuingNetwork = await _issuingNetworkRepository.GetByIdAsync(id);
 
-             // If issuing network is null, throw exception
+
+            // If issuing network is null, throw exception
             if (issuingNetwork != null)
             {
                 // Interface result
