@@ -290,7 +290,7 @@ public class CreditCardService : ICreditCardService
 
             issuingNetworkDataList.Add(networkData);
         }
-
+         
         return issuingNetworkDataList;
     }
     private async Task<List<IssuingNetwork>> GetIssuingNetworks()
