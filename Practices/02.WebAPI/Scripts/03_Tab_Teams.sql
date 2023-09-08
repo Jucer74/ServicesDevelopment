@@ -1,0 +1,5 @@
+CREATE TABLE `teamsdb`.`Teams` (
+  `Id` INT NOT NULL AUTO_INCREMENT,
+  `Name` VARCHAR(50) NOT NULL,
+  `Coach`  VARCHAR(50) NULL,
+  PRIMARY KEY (`Id`));
