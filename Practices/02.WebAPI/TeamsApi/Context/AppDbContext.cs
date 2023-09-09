@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using StudentsApp.Domain.Entities;
+using TeamsApi.Models;
 
-namespace StudentsApp.Infrastructure.Context;
+namespace TeamsApi.Context;
 
 public class AppDbContext : DbContext
 {
@@ -13,5 +13,6 @@ public class AppDbContext : DbContext
     {
     }
 
-    public DbSet<Student> Students { get; set; }
+    public DbSet<Team> Teams { get; set; }
+    public DbSet<TeamMember> TeamMembers { get; set; }
 }
