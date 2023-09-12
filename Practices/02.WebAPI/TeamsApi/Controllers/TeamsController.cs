@@ -39,16 +39,22 @@ namespace TeamsApi.Controllers
 
         // POST api/<TeamsController>
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] TeamDto team)
+        public async Task<IActionResult> Post([FromBody] TeamDto teamDto)
         {
-            return Ok(await _teamService.CreateTeam(_mapper.Map<TeamDto, Team>(team)));
+            Team team = await _teamService.CreateTeam(_mapper.Map<TeamDto, Team>(teamDto));
+
+            return Ok(_mapper.Map<Team, TeamDto>(team));
         }
 
         // PUT api/<TeamsController>/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] TeamDto team)
+        public async Task<IActionResult> Put(int id, [FromBody] TeamDto teamDto)
         {
-            return Ok(await _teamService.UpdateTeam(_mapper.Map<TeamDto, Team>(team)));
+            teamDto.Id = id;
+
+            Team team = await _teamService.UpdateTeam(_mapper.Map<TeamDto, Team>(teamDto));
+
+            return Ok(_mapper.Map<Team, TeamDto>(team));
         }
 
         // DELETE api/<TeamsController>/5
