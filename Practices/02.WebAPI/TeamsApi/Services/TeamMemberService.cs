@@ -13,6 +13,14 @@ public class TeamMemberService : ITeamMemberService
     }
     public async Task<TeamMember> CreateTeamMember(TeamMember teamMember)
     {
+        var teamId = teamMember?.TeamId;
+        Team team = await _appDbContext.Set<Team>().FindAsync(teamId);
+
+        if (team is null)
+        {
+            throw new Exception($"Team with Id={teamId} Not Found");
+        }
+
         _appDbContext.Set<TeamMember>().Add(teamMember);
         await _appDbContext.SaveChangesAsync();
         return teamMember;
