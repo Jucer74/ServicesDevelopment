@@ -44,4 +44,23 @@ public class TeamMembersController:ControllerBase
 
         return Ok(_mapper.Map<TeamMember, TeamMemberDto>(teamMember));
     }
+
+    // PUT api/<TeamMembersController>/5
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Put(int id, [FromBody] TeamMemberDto teamMemberDto)
+    {
+        teamMemberDto.Id = id;
+
+        TeamMember teamMember = await _teamMemberService.UpdateTeamMember(_mapper.Map<TeamMemberDto, TeamMember>(teamMemberDto));
+
+        return Ok(_mapper.Map<TeamMember, TeamMemberDto>(teamMember));
+    }
+
+    // DELETE api/<TeamMembersController>/5
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        await _teamMemberService.DeleteTeamMember(id);
+        return Ok();
+    }
 }
