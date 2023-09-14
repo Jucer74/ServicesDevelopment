@@ -43,9 +43,19 @@ namespace TeamsApi.Services
             return (await _appDbContext.Set<Team>().FindAsync(id))!;
         }
 
-        public async Task<Team> UpdateTeam(Team team)
+        public async Task<List<TeamMember>> GetTeamMembersByTeamId(int id)
         {
-            var id = team?.Id;
+            var teamMembers = await _appDbContext.Teams
+                                    .Include(m => m.Members)
+                                    .Where(t => t.Id == id)
+                                    .FirstOrDefaultAsync();
+                                    
+
+            return teamMembers!.Members;
+        }
+
+        public async Task<Team> UpdateTeam(int id, Team team)
+        {
             var original = await _appDbContext.Set<Team>().FindAsync(id);
 
             if (original is null)

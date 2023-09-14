@@ -12,6 +12,7 @@ public static class ModulesExtension
     public static IServiceCollection AddServices(this IServiceCollection services)
     {
         services.AddScoped<ITeamService, TeamService>();
+        services.AddScoped<ITeamMemberService, TeamMemberService>();
 
         return services;
     }
@@ -34,6 +35,7 @@ public static class ModulesExtension
     public static IServiceCollection AddValidators(this IServiceCollection services)
     {
         services.AddScoped<IValidator<TeamDto>, TeamValidator>();
+        services.AddScoped<IValidator<TeamMemberDto>, TeamMemberValidator>();
 
         return services;
     }

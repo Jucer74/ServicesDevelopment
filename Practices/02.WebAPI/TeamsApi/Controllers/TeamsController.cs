@@ -49,7 +49,7 @@ namespace TeamsApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] TeamDto teamDto)
         {
-            var team = await _teamService.UpdateTeam(_mapper.Map<TeamDto, Team>(teamDto));
+            var team = await _teamService.UpdateTeam(id, _mapper.Map<TeamDto, Team>(teamDto));
             return Ok(_mapper.Map<Team, TeamDto>(team));
         }
 
@@ -63,10 +63,10 @@ namespace TeamsApi.Controllers
 
         // GET api/<TeamsController>/5/Members
         [HttpGet("{id}/Members")]
-        public async Task<IActionResult> GetMemberByTeamId(int id)
+        public async Task<IActionResult> GetMembersByTeamId(int id)
         {
-            var team = await _teamService.GetTeamById(id);
-            return Ok(_mapper.Map<Team, TeamDto>(team));
+            var members = await _teamService.GetTeamMembersByTeamId(id);
+            return Ok(_mapper.Map<List<TeamMember>, List<TeamMemberDto>>(members));
         }
     }
 }
