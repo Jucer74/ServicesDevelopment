@@ -53,7 +53,7 @@ namespace TeamsApi.Services
                 throw new Exception($"Team with Id={id} Not Found");
             }
 
-            _appDbContext.Entry(original).CurrentValues.SetValues(team);
+            _appDbContext.Entry(original).CurrentValues.SetValues(team!);
             await _appDbContext.SaveChangesAsync();
 
             return team;
