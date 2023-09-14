@@ -1,11 +1,7 @@
-using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
-using System;
 using TeamsApi.Context;
-using TeamsApi.Dtos;
 using TeamsApi.Extensions;
-using TeamsApi.Validations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +12,6 @@ builder.Services.AddControllers();
 
 //Add Mvc options
 builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
-
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
