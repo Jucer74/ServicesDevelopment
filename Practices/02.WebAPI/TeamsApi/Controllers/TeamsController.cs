@@ -72,5 +72,13 @@ namespace TeamsApi.Controllers
             await _teamService.DeleteTeam(id);
             return Ok();
         }
+
+        // GET api/<TeamsController>/5/Members
+        [HttpGet("{id}/Members")]
+        public async Task<IActionResult> GetMembersByTeamId(int id)
+        {
+            var members = await _teamService.GetTeamMembersByTeamId(id);
+            return Ok(_mapper.Map<List<TeamMember>, List<TeamMemberDto>>(members));
+        }
     }
 }
