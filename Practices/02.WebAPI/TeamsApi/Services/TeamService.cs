@@ -61,5 +61,12 @@ namespace TeamsApi.Services
 
             return team;
         }
+
+        public async Task<List<TeamMember>> GetTeamMembers(int id)
+        {
+            Team team = await _appDbContext.Set<Team>().FindAsync(id) ?? throw new Exception($"Team with Id={id} Not Found");
+
+            return await _appDbContext.Set<TeamMember>().Where(tm => tm.TeamId == team.Id).ToListAsync<TeamMember>();
+        }
     }
 }
