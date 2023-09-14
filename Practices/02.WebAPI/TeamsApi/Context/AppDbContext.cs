@@ -14,5 +14,5 @@ public class AppDbContext : DbContext
     }
 
     public DbSet<Team> Teams { get; set; }
-    public DbSet<TeamMember> TeamMembers { get; set; }
+    public DbSet<TeamMember> Members { get; set; }
 }

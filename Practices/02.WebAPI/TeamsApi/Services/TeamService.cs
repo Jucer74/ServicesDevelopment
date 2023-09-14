@@ -40,7 +40,7 @@ namespace TeamsApi.Services
 
         public async Task<Team> GetTeamById(int id)
         {
-            return await _appDbContext.Set<Team>().FindAsync(id);
+            return (await _appDbContext.Set<Team>().FindAsync(id))!;
         }
 
         public async Task<Team> UpdateTeam(Team team)
@@ -56,7 +56,7 @@ namespace TeamsApi.Services
             _appDbContext.Entry(original).CurrentValues.SetValues(team!);
             await _appDbContext.SaveChangesAsync();
 
-            return team;
+            return team!;
         }
     }
 }
