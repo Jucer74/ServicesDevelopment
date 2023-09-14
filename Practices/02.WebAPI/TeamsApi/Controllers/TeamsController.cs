@@ -37,14 +37,6 @@ namespace TeamsApi.Controllers
             return Ok(_mapper.Map<Team, TeamDto>(team));
         }
 
-        //GET api/<TeamsController>/5/members
-        [HttpGet("{id}/members")]
-        public async Task<IActionResult> GetTeamMembers(int id)
-        {
-            var teamMembers = await _teamService.GetTeamMembersByTeamId(id);
-            return Ok(_mapper.Map<List<TeamMember>, List<TeamMemberDto>>(teamMembers));
-        }
-
         // POST api/<TeamsController>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] TeamDto teamDto)
