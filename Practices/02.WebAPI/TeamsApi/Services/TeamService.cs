@@ -59,24 +59,16 @@ namespace TeamsApi.Services
 
         public async Task<Team> UpdateTeam(int id, Team team)
         {
-            var original = await _appDbContext.Set<Team>().FindAsync(id);
-
-            if (original is null)
+            if (id != team.Id)
             {
-                throw new Exception($"Team with Id={id} Not Found");
+                throw new Exception($"Team id different than {id}");
             }
 
+            var original = await _appDbContext.Set<Team>().FindAsync(id) ?? throw new Exception($"Team with Id={id} Not Found");
             _appDbContext.Entry(original).CurrentValues.SetValues(team!);
             await _appDbContext.SaveChangesAsync();
 
             return team!;
-        }
-
-        public async Task<List<TeamMember>> GetTeamMembers(int id)
-        {
-            Team team = await _appDbContext.Set<Team>().FindAsync(id) ?? throw new Exception($"Team with Id={id} Not Found");
-
-            return await _appDbContext.Set<TeamMember>().Where(tm => tm.TeamId == team.Id).ToListAsync<TeamMember>();
         }
     }
 }

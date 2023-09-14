@@ -6,7 +6,7 @@ public interface ITeamMemberService
 {
     Task<TeamMember> CreateTeamMember(TeamMember teamMember);
 
-    Task<TeamMember> UpdateTeamMember(TeamMember teamMember);
+    Task<TeamMember> UpdateTeamMember(int id,TeamMember teamMember);
 
     Task DeleteTeamMember(int id);
 

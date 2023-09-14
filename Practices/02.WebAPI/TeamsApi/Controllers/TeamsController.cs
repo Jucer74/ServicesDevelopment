@@ -41,7 +41,7 @@ namespace TeamsApi.Controllers
         [HttpGet("{id}/members")]
         public async Task<IActionResult> GetTeamMembers(int id)
         {
-            var teamMembers = await _teamService.GetTeamMembers(id);
+            var teamMembers = await _teamService.GetTeamMembersByTeamId(id);
             return Ok(_mapper.Map<List<TeamMember>, List<TeamMemberDto>>(teamMembers));
         }
 
@@ -58,9 +58,7 @@ namespace TeamsApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] TeamDto teamDto)
         {
-            teamDto.Id = id;
-
-            Team team = await _teamService.UpdateTeam(_mapper.Map<TeamDto, Team>(teamDto));
+            Team team = await _teamService.UpdateTeam(id, _mapper.Map<TeamDto, Team>(teamDto));
 
             return Ok(_mapper.Map<Team, TeamDto>(team));
         }

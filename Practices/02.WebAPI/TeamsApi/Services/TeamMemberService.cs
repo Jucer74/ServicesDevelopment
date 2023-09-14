@@ -54,9 +54,13 @@ public class TeamMemberService : ITeamMemberService
     }
 
 
-    public async Task<TeamMember> UpdateTeamMember(TeamMember teamMember)
+    public async Task<TeamMember> UpdateTeamMember(int id,TeamMember teamMember)
     {
-        var id = teamMember?.Id;
+       if (id != teamMember.Id)
+        {
+            throw new Exception($"TeamMenber id different than {id}");
+        }
+
         var original = await _appDbContext.Set<TeamMember>().FindAsync(id) ?? throw new Exception($"TeamMember with Id={id} Not Found");
 
         _appDbContext.Entry(original).CurrentValues.SetValues(teamMember);

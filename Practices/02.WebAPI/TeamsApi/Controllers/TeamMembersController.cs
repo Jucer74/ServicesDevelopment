@@ -57,9 +57,7 @@ public class TeamMembersController:ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, [FromBody] TeamMemberDto teamMemberDto)
     {
-        teamMemberDto.Id = id;
-
-        TeamMember teamMember = await _teamMemberService.UpdateTeamMember(_mapper.Map<TeamMemberDto, TeamMember>(teamMemberDto));
+        TeamMember teamMember = await _teamMemberService.UpdateTeamMember(id, _mapper.Map<TeamMemberDto, TeamMember>(teamMemberDto));
 
         return Ok(_mapper.Map<TeamMember, TeamMemberDto>(teamMember));
     }
