@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
+using FluentValidation;
+using TeamsApi.Dtos;
 using TeamsApi.Mapping;
 using TeamsApi.Services;
+using TeamsApi.Validations;
 
 namespace TeamsApi.Extensions;
 
@@ -13,7 +16,7 @@ public static class ModulesExtension
         return services;
     }
 
-    public static IServiceCollection AddMappinmg(this IServiceCollection services)
+    public static IServiceCollection AddMapping(this IServiceCollection services)
     {
 
         // Auto Mapper Configurations
@@ -24,6 +27,13 @@ public static class ModulesExtension
 
         IMapper mapper = mapperConfig.CreateMapper();
         services.AddSingleton(mapper);
+
+        return services;
+    }
+
+    public static IServiceCollection AddValidators(this IServiceCollection services)
+    {
+        services.AddScoped<IValidator<TeamDto>, TeamValidator>();
 
         return services;
     }
