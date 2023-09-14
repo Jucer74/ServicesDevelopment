@@ -29,6 +29,9 @@ namespace TeamsApi.Services
                 throw new Exception($"Team with Id={id} Not Found");
             }
 
+            List<TeamMember> members = await _appDbContext.Set<TeamMember>().Where(tm => tm.TeamId == id).ToListAsync<TeamMember>();
+
+            _appDbContext.Set<TeamMember>().RemoveRange(members);
             _appDbContext.Set<Team>().Remove(original);
             await _appDbContext.SaveChangesAsync();
         }
