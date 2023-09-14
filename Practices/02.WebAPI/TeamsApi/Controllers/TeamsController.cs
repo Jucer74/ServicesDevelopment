@@ -39,16 +39,18 @@ namespace TeamsApi.Controllers
 
         // POST api/<TeamsController>
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] TeamDto team)
+        public async Task<IActionResult> Post([FromBody] TeamDto teamDto)
         {
-            return Ok(await _teamService.CreateTeam(_mapper.Map<TeamDto, Team>(team)));
+            var team = await _teamService.CreateTeam(_mapper.Map<TeamDto, Team>(teamDto));
+            return Ok(_mapper.Map<Team, TeamDto>(team));
         }
 
         // PUT api/<TeamsController>/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] TeamDto team)
+        public async Task<IActionResult> Put(int id, [FromBody] TeamDto teamDto)
         {
-            return Ok(await _teamService.UpdateTeam(_mapper.Map<TeamDto, Team>(team)));
+            var team = await _teamService.UpdateTeam(id, _mapper.Map<TeamDto, Team>(teamDto));
+            return Ok(_mapper.Map<Team, TeamDto>(team));
         }
 
         // DELETE api/<TeamsController>/5
@@ -57,6 +59,14 @@ namespace TeamsApi.Controllers
         {
             await _teamService.DeleteTeam(id);
             return Ok();
+        }
+
+        // GET api/<TeamsController>/5/Members
+        [HttpGet("{id}/Members")]
+        public async Task<IActionResult> GetMembersByTeamId(int id)
+        {
+            var members = await _teamService.GetTeamMembersByTeamId(id);
+            return Ok(_mapper.Map<List<TeamMember>, List<TeamMemberDto>>(members));
         }
     }
 }
