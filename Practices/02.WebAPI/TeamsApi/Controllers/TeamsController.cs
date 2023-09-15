@@ -49,14 +49,23 @@ namespace TeamsApi.Controllers
         public async Task<IActionResult> Put(int id, [FromBody] TeamDto team)
         {
             return Ok(await _teamService.UpdateTeam(_mapper.Map<TeamDto, Team>(team)));
+
         }
 
         // DELETE api/<TeamsController>/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            await _teamService.DeleteTeam(id);
-            return Ok();
+            try
+            {
+                await _teamService.DeleteTeam(id);
+                return NoContent(); // 204 No Content
+            }
+            catch (Exception ex)
+            {
+                // En caso de un error durante la eliminación,  devolver una respuesta de error
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
     }
 }

@@ -1,7 +1,7 @@
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-<<<<<<<< HEAD:Practices/02.CleanArchitecture/StudentsApp/StudentsApp.Api/Program.cs
+<<<<<<<< HEAD:object value = Practices /02.CleanArchitecture/StudentsApp/StudentsApp.Api/Program.cs;
 ========
 builder.Services.AddDbContext<AppDbContext>(options => options.UseMySQL(builder.Configuration.GetConnectionString("CnnStr")!));
 

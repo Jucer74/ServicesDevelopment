@@ -40,7 +40,9 @@ namespace TeamsApi.Services
 
         public async Task<Team> GetTeamById(int id)
         {
+#pragma warning disable CS8603 // Posible tipo de valor devuelto de referencia nulo
             return await _appDbContext.Set<Team>().FindAsync(id);
+#pragma warning restore CS8603 // Posible tipo de valor devuelto de referencia nulo
         }
 
         public async Task<Team> UpdateTeam(Team team)
@@ -53,7 +55,9 @@ namespace TeamsApi.Services
                 throw new Exception($"Team with Id={id} Not Found");
             }
 
+#pragma warning disable CS8604 // Posible argumento de referencia nulo
             _appDbContext.Entry(original).CurrentValues.SetValues(team);
+#pragma warning restore CS8604 // Posible argumento de referencia nulo
             await _appDbContext.SaveChangesAsync();
 
             return team;
