@@ -12,5 +12,7 @@ public class Team
 
     public string Coach { get; set; } = null!;
 
-    public virtual List<TeamMember> Members { get; set; } = new List<TeamMember>();
+    public string Conference { get; set; } = null!;
+
+    public virtual List<TeamMember> Members { get; set; } = null!;
 }
