@@ -14,14 +14,10 @@ public class TeamMember
     [Required]
     public string LastName { get; set; } = null!;
 
-    [Required]
-    [DataType(DataType.Date)]
-    public DateTime BirthDate { get; set; }
-
-    public string Phone { get; set; } = null!;
+    public string Position{ get; set; } = null!;
 
     [ForeignKey("TeamId")]
     public int TeamId { get; set; }
 
-    public Team Team { get; set; } = new Team();
+    public Team Team { get; set; } = null!;
 }
