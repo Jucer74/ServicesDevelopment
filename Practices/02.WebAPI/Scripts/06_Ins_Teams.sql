@@ -1,25 +1,29 @@
-DELETE FROM `netbankdb`.`issuingnetworks` WHERE Id >= 0;
-ALTER TABLE `netbankdb`.`issuingnetworks` AUTO_INCREMENT = 1;
-INSERT INTO `netbankdb`.`issuingnetworks` (`Name`, `StartsWithNumbers`, `InRange`, `AllowedLengths`)
-VALUES('American Express', '34,37', NULL, '15');
-INSERT INTO `netbankdb`.`issuingnetworks` (`Name`, `StartsWithNumbers`, `InRange`, `AllowedLengths`)
-VALUES('Diners Club', '300,301,302,303,304,305', NULL, '14');
-INSERT INTO `netbankdb`.`issuingnetworks` (`Name`, `StartsWithNumbers`, `InRange`, `AllowedLengths`)
-VALUES('Diners Club - International', '36', NULL, '14');
-INSERT INTO `netbankdb`.`issuingnetworks` (`Name`, `StartsWithNumbers`, `InRange`, `AllowedLengths`)
-VALUES('Discover','6011,644,645,646,647,648,649,65', '622126-622925', '16,17,18,19');
-INSERT INTO `netbankdb`.`issuingnetworks` (`Name`, `StartsWithNumbers`, `InRange`, `AllowedLengths`)
-VALUES('InstaPayment', '637,638,639', NULL, '16');
-INSERT INTO `netbankdb`.`issuingnetworks` (`Name`, `StartsWithNumbers`, `InRange`, `AllowedLengths`)
-VALUES('JCB', NULL, '3528-3589', '16,17,18,19');
-INSERT INTO `netbankdb`.`issuingnetworks` (`Name`, `StartsWithNumbers`, `InRange`, `AllowedLengths`)
-VALUES('Maestro', '5018,5020,5038,5893,6304,6759,6761,6762,6763', NULL, '16,17,18,19');
-INSERT INTO `netbankdb`.`issuingnetworks` (`Name`, `StartsWithNumbers`, `InRange`, `AllowedLengths`)
-VALUES('MasterCard', '51,52,53,54,55', '222100-272099', '16');
-INSERT INTO `netbankdb`.`issuingnetworks` (`Name`, `StartsWithNumbers`, `InRange`, `AllowedLengths`)
-VALUES('Visa Electron', '4026,417500,4508,4844,4913,4917', NULL, '16');
-INSERT INTO `netbankdb`.`issuingnetworks` (`Name`, `StartsWithNumbers`, `InRange`, `AllowedLengths`)
-VALUES('Visa', '4', NULL,  '16,17,18,19');
-
-
-
+INSERT INTO `teamsdb`.`teams` (Name, Coach, Conference) VALUES 
+  ('Atlanta Hawks', 'Nate McMillan', 'East'),
+  ('Boston Celtics', 'Ime Udoka', 'East'),
+  ('Brooklyn Nets', 'Steve Nash', 'East'),
+  ('Charlotte Hornets', 'James Borrego', 'East'),
+  ('Chicago Bulls', 'Billy Donovan', 'East'),
+  ('Cleveland Cavaliers', 'J. Bickerstaff', 'East'),
+  ('Detroit Pistons', 'Dwane Casey', 'East'),
+  ('Indiana Pacers', 'Rick Carlisle', 'East'),
+  ('Miami Heat', 'Erik Spoelstra', 'East'),
+  ('Milwaukee Bucks', 'Mike Budenholzer', 'East'),
+  ('New York Knicks', 'Tom Thibodeau', 'East'),
+  ('Orlando Magic', 'Jamahl Mosley', 'East'),
+  ('Philadelphia 76ers', 'Doc Rivers', 'East'),
+  ('Toronto Raptors', 'Nick Nurse', 'East'),
+  ('Washington Wizards', 'Wes Unseld Jr.', 'East'),
+  ('Dallas Mavericks', 'Jason Kidd', 'West'),
+  ('Denver Nuggets', 'Michael Malone', 'West'),
+  ('Golden State Warriors', 'Steve Kerr', 'West'),
+  ('Houston Rockets', 'Stephen Silas', 'West'),
+  ('Los Angeles Clippers', 'Tyronn Lue', 'West'),
+  ('Los Angeles Lakers', 'Darvin Ham', 'West'),
+  ('Memphis Grizzlies', 'Taylor Jenkins', 'West'),
+  ('Minnesota Timberwolves', 'Chris Finch', 'West'),
+  ('Oklahoma City Thunder', 'Mark Daigneault', 'West'),
+  ('Phoenix Suns', 'Monty Williams', 'West'),
+  ('Sacramento Kings', 'Mike Brown', 'West'),
+  ('San Antonio Spurs', 'Gregg Popovich', 'West'),
+  ('Utah Jazz', 'Quin Snyder', 'West');
