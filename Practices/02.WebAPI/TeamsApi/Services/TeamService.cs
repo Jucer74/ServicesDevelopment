@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TeamsApi.Context;
+using TeamsApi.Exceptions;
 using TeamsApi.Models;
 
 namespace TeamsApi.Services
@@ -26,7 +27,7 @@ namespace TeamsApi.Services
 
             if (original is null)
             {
-                throw new Exception($"Team with Id={id} Not Found");
+                throw new NotFoundException($"Team with Id={id} Not Found");
             }
 
             _appDbContext.Set<Team>().Remove(original);
@@ -40,7 +41,12 @@ namespace TeamsApi.Services
 
         public async Task<Team> GetTeamById(int id)
         {
-            return (await _appDbContext.Set<Team>().FindAsync(id))!;
+            var team = await _appDbContext.Set<Team>().FindAsync(id);
+            if (team is null)
+            {
+                throw new NotFoundException($"Team with Id={id} Not Found");
+            }
+            return team!;
         }
 
         public async Task<List<TeamMember>> GetTeamMembersByTeamId(int id)
@@ -60,7 +66,7 @@ namespace TeamsApi.Services
 
             if (original is null)
             {
-                throw new Exception($"Team with Id={id} Not Found");
+                throw new NotFoundException($"Team with Id={id} Not Found");
             }
 
             _appDbContext.Entry(original).CurrentValues.SetValues(team!);
