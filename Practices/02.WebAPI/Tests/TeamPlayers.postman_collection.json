@@ -1,0 +1,1585 @@
+{
+	"info": {
+		"_postman_id": "c261c541-134d-42eb-a559-d998f61617c0",
+		"name": "TeamPlayers",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7220587"
+	},
+	"item": [
+		{
+			"name": "Teams",
+			"item": [
+				{
+					"name": "GetAllTeams_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Count Records == 28\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.length).to.eql(28);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Teams",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Teams"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddTeam_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    var teamId = jsonData.id;\r",
+									"    pm.collectionVariables.set(\"teamId\", teamId);\r",
+									"    pm.expect(jsonData.id).to.eql(teamId);\r",
+									"    pm.expect(jsonData.name).to.eql(\"Washington Wizards\");\r",
+									"    pm.expect(jsonData.coach).to.eql(\"Wes Unseld Jr.\");\r",
+									"    pm.expect(jsonData.conference).to.eql(\"East\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"name\": \"Washington Wizards\",\r\n  \"coach\": \"Wes Unseld Jr.\",\r\n  \"conference\": \"East\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/Teams",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Teams"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetTeamById_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    var teamId = pm.collectionVariables.get(\"teamId\");\r",
+									"    pm.expect(jsonData.id).to.eql(teamId);\r",
+									"    pm.expect(jsonData.name).to.eql(\"Washington Wizards\");\r",
+									"    pm.expect(jsonData.coach).to.eql(\"Wes Unseld Jr.\");\r",
+									"    pm.expect(jsonData.conference).to.eql(\"East\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Teams/{{teamId}}",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Teams",
+								"{{teamId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateTeam_Succes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    var teamId = pm.collectionVariables.get(\"teamId\");\r",
+									"    pm.expect(jsonData.id).to.eql(teamId);\r",
+									"    pm.expect(jsonData.name).to.eql(\"Washington Wizards\");\r",
+									"    pm.expect(jsonData.coach).to.eql(\"Scott Brooks\");\r",
+									"    pm.expect(jsonData.conference).to.eql(\"East\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": {{teamId}},\r\n  \"name\": \"Washington Wizards\",\r\n  \"coach\": \"Scott Brooks\",\r\n  \"conference\": \"East\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/Teams/{{teamId}}",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Teams",
+								"{{teamId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteTeam_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Teams/{{teamId}}",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Teams",
+								"{{teamId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetTeamById_BadRequest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.errors.length).to.eql(1);\r",
+									"    pm.expect(jsonData.errors[0]).to.eql(\"The value 'A' is not valid.\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Teams/A",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Teams",
+								"A"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddTeam_BadRequest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.errors.length).to.eql(2);\r",
+									"    pm.expect(jsonData.errors[0]).to.eql(\"The teamDto field is required.\");\r",
+									"    pm.expect(jsonData.errors[1]).to.eql(\"'E' is an invalid start of a value. Path: $.conference | LineNumber: 4 | BytePositionInLine: 16.\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"name\": \"Washington Wizards\",\r\n  \"coach\": \"Wes Unseld Jr.\",\r\n  \"conference\": East\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/Teams",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Teams"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddTeam_BadRequest_RequiredFields",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.errors.length).to.eql(1);\r",
+									"    pm.expect(jsonData.errors[0]).to.eql(\"The Team Name is required.\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"name\": \"\",\r\n  \"coach\": \"\",\r\n  \"conference\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/Teams",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Teams"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddTeam_BadRequest_FieldsMaxLength",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.errors.length).to.eql(3);\r",
+									"    pm.expect(jsonData.errors).to.contains(\"The maximum length of Team Name is 50 characters.\");\r",
+									"    pm.expect(jsonData.errors).to.contains(\"The maximum length of Coach Name is 50 characters.\");\r",
+									"    pm.expect(jsonData.errors).to.contains(\"The maximum length of Conference is 20 characters.\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"name\": \"123456789012345678901234567890123456789012345678901\",\r\n  \"coach\": \"123456789012345678901234567890123456789012345678901\",\r\n  \"conference\": \"123456789012345678901\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/Teams",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Teams"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateTeam_BadRequest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.errors.length).to.eql(2);\r",
+									"    pm.expect(jsonData.errors).to.contains(\"The teamDto field is required.\");\r",
+									"    pm.expect(jsonData.errors).to.contains(\"'E' is an invalid start of a value. Path: $.conference | LineNumber: 4 | BytePositionInLine: 16.\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"name\": \"Washington Wizards\",\r\n  \"coach\": \"Scott Brooks\",\r\n  \"conference\": East\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/Teams/0",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Teams",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateTeam_BadRequest_Diff_Ids",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.ErrorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+									"    pm.expect(jsonData.Errors[0]).to.eql(\"Id [0] is different to Team.Id [1]\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 1,\r\n  \"name\": \"Washington Wizards\",\r\n  \"coach\": \"Scott Brooks\",\r\n  \"conference\": \"East\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/Teams/0",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Teams",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateTeam_BadRequest_RequiredFields",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.errors.length).to.eql(1);\r",
+									"    pm.expect(jsonData.errors[0]).to.eql(\"The Team Name is required.\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"name\": \"\",\r\n  \"coach\": \"\",\r\n  \"conference\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/Teams/0",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Teams",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddTeam_BadRequest_FieldsMaxLength",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.errors.length).to.eql(3);\r",
+									"    pm.expect(jsonData.errors).to.contains(\"The maximum length of Team Name is 50 characters.\");\r",
+									"    pm.expect(jsonData.errors).to.contains(\"The maximum length of Coach Name is 50 characters.\");\r",
+									"    pm.expect(jsonData.errors).to.contains(\"The maximum length of Conference is 20 characters.\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"name\": \"123456789012345678901234567890123456789012345678901\",\r\n  \"coach\": \"123456789012345678901234567890123456789012345678901\",\r\n  \"conference\": \"123456789012345678901\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/Teams/0",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Teams",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteTeam_BadRequest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.errors.length).to.eql(1);\r",
+									"    pm.expect(jsonData.errors[0]).to.eql(\"The value 'A' is not valid.\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Teams/A",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Teams",
+								"A"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetTeamById_NotFound",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404-NotFound\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.ErrorType).to.eql(\"Not Found\");\r",
+									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+									"    pm.expect(jsonData.Errors[0]).to.eql(\"Team with Id=0 Not Found\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Teams/0",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Teams",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateTeam_NotFound",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404-NotFound\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.ErrorType).to.eql(\"Not Found\");\r",
+									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+									"    pm.expect(jsonData.Errors[0]).to.eql(\"Team with Id=0 Not Found\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"name\": \"Washington Wizards\",\r\n  \"coach\": \"Scott Brooks\",\r\n  \"conference\": \"East\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/Teams/0",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Teams",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteTeam_NotFound",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404-NotFound\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.ErrorType).to.eql(\"Not Found\");\r",
+									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+									"    pm.expect(jsonData.Errors[0]).to.eql(\"Team with Id=0 Not Found\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Teams/0",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Teams",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetMemberByTeamId_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    var dataCount = jsonData.length;\r",
+									"    pm.expect(dataCount).to.eql(5);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Teams/1/Members",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Teams",
+								"1",
+								"Members"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Members",
+			"item": [
+				{
+					"name": "GetAllMembers_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Count Records == 140\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.length).to.eql(140);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Members",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Members"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddMember_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    var memberId = jsonData.id;\r",
+									"    pm.collectionVariables.set(\"memberId\", memberId);\r",
+									"    pm.expect(jsonData.id).to.eql(memberId);\r",
+									"    pm.expect(jsonData.firstName).to.eql(\"Michael\");\r",
+									"    pm.expect(jsonData.lastName).to.eql(\"Johnson\");\r",
+									"    pm.expect(jsonData.position).to.eql(\"Forward\");\r",
+									"    pm.expect(jsonData.teamId).to.eql(5);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"firstName\": \"Michael\",\r\n  \"lastName\": \"Johnson\",\r\n  \"position\": \"Forward\",\r\n  \"teamId\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/Members",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Members"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetMemberById_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    var memberId = pm.collectionVariables.get(\"memberId\");\r",
+									"    pm.expect(jsonData.id).to.eql(memberId);\r",
+									"    pm.expect(jsonData.firstName).to.eql(\"Michael\");\r",
+									"    pm.expect(jsonData.lastName).to.eql(\"Johnson\");\r",
+									"    pm.expect(jsonData.position).to.eql(\"Forward\");\r",
+									"    pm.expect(jsonData.teamId).to.eql(5);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Members/{{memberId}}",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Members",
+								"{{memberId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateMember_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    var memberId = pm.collectionVariables.get(\"memberId\");\r",
+									"    pm.expect(jsonData.id).to.eql(memberId);\r",
+									"    pm.expect(jsonData.firstName).to.eql(\"Michael\");\r",
+									"    pm.expect(jsonData.lastName).to.eql(\"Jordan\");\r",
+									"    pm.expect(jsonData.position).to.eql(\"Forward\");\r",
+									"    pm.expect(jsonData.teamId).to.eql(5);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": {{memberId}},\r\n  \"firstName\": \"Michael\",\r\n  \"lastName\": \"Jordan\",\r\n  \"position\": \"Forward\",\r\n  \"teamId\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/Members/{{memberId}}",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Members",
+								"{{memberId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteMember_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Members/{{memberId}}",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Members",
+								"{{memberId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetMemberById_BadRequest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.errors.length).to.eql(1);\r",
+									"    pm.expect(jsonData.errors[0]).to.eql(\"The value 'A' is not valid.\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Members/A",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Members",
+								"A"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddMember_BadRequest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.errors.length).to.eql(2);\r",
+									"    pm.expect(jsonData.errors[0]).to.eql(\"The teamMemberDto field is required.\");\r",
+									"    pm.expect(jsonData.errors[1]).to.eql(\"'C' is an invalid start of a value. Path: $.teamId | LineNumber: 5 | BytePositionInLine: 12.\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"firstName\": \"Michael\",\r\n  \"lastName\": \"Johnson\",\r\n  \"position\": \"Forward\",\r\n  \"teamId\": Chicago\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/Members",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Members"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddMember_BadRequest_RequiredFields",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.errors.length).to.eql(3);\r",
+									"    pm.expect(jsonData.errors).to.contains(\"The TeamId is required.\");\r",
+									"    pm.expect(jsonData.errors).to.contains(\"The LastName is required.\");\r",
+									"    pm.expect(jsonData.errors).to.contains(\"The FirstName is required.\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"firstName\": \"\",\r\n  \"lastName\": \"\",\r\n  \"position\": \"\",\r\n  \"teamId\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/Members",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Members"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddMember_BadRequest_MaxLength",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.errors.length).to.eql(3);\r",
+									"    pm.expect(jsonData.errors).to.contains(\"The maximum length of LastName is 50 characters.\");\r",
+									"    pm.expect(jsonData.errors).to.contains(\"The maximum length of Position is 20 characters.\");\r",
+									"    pm.expect(jsonData.errors).to.contains(\"The maximum length of FirstName is 50 characters.\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 1,\r\n  \"firstName\": \"123456789012345678901234567890123456789012345678901\",\r\n  \"lastName\": \"123456789012345678901234567890123456789012345678901\",\r\n  \"position\": \"123456789012345678901\",\r\n  \"teamId\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/Members",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Members"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateMember_BadRequest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.errors.length).to.eql(2);\r",
+									"    pm.expect(jsonData.errors[0]).to.eql(\"The teamMemberDto field is required.\");\r",
+									"    pm.expect(jsonData.errors[1]).to.eql(\"'C' is an invalid start of a value. Path: $.teamId | LineNumber: 5 | BytePositionInLine: 12.\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"firstName\": \"Michael\",\r\n  \"lastName\": \"Jordan\",\r\n  \"position\": \"Forward\",\r\n  \"teamId\": Chicago\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/Members/0",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Members",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateMember_BadRequest_Diff_Ids",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.ErrorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+									"    pm.expect(jsonData.Errors[0]).to.eql(\"Id [0] is different to TeamMember.Id [1]\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 1,\r\n  \"firstName\": \"Michael\",\r\n  \"lastName\": \"Jordan\",\r\n  \"position\": \"Forward\",\r\n  \"teamId\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/Members/0",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Members",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateMember_BadRequest_RequiredFields",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.errors.length).to.eql(3);\r",
+									"    pm.expect(jsonData.errors).to.contains(\"The TeamId is required.\");\r",
+									"    pm.expect(jsonData.errors).to.contains(\"The LastName is required.\");\r",
+									"    pm.expect(jsonData.errors).to.contains(\"The FirstName is required.\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"firstName\": \"\",\r\n  \"lastName\": \"\",\r\n  \"position\": \"\",\r\n  \"teamId\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/Members/0",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Members",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateMember_BadRequest_MaxLength",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.errors.length).to.eql(3);\r",
+									"    pm.expect(jsonData.errors).to.contains(\"The maximum length of LastName is 50 characters.\");\r",
+									"    pm.expect(jsonData.errors).to.contains(\"The maximum length of Position is 20 characters.\");\r",
+									"    pm.expect(jsonData.errors).to.contains(\"The maximum length of FirstName is 50 characters.\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"firstName\": \"123456789012345678901234567890123456789012345678901\",\r\n  \"lastName\": \"123456789012345678901234567890123456789012345678901\",\r\n  \"position\": \"123456789012345678901\",\r\n  \"teamId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/Members/0",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Members",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteMember_BadRequest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.errors.length).to.eql(1);\r",
+									"    pm.expect(jsonData.errors[0]).to.eql(\"The value 'A' is not valid.\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Members/A",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Members",
+								"A"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetMemberById_NotFound",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404-NotFound\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.ErrorType).to.eql(\"Not Found\");\r",
+									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+									"    pm.expect(jsonData.Errors[0]).to.eql(\"Team Member with Id=0 Not Found\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Members/0",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Members",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateMember_NotFound",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404-NotFound\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.ErrorType).to.eql(\"Not Found\");\r",
+									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+									"    pm.expect(jsonData.Errors[0]).to.eql(\"Team Member with Id=0 Not Found\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"firstName\": \"Michael\",\r\n  \"lastName\": \"Jordan\",\r\n  \"position\": \"Forward\",\r\n  \"teamId\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/Members/0",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Members",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteMember_NotFound",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404-NotFound\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.ErrorType).to.eql(\"Not Found\");\r",
+									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+									"    pm.expect(jsonData.Errors[0]).to.eql(\"Team Member with Id=0 Not Found\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Members/0",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Members",
+								"0"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BaseUrl",
+			"value": "https://localhost:3001/api",
+			"type": "string"
+		},
+		{
+			"key": "teamId",
+			"value": ""
+		},
+		{
+			"key": "memberId",
+			"value": ""
+		}
+	]
+}
