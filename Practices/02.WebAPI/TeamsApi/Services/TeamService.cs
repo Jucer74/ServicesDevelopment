@@ -62,6 +62,11 @@ namespace TeamsApi.Services
 
         public async Task<Team> UpdateTeam(int id, Team team)
         {
+            if(id != team.Id)
+            {
+                throw new BadRequestException($"Id [{id}] is different to Team.Id [{team.Id}]");
+            }
+
             var original = await _appDbContext.Set<Team>().FindAsync(id);
 
             if (original is null)
