@@ -11,7 +11,7 @@ public class TeamMemberValidator : AbstractValidator<TeamMemberDto>
             .NotEmpty()
             .WithMessage("The FirstName is required.")
             .MaximumLength(50)
-            .WithMessage("The maximum length of FisrtName is 50 characters.");
+            .WithMessage("The maximum length of FirstName is 50 characters.");
 
         RuleFor(m => m.LastName)
             .NotEmpty()
