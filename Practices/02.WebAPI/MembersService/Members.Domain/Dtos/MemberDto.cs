@@ -1,6 +1,6 @@
 ﻿namespace Members.Domain.Dtos;
 
-public class TeamMemberDto
+public class MemberDto
 {
     public int Id { get; set; }
     public string FirstName { get; set; } = null!;
