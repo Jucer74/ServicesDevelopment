@@ -4,61 +4,69 @@ using TeamsApi.Dtos;
 using TeamsApi.Models;
 using TeamsApi.Services;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+namespace TeamsApi.Controllers;
 
-namespace TeamsApi.Controllers
+[Route("api/[controller]")]
+[ApiController]
+public class TeamMembersController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class MembersController : ControllerBase
+    private readonly ITeamMemberService _teamMemberService;
+    private readonly IMapper _mapper;
+
+    public TeamMembersController(ITeamMemberService teamMemberService, IMapper mapper)
     {
-        private readonly ITeamMemberService _teamMemberService;
-        private readonly IMapper _mapper;
+        _teamMemberService = teamMemberService;
+        _mapper = mapper;
+    }
 
-        public MembersController(ITeamMemberService teamMemberService, IMapper mapper)
-        {
-            _teamMemberService = teamMemberService;
-            _mapper = mapper;
-        }
+    // GET: api/<TeamMembersController>
+    [HttpGet]
+    public async Task<IActionResult> GetAllTeamMembers()
+    {
+        var teamMembers = await _teamMemberService.GetAllTeamMembers();
+        return Ok(_mapper.Map<List<TeamMember>, List<TeamMemberDto>>(teamMembers));
+    }
 
-        // GET: api/<MembersController>
-        [HttpGet]
-        public async Task<IActionResult> GetAllTeamMembers()
-        {
-            var teamMembers = await _teamMemberService.GetAllTeamMembers();
-            return Ok(_mapper.Map<List<TeamMember>, List<TeamMemberDto>>(teamMembers));
-        }
 
-        // GET api/<MembersController>/5
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetTeamMemberById(int id)
-        {
-            var teamMember = await _teamMemberService.GetTeamMemberById(id);
-            return Ok(_mapper.Map<TeamMember, TeamMemberDto>(teamMember));
-        }
+    // GET api/<TeamMembersController>/5
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetTeamMemberById(int id)
+    {
+        var teamMember = await _teamMemberService.GetTeamMemberById(id);
+        return Ok(_mapper.Map<TeamMember, TeamMemberDto>(teamMember));
+    }
 
-        // POST api/<MembersController>
-        [HttpPost]
-        public async Task<IActionResult> Post([FromBody] TeamMemberDto teamMemberDto)
-        {
-            var teamMember = await _teamMemberService.CreateTeamMember(_mapper.Map<TeamMemberDto, TeamMember>(teamMemberDto));
-            return Ok(_mapper.Map<TeamMember, TeamMemberDto>(teamMember));
-        }
+    //GET api/<TeamMembersController>/5/team
+    [HttpGet("{id}/Teams")]
+    public async Task<IActionResult> GetTeam(int id)
+    {
+        var team = await _teamMemberService.GetTeam(id);
+        return Ok(_mapper.Map<Team, TeamDto>(team));
+    }
 
-        // PUT api/<MembersController>/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] TeamMemberDto teamMemberDto)
-        {
-            var teamMember = await _teamMemberService.UpdateTeamMember(id, _mapper.Map<TeamMemberDto, TeamMember>(teamMemberDto));
-            return Ok(_mapper.Map<TeamMember, TeamMemberDto>(teamMember));
-        }
+    // POST api/<TeamMembersController>
+    [HttpPost]
+    public async Task<IActionResult> Post([FromBody] TeamMemberDto teamMemberDto)
+    {
+        TeamMember teamMember = await _teamMemberService.CreateTeamMember(_mapper.Map<TeamMemberDto, TeamMember>(teamMemberDto));
 
-        // DELETE api/<MembersController>/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
-        {
-            await _teamMemberService.DeleteTeamMember(id);
-            return Ok();
-        }
+        return Ok(_mapper.Map<TeamMember, TeamMemberDto>(teamMember));
+    }
+
+    // PUT api/<TeamMembersController>/5
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Put(int id, [FromBody] TeamMemberDto teamMemberDto)
+    {
+        TeamMember teamMember = await _teamMemberService.UpdateTeamMember(id, _mapper.Map<TeamMemberDto, TeamMember>(teamMemberDto));
+
+        return Ok(_mapper.Map<TeamMember, TeamMemberDto>(teamMember));
+    }
+
+    // DELETE api/<TeamMembersController>/5
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        await _teamMemberService.DeleteTeamMember(id);
+        return Ok();
     }
 }

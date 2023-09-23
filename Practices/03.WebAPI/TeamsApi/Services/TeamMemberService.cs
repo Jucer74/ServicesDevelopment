@@ -8,15 +8,20 @@ namespace TeamsApi.Services;
 public class TeamMemberService : ITeamMemberService
 {
     private readonly AppDbContext _appDbContext;
-
     public TeamMemberService(AppDbContext appDbContext)
     {
         _appDbContext = appDbContext;
     }
-
-
     public async Task<TeamMember> CreateTeamMember(TeamMember teamMember)
     {
+        var teamId = teamMember?.TeamId;
+        Team team = await _appDbContext.Set<Team>().FindAsync(teamId);
+
+        if (team is null)
+        {
+            throw new Exception($"Team with Id={teamId} Not Found");
+        }
+
         _appDbContext.Set<TeamMember>().Add(teamMember);
         await _appDbContext.SaveChangesAsync();
         return teamMember;
@@ -51,7 +56,7 @@ public class TeamMemberService : ITeamMemberService
         return teamMember!;
     }
 
-    public async Task<TeamMember> UpdateTeamMember(int id, TeamMember teamMember)
+    public async Task<Team>GetTeam(int id)
     {
         if (id != teamMember.Id)
         {
@@ -60,14 +65,23 @@ public class TeamMemberService : ITeamMemberService
 
         var original = await _appDbContext.Set<TeamMember>().FindAsync(id);
 
-        if (original is null)
+        Team team = await _appDbContext.Set<Team>().FindAsync(teamMember.TeamId) ?? throw new Exception($"Team with Id={teamMember.TeamId} Not Found");
+
+        return team;
+    }
+
+
+    public async Task<TeamMember> UpdateTeamMember(int id,TeamMember teamMember)
+    {
+       if (id != teamMember.Id)
         {
             throw new NotFoundException($"Team Member with Id={id} Not Found");
         }
 
-        _appDbContext.Entry(original).CurrentValues.SetValues(teamMember!);
-        await _appDbContext.SaveChangesAsync();
+        var original = await _appDbContext.Set<TeamMember>().FindAsync(id) ?? throw new Exception($"TeamMember with Id={id} Not Found");
 
-        return teamMember!;
+        _appDbContext.Entry(original).CurrentValues.SetValues(teamMember);
+        await _appDbContext.SaveChangesAsync();
+        return teamMember;
     }
 }

@@ -30,6 +30,9 @@ namespace TeamsApi.Services
                 throw new NotFoundException($"Team with Id={id} Not Found");
             }
 
+            List<TeamMember> members = await _appDbContext.Set<TeamMember>().Where(tm => tm.TeamId == id).ToListAsync<TeamMember>();
+
+            _appDbContext.Set<TeamMember>().RemoveRange(members);
             _appDbContext.Set<Team>().Remove(original);
             await _appDbContext.SaveChangesAsync();
         }
@@ -74,6 +77,7 @@ namespace TeamsApi.Services
                 throw new NotFoundException($"Team with Id={id} Not Found");
             }
 
+            var original = await _appDbContext.Set<Team>().FindAsync(id) ?? throw new Exception($"Team with Id={id} Not Found");
             _appDbContext.Entry(original).CurrentValues.SetValues(team!);
             await _appDbContext.SaveChangesAsync();
 

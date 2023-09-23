@@ -41,7 +41,8 @@ namespace TeamsApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] TeamDto teamDto)
         {
-            var team = await _teamService.CreateTeam(_mapper.Map<TeamDto, Team>(teamDto));
+            Team team = await _teamService.CreateTeam(_mapper.Map<TeamDto, Team>(teamDto));
+
             return Ok(_mapper.Map<Team, TeamDto>(team));
         }
 
@@ -49,7 +50,8 @@ namespace TeamsApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] TeamDto teamDto)
         {
-            var team = await _teamService.UpdateTeam(id, _mapper.Map<TeamDto, Team>(teamDto));
+            Team team = await _teamService.UpdateTeam(id, _mapper.Map<TeamDto, Team>(teamDto));
+
             return Ok(_mapper.Map<Team, TeamDto>(team));
         }
 

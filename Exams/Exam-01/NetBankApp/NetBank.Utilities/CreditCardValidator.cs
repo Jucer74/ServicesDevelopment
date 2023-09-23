@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using NetBank.Domain.Dto;
+using System.Text;
 
 namespace NetBank.Utilities;
 
@@ -47,5 +48,76 @@ public static class CreditCardValidator
                 digitsOnly.Append(character);
         }
         return digitsOnly;
+    }
+
+    public static bool IsValidCreditCardLength(string creditCardNumber, List<IssuingNetworkData> issuingNetworkDataList, string issuingNetworkName)
+    {
+        IssuingNetworkData issuingNetworkData = issuingNetworkDataList.Single(issuingNetworkData => issuingNetworkData.Name.Trim() == issuingNetworkName.Trim());//Finds the data of the issuing network
+        int creditCardNumberLength = creditCardNumber.Trim().Length;
+
+        return issuingNetworkData.AllowedLengths.Contains(creditCardNumberLength);
+    }
+
+    public static string FindIssuingNetwork(string creditCardNumber, List<IssuingNetworkData> issuingNetworkDataList)
+    {
+        string issuingNetworkName = "";
+        bool startsWithNumbers = false;
+        bool startsWithNumbersInRange = false;
+
+        foreach (IssuingNetworkData issuingNetworkData in issuingNetworkDataList)
+        {
+            if (issuingNetworkData.StartsWithNumbers?.Any() ?? false)
+            {
+                startsWithNumbers = StartsWithNumberFromList(creditCardNumber, issuingNetworkData.StartsWithNumbers);
+            }
+
+            if (issuingNetworkData.InRange != null)
+            {
+                startsWithNumbersInRange = StartsWithNumberInRange(creditCardNumber, issuingNetworkData.InRange);
+            }
+
+            if (startsWithNumbers || startsWithNumbersInRange)
+            {
+                issuingNetworkName = issuingNetworkData.Name;
+                break;
+            }
+        }
+
+        return issuingNetworkName;
+    }
+
+    private static bool StartsWithNumberFromList(string creditCardNumber, List<int> numberList)
+    {
+        //Checks if the creadit card number starts with any number inside a particular list of numbers
+        int numberLength;
+        int initalCreditCardDigits;
+
+        foreach (int number in numberList)
+        {
+            numberLength = number.ToString().Length;
+
+            if (creditCardNumber.Length < numberLength) { continue; } //If the length of the credit card number is shorter than expected, those numbers will never be equal
+
+            initalCreditCardDigits = int.Parse(creditCardNumber[..numberLength]);//Takes the initial digits of the credit card 
+
+            if (initalCreditCardDigits == number)//Compares the inital digits of the credit card with each element of the list
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private static bool StartsWithNumberInRange(string creditCardNumber, RangeNumber rangeNumber)
+    {
+        int numberLength = rangeNumber.MinValue.ToString().Length;
+
+        if (creditCardNumber.Length < numberLength) { return false; }//If the length of the credit card number is shorter than the minimum allowable length, then the credit card number is out of range
+
+        int initalCreditCardDigits = int.Parse(creditCardNumber[..numberLength]);//Takes the initial digits of the credit card 
+
+        //Checks if the initial digits of the credit card number are between a range
+        return (initalCreditCardDigits >= rangeNumber.MinValue) && (initalCreditCardDigits <= rangeNumber.MaxValue);
     }
 }

@@ -12,5 +12,6 @@ public class MappingProfile: Profile
         CreateMap<Team, TeamDto>();
         CreateMap<TeamMemberDto, TeamMember>();
         CreateMap<TeamMember, TeamMemberDto>();
+        CreateMap<Team, TeamDto>();
     }
 }

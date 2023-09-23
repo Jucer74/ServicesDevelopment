@@ -19,5 +19,5 @@ public class TeamMember
     [ForeignKey("TeamId")]
     public int TeamId { get; set; }
 
-    public Team Team { get; set; } = null!;
+    public Team team { get; set; } = null!;
 }

@@ -1,9 +1,11 @@
 ﻿using Netbank.Application.Interfaces;
+using Netbank.Application.Mappers;
 using NetBank.Domain.Define;
 using NetBank.Domain.Dto;
 using NetBank.Domain.Interfaces.Repositories;
 using NetBank.Domain.Models;
-using System.Linq;
+using NetBank.Utilities;
+using System.Text.RegularExpressions;
 
 namespace Netbank.Application.Services;
 
@@ -31,22 +33,66 @@ public class CreditCardService : ICreditCardService
 
     public async Task<ValidationResultType> Validate(string creditCardNumber)
     {
-        // List<IssuingNetworkData> issuingNetworkDataList = await LoadIssuingNetworkData();
+        bool isValidCreditCardLength;
+        bool isCreditCardNumberValid;
+        string issuingNetworkName;
+        List<IssuingNetworkData> issuingNetworkDataList;
+
 
         // Call the Individual Validations
 
-        throw new NotImplementedException();
+        //Checks if there is any letter in the credit card number
+        if (!Regex.IsMatch(creditCardNumber, NUMBER_REGEX))
+        {
+            string requestMessage = ErrorMessageFormatter.AddSpaceBetweenLowerAndCapitalLetter(ValidationResultType.BadRequest.ToString());
+
+            Result = new CreditCardResult(requestMessage, false);
+
+            return ValidationResultType.BadRequest;
+        }
+
+        issuingNetworkDataList = await LoadIssuingNetworkDataAsync();
+
+        issuingNetworkName = CreditCardValidator.FindIssuingNetwork(creditCardNumber, issuingNetworkDataList);
+
+        //Checks if the issuing network was not found
+        if (string.IsNullOrEmpty(issuingNetworkName))
+        {
+            string requestMessage = ErrorMessageFormatter.AddSpaceBetweenLowerAndCapitalLetter(ValidationResultType.NotFound.ToString());
+
+            Result = new CreditCardResult(requestMessage, false);
+            return ValidationResultType.NotFound;
+        }
+
+
+        isValidCreditCardLength = CreditCardValidator.IsValidCreditCardLength(creditCardNumber, issuingNetworkDataList, issuingNetworkName);
+        isCreditCardNumberValid = CreditCardValidator.IsValid(creditCardNumber);
+
+        if (isValidCreditCardLength && isCreditCardNumberValid)//As the issuing network was found, it checks if the credit number is valid and if it has the appropriate length
+        {
+            Result = new CreditCardResult(issuingNetworkName, true);
+            return ValidationResultType.Ok;
+        }
+
+        Result = new CreditCardResult(issuingNetworkName, false); //The issuing network was found, but the credit card number is invalid or it does not have the appropiate length
+        return ValidationResultType.Ok;
     }
 
-    private async Task<List<IssuingNetworkData>> LoadIssuingNetworkData()
+    private async Task<List<IssuingNetworkData>> LoadIssuingNetworkDataAsync()
     {
         // Convert Data to List Data
-        throw new NotImplementedException();
+        List<IssuingNetwork> issuingNetworkList = await this.GetIssuingNetworksAsync();
+
+        List<IssuingNetworkData> issuingNetworkDataList = IssuingNetworkDataMapper.MapsFromIssuingNetworkToIssuingNetworkData(issuingNetworkList);
+        
+        return issuingNetworkDataList;
     }
 
-    private async Task<List<IssuingNetwork>> GetIssuingNetworks()
+    private async Task<List<IssuingNetwork>> GetIssuingNetworksAsync()
     {
         // Load Data From DataBase
-        throw new NotImplementedException();
+        IEnumerable<IssuingNetwork> issuingNetwork = await _issuingNetworkRepository.GetAllAsync();
+
+        return issuingNetwork.ToList();
     }
 }
