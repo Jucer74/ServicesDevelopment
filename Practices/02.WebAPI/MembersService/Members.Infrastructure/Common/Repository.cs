@@ -49,9 +49,9 @@ public class Repository<T> : IRepository<T> where T : EntityBase
     public async Task<T> UpdateAsync(T entity)
     {
         var id = entity?.Id;
-        _ = await _appDbContext.Set<T>().FindAsync(id) ?? throw new NotFoundException($"Member with Id={id} Not Found");
+        var original = await _appDbContext.Set<T>().FindAsync(id) ?? throw new NotFoundException($"Member with Id={id} Not Found");
 
-        _appDbContext.Entry(entity).CurrentValues.SetValues(entity);
+        _appDbContext.Entry(original).CurrentValues.SetValues(entity);
         await _appDbContext.SaveChangesAsync();
 
         return entity;

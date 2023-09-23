@@ -6,6 +6,8 @@ using Members.Application.Interfaces;
 
 namespace Members.Api.Controllers;
 
+[Route("api/v1/[controller]")]
+[ApiController]
 public class MembersController: ControllerBase
 {
     private readonly IMemberService _MemberService;
@@ -22,7 +24,7 @@ public class MembersController: ControllerBase
     public async Task<IActionResult> GetAllMembers()
     {
         var members = await _MemberService.GetAllAsync();
-        return Ok(_mapper.Map<IEnumerable<Member>, List<MemberDto>>(members));
+        return Ok(_mapper.Map<List<Member>, List<MemberDto>>((List<Member>)members));
     }
 
     // GET api/<MembersController>/5

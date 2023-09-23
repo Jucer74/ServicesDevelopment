@@ -10,6 +10,5 @@ public class MappingProfile: Profile
     {
         CreateMap<MemberDto, Member>();
         CreateMap<Member, MemberDto>();
-        CreateMap<IEnumerable<Member>,List<MemberDto>>();
     }
 }
