@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using TeamsService.Application.Interfaces;
+﻿using TeamsService.Application.Interfaces;
 using TeamsService.Domain.Dtos;
 using TeamsService.Domain.Entities;
 using TeamsService.Domain.Exceptions;
@@ -28,6 +27,7 @@ namespace TeamsService.Application.Services
             if (original is not null)
             {
                 await _teamRepository.RemoveAsync(original);
+                return;
             }
 
             throw new NotFoundException($"Team with Id={id} Not Found");
