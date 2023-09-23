@@ -30,6 +30,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddCoreModules();
 builder.Services.AddMapping();
 builder.Services.AddInfrastructureModules();
+builder.Services.AddValidators();
 
 var app = builder.Build();
 

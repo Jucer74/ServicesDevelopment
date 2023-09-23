@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using Members.Api.Mapping;
 using Members.Application.Interfaces;
 using Members.Application.Services;
+using Members.Domain.Dtos;
 using Members.Domain.Interfaces;
+using Members.Domain.Validators;
 using Members.Infrastructure.Repositories;
 
 namespace Members.Api.Extensions;
@@ -32,6 +35,13 @@ public static class ModulesExtension
         // Repositories
         services.AddScoped<IMemberRepository, MemberRepository>();
 
+
+        return services;
+    }
+
+    public static IServiceCollection AddValidators(this IServiceCollection services)
+    {
+        services.AddScoped<IValidator<MemberDto>, MemberValidator>();
 
         return services;
     }
