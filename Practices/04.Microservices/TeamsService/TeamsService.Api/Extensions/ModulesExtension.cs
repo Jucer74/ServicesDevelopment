@@ -2,11 +2,11 @@
 using FluentValidation;
 using TeamsService.Api.Dtos;
 using TeamsService.Api.Mapping;
-using TeamsService.Api.Validations;
+using TeamsService.Api.Validators;
 using TeamsService.Application.Interfaces;
 using TeamsService.Application.Services;
 using TeamsService.Domain.Interfaces.Repositories;
-using TeamsService.Infrastructure.Repositorires;
+using TeamsService.Infrastructure.Repositories;
 
 namespace TeamsService.Api.Extensions;
 

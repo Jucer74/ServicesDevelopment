@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TeamsService.Domain.Entities;
 
-namespace TeamsService.Infrastructure.Content
+namespace TeamsService.Infrastructure.Context
 {
     public class AppDbContext : DbContext
     {

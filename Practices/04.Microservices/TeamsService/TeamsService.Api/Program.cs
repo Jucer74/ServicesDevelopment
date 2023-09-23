@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TeamsService.Api.Extensions;
 using TeamsService.Api.Middleware;
-using TeamsService.Infrastructure.Content;
+using TeamsService.Infrastructure.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 

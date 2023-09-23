@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 using TeamsService.Domain.Common;
 using TeamsService.Domain.Exceptions;
-using TeamsService.Infrastructure.Content;
+using TeamsService.Infrastructure.Context;
 
 namespace TeamsService.Infrastructure.Common
 {

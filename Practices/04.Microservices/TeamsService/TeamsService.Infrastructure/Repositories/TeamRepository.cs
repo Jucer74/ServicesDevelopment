@@ -1,9 +1,9 @@
 ﻿using TeamsService.Domain.Entities;
 using TeamsService.Domain.Interfaces.Repositories;
 using TeamsService.Infrastructure.Common;
-using TeamsService.Infrastructure.Content;
+using TeamsService.Infrastructure.Context;
 
-namespace TeamsService.Infrastructure.Repositorires
+namespace TeamsService.Infrastructure.Repositories
 {
     public class TeamRepository : Repository<Team>, ITeamRepository
     {
