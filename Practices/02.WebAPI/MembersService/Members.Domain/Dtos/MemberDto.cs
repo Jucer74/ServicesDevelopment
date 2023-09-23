@@ -1,17 +1,10 @@
-﻿using Members.Domain.Common;
-using System.ComponentModel.DataAnnotations;
+﻿namespace Members.Domain.Dtos;
 
-namespace Members.Domain.Entities;
-
-public class Member : EntityBase
+public class MemberDto
 {
-    [Required]
+    public int Id { get; set; }
     public string FirstName { get; set; } = null!;
-
-    [Required]
     public string LastName { get; set; } = null!;
-
     public string Position { get; set; } = null!;
-
     public int TeamId { get; set; }
 }
