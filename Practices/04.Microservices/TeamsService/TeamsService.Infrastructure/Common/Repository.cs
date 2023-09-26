@@ -46,6 +46,7 @@ namespace TeamsService.Infrastructure.Common
             {
                 _appDbContext.Set<T>().Remove(entity!);
                 await _appDbContext.SaveChangesAsync();
+                return;
             }
 
             throw new NotFoundException($"Team with Id={id} Not Found");

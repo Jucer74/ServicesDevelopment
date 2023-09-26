@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "c261c541-134d-42eb-a559-d998f61617c0",
-		"name": "TeamPlayers",
+		"_postman_id": "4f3e4081-269d-4c40-a5fa-8e60279a512d",
+		"name": "PlayersServices",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "7220587"
 	},
@@ -34,9 +34,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BaseUrl}}/Teams",
+							"raw": "{{TeamsBaseUrl}}/Teams",
 							"host": [
-								"{{BaseUrl}}"
+								"{{TeamsBaseUrl}}"
 							],
 							"path": [
 								"Teams"
@@ -82,9 +82,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BaseUrl}}/Teams",
+							"raw": "{{TeamsBaseUrl}}/Teams",
 							"host": [
-								"{{BaseUrl}}"
+								"{{TeamsBaseUrl}}"
 							],
 							"path": [
 								"Teams"
@@ -120,9 +120,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BaseUrl}}/Teams/{{teamId}}",
+							"raw": "{{TeamsBaseUrl}}/Teams/{{teamId}}",
 							"host": [
-								"{{BaseUrl}}"
+								"{{TeamsBaseUrl}}"
 							],
 							"path": [
 								"Teams",
@@ -168,9 +168,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BaseUrl}}/Teams/{{teamId}}",
+							"raw": "{{TeamsBaseUrl}}/Teams/{{teamId}}",
 							"host": [
-								"{{BaseUrl}}"
+								"{{TeamsBaseUrl}}"
 							],
 							"path": [
 								"Teams",
@@ -199,9 +199,9 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{BaseUrl}}/Teams/{{teamId}}",
+							"raw": "{{TeamsBaseUrl}}/Teams/{{teamId}}",
 							"host": [
-								"{{BaseUrl}}"
+								"{{TeamsBaseUrl}}"
 							],
 							"path": [
 								"Teams",
@@ -237,9 +237,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BaseUrl}}/Teams/A",
+							"raw": "{{TeamsBaseUrl}}/Teams/A",
 							"host": [
-								"{{BaseUrl}}"
+								"{{TeamsBaseUrl}}"
 							],
 							"path": [
 								"Teams",
@@ -285,9 +285,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BaseUrl}}/Teams",
+							"raw": "{{TeamsBaseUrl}}/Teams",
 							"host": [
-								"{{BaseUrl}}"
+								"{{TeamsBaseUrl}}"
 							],
 							"path": [
 								"Teams"
@@ -332,9 +332,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BaseUrl}}/Teams",
+							"raw": "{{TeamsBaseUrl}}/Teams",
 							"host": [
-								"{{BaseUrl}}"
+								"{{TeamsBaseUrl}}"
 							],
 							"path": [
 								"Teams"
@@ -381,9 +381,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BaseUrl}}/Teams",
+							"raw": "{{TeamsBaseUrl}}/Teams",
 							"host": [
-								"{{BaseUrl}}"
+								"{{TeamsBaseUrl}}"
 							],
 							"path": [
 								"Teams"
@@ -428,9 +428,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BaseUrl}}/Teams/0",
+							"raw": "{{TeamsBaseUrl}}/Teams/0",
 							"host": [
-								"{{BaseUrl}}"
+								"{{TeamsBaseUrl}}"
 							],
 							"path": [
 								"Teams",
@@ -475,9 +475,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BaseUrl}}/Teams/0",
+							"raw": "{{TeamsBaseUrl}}/Teams/0",
 							"host": [
-								"{{BaseUrl}}"
+								"{{TeamsBaseUrl}}"
 							],
 							"path": [
 								"Teams",
@@ -523,9 +523,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BaseUrl}}/Teams/0",
+							"raw": "{{TeamsBaseUrl}}/Teams/0",
 							"host": [
-								"{{BaseUrl}}"
+								"{{TeamsBaseUrl}}"
 							],
 							"path": [
 								"Teams",
@@ -573,9 +573,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BaseUrl}}/Teams/0",
+							"raw": "{{TeamsBaseUrl}}/Teams/0",
 							"host": [
-								"{{BaseUrl}}"
+								"{{TeamsBaseUrl}}"
 							],
 							"path": [
 								"Teams",
@@ -611,9 +611,9 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{BaseUrl}}/Teams/A",
+							"raw": "{{TeamsBaseUrl}}/Teams/A",
 							"host": [
-								"{{BaseUrl}}"
+								"{{TeamsBaseUrl}}"
 							],
 							"path": [
 								"Teams",
@@ -651,9 +651,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BaseUrl}}/Teams/0",
+							"raw": "{{TeamsBaseUrl}}/Teams/0",
 							"host": [
-								"{{BaseUrl}}"
+								"{{TeamsBaseUrl}}"
 							],
 							"path": [
 								"Teams",
@@ -700,9 +700,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BaseUrl}}/Teams/0",
+							"raw": "{{TeamsBaseUrl}}/Teams/0",
 							"host": [
-								"{{BaseUrl}}"
+								"{{TeamsBaseUrl}}"
 							],
 							"path": [
 								"Teams",
@@ -740,13 +740,50 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{BaseUrl}}/Teams/0",
+							"raw": "{{TeamsBaseUrl}}/Teams/0",
 							"host": [
-								"{{BaseUrl}}"
+								"{{TeamsBaseUrl}}"
 							],
 							"path": [
 								"Teams",
 								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetMemberByTeamId_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    var dataCount = jsonData.length;\r",
+									"    pm.expect(dataCount).to.eql(5);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{TeamsBaseUrl}}/Teams/1/Members",
+							"host": [
+								"{{TeamsBaseUrl}}"
+							],
+							"path": [
+								"Teams",
+								"1",
+								"Members"
 							]
 						}
 					},
@@ -782,9 +819,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BaseUrl}}/Members",
+							"raw": "{{MembersBaseUrl}}/Members",
 							"host": [
-								"{{BaseUrl}}"
+								"{{MembersBaseUrl}}"
 							],
 							"path": [
 								"Members"
@@ -831,9 +868,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BaseUrl}}/Members",
+							"raw": "{{MembersBaseUrl}}/Members",
 							"host": [
-								"{{BaseUrl}}"
+								"{{MembersBaseUrl}}"
 							],
 							"path": [
 								"Members"
@@ -870,9 +907,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BaseUrl}}/Members/{{memberId}}",
+							"raw": "{{MembersBaseUrl}}/Members/{{memberId}}",
 							"host": [
-								"{{BaseUrl}}"
+								"{{MembersBaseUrl}}"
 							],
 							"path": [
 								"Members",
@@ -919,9 +956,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BaseUrl}}/Members/{{memberId}}",
+							"raw": "{{MembersBaseUrl}}/Members/{{memberId}}",
 							"host": [
-								"{{BaseUrl}}"
+								"{{MembersBaseUrl}}"
 							],
 							"path": [
 								"Members",
@@ -950,9 +987,9 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{BaseUrl}}/Members/{{memberId}}",
+							"raw": "{{MembersBaseUrl}}/Members/{{memberId}}",
 							"host": [
-								"{{BaseUrl}}"
+								"{{MembersBaseUrl}}"
 							],
 							"path": [
 								"Members",
@@ -988,9 +1025,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BaseUrl}}/Members/A",
+							"raw": "{{MembersBaseUrl}}/Members/A",
 							"host": [
-								"{{BaseUrl}}"
+								"{{MembersBaseUrl}}"
 							],
 							"path": [
 								"Members",
@@ -1036,9 +1073,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BaseUrl}}/Members",
+							"raw": "{{MembersBaseUrl}}/Members",
 							"host": [
-								"{{BaseUrl}}"
+								"{{MembersBaseUrl}}"
 							],
 							"path": [
 								"Members"
@@ -1085,9 +1122,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BaseUrl}}/Members",
+							"raw": "{{MembersBaseUrl}}/Members",
 							"host": [
-								"{{BaseUrl}}"
+								"{{MembersBaseUrl}}"
 							],
 							"path": [
 								"Members"
@@ -1134,9 +1171,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BaseUrl}}/Members",
+							"raw": "{{MembersBaseUrl}}/Members",
 							"host": [
-								"{{BaseUrl}}"
+								"{{MembersBaseUrl}}"
 							],
 							"path": [
 								"Members"
@@ -1181,9 +1218,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BaseUrl}}/Members/0",
+							"raw": "{{MembersBaseUrl}}/Members/0",
 							"host": [
-								"{{BaseUrl}}"
+								"{{MembersBaseUrl}}"
 							],
 							"path": [
 								"Members",
@@ -1228,9 +1265,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BaseUrl}}/Members/0",
+							"raw": "{{MembersBaseUrl}}/Members/0",
 							"host": [
-								"{{BaseUrl}}"
+								"{{MembersBaseUrl}}"
 							],
 							"path": [
 								"Members",
@@ -1278,9 +1315,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BaseUrl}}/Members/0",
+							"raw": "{{MembersBaseUrl}}/Members/0",
 							"host": [
-								"{{BaseUrl}}"
+								"{{MembersBaseUrl}}"
 							],
 							"path": [
 								"Members",
@@ -1328,9 +1365,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BaseUrl}}/Members/0",
+							"raw": "{{MembersBaseUrl}}/Members/0",
 							"host": [
-								"{{BaseUrl}}"
+								"{{MembersBaseUrl}}"
 							],
 							"path": [
 								"Members",
@@ -1366,9 +1403,9 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{BaseUrl}}/Members/A",
+							"raw": "{{MembersBaseUrl}}/Members/A",
 							"host": [
-								"{{BaseUrl}}"
+								"{{MembersBaseUrl}}"
 							],
 							"path": [
 								"Members",
@@ -1406,9 +1443,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BaseUrl}}/Members/0",
+							"raw": "{{MembersBaseUrl}}/Members/0",
 							"host": [
-								"{{BaseUrl}}"
+								"{{MembersBaseUrl}}"
 							],
 							"path": [
 								"Members",
@@ -1455,9 +1492,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BaseUrl}}/Members/0",
+							"raw": "{{MembersBaseUrl}}/Members/0",
 							"host": [
-								"{{BaseUrl}}"
+								"{{MembersBaseUrl}}"
 							],
 							"path": [
 								"Members",
@@ -1495,9 +1532,9 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{BaseUrl}}/Members/0",
+							"raw": "{{MembersBaseUrl}}/Members/0",
 							"host": [
-								"{{BaseUrl}}"
+								"{{MembersBaseUrl}}"
 							],
 							"path": [
 								"Members",
@@ -1532,8 +1569,13 @@
 	],
 	"variable": [
 		{
-			"key": "BaseUrl",
-			"value": "https://localhost:3001/api",
+			"key": "TeamsBaseUrl",
+			"value": "https://localhost:4001/api",
+			"type": "string"
+		},
+		{
+			"key": "MembersBaseUrl",
+			"value": "https://localhost:5001/api",
 			"type": "string"
 		},
 		{
