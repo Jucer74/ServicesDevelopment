@@ -35,6 +35,14 @@ public class MembersController: ControllerBase
         return Ok(_mapper.Map<Member, MemberDto>(Member));
     }
 
+    //GET api/<MembersController>/team/5
+    [HttpGet("team/{id}")]
+    public async Task<IActionResult> GetMembersByTeamId(int id)
+    {
+        var Members = await _MemberService.FindAsync(member => member.TeamId == id);
+        return Ok(_mapper.Map<List<Member>, List<MemberDto>>((List<Member>)Members));
+    }
+
     // POST api/<MembersController>
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] MemberDto MemberDto)
