@@ -16,7 +16,6 @@ public static class ModulesExtension
     public static IServiceCollection AddCoreModules(this IServiceCollection services)
     {
         services.AddScoped<IMemberService, MemberService>();
-        services.AddScoped<ITeamClientService, TeamClientService>();
         return services;
     }
 
