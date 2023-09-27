@@ -2,7 +2,6 @@
 using FluentValidation;
 using MembersService.Api.Mapping;
 using MembersService.Application.Interfaces;
-using Members.Application.Services;
 using MembersService.Domain.Dtos;
 using MembersService.Domain.Interfaces;
 using MembersService.Domain.Validators;
