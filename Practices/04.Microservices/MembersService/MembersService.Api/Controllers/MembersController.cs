@@ -6,7 +6,7 @@ using MembersService.Application.Interfaces;
 
 namespace MembersService.Api.Controllers;
 
-[Route("api/v1/[controller]")]
+[Route("api/[controller]")]
 [ApiController]
 public class MembersController: ControllerBase
 {

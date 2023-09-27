@@ -9,24 +9,22 @@ public class MemberValidator:AbstractValidator<MemberDto>
     {
         RuleFor(x => x.FirstName)
             .NotEmpty()
-            .WithMessage("First name is required")
+            .WithMessage("The FirstName is required.")
             .MaximumLength(50)
-            .WithMessage("The maximum length of FisrtName is 50 characters");
+            .WithMessage("The maximum length of FirstName is 50 characters.");
 
         RuleFor(x => x.LastName)
             .NotEmpty()
-            .WithMessage("First name is required")
+            .WithMessage("The LastName is required.")
             .MaximumLength(50)
-            .WithMessage("The maximum length of FisrtName is 50 characters");
+            .WithMessage("The maximum length of LastName is 50 characters.");
 
         RuleFor(x => x.Position)
-            .NotEmpty()
-            .WithMessage("First name is required")
-            .MaximumLength(50)
-            .WithMessage("The maximum length of FisrtName is 50 characters");
+            .MaximumLength(20)
+            .WithMessage("The maximum length of Position is 20 characters.");
 
         RuleFor(x => x.TeamId)
             .NotEmpty()
-            .WithMessage("First name is required");
+            .WithMessage("The TeamId is required.");
     }
 }

@@ -41,13 +41,13 @@ public class MemberService : IMemberService
 
     public async Task<Member> GetByIdAsync(int id)
     {
-        Member member = await _memberRepository.GetByIdAsync(id) ?? throw new NotFoundException($"Member with Id={id} Not Found");
+        Member member = await _memberRepository.GetByIdAsync(id) ?? throw new NotFoundException($"Team Member with Id={id} Not Found");
         return member;
     }
 
     public async Task RemoveAsync(int id)
     {
-        Member member = await _memberRepository.GetByIdAsync(id) ?? throw new NotFoundException($"Member with Id={id} Not Found");
+        Member member = await _memberRepository.GetByIdAsync(id) ?? throw new NotFoundException($"Team Member with Id={id} Not Found");
         await _memberRepository.RemoveAsync(member);
     }
 
@@ -55,10 +55,10 @@ public class MemberService : IMemberService
     {
         if (id != entity.Id)
         {
-            throw new BadRequestException($"The Id={id} not corresponding with Entity.Id={entity.Id}");
+            throw new BadRequestException($"Id [{id}] is different to TeamMember.Id [{entity.Id}]");
         }
 
-        _ = await _memberRepository.GetByIdAsync(id) ?? throw new NotFoundException($"Member with Id={id} Not Found");
+        _ = await _memberRepository.GetByIdAsync(id) ?? throw new NotFoundException($"Team Member with Id={id} Not Found");
 
         return (await _memberRepository.UpdateAsync(entity));
     }
