@@ -42,7 +42,7 @@ public class Repository<T> : IRepository<T> where T : EntityBase
         var id = entity?.Id;
         _ = await _appDbContext.Set<T>().FindAsync(id) ?? throw new NotFoundException($"Member with Id={id} Not Found");
 
-        _appDbContext.Set<T>().Remove(entity);
+        _appDbContext.Set<T>().Remove(entity!);
         await _appDbContext.SaveChangesAsync();
     }
 
@@ -51,9 +51,9 @@ public class Repository<T> : IRepository<T> where T : EntityBase
         var id = entity?.Id;
         var original = await _appDbContext.Set<T>().FindAsync(id) ?? throw new NotFoundException($"Member with Id={id} Not Found");
 
-        _appDbContext.Entry(original).CurrentValues.SetValues(entity);
+        _appDbContext.Entry(original).CurrentValues.SetValues(entity!);
         await _appDbContext.SaveChangesAsync();
 
-        return entity;
+        return entity!;
     }
 }

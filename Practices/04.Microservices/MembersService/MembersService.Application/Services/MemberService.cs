@@ -58,7 +58,7 @@ public class MemberService : IMemberService
             throw new BadRequestException($"The Id={id} not corresponding with Entity.Id={entity.Id}");
         }
 
-        Member member = await _memberRepository.GetByIdAsync(id) ?? throw new NotFoundException($"Member with Id={id} Not Found");
+        _ = await _memberRepository.GetByIdAsync(id) ?? throw new NotFoundException($"Member with Id={id} Not Found");
 
         return (await _memberRepository.UpdateAsync(entity));
     }
