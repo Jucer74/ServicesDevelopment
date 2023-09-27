@@ -35,6 +35,7 @@ public static class ModulesExtension
     {
         // Repositories
         services.AddScoped<IMemberRepository, MemberRepository>();
+        services.AddScoped<ITeamRepository, TeamRepository>();
 
 
         return services;

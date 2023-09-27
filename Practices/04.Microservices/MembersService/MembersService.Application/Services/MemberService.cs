@@ -9,17 +9,17 @@ namespace MembersService.Application.Services;
 public class MemberService : IMemberService
 {
     private readonly IMemberRepository _memberRepository;
-    private readonly ITeamClientService _teamClientService;
+    private readonly ITeamRepository _teamRepository;
 
-    public MemberService(IMemberRepository memberRepository, ITeamClientService teamClientService)
+    public MemberService(IMemberRepository memberRepository, ITeamRepository teamRepository)
     {
         _memberRepository = memberRepository;
-        _teamClientService = teamClientService;
+        _teamRepository = teamRepository;
     }
 
     public async Task<Member> AddAsync(Member entity)
     {
-        var team = await _teamClientService.GetByIdAsync(entity.TeamId);
+        var team = await _teamRepository.GetByIdAsync(entity.TeamId);
 
         if (team is null)
         {
