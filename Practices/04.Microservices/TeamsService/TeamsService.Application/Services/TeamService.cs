@@ -71,6 +71,12 @@ namespace TeamsService.Application.Services
 
         public async Task<IEnumerable<TeamMemberDto>> GetTeamMembersByTeamId(int id)
         {
+            var team = await _teamRepository.GetByIdAsync(id);
+
+            if (team is null)
+            {
+                throw new NotFoundException($"Team with Id={id} Not Found");
+            }
                         
             var members = await _memberRepository.GetMembersByTeamId(id);
 
