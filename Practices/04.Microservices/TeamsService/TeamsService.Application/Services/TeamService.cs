@@ -9,10 +9,12 @@ namespace TeamsService.Application.Services
     public class TeamService : ITeamService
     {
         private readonly ITeamRepository _teamRepository;
+        private readonly IMemberRepository _memberRepository;
 
-        public TeamService(ITeamRepository teamRepository)
+        public TeamService(ITeamRepository teamRepository, IMemberRepository memberRepository)
         {
             _teamRepository = teamRepository;
+            _memberRepository = memberRepository;
         }
 
         public async Task<Team> CreateTeam(Team team)
@@ -69,8 +71,8 @@ namespace TeamsService.Application.Services
 
         public async Task<IEnumerable<TeamMemberDto>> GetTeamMembersByTeamId(int id)
         {
-            // Call the Members Service
-            var members = new List<TeamMemberDto>();
+                        
+            var members = await _memberRepository.GetMembersByTeamId(id);
 
             return members;
         }

@@ -22,6 +22,7 @@ public static class ModulesExtension
     public static IServiceCollection AddRepositories(this IServiceCollection services)
     {
         services.AddScoped<ITeamRepository, TeamRepository>();
+        services.AddScoped<IMemberRepository, MemberRepository>();
 
         return services;
     }
