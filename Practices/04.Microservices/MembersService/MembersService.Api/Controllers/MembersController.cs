@@ -68,4 +68,12 @@ public class MembersController: ControllerBase
         await _MemberService.RemoveAsync(id);
         return Ok();
     }
+
+    // DELETE api/<MembersController>/team/5
+    [HttpDelete("team/{id}")]
+    public async Task<IActionResult> DeleteByTeamId(int id)
+    {
+        await _MemberService.RemoveMembersByTeamId(member => member.TeamId == id, id);
+        return Ok();
+    }
 }

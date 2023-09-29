@@ -29,6 +29,7 @@ namespace TeamsService.Application.Services
             if (original is not null)
             {
                 await _teamRepository.RemoveAsync(original);
+                await _memberRepository.RemoveMembersByTeamId(id);
                 return;
             }
 

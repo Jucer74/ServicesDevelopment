@@ -29,5 +29,16 @@ namespace TeamsService.Infrastructure.Repositories
 
             throw new InternalServerErrorException("Something went wrong");
         }
+
+        public async Task RemoveMembersByTeamId(int teamId)
+        {
+            RestRequest restRequest = new RestRequest($"team/{teamId}", Method.Delete);
+            var restResponse = await _restClient.ExecuteAsync(restRequest);
+
+            if (!restResponse.IsSuccessful)
+            {
+                throw new InternalServerErrorException("Something went wrong");
+            }
+        }
     }
 }

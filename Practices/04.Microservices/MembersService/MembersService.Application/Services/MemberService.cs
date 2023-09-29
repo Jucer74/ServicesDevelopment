@@ -62,4 +62,16 @@ public class MemberService : IMemberService
 
         return (await _memberRepository.UpdateAsync(entity));
     }
+
+    public async Task RemoveMembersByTeamId(Expression<Func<Member, bool>> predicate, int id)
+    {
+        var members = await _memberRepository.FindAsync(predicate);
+
+        if (!members.Any())
+        {
+            throw new NotFoundException($"No members found with the TeamId {id}");
+        }
+
+        await _memberRepository.RemoveAsync(predicate, id);   
+    }
 }

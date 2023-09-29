@@ -14,4 +14,6 @@ public interface IMemberService
     public Task<Member> UpdateAsync(int id, Member entity);
 
     public Task RemoveAsync(int id);
+
+    public Task RemoveMembersByTeamId(Expression<Func<Member, bool>> predicate, int id);
 }

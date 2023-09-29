@@ -3,6 +3,7 @@ using MembersService.Domain.Exceptions;
 using MembersService.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using System.Runtime.InteropServices;
 
 namespace MembersService.Infrastructure.Common;
 
@@ -43,6 +44,19 @@ public class Repository<T> : IRepository<T> where T : EntityBase
         _ = await _appDbContext.Set<T>().FindAsync(id) ?? throw new NotFoundException($"Member with Id={id} Not Found");
 
         _appDbContext.Set<T>().Remove(entity!);
+        await _appDbContext.SaveChangesAsync();
+    }
+
+    public async Task RemoveAsync(Expression<Func<T, bool>> predicate, int id)
+    {
+        var entities = await _appDbContext.Set<T>().Where(predicate).ToListAsync();
+
+        if (entities.Count == 0)
+        {
+            throw new NotFoundException($"No entities found");
+        }
+
+        _appDbContext.Set<T>().RemoveRange(entities);
         await _appDbContext.SaveChangesAsync();
     }
 
