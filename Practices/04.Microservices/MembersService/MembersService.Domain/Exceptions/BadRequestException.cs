@@ -5,6 +5,8 @@ namespace MembersService.Domain.Exceptions;
 
 [ExcludeFromCodeCoverage]
 [Serializable]
+
+
 public class BadRequestException : BusinessException
 {
     public BadRequestException()
