@@ -1,6 +1,5 @@
 ﻿using MembersService.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 
 namespace MembersService.Infrastructure.Context;
 
