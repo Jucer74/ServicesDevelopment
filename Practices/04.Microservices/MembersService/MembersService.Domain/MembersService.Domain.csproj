@@ -7,10 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Common\" />
-    <Folder Include="Entities\" />
-    <Folder Include="Exceptions\" />
-    <Folder Include="Interfaces\" />
+    <PackageReference Include="FluentValidation" Version="11.7.1" />
   </ItemGroup>
 
 </Project>
