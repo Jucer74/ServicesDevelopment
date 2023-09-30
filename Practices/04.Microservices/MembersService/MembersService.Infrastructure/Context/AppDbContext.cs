@@ -1,12 +1,18 @@
-﻿using System;
+﻿using MembersService.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace MembersService.Infrastructure.Context
+namespace MembersService.Infrastructure.Context;
+
+public class AppDbContext : DbContext
 {
-    internal class AppDbContext
+    public AppDbContext()
     {
     }
+
+    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+    {
+    }
+
+    public DbSet<Member> Members { get; set; }
 }
