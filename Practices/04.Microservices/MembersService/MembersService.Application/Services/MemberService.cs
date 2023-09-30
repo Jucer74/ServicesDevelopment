@@ -25,7 +25,7 @@ public class MemberService : IMemberService
 
     public async Task<Member> AddAsync(Member entity)
     {
-        int id = entity.Id;
+        int id = entity.TeamId;
         RestRequest restRequest = new($"{id}", Method.Get);
         var restResponse = await _restClient.ExecuteAsync<TeamDto>(restRequest);
 
