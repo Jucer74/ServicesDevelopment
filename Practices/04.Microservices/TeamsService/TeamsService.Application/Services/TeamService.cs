@@ -2,7 +2,6 @@
 using Newtonsoft.Json;
 using RestSharp;
 using System.Net;
-using System.Text.Json.Serialization;
 using TeamsService.Application.Interfaces;
 using TeamsService.Domain.Dtos;
 using TeamsService.Domain.Entities;
@@ -102,7 +101,6 @@ namespace TeamsService.Application.Services
             }
 
             return responseData!;
-
         }
     }
 }
