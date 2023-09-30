@@ -1,29 +1,42 @@
 ﻿using MembersService.Application.Interfaces;
+using MembersService.Domain.Dtos;
 using MembersService.Domain.Entities;
 using MembersService.Domain.Exceptions;
 using MembersService.Domain.Interfaces;
+using Microsoft.Extensions.Configuration;
+using RestSharp;
 using System.Linq.Expressions;
+using System.Net;
 
 namespace MembersService.Application.Services;
 
 public class MemberService : IMemberService
 {
     private readonly IMemberRepository _memberRepository;
-    private readonly ITeamRepository _teamRepository;
+    private readonly RestClient _restClient;
 
-    public MemberService(IMemberRepository memberRepository, ITeamRepository teamRepository)
+    public MemberService(IMemberRepository memberRepository, IConfiguration configuration)
     {
+        string baseUrl = configuration["MicroserviceSettings:TeamsServiceUrl"]!;
+        _restClient = new RestClient(baseUrl);
         _memberRepository = memberRepository;
-        _teamRepository = teamRepository;
+        
     }
 
     public async Task<Member> AddAsync(Member entity)
     {
-        var team = await _teamRepository.GetByIdAsync(entity.TeamId);
+        int id = entity.Id;
+        RestRequest restRequest = new($"{id}", Method.Get);
+        var restResponse = await _restClient.ExecuteAsync<TeamDto>(restRequest);
 
-        if (team is null)
+
+        if (!restResponse.IsSuccessful)
         {
-            throw new NotFoundException($"Team with id {entity.TeamId} not found");
+            throw restResponse.StatusCode switch
+            {
+                HttpStatusCode.NotFound => new NotFoundException($"Team with id {id} not found"),
+                _ => new InternalServerErrorException("Something went wrong"),
+            };
         }
 
         return await _memberRepository.AddAsync(entity);
