@@ -1,10 +1,10 @@
-﻿using Castle.Core.Configuration;
-using MembersService.Application.Interfaces;
+﻿using MembersService.Application.Interfaces;
 using MembersService.Domain.Dtos;
 using MembersService.Domain.Entities;
 using MembersService.Domain.Exceptions;
 using MembersService.Domain.Interfaces;
 using RestSharp;
+using Microsoft.Extensions.Configuration;
 using System.Linq.Expressions;
 using System.Net;
 namespace MembersService.Application.Services;
