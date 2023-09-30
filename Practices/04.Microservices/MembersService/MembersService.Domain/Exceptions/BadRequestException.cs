@@ -1,34 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace MembersService.Domain.Exceptions
+namespace MembersService.Domain.Exceptions;
+
+[ExcludeFromCodeCoverage]
+[Serializable]
+public class BadRequestException : BusinessException
 {
-    [ExcludeFromCodeCoverage]
-    [Serializable]
-    public class BadRequestException : BusinessException
+    public BadRequestException()
     {
-        public BadRequestException()
-        {
-        }
+    }
 
-        public BadRequestException(string message) : base(message)
-        {
-        }
+    public BadRequestException(string message) : base(message)
+    {
+    }
 
-        public BadRequestException(string message, Exception innerException)
-            : base(message, innerException)
-        {
-        }
+    public BadRequestException(string message, Exception innerException)
+        : base(message, innerException)
+    {
+    }
 
-        // Without this constructor, deserialization will fail
-        protected BadRequestException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-        }
+    // Without this constructor, deserialization will fail
+    protected BadRequestException(SerializationInfo info, StreamingContext context)
+        : base(info, context)
+    {
     }
 }

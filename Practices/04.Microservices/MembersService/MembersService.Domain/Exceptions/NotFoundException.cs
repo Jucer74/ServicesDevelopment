@@ -1,34 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace MembersService.Domain.Exceptions
+namespace MembersService.Domain.Exceptions;
+
+[ExcludeFromCodeCoverage]
+[Serializable]
+public class NotFoundException : BusinessException
 {
-    [ExcludeFromCodeCoverage]
-    [Serializable]
-    public class NotFoundException : BusinessException
+    public NotFoundException()
     {
-        public NotFoundException()
-        {
-        }
+    }
 
-        public NotFoundException(string message) : base(message)
-        {
-        }
+    public NotFoundException(string message) : base(message)
+    {
+    }
 
-        public NotFoundException(string message, Exception innerException)
-            : base(message, innerException)
-        {
-        }
+    public NotFoundException(string message, Exception innerException)
+        : base(message, innerException)
+    {
+    }
 
-        // Without this constructor, deserialization will fail
-        protected NotFoundException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-        }
+    // Without this constructor, deserialization will fail
+    protected NotFoundException(SerializationInfo info, StreamingContext context)
+        : base(info, context)
+    {
     }
 }
