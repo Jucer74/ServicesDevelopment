@@ -82,7 +82,7 @@ public class MemberService : IMemberService
 
         if (!members.Any())
         {
-            throw new NotFoundException($"No members found with the TeamId {id}");
+            return;
         }
 
         await _memberRepository.RemoveAsync(predicate, id);   
