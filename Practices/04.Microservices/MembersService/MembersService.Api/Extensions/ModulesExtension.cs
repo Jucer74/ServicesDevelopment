@@ -41,7 +41,7 @@ public static class ModulesExtension
 
     public static IServiceCollection AddValidators(this IServiceCollection services)
     {
-        services.AddScoped<IValidator<MemberDto>, MemberValidator>();
+        services.AddScoped<IValidator<TeamMemberDto>, MemberValidator>();
 
         return services;
     }

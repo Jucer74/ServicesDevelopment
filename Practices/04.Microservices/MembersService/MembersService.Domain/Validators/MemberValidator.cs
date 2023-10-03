@@ -3,7 +3,7 @@ using MembersService.Domain.Dtos;
 
 namespace MembersService.Domain.Validators;
 
-public class MemberValidator:AbstractValidator<MemberDto>
+public class MemberValidator:AbstractValidator<TeamMemberDto>
 {
     public MemberValidator()
     {
