@@ -3,25 +3,28 @@ using System.Runtime.Serialization;
 
 namespace MembersService.Domain.Exceptions
 {
+    /// <summary>
+    /// Base Business Exception
+    /// </summary>
     [ExcludeFromCodeCoverage]
     [Serializable]
-    public class NotFoundException : BusinessException
+    public class BusinessException : Exception
     {
-        public NotFoundException()
+        public BusinessException()
         {
         }
 
-        public NotFoundException(string message) : base(message)
+        public BusinessException(string message) : base(message)
         {
         }
 
-        public NotFoundException(string message, Exception innerException)
+        public BusinessException(string message, Exception innerException)
             : base(message, innerException)
         {
         }
 
         // Without this constructor, deserialization will fail
-        protected NotFoundException(SerializationInfo info, StreamingContext context)
+        protected BusinessException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
         }

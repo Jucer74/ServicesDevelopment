@@ -8,7 +8,7 @@ namespace StudentsApp.Application.Services;
 
 public class StudentService : IStudentService
 {
-    public readonly IStudentRepository _studentRepository;
+    private readonly IStudentRepository _studentRepository;
 
     public StudentService(IStudentRepository studentRepository)
     {
@@ -32,26 +32,26 @@ public class StudentService : IStudentService
 
     public async Task<Student> GetByIdAsync(int id)
     {
-        var person = await _studentRepository.GetByIdAsync(id);
+        var student = await _studentRepository.GetByIdAsync(id);
 
-        if (person is null)
+        if (student is null)
         {
-            throw new NotFoundException($"Person with Id={id} Not Found");
+            throw new NotFoundException($"Student with Id={id} Not Found");
         }
 
-        return person;
+        return student;
     }
 
     public async Task RemoveAsync(int id)
     {
-        var person = await _studentRepository.GetByIdAsync(id);
+        var student = await _studentRepository.GetByIdAsync(id);
 
-        if (person is null)
+        if (student is null)
         {
-            throw new NotFoundException($"Person with Id={id} Not Found");
+            throw new NotFoundException($"Student with Id={id} Not Found");
         }
 
-        await _studentRepository.RemoveAsync(person);
+        await _studentRepository.RemoveAsync(student);
     }
 
     public async Task<Student> UpdateAsync(int id, Student entity)
@@ -61,11 +61,11 @@ public class StudentService : IStudentService
             throw new BadRequestException($"The Id={id} not corresponding with Entity.Id={entity.Id}");
         }
 
-        var person = await _studentRepository.GetByIdAsync(id);
+        var student = await _studentRepository.GetByIdAsync(id);
 
-        if (person is null)
+        if (student is null)
         {
-            throw new NotFoundException($"Person with Id={id} Not Found");
+            throw new NotFoundException($"Student with Id={id} Not Found");
         }
 
         return (await _studentRepository.UpdateAsync(entity));

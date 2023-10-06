@@ -1,19 +1,18 @@
 ﻿using MembersService.Domain.Entities;
-using System.Linq.Expressions;
-using System;
 
 namespace MembersService.Application.Interfaces;
 
 public interface IMemberService
 {
-    public Task<Member> AddAsync(Member entity);
+    Task<Member> CreateMember(Member team);
 
-    public Task<IEnumerable<Member>> GetAllAsync();
-    public Task<Member> GetByIdAsync(int id);
-    public Task<IEnumerable<Member>> FindAsync(Expression<Func<Member, bool>> predicate);
-    public Task<Member> UpdateAsync(int id, Member entity);
+    Task DeleteMember(int id);
 
-    public Task RemoveAsync(int id);
+    Task<IEnumerable<Member>> GetAllMembers();
 
-    public Task RemoveMembersByTeamId(Expression<Func<Member, bool>> predicate, int id);
+    Task<Member> GetMemberById(int id);
+
+    Task<Member> UpdateMember(int id, Member team);
+
+    Task<IEnumerable<Member>> GetMembersByTeamId(int id);
 }
