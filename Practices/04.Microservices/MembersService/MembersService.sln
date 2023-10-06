@@ -11,13 +11,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{0E21D8
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{352DF0C0-B781-4874-A8CC-F341F88100A9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MembersService.Api", "MembersService.Api\MembersService.Api.csproj", "{9D905BEA-D0E4-469C-A741-0BDAAFB37C02}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MembersService.Api", "MembersService.Api\MembersService.Api.csproj", "{9D905BEA-D0E4-469C-A741-0BDAAFB37C02}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MembersService.Application", "MembersService.Application\MembersService.Application.csproj", "{62F54ECC-81EA-431C-ACB8-802C2E0A87F4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MembersService.Application", "MembersService.Application\MembersService.Application.csproj", "{62F54ECC-81EA-431C-ACB8-802C2E0A87F4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MembersService.Domain", "MembersService.Domain\MembersService.Domain.csproj", "{1DBB7BE6-0404-4A94-9E66-422C5C2BF1E7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MembersService.Domain", "MembersService.Domain\MembersService.Domain.csproj", "{1DBB7BE6-0404-4A94-9E66-422C5C2BF1E7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MembersService.Infrastructure", "MembersService.Infrastructure\MembersService.Infrastructure.csproj", "{4859EFFB-0D1D-47A1-BA88-FB983F2598CB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MembersService.Infrastructure", "MembersService.Infrastructure\MembersService.Infrastructure.csproj", "{4859EFFB-0D1D-47A1-BA88-FB983F2598CB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
