@@ -1,27 +1,25 @@
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
-using StudentsApp.Api.Extensions;
-using StudentsApp.Infrastructure.Context;
+using TeamsApi.Context;
+using TeamsApi.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-<<<<<<<< HEAD:Practices/02.CleanArchitecture/StudentsApp/StudentsApp.Api/Program.cs
-builder.Services.AddDbContext<AppDbContext>(options => options.UseMySQL(builder.Configuration.GetConnectionString("StrCnn")));
-========
 builder.Services.AddDbContext<AppDbContext>(options => options.UseMySQL(builder.Configuration.GetConnectionString("CnnStr")!));
+
+builder.Services.AddControllers();
 
 //Add Mvc options
 builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
->>>>>>>> main:Practices/02.WebAPI/TeamsApi/Program.cs
 
-builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Add Modules
-builder.Services.AddCoreModules();
-builder.Services.AddInfrastructureModules();
+builder.Services.AddServices();
+builder.Services.AddMapping();
+builder.Services.AddValidators();
 
 var app = builder.Build();
 
