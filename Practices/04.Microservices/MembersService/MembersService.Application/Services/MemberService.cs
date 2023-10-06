@@ -1,90 +1,75 @@
 ﻿using MembersService.Application.Interfaces;
-using MembersService.Domain.Dtos;
 using MembersService.Domain.Entities;
 using MembersService.Domain.Exceptions;
-using MembersService.Domain.Interfaces;
-using Microsoft.Extensions.Configuration;
-using RestSharp;
-using System.Linq.Expressions;
-using System.Net;
+using MembersService.Domain.Interfaces.Repositories;
 
-namespace MembersService.Application.Services;
-
-public class MemberService : IMemberService
+namespace MembersService.Application.Services
 {
-    private readonly IMemberRepository _memberRepository;
-    private readonly RestClient _restClient;
-
-    public MemberService(IMemberRepository memberRepository, IConfiguration configuration)
+    public class MemberService : IMemberService
     {
-        string baseUrl = configuration["MicroserviceSettings:TeamsServiceUrl"]!;
-        _restClient = new RestClient(baseUrl);
-        _memberRepository = memberRepository;
+        private readonly IMemberRepository _memberRepository;
 
-    }
-
-    public async Task<Member> AddAsync(Member entity)
-    {
-        int id = entity.TeamId;
-        RestRequest restRequest = new($"{id}", Method.Get);
-        var restResponse = await _restClient.ExecuteAsync<TeamDto>(restRequest);
-
-
-        if (!restResponse.IsSuccessful)
+        public MemberService(IMemberRepository memberRepository)
         {
-            throw restResponse.StatusCode switch
+            _memberRepository = memberRepository;
+        }
+
+        public async Task<Member> CreateMember(Member member)
+        {
+            return await _memberRepository.AddAsync(member);
+        }
+
+        public async Task DeleteMember(int id)
+        {
+            var original = await _memberRepository.GetByIdAsync(id);
+
+            if (original is not null)
             {
-                HttpStatusCode.NotFound => new NotFoundException($"Team with id {id} not found"),
-                _ => new InternalServerErrorException("Something went wrong"),
-            };
+                await _memberRepository.RemoveAsync(original);
+                return;
+            }
+
+            throw new NotFoundException($"Team Member with Id={id} Not Found");
         }
 
-        return await _memberRepository.AddAsync(entity);
-    }
-
-    public async Task<IEnumerable<Member>> FindAsync(Expression<Func<Member, bool>> predicate)
-    {
-        return await _memberRepository.FindAsync(predicate);
-    }
-
-    public async Task<IEnumerable<Member>> GetAllAsync()
-    {
-        return await _memberRepository.GetAllAsync();
-    }
-
-    public async Task<Member> GetByIdAsync(int id)
-    {
-        Member member = await _memberRepository.GetByIdAsync(id) ?? throw new NotFoundException($"Team Member with Id={id} Not Found");
-        return member;
-    }
-
-    public async Task RemoveAsync(int id)
-    {
-        Member member = await _memberRepository.GetByIdAsync(id) ?? throw new NotFoundException($"Team Member with Id={id} Not Found");
-        await _memberRepository.RemoveAsync(member);
-    }
-
-    public async Task<Member> UpdateAsync(int id, Member entity)
-    {
-        if (id != entity.Id)
+        public async Task<IEnumerable<Member>> GetAllMembers()
         {
-            throw new BadRequestException($"Id [{id}] is different to TeamMember.Id [{entity.Id}]");
+            return await _memberRepository.GetAllAsync();
         }
 
-        _ = await _memberRepository.GetByIdAsync(id) ?? throw new NotFoundException($"Team Member with Id={id} Not Found");
-
-        return (await _memberRepository.UpdateAsync(entity));
-    }
-
-    public async Task RemoveMembersByTeamId(Expression<Func<Member, bool>> predicate, int id)
-    {
-        var members = await _memberRepository.FindAsync(predicate);
-
-        if (!members.Any())
+        public async Task<Member> GetMemberById(int id)
         {
-            throw new NotFoundException($"No members found with the TeamId {id}");
+            var member = await _memberRepository.GetByIdAsync(id);
+
+            if (member is not null)
+            {
+                return member;
+            }
+
+            throw new NotFoundException($"Team Member with Id={id} Not Found");
         }
 
-        await _memberRepository.RemoveAsync(predicate, id);
+        public async Task<Member> UpdateMember(int id, Member member)
+        {
+            if (id != member.Id)
+            {
+                throw new BadRequestException($"Id [{id}] is different to TeamMember.Id [{member.Id}]");
+            }
+
+            var original = await _memberRepository.GetByIdAsync(id);
+
+            if (original is not null)
+            {
+                return await _memberRepository.UpdateAsync(member);
+            }
+
+            throw new NotFoundException($"Team Member with Id={id} Not Found");
+        }
+
+        public async Task<IEnumerable<Member>> GetMembersByTeamId(int id)
+        {
+            var members = await _memberRepository.FindAsync(m => m.TeamId == id);
+            return members;
+        }
     }
 }

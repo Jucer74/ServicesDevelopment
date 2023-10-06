@@ -1,38 +1,37 @@
-﻿using MemebersService.Api.Middleware;
-
-namespace MembersService.Api.Middleware;
-
-/// <summary>
-/// Handler the exceptions
-/// </summary>
-public class ExceptionMiddleware
+﻿namespace MembersService.Api.Middleware
 {
-    private readonly RequestDelegate _next;
-
-    public ExceptionMiddleware(RequestDelegate next)
+    /// <summary>
+    /// Handler the exceptions
+    /// </summary>
+    public class ExceptionMiddleware
     {
-        _next = next ?? throw new ArgumentNullException(nameof(next));
-    }
+        private readonly RequestDelegate _next;
 
-    public async Task InvokeAsync(HttpContext httpContext)
-    {
-        if (httpContext == null)
+        public ExceptionMiddleware(RequestDelegate next)
         {
-            return;
+            _next = next ?? throw new ArgumentNullException(nameof(next));
         }
 
-        try
+        public async Task InvokeAsync(HttpContext httpContext)
         {
-            await _next(httpContext);
-        }
-        catch (Exception ex)
-        {
-            if (httpContext.Response.HasStarted)
+            if (httpContext == null)
             {
-                throw;
+                return;
             }
 
-            await httpContext.HandleExceptionAsync(ex);
+            try
+            {
+                await _next(httpContext);
+            }
+            catch (Exception ex)
+            {
+                if (httpContext.Response.HasStarted)
+                {
+                    throw;
+                }
+
+                await httpContext.HandleExceptionAsync(ex);
+            }
         }
     }
 }

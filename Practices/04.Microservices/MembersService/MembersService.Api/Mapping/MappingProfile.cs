@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using MembersService.Domain.Dtos;
+using MembersService.Api.Dtos;
 using MembersService.Domain.Entities;
 
 namespace MembersService.Api.Mapping;

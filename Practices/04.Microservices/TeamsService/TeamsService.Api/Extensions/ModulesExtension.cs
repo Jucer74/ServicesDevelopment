@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation;
+using RestSharp;
 using TeamsService.Api.Dtos;
 using TeamsService.Api.Mapping;
 using TeamsService.Api.Validators;
@@ -44,6 +45,13 @@ public static class ModulesExtension
     public static IServiceCollection AddValidators(this IServiceCollection services)
     {
         services.AddScoped<IValidator<TeamDto>, TeamValidator>();
+
+        return services;
+    }
+
+    public static IServiceCollection AddRestClient(this IServiceCollection services)
+    {
+        services.AddSingleton<RestClient>();
 
         return services;
     }
