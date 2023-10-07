@@ -1,0 +1,1200 @@
+{
+	"info": {
+		"_postman_id": "6afd3196-e531-4a01-8415-db71d7fb5e8f",
+		"name": "MoneyBankServices",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28964585"
+	},
+	"item": [
+		{
+			"name": "GetAllAccounts_Success",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200-Ok\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Count Records == 3\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.length).to.eql(3);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BaseUrl}}/Accounts",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"Accounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddAccount_Success",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200-Ok\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Valid Data\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var id = jsonData.id;\r",
+							"    var accountNumber = jsonData.accountNumber;\r",
+							"    var initialBalanceAmount = jsonData.balanceAmount;\r",
+							"\r",
+							"    pm.collectionVariables.set(\"id\", id);\r",
+							"    pm.collectionVariables.set(\"accountNumber\", accountNumber);\r",
+							"    pm.collectionVariables.set(\"initialBalanceAmount\", initialBalanceAmount);\r",
+							"\r",
+							"\r",
+							"\r",
+							"    pm.expect(jsonData.id).to.eql(id);\r",
+							"    pm.expect(jsonData.accountType).to.eql(\"A\");\r",
+							"    pm.expect(jsonData.creationDate).to.eql(\"2023-10-07T00:00:00\");\r",
+							"    pm.expect(jsonData.accountNumber).to.eql(\"1212121090\");\r",
+							"    pm.expect(jsonData.ownerName).to.eql(\"Alexander Arce\");\r",
+							"    pm.expect(jsonData.balanceAmount).to.eql(490000);\r",
+							"    pm.expect(jsonData.overdraftAmount).to.eql(170000);\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 0,\r\n  \"accountType\": \"A\",\r\n  \"creationDate\": \"2023-10-07\",\r\n  \"accountNumber\": \"1212121090\",\r\n  \"ownerName\": \"Alexander Arce\",\r\n  \"balanceAmount\": 490000,\r\n  \"overdraftAmount\": 170000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/Accounts",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"Accounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DepositAhorros_Success",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200-Ok\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": {{id}},\r\n  \"accountNumber\": \"{{accountNumber}}\",\r\n  \"valueAmount\": 5000\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/Accounts/{{id}}/Deposit",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"Accounts",
+						"{{id}}",
+						"Deposit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CheckDeposit_Success",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200-Ok\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Valid Data\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var id =  pm.collectionVariables.get(\"id\");\r",
+							"    var balanceAmount = pm.collectionVariables.get(\"initialBalanceAmount\")+5000;\r",
+							"\r",
+							"    pm.expect(jsonData.id).to.eql(id);\r",
+							"    pm.expect(jsonData.accountType).to.eql(\"A\");\r",
+							"    pm.expect(jsonData.creationDate).to.eql(\"2023-10-07T00:00:00\");\r",
+							"    pm.expect(jsonData.accountNumber).to.eql(\"1212121090\");\r",
+							"    pm.expect(jsonData.ownerName).to.eql(\"Alexander Arce\");\r",
+							"    pm.expect(jsonData.balanceAmount).to.eql(balanceAmount);\r",
+							"    pm.expect(jsonData.overdraftAmount).to.eql(170000);\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/Accounts/{{id}}",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"Accounts",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "WithdrawalAhorros_Success Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200-Ok\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": {{id}},\r\n  \"accountNumber\": \"{{accountNumber}}\",\r\n  \"valueAmount\": 5000\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/Accounts/{{id}}/Withdraw",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"Accounts",
+						"{{id}}",
+						"Withdraw"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAccountById_Success",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200-Ok\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Valid Data\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var id =  pm.collectionVariables.get(\"id\");\r",
+							"\r",
+							"    pm.expect(jsonData.id).to.eql(id);\r",
+							"    pm.expect(jsonData.accountType).to.eql(\"A\");\r",
+							"    pm.expect(jsonData.creationDate).to.eql(\"2023-10-07T00:00:00\");\r",
+							"    pm.expect(jsonData.accountNumber).to.eql(\"1212121090\");\r",
+							"    pm.expect(jsonData.ownerName).to.eql(\"Alexander Arce\");\r",
+							"    pm.expect(jsonData.balanceAmount).to.eql(490000);\r",
+							"    pm.expect(jsonData.overdraftAmount).to.eql(170000);\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BaseUrl}}/Accounts/{{id}}",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"Accounts",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateAccount_Success",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200-Ok\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Valid Data\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var id =  pm.collectionVariables.get(\"id\");\r",
+							"\r",
+							"    pm.expect(jsonData.id).to.eql(id);\r",
+							"    pm.expect(jsonData.accountType).to.eql(\"C\");\r",
+							"    pm.expect(jsonData.creationDate).to.eql(\"2023-10-07T00:00:00\");\r",
+							"    pm.expect(jsonData.accountNumber).to.eql(\"1212121090\");\r",
+							"    pm.expect(jsonData.ownerName).to.eql(\"Alexander Arce\");\r",
+							"    pm.expect(jsonData.balanceAmount).to.eql(490000);\r",
+							"    pm.expect(jsonData.overdraftAmount).to.eql(170001);\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": {{id}},\r\n  \"accountType\": \"C\",\r\n  \"creationDate\": \"2023-10-07\",\r\n  \"accountNumber\": \"1212121090\",\r\n  \"ownerName\": \"Alexander Arce\",\r\n  \"balanceAmount\": 490000,\r\n  \"overdraftAmount\": 170001\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/Accounts/{{id}}",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"Accounts",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DepositCorriente_Success",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200-Ok\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": {{id}},\r\n  \"accountNumber\": \"{{accountNumber}}\",\r\n  \"valueAmount\": 5000\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/Accounts/{{id}}/Deposit",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"Accounts",
+						"{{id}}",
+						"Deposit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteAccount_Success",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200-Ok\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{BaseUrl}}/Accounts/{{id}}",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"Accounts",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAccountById_BadRequest",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Valid Data\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+							"    pm.expect(jsonData.errors.length).to.eql(1);\r",
+							"    pm.expect(jsonData.errors[0]).to.eql(\"The value 'A' is not valid.\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BaseUrl}}/Accounts/A",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"Accounts",
+						"A"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddAccount_BadRequest",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Valid Data\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+							"    pm.expect(jsonData.errors.length).to.eql(2);\r",
+							"    pm.expect(jsonData.errors[0]).to.eql(\"The accountDto field is required.\");\r",
+							"    pm.expect(jsonData.errors[1]).to.eql(\"'a' is an invalid start of a value. Path: $.overdraftAmount | LineNumber: 7 | BytePositionInLine: 21.\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 0,\r\n  \"accountType\": \"A\",\r\n  \"creationDate\": \"2023-10-07\",\r\n  \"accountNumber\": \"1212121090\",\r\n  \"ownerName\": \"Alexander Arce\",\r\n  \"balanceAmount\": 490000,\r\n  \"overdraftAmount\": a\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/Accounts",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"Accounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddAccount_BadRequest_RequiredFields",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Valid Data\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+							"    pm.expect(jsonData.errors.length).to.eql(7);\r",
+							"    pm.expect(jsonData.errors[0]).to.eql(\"The OwnerName is required.\");\r",
+							"    pm.expect(jsonData.errors[1]).to.eql(\"The AccountType is required.\");\r",
+							"    pm.expect(jsonData.errors[2]).to.eql(\"The AccountNumber is required.\");\r",
+							"    pm.expect(jsonData.errors[3]).to.eql(\"The AccountNumber only accepts numbers.\");\r",
+							"    pm.expect(jsonData.errors[4]).to.eql(\"The BalanceAmount is required.\");\r",
+							"    pm.expect(jsonData.errors[5]).to.eql(\"The BalanceAmount must be greater than 0.\");\r",
+							"    pm.expect(jsonData.errors[6]).to.eql(\"The OverdraftAmount is required.\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 0,\r\n  \"accountType\": \"\",\r\n  \"creationDate\": \"2023-07-21\",\r\n  \"accountNumber\": \"\",\r\n  \"ownerName\": \"Alexander Arce\",\r\n  \"balanceAmount\": 0,\r\n  \"overdraftAmount\": 0\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/Accounts",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"Accounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddAccount_BadRequest_FieldsMaxLength",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Valid Data\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+							"    pm.expect(jsonData.errors.length).to.eql(2);\r",
+							"    pm.expect(jsonData.errors).to.contains(\"The OwnerName has a maximum length of 100 characters.\");\r",
+							"    pm.expect(jsonData.errors).to.contains(\"The AccountNumber has a maximum length of 10 characters.\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 0,\r\n  \"accountType\": \"A\",\r\n  \"creationDate\": \"2023-07-21\",\r\n  \"accountNumber\": \"12345678901\",\r\n  \"ownerName\": \"Alexander Arce\",\r\n  \"balanceAmount\": 45345,\r\n  \"overdraftAmount\": 34252\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/Accounts",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"Accounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddAccount_BadRequest Invalid Date",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400-Bad Request\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"pm.test(\"Valid Data\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"\r",
+							"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+							"    pm.expect(jsonData.errors.length).to.eql(2);\r",
+							"    pm.expect(jsonData.errors[0]).to.eql(\"The accountDto field is required.\");\r",
+							"    pm.expect(jsonData.errors[1]).to.eql(\"The JSON value could not be converted to System.DateTime. Path: $.creationDate | LineNumber: 3 | BytePositionInLine: 24.\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 0,\r\n  \"accountType\": \"A\",\r\n  \"creationDate\": \"asdf\",\r\n  \"accountNumber\": \"1212121090\",\r\n  \"ownerName\": \"Alexander Arce\",\r\n  \"balanceAmount\": 490000,\r\n  \"overdraftAmount\": 170000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/Accounts",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"Accounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddAccount_BadRequest Invalid BalanceAmount",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400-Bad Request\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"pm.test(\"Valid Data\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"\r",
+							"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+							"    pm.expect(jsonData.errors.length).to.eql(2);\r",
+							"    pm.expect(jsonData.errors[0]).to.eql(\"The BalanceAmount is required.\");\r",
+							"    pm.expect(jsonData.errors[1]).to.eql(\"The BalanceAmount must be greater than 0.\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 0,\r\n  \"accountType\": \"A\",\r\n  \"creationDate\": \"2023-07-08\",\r\n  \"accountNumber\": \"1212121090\",\r\n  \"ownerName\": \"Alexander Arce\",\r\n  \"balanceAmount\": 0,\r\n  \"overdraftAmount\": 170000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/Accounts",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"Accounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateAccount_BadRequest",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Valid Data\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+							"    pm.expect(jsonData.errors.length).to.eql(2);\r",
+							"    pm.expect(jsonData.errors[0]).to.eql(\"The accountDto field is required.\");\r",
+							"    pm.expect(jsonData.errors[1]).to.eql(\"'a' is an invalid start of a value. Path: $.overdraftAmount | LineNumber: 7 | BytePositionInLine: 21.\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 0,\r\n  \"accountType\": \"A\",\r\n  \"creationDate\": \"2023-10-07\",\r\n  \"accountNumber\": \"1212121090\",\r\n  \"ownerName\": \"Alexander Arce\",\r\n  \"balanceAmount\": 490000,\r\n  \"overdraftAmount\": a\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/Accounts/0",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"Accounts",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateAccount_BadRequest_Diff_Ids",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Valid Data\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.ErrorType).to.eql(\"Bad Request\");\r",
+							"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+							"    pm.expect(jsonData.Errors[0]).to.eql(\"Id [0] is different to Account.Id [5]\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 5,\r\n  \"accountType\": \"A\",\r\n  \"creationDate\": \"2023-10-07\",\r\n  \"accountNumber\": \"1212121090\",\r\n  \"ownerName\": \"Alexander Arce\",\r\n  \"balanceAmount\": 490000,\r\n  \"overdraftAmount\":342432\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/Accounts/0",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"Accounts",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddAccount_BadRequest_RequiredFields",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Valid Data\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+							"    pm.expect(jsonData.errors.length).to.eql(7);\r",
+							"    pm.expect(jsonData.errors[0]).to.eql(\"The OwnerName is required.\");\r",
+							"    pm.expect(jsonData.errors[1]).to.eql(\"The AccountType is required.\");\r",
+							"    pm.expect(jsonData.errors[2]).to.eql(\"The AccountNumber is required.\");\r",
+							"    pm.expect(jsonData.errors[3]).to.eql(\"The AccountNumber only accepts numbers.\");\r",
+							"    pm.expect(jsonData.errors[4]).to.eql(\"The BalanceAmount is required.\");\r",
+							"    pm.expect(jsonData.errors[5]).to.eql(\"The BalanceAmount must be greater than 0.\");\r",
+							"    pm.expect(jsonData.errors[6]).to.eql(\"The OverdraftAmount is required.\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 1,\r\n  \"accountType\": \"\",\r\n  \"creationDate\": \"2023-07-21\",\r\n  \"accountNumber\": \"\",\r\n  \"ownerName\": \"Alexander Arce\",\r\n  \"balanceAmount\": 0,\r\n  \"overdraftAmount\": 0\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/Accounts/1",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"Accounts",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddAccount_BadRequest_FieldsMaxLength",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Valid Data\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+							"    pm.expect(jsonData.errors.length).to.eql(2);\r",
+							"    pm.expect(jsonData.errors).to.contains(\"The OwnerName has a maximum length of 100 characters.\");\r",
+							"    pm.expect(jsonData.errors).to.contains(\"The AccountNumber has a maximum length of 10 characters.\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 1,\r\n  \"accountType\": \"A\",\r\n  \"creationDate\": \"2023-07-21\",\r\n  \"accountNumber\": \"12345678901\",\r\n  \"ownerName\": \"Alexander Arce\",\r\n  \"balanceAmount\": 45345,\r\n  \"overdraftAmount\": 34252\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/Accounts/1",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"Accounts",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateAccount_BadRequest Invalid Date",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400-Bad Request\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"pm.test(\"Valid Data\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"\r",
+							"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+							"    pm.expect(jsonData.errors.length).to.eql(2);\r",
+							"    pm.expect(jsonData.errors[0]).to.eql(\"The accountDto field is required.\");\r",
+							"    pm.expect(jsonData.errors[1]).to.eql(\"The JSON value could not be converted to System.DateTime. Path: $.creationDate | LineNumber: 3 | BytePositionInLine: 24.\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 3,\r\n  \"accountType\": \"A\",\r\n  \"creationDate\": \"asdf\",\r\n  \"accountNumber\": \"1212121090\",\r\n  \"ownerName\": \"Alexander Arce\",\r\n  \"balanceAmount\": 490000,\r\n  \"overdraftAmount\": 170000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/Accounts/3",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"Accounts",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddAccount_BadRequest Invalid BalanceAmount",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400-Bad Request\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"pm.test(\"Valid Data\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"\r",
+							"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+							"    pm.expect(jsonData.errors.length).to.eql(2);\r",
+							"    pm.expect(jsonData.errors[0]).to.eql(\"The BalanceAmount is required.\");\r",
+							"    pm.expect(jsonData.errors[1]).to.eql(\"The BalanceAmount must be greater than 0.\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 5,\r\n  \"accountType\": \"A\",\r\n  \"creationDate\": \"2023-07-08\",\r\n  \"accountNumber\": \"1212121090\",\r\n  \"ownerName\": \"Alexander Arce\",\r\n  \"balanceAmount\": 0,\r\n  \"overdraftAmount\": 170000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/Accounts/5",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"Accounts",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteAccount_BadRequest",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400-Ok\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Valid Data\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+							"    pm.expect(jsonData.errors.length).to.eql(1);\r",
+							"    pm.expect(jsonData.errors[0]).to.eql(\"The value 'A' is not valid.\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{BaseUrl}}/Accounts/A",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"Accounts",
+						"A"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAccountById_NotFound",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404-NotFound\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Valid Data\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.ErrorType).to.eql(\"Not Found\");\r",
+							"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+							"    pm.expect(jsonData.Errors[0]).to.eql(\"Account with Id=0 Not Found\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BaseUrl}}/Accounts/0",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"Accounts",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateById_NotFound",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404-NotFound\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Valid Data\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.ErrorType).to.eql(\"Not Found\");\r",
+							"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+							"    pm.expect(jsonData.Errors[0]).to.eql(\"Account with Id=0 Not Found\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 0,\r\n  \"accountType\": \"A\",\r\n  \"creationDate\": \"2023-10-07\",\r\n  \"accountNumber\": \"1212121090\",\r\n  \"ownerName\": \"Alexander Arce\",\r\n  \"balanceAmount\": 490000,\r\n  \"overdraftAmount\": 170001\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/Accounts/0",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"Accounts",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete_NotFound",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404-NotFound\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Valid Data\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.ErrorType).to.eql(\"Not Found\");\r",
+							"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+							"    pm.expect(jsonData.Errors[0]).to.eql(\"Account with Id=0 Not Found\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/Accounts/0",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"Accounts",
+						"0"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BaseUrl",
+			"value": "https://localhost:7001/api",
+			"type": "string"
+		},
+		{
+			"key": "id",
+			"value": ""
+		},
+		{
+			"key": "accountNumber",
+			"value": ""
+		},
+		{
+			"key": "initialBalanceAmount",
+			"value": ""
+		}
+	]
+}
