@@ -1,0 +1,479 @@
+{
+	"info": {
+		"_postman_id": "2e12b205-84aa-4148-a8ce-e54db54333ae",
+		"name": "MoneyBankService",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25902073"
+	},
+	"item": [
+		{
+			"name": "GetAllAccounts",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200-Ok\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Reponse length\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(Object.keys(jsonData).length).to.eql(3);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7001/api/Accounts",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7001",
+					"path": [
+						"api",
+						"Accounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostAccount",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200-ok\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Reponse Assertion\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.collectionVariables.set(\"AccountId\",jsonData.id);\r",
+							"    pm.expect(jsonData.id).to.eql(4);\r",
+							"    pm.expect(jsonData.accountType).to.eql(\"C\");\r",
+							"    pm.expect(jsonData.accountNumber).to.eql(\"6703001329\");\r",
+							"    pm.expect(jsonData.ownerName).to.eql(\"John Fredy Vásquez Izquierdo\");\r",
+							"    pm.expect(jsonData.balanceAmount).to.eql(\"7000000\");\r",
+							"    pm.expect(jsonData.overdraftAmount).to.eql(\"96000000\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 4,\r\n  \"accountType\": \"C\",\r\n  \"creationDate\": \"2023-08-25T00:00:00\",\r\n  \"accountNumber\": \"6703001329\",\r\n  \"ownerName\": \"John Fredy Vásquez Izquierdo\",\r\n  \"balanceAmount\": \"7000000\",\r\n  \"overdraftAmount\": \"96000000\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7001/api/Accounts",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7001",
+					"path": [
+						"api",
+						"Accounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetByIdAccount",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200-Ok\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Reponse length\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.id).to.eql(1);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7001/api/Accounts/4",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7001",
+					"path": [
+						"api",
+						"Accounts",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PutAccount",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200-Ok\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"id\": 5,\r\n        \"accountType\": \"A\",\r\n        \"creationDate\": \"2023-08-25T00:00:00\",\r\n        \"accountNumber\": \"6703001328\",\r\n        \"ownerName\": \"John Fredy lucumi\",\r\n        \"balanceAmount\": \"7000000.00\",\r\n        \"overdraftAmount\": \"96000000.00\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7001/api/Accounts/5",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7001",
+					"path": [
+						"api",
+						"Accounts",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteAccount",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200-ok\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://localhost:7001/api/Accounts/5",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7001",
+					"path": [
+						"api",
+						"Accounts",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deposito",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200-Ok\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 1,\r\n  \"accountNumber\": \"3016892501\",\r\n  \"valueAmount\": \"500000.00\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7001/api/Accounts/1/Deposit",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7001",
+					"path": [
+						"api",
+						"Accounts",
+						"1",
+						"Deposit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "WithDrawal",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200-ok\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 1,\r\n  \"accountNumber\": \"3016892501\",\r\n  \"valueAmount\": \"500000.00\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7001/api/Accounts/1/WithDrawal",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7001",
+					"path": [
+						"api",
+						"Accounts",
+						"1",
+						"WithDrawal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DepositNoEncontrado",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 1,\r\n  \"accountNumber\": \"3016892502\",\r\n  \"valueAmount\": \"500000.00\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7001/api/Accounts/1/Deposit",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7001",
+					"path": [
+						"api",
+						"Accounts",
+						"1",
+						"Deposit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "WithDrawalAcoountNotFound",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400-Bad request \", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Reponse Assertion\", function () {\r",
+							"    pm.expect(pm.response.json().Errors[0]).to.eql(\"El Numero de la Cuenta es Diferente al de la transaccion\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 1,\r\n  \"accountNumber\": \"3016892502\",\r\n  \"valueAmount\": \"500000.00\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7001/api/Accounts/1/WithDrawal",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7001",
+					"path": [
+						"api",
+						"Accounts",
+						"1",
+						"WithDrawal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllAccountByIdNotFound",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7001/api/Accounts/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7001",
+					"path": [
+						"api",
+						"Accounts",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 4,\r\n  \"accountType\": \"C\",\r\n  \"creationDate\": \"2023-08-25T00:00:00\",\r\n  \"accountNumber\": \"6703001329\",\r\n  \"ownerName\": \"John Fredy Vásquez Izquierdo\",\r\n  \"balanceAmount\": \"7000000\",\r\n  \"overdraftAmount\": \"96000000\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7001/api/Accounts",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7001",
+					"path": [
+						"api",
+						"Accounts"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "AccountId",
+			"value": ""
+		}
+	]
+}
