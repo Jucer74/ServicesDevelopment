@@ -1,8 +1,8 @@
-﻿using MoneyBankService.Api.Dto;
-using MoneyBankService.Application.Interfaces;
+﻿using MoneyBankService.Application.Interfaces;
 using MoneyBankService.Domain.Entities;
 using MoneyBankService.Domain.Exceptions;
 using MoneyBankService.Domain.Interfaces.Repositories;
+
 namespace MoneyBankService.Application.Services;
 
 public class AccountService : IAccountService

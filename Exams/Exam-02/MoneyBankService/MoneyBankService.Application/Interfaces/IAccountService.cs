@@ -1,5 +1,7 @@
-﻿using MoneyBankService.Api.Dto;
-using MoneyBankService.Domain.Entities;
+﻿using MoneyBankService.Domain.Entities;
+using MoneyBankService.Domain.Interfaces.Repositories;
+
+
 
 
 namespace MoneyBankService.Application.Interfaces;
