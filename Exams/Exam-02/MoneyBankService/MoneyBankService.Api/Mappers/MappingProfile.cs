@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using MoneyBankService.Api.Dto;
+using MoneyBankService.Domain.Dto;
+//using MoneyBankService.Api.Dto;
 using MoneyBankService.Domain.Entities;
 
 namespace MoneyBankService.Api.Mappers;
@@ -14,6 +15,7 @@ public class MappingProfile : Profile
         //CreateMap<TransactionDto, Account>()
         //    .ForMember(acc => acc.Id, opt => opt.MapFrom(trx => trx.Id));
         //    .ForMember( ....... Oher Fields
-
+        CreateMap<TransactionDto, Transaction>();
+        CreateMap<Transaction, TransactionDto>();
     }
 }
