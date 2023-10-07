@@ -19,5 +19,12 @@ public class AccountValidator: AbstractValidator<AccountDto>
         //    .GreaterThan("0")
         //    .WithMessage("El campo FIELD debe ser mayor a cero");
 
+        RuleFor(m => m.AccountType)
+            .NotEmpty()
+            .WithMessage("El campo Tipo de Cuenta es Requerido.")
+            .Matches(@"[AC]")
+            .WithMessage("El campo Tipo de Cuenta solo permite (A o C)");
+            
+
     }
 }
