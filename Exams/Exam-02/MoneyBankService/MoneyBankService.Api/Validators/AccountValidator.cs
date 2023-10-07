@@ -29,7 +29,9 @@ public class AccountValidator: AbstractValidator<AccountDto>
             .WithMessage("The OwnerName has a maximum length of 100 characters.");
         RuleFor(m => m.BalanceAmount)
             .NotEmpty()
-            .WithMessage("The BalanceAmount is required.");
+            .WithMessage("The BalanceAmount is required.")
+            .GreaterThan(0)
+            .WithMessage("The BalanceAmount must be greater than 0.");
         RuleFor(m => m.OverdraftAmount)
             .NotEmpty()
             .WithMessage("The OverdraftAmount is required.");

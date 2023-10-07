@@ -21,7 +21,9 @@ public class TransactionValidator : AbstractValidator<TransactionDto>
 
         RuleFor(m => m.ValueAmount)
             .NotEmpty()
-            .WithMessage("The ValueAmount is required.");
+            .WithMessage("The ValueAmount is required.")
+            .GreaterThan(0)
+            .WithMessage("The ValueAmount must be greater than 0.");
         
     }
 }
