@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using MoneyBankService.Application.Interfaces;
 
 namespace MoneyBankService.Api.Controllers
 {
@@ -8,36 +8,15 @@ namespace MoneyBankService.Api.Controllers
     [ApiController]
     public class AccountsController : ControllerBase
     {
-        // GET: api/<AccountsController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private readonly IAccountService _accountService;
+        private readonly IMapper _mapper;
+
+
+        public AccountsController(IAccountService accountService)
         {
-            return new string[] { "value1", "value2" };
+            _accountService = accountService;
+        
         }
 
-        // GET api/<AccountsController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<AccountsController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<AccountsController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<AccountsController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }
