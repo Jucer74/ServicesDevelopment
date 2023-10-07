@@ -1,0 +1,150 @@
+{
+	"info": {
+		"_postman_id": "6eaa5e15-abdc-44ba-ab42-682133a865a7",
+		"name": "MoneyBankService",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28964582"
+	},
+	"item": [
+		{
+			"name": "GetAllAccounts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BaseUrl}}/Accounts?=https://localhost:7001/api/Accounts",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"Accounts"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "https://localhost:7001/api/Accounts",
+							"description": "https://localhost:7001/api/Accounts"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddAccount",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{BaseUrl}}/Accounts?=https://localhost:7001/api/Accounts",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"Accounts"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "https://localhost:7001/api/Accounts",
+							"description": "https://localhost:7001/api/Accounts"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateAccount",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{BaseUrl}}/Accounts/{{id}}?=https://localhost:7001/api/Accounts/",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"Accounts",
+						"{{id}}"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "https://localhost:7001/api/Accounts/",
+							"description": "https://localhost:7001/api/Accounts/"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteAccount",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "",
+						"value": "https://localhost:7001/api/Accounts/",
+						"description": "https://localhost:7001/api/Accounts/",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{BaseUrl}}/Accounts/{{id}}",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"Accounts",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "GetAllAccounts",
+			"value": "https://localhost:7001/api/Accounts",
+			"type": "string"
+		},
+		{
+			"key": "AddAccount",
+			"value": "https://localhost:7001/api/Accounts",
+			"type": "string"
+		},
+		{
+			"key": "DeleteAccount",
+			"value": "https://localhost:7001/api/Accounts/",
+			"type": "string"
+		},
+		{
+			"key": "UpdateAccount",
+			"value": "https://localhost:7001/api/Accounts/",
+			"type": "string"
+		}
+	]
+}
