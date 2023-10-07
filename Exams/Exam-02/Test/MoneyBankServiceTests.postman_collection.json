@@ -1,0 +1,952 @@
+{
+  "info": {
+    "_postman_id": "bda9a555-723c-469b-a805-0260d251bbbb",
+    "name": "MoneyBankServiceTest",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "22695725"
+  },
+  "item": [
+    {
+      "name": "GetAllAccounts",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response is a JSON object\", function () {",
+              "    pm.response.to.be.json;",
+              "});",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{BaseUrl}}/Accounts",
+          "host": [
+            "{{BaseUrl}}"
+          ],
+          "path": [
+            "Accounts"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GetAccountById",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response is a JSON object\", function () {",
+              "    pm.response.to.be.json;",
+              "});",
+              "",
+              "pm.test(\"Response 'id' should match the value '2'\", function () {",
+              "    pm.expect(pm.response.json().id).to.eql(2);",
+              "});",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": []
+        },
+        "url": {
+          "raw": "{{BaseUrl}}/Accounts/accountId/{{idTestTwo}}",
+          "host": [
+            "{{BaseUrl}}"
+          ],
+          "path": [
+            "Accounts",
+            "accountId",
+            "{{idTestTwo}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GetAccountByNumberAccount",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response is a JSON object\", function () {",
+              "    pm.response.to.be.json;",
+              "});",
+              "",
+              "pm.test(\"Response 'accountNumber' should match the accountNumber in the URL\", function () {",
+              "    const accountNumberInUrl = pm.request.url.path.join('/').split('/').pop(); // Obtener el último segmento de la URL como el accountNumber",
+              "    pm.expect(pm.response.json().accountNumber).to.eql(accountNumberInUrl);",
+              "});",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{BaseUrl}}/Accounts/accountNumber/{{numberAccount}}",
+          "host": [
+            "{{BaseUrl}}"
+          ],
+          "path": [
+            "Accounts",
+            "accountNumber",
+            "{{numberAccount}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "AddAccount",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response is a JSON object\", function () {",
+              "    pm.response.to.be.json;",
+              "});",
+              "",
+              "pm.test(\"Response should have an 'id'\", function () {",
+              "    pm.response.to.have.jsonBody('id');",
+              "});",
+              "",
+              "pm.test(\"Response 'accountNumber' should match the expected value\", function () {",
+              "    const expectedAccountNumber = \"1234567890\";",
+              "    pm.expect(pm.response.json().accountNumber).to.eql(expectedAccountNumber);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"id\": {{id}},\n    \"accountNumber\": \"1234567890\",\n    \"accountType\": \"A\",\n    \"balanceAmount\": 10000,\n    \"overdraftAmount\": 0,\n    \"ownerName\": \"John Doe\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{BaseUrl}}/Accounts",
+          "host": [
+            "{{BaseUrl}}"
+          ],
+          "path": [
+            "Accounts"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "UpdateAccount",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response is a JSON object\", function () {",
+              "    pm.response.to.be.json;",
+              "});",
+              "",
+              "pm.test(\"Response 'id' should match the 'id' in the URL\", function () {",
+              "    const idInUrl = pm.variables.get(\"id\"); // Assumes you've set this as a URL variable",
+              "    pm.expect(pm.response.json().id).to.eql(Number(idInUrl));",
+              "});",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"id\": {{id}},\n    \"accountNumber\": \"1234567890\",\n    \"accountType\": \"C\",\n    \"balanceAmount\": 150000,\n    \"overdraftAmount\": 0,\n    \"ownerName\": \"Updated John Doe\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{BaseUrl}}/Accounts/{{id}}",
+          "host": [
+            "{{BaseUrl}}"
+          ],
+          "path": [
+            "Accounts",
+            "{{id}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "DeleteAccount",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{BaseUrl}}/Accounts/{{id}}",
+          "host": [
+            "{{BaseUrl}}"
+          ],
+          "path": [
+            "Accounts",
+            "{{id}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "DepositAccount",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"id\": {{idTestTwo}},\n    \"accountNumber\": \"5263418932\",\n    \"valueAmount\": 500000\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{BaseUrl}}/Accounts/{{idTestTwo}}/Deposit",
+          "host": [
+            "{{BaseUrl}}"
+          ],
+          "path": [
+            "Accounts",
+            "{{idTestTwo}}",
+            "Deposit"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "WithdrawAccount",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"id\": {{idTestTwo}},\n    \"accountNumber\": \"5263418932\",\n    \"valueAmount\": 100000\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{BaseUrl}}/Accounts/{{idTestTwo}}/Withdraw",
+          "host": [
+            "{{BaseUrl}}"
+          ],
+          "path": [
+            "Accounts",
+            "{{idTestTwo}}",
+            "Withdraw"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GetAllAccounts NotFound",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{BaseUrl}}/Accounts",
+          "host": [
+            "{{BaseUrl}}"
+          ],
+          "path": [
+            "Accounts"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GetAccountById NotFound",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 404\", function () {",
+              "    pm.response.to.have.status(404);",
+              "});",
+              "",
+              "pm.test(\"Response is a JSON object\", function () {",
+              "    pm.response.to.be.json;",
+              "});",
+              "",
+              "pm.test(\"Response should contain an 'error' message\", function () {",
+              "    const responseBody = pm.response.json();",
+              "    pm.expect(responseBody).to.have.property(\"Errors\"); // Cambio aquí",
+              "    pm.expect(responseBody.Errors[0]).to.be.a(\"string\");",
+              "    pm.expect(responseBody.Errors[0]).to.eql(\"Account with id 100 not found.\");",
+              "});",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{BaseUrl}}/Accounts/accountId/{{idNotFound}}",
+          "host": [
+            "{{BaseUrl}}"
+          ],
+          "path": [
+            "Accounts",
+            "accountId",
+            "{{idNotFound}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GetAccountByNumberAccount NotFound",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 404\", function () {",
+              "    pm.response.to.have.status(404);",
+              "});",
+              "",
+              "pm.test(\"Response is a JSON object\", function () {",
+              "    pm.response.to.be.json;",
+              "});",
+              "",
+              "pm.test(\"Response should contain an 'error' message\", function () {",
+              "    const responseBody = pm.response.json();",
+              "    pm.expect(responseBody).to.have.property(\"Errors\"); // Cambio aquí",
+              "    pm.expect(responseBody.Errors[0]).to.be.a(\"string\");",
+              "    pm.expect(responseBody.Errors[0]).to.eql(\"Account with number 321312321345552 not found.\");",
+              "});",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{BaseUrl}}/Accounts/accountNumber/{{numberAccountNotFound}}",
+          "host": [
+            "{{BaseUrl}}"
+          ],
+          "path": [
+            "Accounts",
+            "accountNumber",
+            "{{numberAccountNotFound}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "AddAccount balanceAmoutCero BadRequest",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 400\", function () {",
+              "    pm.response.to.have.status(400);",
+              "});",
+              "",
+              "pm.test(\"Response is a JSON object\", function () {",
+              "    pm.response.to.be.json;",
+              "});",
+              "",
+              "pm.test(\"Response should contain an 'error' message\", function () {",
+              "    const responseBody = pm.response.json();",
+              "    pm.expect(responseBody).to.have.property(\"Errors\"); // Cambio aquí",
+              "    pm.expect(responseBody.Errors[0]).to.be.a(\"string\");",
+              "    pm.expect(responseBody.Errors[0]).to.eql(\"BalanceAmount must be greater than 0.\");",
+              "});",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"id\": {{idBadRequest}},\n    \"accountType\": \"A\",\n    \"creationDate\": \"2023-10-07\",\n    \"accountNumber\": \"1938762643\",\n    \"ownerName\": \"string\",\n    \"balanceAmount\": 0,\n    \"overdraftAmount\": 0\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{BaseUrl}}/Accounts",
+          "host": [
+            "{{BaseUrl}}"
+          ],
+          "path": [
+            "Accounts"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "UpdateAccount NotFound",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 404\", function () {",
+              "    pm.response.to.have.status(404);",
+              "});",
+              "",
+              "pm.test(\"Response is a JSON object\", function () {",
+              "    pm.response.to.be.json;",
+              "});",
+              "",
+              "pm.test(\"Response should contain an 'error' message\", function () {",
+              "    const responseBody = pm.response.json();",
+              "    pm.expect(responseBody).to.have.property(\"Errors\"); // Cambio aquí",
+              "    pm.expect(responseBody.Errors[0]).to.be.a(\"string\");",
+              "    pm.expect(responseBody.Errors[0]).to.eql(\"Account with id 100 not found.\");",
+              "});",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"id\": {{idNotFound}},\n    \"accountType\": \"A\",\n    \"creationDate\": \"2023-10-07\",\n    \"accountNumber\": \"1938762643\",\n    \"ownerName\": \"string\",\n    \"balanceAmount\": 0,\n    \"overdraftAmount\": 0\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{BaseUrl}}/Accounts/{{idNotFound}}",
+          "host": [
+            "{{BaseUrl}}"
+          ],
+          "path": [
+            "Accounts",
+            "{{idNotFound}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "DeleteAccount NotFound",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 404\", function () {",
+              "    pm.response.to.have.status(404);",
+              "});",
+              "",
+              "pm.test(\"Response is a JSON object\", function () {",
+              "    pm.response.to.be.json;",
+              "});",
+              "",
+              "pm.test(\"Response should contain an 'error' message\", function () {",
+              "    const responseBody = pm.response.json();",
+              "    pm.expect(responseBody).to.have.property(\"Errors\"); // Cambio aquí",
+              "    pm.expect(responseBody.Errors[0]).to.be.a(\"string\");",
+              "    pm.expect(responseBody.Errors[0]).to.eql(\"Account with id 100 not found.\");",
+              "});",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{BaseUrl}}/Accounts/{{idNotFound}}",
+          "host": [
+            "{{BaseUrl}}"
+          ],
+          "path": [
+            "Accounts",
+            "{{idNotFound}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "DepositAccount BadRequest",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 400\", function () {",
+              "    pm.response.to.have.status(400);",
+              "});",
+              "",
+              "pm.test(\"Response is a JSON object\", function () {",
+              "    pm.response.to.be.json;",
+              "});",
+              "",
+              "pm.test(\"Response should contain an 'error' message\", function () {",
+              "    const responseBody = pm.response.json();",
+              "    pm.expect(responseBody).to.have.property(\"Errors\"); // Cambio aquí",
+              "    pm.expect(responseBody.Errors[0]).to.be.a(\"string\");",
+              "    pm.expect(responseBody.Errors[0]).to.eql(\"Invalid account or account number mismatch.\");",
+              "});",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"id\": {{idBadRequest}},\n    \"accountNumber\": \"111111111\",\n    \"valueAmount\": 0\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{BaseUrl}}/Accounts/{{idBadRequest}}/Deposit",
+          "host": [
+            "{{BaseUrl}}"
+          ],
+          "path": [
+            "Accounts",
+            "{{idBadRequest}}",
+            "Deposit"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "WithdrawAccount BadRequest",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 400\", function () {",
+              "    pm.response.to.have.status(400);",
+              "});",
+              "",
+              "pm.test(\"Response is a JSON object\", function () {",
+              "    pm.response.to.be.json;",
+              "});",
+              "",
+              "pm.test(\"Response should contain an 'error' message\", function () {",
+              "    const responseBody = pm.response.json();",
+              "    pm.expect(responseBody).to.have.property(\"Errors\"); // Cambio aquí",
+              "    pm.expect(responseBody.Errors[0]).to.be.a(\"string\");",
+              "    pm.expect(responseBody.Errors[0]).to.eql(\"Invalid account or account number mismatch.\");",
+              "});",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"id\": {{idBadRequest}},\n    \"accountNumber\": \"111111111\",\n    \"valueAmount\": 0\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{BaseUrl}}/Accounts/{{idBadRequest}}/Withdraw",
+          "host": [
+            "{{BaseUrl}}"
+          ],
+          "path": [
+            "Accounts",
+            "{{idBadRequest}}",
+            "Withdraw"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "AddAccount FieldValidation BadRequest",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 400 (Bad Request)\", function () {",
+              "    pm.response.to.have.status(400);",
+              "});",
+              "",
+              "pm.test(\"Response is a JSON object\", function () {",
+              "    pm.response.to.be.json;",
+              "});",
+              "",
+              "pm.test(\"Response 'errorType' should be 'Bad Request'\", function () {",
+              "    const responseBody = pm.response.json();",
+              "    pm.expect(responseBody).to.have.property(\"errorType\");",
+              "    pm.expect(responseBody.errorType).to.eql(\"Bad Request\");",
+              "});",
+              "",
+              "pm.test(\"Response should contain error messages\", function () {",
+              "    const responseBody = pm.response.json();",
+              "    pm.expect(responseBody).to.have.property(\"errors\");",
+              "    pm.expect(responseBody.errors).to.be.an(\"array\");",
+              "",
+              "    // Verificar mensajes de error individuales",
+              "    pm.expect(responseBody.errors).to.include(\"The account field is required.\");",
+              "    pm.expect(responseBody.errors).to.include(\"The JSON value could not be converted to System.Int32. Path: $.id | LineNumber: 1 | BytePositionInLine: 13.\");",
+              "});",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "  {\n    \"id\": \"s\",\n    \"accountType\": \"P\",\n    \"creationDate\": \"2023-10-07T07:37:42\",\n    \"accountNumber\": \"1234567890\",\n    \"ownerName\": \"John Doeiuisiuddsiudsiudsiudsiusdiusdiu\",\n    \"balanceAmount\": 10000,\n    \"overdraftAmount\": 0\n  }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{BaseUrl}}/Accounts",
+          "host": [
+            "{{BaseUrl}}"
+          ],
+          "path": [
+            "Accounts"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "UpdateAccount FieldValidation BadRequest",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 400 (Bad Request)\", function () {",
+              "    pm.response.to.have.status(400);",
+              "});",
+              "",
+              "pm.test(\"Response is a JSON object\", function () {",
+              "    pm.response.to.be.json;",
+              "});",
+              "",
+              "pm.test(\"Response 'errorType' should be 'Bad Request'\", function () {",
+              "    const responseBody = pm.response.json();",
+              "    pm.expect(responseBody).to.have.property(\"errorType\");",
+              "    pm.expect(responseBody.errorType).to.eql(\"Bad Request\");",
+              "});",
+              "",
+              "pm.test(\"Response should contain error messages\", function () {",
+              "    const responseBody = pm.response.json();",
+              "    pm.expect(responseBody).to.have.property(\"errors\");",
+              "    pm.expect(responseBody.errors).to.be.an(\"array\");",
+              "",
+              "    // Verificar mensajes de error individuales",
+              "    pm.expect(responseBody.errors).to.include(\"The account field is required.\");",
+              "    pm.expect(responseBody.errors).to.include(\"The JSON value could not be converted to System.Int32. Path: $.id | LineNumber: 1 | BytePositionInLine: 13.\");",
+              "});",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"id\": \"s\",\n    \"accountType\": \"P\",\n    \"creationDate\": \"2023-10-07T07:37:42\",\n    \"accountNumber\": \"1234567890\",\n    \"ownerName\": \"John Doeiuisiuddsiudsiudsiudsiusdiusdiu\",\n    \"balanceAmount\": 10000,\n    \"overdraftAmount\": 0\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{BaseUrl}}/Accounts/{{id}}",
+          "host": [
+            "{{BaseUrl}}"
+          ],
+          "path": [
+            "Accounts",
+            "{{id}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "WithdrawAccount Insufficient funds BadRequest",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 400 (Bad Request)\", function () {",
+              "    pm.response.to.have.status(400);",
+              "});",
+              "",
+              "pm.test(\"Response is a JSON object\", function () {",
+              "    pm.response.to.be.json;",
+              "});",
+              "",
+              "pm.test(\"Response 'ErrorType' should be 'Bad Request'\", function () {",
+              "    const responseBody = pm.response.json();",
+              "    pm.expect(responseBody).to.have.property(\"ErrorType\");",
+              "    pm.expect(responseBody.ErrorType).to.eql(\"Bad Request\");",
+              "});",
+              "",
+              "pm.test(\"Response should contain an 'Errors' array\", function () {",
+              "    const responseBody = pm.response.json();",
+              "    pm.expect(responseBody).to.have.property(\"Errors\");",
+              "    pm.expect(responseBody.Errors).to.be.an(\"array\");",
+              "",
+              "    // Verificar mensajes de error individuales",
+              "    pm.expect(responseBody.Errors).to.include(\"Insufficient funds\");",
+              "});",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"id\": {{idTestTwo}},\n    \"accountNumber\": \"5263418932\",\n    \"valueAmount\": 1000000000\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{BaseUrl}}/Accounts/{{idTestTwo}}/Withdraw",
+          "host": [
+            "{{BaseUrl}}"
+          ],
+          "path": [
+            "Accounts",
+            "{{idTestTwo}}",
+            "Withdraw"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "BaseUrl",
+      "value": "http://localhost:7000/api",
+      "type": "string"
+    },
+    {
+      "key": "id",
+      "value": "6",
+      "type": "string"
+    },
+    {
+      "key": "numberAccount",
+      "value": "3016892501",
+      "type": "string"
+    },
+    {
+      "key": "idNotFound",
+      "value": "100",
+      "type": "string"
+    },
+    {
+      "key": "numberAccountNotFound",
+      "value": "321312321345552",
+      "type": "string"
+    },
+    {
+      "key": "idBadRequest",
+      "value": "100",
+      "type": "string"
+    },
+    {
+      "key": "idTestTwo",
+      "value": "2"
+    }
+  ]
+}
