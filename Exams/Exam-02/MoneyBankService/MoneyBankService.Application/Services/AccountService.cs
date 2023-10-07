@@ -70,12 +70,21 @@ public class AccountService : IAccountService
 
         var original = await _accountRepository.GetByIdAsync(id);
 
-        if (original is not null)
+        if (original is null)
         {
-            return await _accountRepository.UpdateAsync(account);
+            throw new NotFoundException($"Account with Id={id} Not Found");
         }
 
-        throw new NotFoundException($"Account with Id={id} Not Found");
+        var accounts = await _accountRepository.FindAsync(a => a.AccountNumber == original.AccountNumber);
+
+        if (accounts.Any())
+        {
+            throw new BadRequestException($"Account Number [{account.AccountNumber}] already exists");
+        }
+
+        return await _accountRepository.UpdateAsync(account);
+
+
     }
 
     public async Task Deposit (int id, TransactionDto transactionDto) 
@@ -131,7 +140,7 @@ public class AccountService : IAccountService
 
         if (account.BalanceAmount < transactionDto.ValueAmount)
         {
-            throw new BadRequestException($"Account Number [{transactionDto.AccountNumber}] has not enough balance to whithdraw [{transactionDto.ValueAmount}]");
+            throw new BadRequestException($"Insufficient funds");
         }
 
         account.BalanceAmount -= transactionDto.ValueAmount;
