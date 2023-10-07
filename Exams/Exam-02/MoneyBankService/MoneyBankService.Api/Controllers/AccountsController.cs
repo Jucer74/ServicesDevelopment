@@ -1,4 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using MoneyBankService.Api.Dto;
+using MoneyBankService.Application.Interfaces;
+using MoneyBankService.Domain.Entities;
+using Org.BouncyCastle.Utilities.IO;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,36 +14,64 @@ namespace MoneyBankService.Api.Controllers
     [ApiController]
     public class AccountsController : ControllerBase
     {
-        // GET: api/<AccountsController>
+        private readonly IAccountService _accountService;
+        private readonly IMapper _mapper;
+
+        public AccountsController(IAccountService accountService, IMapper mapper)
+        {
+            _accountService = accountService;
+            _mapper = mapper;
+        }
+
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<ActionResult<IEnumerable<Account>>> GetAccounts()
         {
-            return new string[] { "value1", "value2" };
+            var accounts = await _accountService.GetAllAccounts() as List<Account>;
+            return Ok(_mapper.Map<List<Account>, List<AccountDto>>(accounts!));
         }
 
-        // GET api/<AccountsController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<AccountsController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> PostAccount([FromBody] AccountDto accountDto)
         {
+            var account = await _accountService.CreateAcount(_mapper.Map<AccountDto, Account>(accountDto));
+            return Ok(_mapper.Map<Account, AccountDto>(account));
         }
 
-        // PUT api/<AccountsController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetAccountById(int id)
         {
+            var account = await _accountService.GetAccountById(id);
+            return Ok(_mapper.Map<Account, AccountDto>(account));
+        }
+
+        // PUT api/<TeamsController>/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutAccount(int id, [FromBody] AccountDto accountDto)
+        {
+            var account = await _accountService.UpdateAcount(id, _mapper.Map<AccountDto, Account>(accountDto));
+            return Ok(_mapper.Map<Account, AccountDto>(account));
         }
 
         // DELETE api/<AccountsController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<OkResult> Delete(int id)
         {
+            await _accountService.DeleteAccount(id);
+            return Ok();
+        }
+
+        [HttpPut("{id}/Deposit")]
+        public async Task<IActionResult> Deposit(int id, TransactionDto transactionDto)
+        {
+            var account = await _accountService.DepositToAccount(id, _mapper.Map<TransactionDto, Transaction>(transactionDto));
+            return Ok(_mapper.Map<Account, AccountDto>(account));
+        }
+
+        [HttpPut("{id}/WithDrawal")]
+        public async Task<IActionResult> WithDrawal(int id, TransactionDto transactionDto)
+        {
+            var account = await _accountService.WithDrawalToAccount(id, _mapper.Map<TransactionDto, Transaction>(transactionDto));
+            return Ok(_mapper.Map<Account, AccountDto>(account));
         }
     }
 }

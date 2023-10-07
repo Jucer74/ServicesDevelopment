@@ -7,17 +7,46 @@ public class AccountValidator: AbstractValidator<AccountDto>
 {
     public AccountValidator()
     {
-        // TODO: Implement the Validation Rules
+        RuleFor(m => m.Id)
+            .NotEmpty()
+            .WithMessage("El campo Id es Requerido.")
+            .GreaterThan(0)
+            .WithMessage("El campo Id debe ser mayor a cero");
 
-        //RuleFor(m => m.FIELD)
-        //    .NotEmpty()
-        //    .WithMessage("El campo FIELD es Requerido.")
-        //    .MaximumLength(50)
-        //    .WithMessage("El campo FIELD tiene una longitud maxima de 10 caracteres")
-        //    .Matches(@"\d{10}")
-        //    .WithMessage("El campo FIELD Solo Acepta Numeros")
-        //    .GreaterThan(0)
-        //    .WithMessage("El campo FIELD debe ser mayor a cero");
+        RuleFor(m => m.AccountType)
+            .NotEmpty()
+            .WithMessage("El campo AccountType es Requerido.")
+            .Matches(@"[AC]")
+            .WithMessage("El campo Tipo de Cuenta solo permite (A o C)");
 
+        RuleFor(m => m.CreationDate)
+            .NotEmpty()
+            .WithMessage("El campo CreationDate es Requerido.");
+
+        RuleFor(m => m.AccountNumber)
+           .NotEmpty()
+           .WithMessage("El campo Account number es Requerido.")
+           .MaximumLength(10)
+           .WithMessage("El campo Account number debe tener máximo 10 carácteres")
+           .Matches(@"\d{10}")
+            .WithMessage("El campo Account number Solo Acepta Numeros");
+
+        RuleFor(m => m.OwnerName)
+           .NotEmpty()
+           .WithMessage("El campo Owner name es Requerido.")
+           .MaximumLength(100)
+           .WithMessage("El campo Owner name debe tener máximo 100 carácteres");
+
+        RuleFor(m => m.BalanceAmount)
+           .NotEmpty()
+           .WithMessage("El campo Balance amount es Requerido.")
+           .Matches(@"^\d+.?\d{0,2}$")
+           .WithMessage("El campo Balance amount debe ser en formato Moneda (0.00)");
+
+        RuleFor(m => m.OverdraftAmount)
+           .NotEmpty()
+           .WithMessage("El campo Overdraft amount es Requerido.")
+           .Matches(@"^\d+.?\d{0,2}$")
+           .WithMessage("El campo Overdraft amount debe ser en formato Moneda (0.00)");
     }
 }
