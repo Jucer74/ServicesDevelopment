@@ -90,7 +90,7 @@ namespace MoneyBankService.Api.Controllers
             return NoContent();
         }
 
-        // PUT api/Accounts/{id}/Withdrawal
+        // PUT api/Accounts/{id}/   
         [HttpPut("{id}/Withdrawal")]
         public async Task<IActionResult> Withdrawal(int id, [FromBody] TransactionDto transactionDto)
         {

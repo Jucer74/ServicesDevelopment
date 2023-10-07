@@ -76,7 +76,7 @@ public class AccountService : IAccountService
     {
         if (id != account.Id)
         {
-            throw new BadRequestException($"Id [{id}] is different to Team.Id [{account.Id}]");
+            throw new BadRequestException($"Id [{id}] is different to Account.Id [{account.Id}]");
         }
 
         var original = await _accountRepository.GetByIdAsync(id);
@@ -91,7 +91,6 @@ public class AccountService : IAccountService
 
     public async Task Deposit(int id, Transaction transaction)
     {
-        // Obtenemos la cuenta por su ID
         var account = await _accountRepository.GetByIdAsync(id);
 
         if (account == null)
@@ -99,26 +98,21 @@ public class AccountService : IAccountService
             throw new NotFoundException($"Account with Id={id} Not Found");
         }
 
-        // Incrementamos el balance de la cuenta con el valor depositado
         account.BalanceAmount += transaction.ValueAmount;
 
-        // Si es una cuenta corriente
         if (account.AccountType == 'C')
         {
-            // Si después del depósito el balance sigue siendo menor al sobregiro máximo
             if (account.BalanceAmount < MAX_OVERDRAFT)
             {
-                // Recalculamos el sobregiro
                 account.OverdraftAmount = MAX_OVERDRAFT - account.BalanceAmount;
             }
             else
             {
-                // Si después del depósito, el balance excede el sobregiro máximo
-                account.OverdraftAmount = 0;  // Ajustamos el sobregiro a cero
+                account.OverdraftAmount = 0; 
             }
         }
 
-        await _accountRepository.UpdateAsync(account);  // Actualizamos la cuenta en la base de datos
+        await _accountRepository.UpdateAsync(account);  
     }
 
 
@@ -131,28 +125,34 @@ public class AccountService : IAccountService
             throw new NotFoundException($"Account with Id={id} Not Found");
         }
 
-        // Fondos totales disponibles, que son el balance más el sobregiro no utilizado.
-        decimal availableFunds = account.BalanceAmount + (MAX_OVERDRAFT - account.OverdraftAmount);
+        decimal totalAvailableFunds = account.BalanceAmount + (MAX_OVERDRAFT - account.OverdraftAmount);
 
-        // Si el monto de retiro solicitado es mayor a los fondos disponibles, lanzar excepción
-        if (transaction.ValueAmount > availableFunds)
+        if (transaction.ValueAmount > totalAvailableFunds)
         {
             throw new BadRequestException("Fondos Insuficientes");
         }
 
-        // Actualizamos el balance de la cuenta
-        account.BalanceAmount -= transaction.ValueAmount;
-
-        // Si el balance baja de 1 millón, comenzamos a usar el sobregiro
-        if (account.BalanceAmount < MAX_OVERDRAFT && account.AccountType == 'C')
+        if (transaction.ValueAmount > account.BalanceAmount)
         {
-            // Calculamos cuánto del sobregiro hemos utilizado
-            account.OverdraftAmount = MAX_OVERDRAFT - account.BalanceAmount;
+            decimal requiredOverdraft = transaction.ValueAmount - account.BalanceAmount;
 
-            // Aseguramos que el sobregiro no exceda MAX_OVERDRAFT
-            if (account.OverdraftAmount > MAX_OVERDRAFT)
+            if (account.AccountType == 'C' && requiredOverdraft <= MAX_OVERDRAFT - account.OverdraftAmount)
             {
-                account.OverdraftAmount = MAX_OVERDRAFT;
+                account.OverdraftAmount += requiredOverdraft;
+                account.BalanceAmount = 0;
+            }
+            else
+            {
+                throw new BadRequestException("Fondos Insuficientes");
+            }
+        }
+        else
+        {
+            account.BalanceAmount -= transaction.ValueAmount;
+
+            if (account.AccountType == 'C' && account.BalanceAmount < MAX_OVERDRAFT)
+            {
+                account.OverdraftAmount = MAX_OVERDRAFT - account.BalanceAmount;
             }
         }
 

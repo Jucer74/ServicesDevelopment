@@ -14,8 +14,7 @@ namespace MoneyBankService.Domain.Entities
         public DateTime CreationDate { get; set; } = DateTime.Now;
 
         [Required(ErrorMessage = "El número de cuenta es obligatorio.")]
-        [MaxLength(10, ErrorMessage = "La longitud máxima del número de cuenta es de 10 caracteres.")]
-        [RegularExpression(@"\d{10}", ErrorMessage = "El número de cuenta solo acepta números.")]
+        [RegularExpression(@"^\d{1,10}$", ErrorMessage = "El número de cuenta solo acepta números y debe tener un máximo de 10 dígitos.")]
         public string AccountNumber { get; set; } = null!;
 
         [Required(ErrorMessage = "El nombre del propietario es obligatorio.")]
