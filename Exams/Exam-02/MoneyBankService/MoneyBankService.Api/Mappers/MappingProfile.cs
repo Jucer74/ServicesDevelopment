@@ -11,7 +11,7 @@ public class MappingProfile : Profile
         // Accounts
         CreateMap<AccountDto, Accounts>();
         CreateMap<Accounts, AccountDto>();
-        
+
         // Transactions
         CreateMap<TransactionDto, Transactions>();
         CreateMap<Transactions, TransactionDto>();

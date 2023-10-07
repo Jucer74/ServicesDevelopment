@@ -20,7 +20,7 @@ public class TransactionValidator : AbstractValidator<TransactionDto>
             .WithMessage("The AccountNumber has a maximum length of 10 characters.")
             .Matches(@"\d{10}")
             .WithMessage("The AccountNumber only accepts numbers.");
-    
+
         // Validate transaction type is D or W
         RuleFor(m => m.ValueAmount)
             .NotEmpty()

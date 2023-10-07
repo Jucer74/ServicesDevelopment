@@ -53,7 +53,7 @@ public class AccountService : IAccountService
             default:
                 throw new BadRequestException("Invalid account type.");
         }
-        
+
         // Validate balance amount
         if (account.BalanceAmount <= 0)
         {
