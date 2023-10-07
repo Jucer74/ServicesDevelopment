@@ -70,20 +70,20 @@ public class AccountService : IAccountService
 
         var original = await _accountRepository.GetByIdAsync(id);
 
-        if (original is null)
+        if (original is not null)
         {
-            throw new NotFoundException($"Account with Id={id} Not Found");
+            var accounts = await _accountRepository.FindAsync(a => a.AccountNumber == original!.AccountNumber);
+
+            if (accounts.Any() && account.AccountNumber != original.AccountNumber)
+            {
+                throw new BadRequestException($"Account Number [{account.AccountNumber}] already exists");
+            }
+
+            return await _accountRepository.UpdateAsync(account);
+            
         }
 
-        var accounts = await _accountRepository.FindAsync(a => a.AccountNumber == original.AccountNumber);
-
-        if (accounts.Any())
-        {
-            throw new BadRequestException($"Account Number [{account.AccountNumber}] already exists");
-        }
-
-        return await _accountRepository.UpdateAsync(account);
-
+        throw new NotFoundException($"Account with Id={id} Not Found");
 
     }
 
