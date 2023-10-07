@@ -24,6 +24,5 @@ public class TransactionValidator : AbstractValidator<TransactionDto>
             .WithMessage("The ValueAmount is required.")
             .GreaterThan(0)
             .WithMessage("The ValueAmount must be greater than 0.");
-
     }
 }

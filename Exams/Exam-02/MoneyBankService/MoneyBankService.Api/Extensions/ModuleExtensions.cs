@@ -1,4 +1,4 @@
-﻿﻿using AutoMapper;
+﻿using AutoMapper;
 using FluentValidation;
 using MoneyBankService.Api.Dto;
 using MoneyBankService.Api.Mappers;
@@ -26,7 +26,6 @@ public static class ModuleExtensions
 
         return services;
     }
-
 
     public static IServiceCollection AddMapping(this IServiceCollection services)
     {

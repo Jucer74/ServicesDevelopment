@@ -5,29 +5,25 @@ namespace MoneyBankService.Domain.Entities
 {
     public class Account : EntityBase
     {
-        [Required(ErrorMessage = "El tipo de cuenta es requerido")]
-        [RegularExpression("^[AC]$", ErrorMessage = "El tipo de cuenta solo permite 'A' o 'C'")]
-        [StringLength(1, ErrorMessage = "El tipo de cuenta es hasta 1 caracter")]
+        [Required(ErrorMessage = "The AccountType is required.")]
+        [RegularExpression("^[AC]$", ErrorMessage = "The AccountType must be 'A' or 'C'.")]
+        [StringLength(1, ErrorMessage = "The maximum length of AccountType is 1 character.")]
         public char AccountType { get; set; } = 'A';
 
-        [DataType(DataType.Date, ErrorMessage = "La fecha de creacion es requerida")]
+        [DataType(DataType.Date, ErrorMessage = "The CreationDate must be a valid date.")]
         public DateTime CreationDate { get; set; } = DateTime.Now;
-
-        [Required(ErrorMessage = "El numero de cuenta es requerido")]
-        [MaxLength(10, ErrorMessage = "El numero de cuenta es hasta 10 caracteres")]
-        [RegularExpression(@"\d{10}", ErrorMessage = "El numero de cuenta solo permite los valores 0-9")]
+        [Required(ErrorMessage = "The AccountNumber is required.")]
+        [MaxLength(10, ErrorMessage = "The maximum length of AccountNumber is 10 characters.")]
+        [RegularExpression(@"\d{10}", ErrorMessage = "The AccountNumber only accepts numbers.")]
         public string AccountNumber { get; set; } = null!;
-
-        [Required(ErrorMessage = "El nombre del propietario es requerido")]
-        [MaxLength(100, ErrorMessage = "El nombre del propietario es hasta 100 caracteres")]
+        [Required(ErrorMessage = "The OwnerName is required.")]
+        [MaxLength(100, ErrorMessage = "The maximum length of OwnerName is 100 characters.")]
         public string OwnerName { get; set; } = null!;
-
-        [Required(ErrorMessage = "El saldo es requerido")]
-        [RegularExpression(@"^\d+.?\d{0,2}$", ErrorMessage = "El saldo debe estar en formato dinero (0,00)")]
+        [Required(ErrorMessage = "The BalanceAmount is required.")]
+        [RegularExpression(@"^\d+.?\d{0,2}$", ErrorMessage = "The BalanceAmount should be in money format (0.00)")]
         public decimal BalanceAmount { get; set; }
-
-        [Required(ErrorMessage = "El monto de sobregiro es requerido")]
-        [RegularExpression(@"^\d+.?\d{0,2}$", ErrorMessage = "El monto del sobregiro debe estar en formato de dinero (0,00)")]
+        [Required(ErrorMessage = "The OverdraftAmount is required.")]
+        [RegularExpression(@"^\d+.?\d{0,2}$", ErrorMessage = "The OverdraftAmount should be in money format (0.00)")]
         public decimal OverdraftAmount { get; set; }
     }
 }
