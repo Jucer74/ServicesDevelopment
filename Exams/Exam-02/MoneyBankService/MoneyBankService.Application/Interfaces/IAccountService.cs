@@ -1,4 +1,6 @@
-﻿using MoneyBankService.Domain.Entities;
+﻿using MoneyBankService.Api.Dto;
+using MoneyBankService.Domain.Entities;
+using System.Transactions;
 
 namespace MoneyBankService.Application.Interfaces;
 
@@ -9,5 +11,6 @@ public interface IAccountService
     Task<IEnumerable<Account>> GetAllAccounts();
     Task<Account> GetAccountById(int id);
     Task<Account> UpdateAccount(int id , Account account);
+    Task Deposit(int id, TransactionDto transactionDto);
 
 }
