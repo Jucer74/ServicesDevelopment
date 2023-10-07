@@ -122,7 +122,6 @@ public class AccountService : IAccountService
     }
 
 
-
     public async Task Withdrawal(int id, Transaction transaction)
     {
         var account = await _accountRepository.GetByIdAsync(id);
@@ -132,21 +131,25 @@ public class AccountService : IAccountService
             throw new NotFoundException($"Account with Id={id} Not Found");
         }
 
-        // Si el monto del retiro es mayor que el balance total (balance + sobregiro)
-        if (transaction.ValueAmount > (account.BalanceAmount + MAX_OVERDRAFT - account.OverdraftAmount))
+        // Fondos totales disponibles, que son el balance más el sobregiro no utilizado.
+        decimal availableFunds = account.BalanceAmount + (MAX_OVERDRAFT - account.OverdraftAmount);
+
+        // Si el monto de retiro solicitado es mayor a los fondos disponibles, lanzar excepción
+        if (transaction.ValueAmount > availableFunds)
         {
             throw new BadRequestException("Fondos Insuficientes");
         }
 
+        // Actualizamos el balance de la cuenta
         account.BalanceAmount -= transaction.ValueAmount;
 
-        // Si es una cuenta corriente y el balance está por debajo del millón prestado
-        if (account.AccountType == 'C' && account.BalanceAmount < MAX_OVERDRAFT)
+        // Si el balance baja de 1 millón, comenzamos a usar el sobregiro
+        if (account.BalanceAmount < MAX_OVERDRAFT && account.AccountType == 'C')
         {
-            // El sobregiro utilizado se calcula como la diferencia entre el MAX_OVERDRAFT y el balance actual
+            // Calculamos cuánto del sobregiro hemos utilizado
             account.OverdraftAmount = MAX_OVERDRAFT - account.BalanceAmount;
 
-            // Garantizar que el sobregiro no exceda el valor de MAX_OVERDRAFT
+            // Aseguramos que el sobregiro no exceda MAX_OVERDRAFT
             if (account.OverdraftAmount > MAX_OVERDRAFT)
             {
                 account.OverdraftAmount = MAX_OVERDRAFT;
@@ -155,6 +158,7 @@ public class AccountService : IAccountService
 
         await _accountRepository.UpdateAsync(account);
     }
+
 
 
 
