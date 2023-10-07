@@ -60,5 +60,29 @@ namespace MoneyBankService.Api.Controllers
             await _accountService.DeleteAccount(id);
             return Ok();
         }
+
+        //PUT api/<AccountsController>/5/Deposit
+        [HttpPut("{id}/Deposit")]
+        public async Task<IActionResult> Deposit(int id, [FromBody] TransactionDto transactionDto)
+        {
+            await _accountService.Deposit(id, transactionDto);
+            return Ok();
+        }
+
+        //PUT api/<AccountsController>/5/Withdraw
+        [HttpPut("{id}/Withdraw")]
+        public async Task<IActionResult> Withdraw(int id, [FromBody] TransactionDto transactionDto)
+        {
+            await _accountService.Withdraw(id, transactionDto);
+            return Ok();
+        }
+
+        //GET api/<AccountsController>?AccountNumber={AccountNumber}
+        [HttpGet]
+        public async Task<IActionResult> GetAccountByAccountNumber([FromQuery] string accountNumber)
+        {
+            var accounts = await _accountService.FindAccountsByAccountNumber(accountNumber) as List<Account>;
+            return Ok(_mapper.Map<List<Account>, List<AccountDto>>(accounts!));
+        }
     }
 }

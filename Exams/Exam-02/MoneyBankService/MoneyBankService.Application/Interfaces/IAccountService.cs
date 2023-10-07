@@ -1,5 +1,6 @@
 ﻿using MoneyBankService.Api.Dto;
 using MoneyBankService.Domain.Entities;
+using System.Linq.Expressions;
 using System.Transactions;
 
 namespace MoneyBankService.Application.Interfaces;
@@ -13,4 +14,6 @@ public interface IAccountService
     Task<Account> UpdateAccount(int id , Account account);
     Task Deposit(int id, TransactionDto transactionDto);
     Task Withdraw(int id, TransactionDto transactionDto);
+
+    Task<IEnumerable<Account>> FindAccountsByAccountNumber(string accountNumber);
 }

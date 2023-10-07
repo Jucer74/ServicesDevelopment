@@ -3,6 +3,7 @@ using MoneyBankService.Application.Interfaces;
 using MoneyBankService.Domain.Entities;
 using MoneyBankService.Domain.Exceptions;
 using MoneyBankService.Domain.Interfaces.Repositories;
+using System.Linq.Expressions;
 
 namespace MoneyBankService.Application.Services;
 
@@ -99,7 +100,7 @@ public class AccountService : IAccountService
 
     }
 
-    public async Task Whithdraw (int id, TransactionDto transactionDto)
+    public async Task Withdraw(int id, TransactionDto transactionDto)
     {
         var account = await _accountRepository.GetByIdAsync(id);
 
@@ -127,5 +128,17 @@ public class AccountService : IAccountService
 
         await _accountRepository.UpdateAsync(account);
     }   
+
+    public async Task<IEnumerable<Account>> FindAccountsByAccountNumber(string accountNumber)
+    {
+        var accounts = await _accountRepository.FindAsync(a => a.AccountNumber == accountNumber);
+
+        if (accounts.Any())
+        {
+            return accounts;
+        }
+
+        throw new NotFoundException($"Accounts not found");
+    }
 
 }
