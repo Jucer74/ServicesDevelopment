@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using MoneyBankService.Api.Dto;
-
+namespace MoneyBankService.Api.Validators;
 public class AccountValidator : AbstractValidator<AccountDto>
 {
     private const decimal MAX_OVERDRAFT = 1000000.00M;

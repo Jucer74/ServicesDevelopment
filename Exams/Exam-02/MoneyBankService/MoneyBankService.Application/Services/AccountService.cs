@@ -143,8 +143,16 @@ public class AccountService : IAccountService
         if (transaction.ValueAmount > account.BalanceAmount)
         {
             decimal requiredOverdraft = transaction.ValueAmount - account.BalanceAmount;
-            account.OverdraftAmount += requiredOverdraft;
-            account.BalanceAmount = 0;
+
+            if (account.AccountType == 'C' && requiredOverdraft <= MAX_OVERDRAFT - account.OverdraftAmount)
+            {
+                account.OverdraftAmount += requiredOverdraft;
+                account.BalanceAmount = 0;
+            }
+            else
+            {
+                throw new BadRequestException("Fondos Insuficientes");
+            }
         }
         else
         {
