@@ -26,7 +26,7 @@ namespace MoneyBankService.Api.Controllers
  
         // GET: api/Accounts
         [HttpGet]
-        public async Task<IActionResult> GetAccountsByAccountNumberAsync([FromQuery] string accountNumber = null)
+        public async Task<IActionResult> GetAccountsByAccountNumberAsync([FromQuery] string? accountNumber = null)
         {
             List<Account>? accounts;
 
@@ -97,10 +97,7 @@ namespace MoneyBankService.Api.Controllers
             var transaction = _mapper.Map<TransactionDto, Transaction>(transactionDto);
             await _accountService.Withdrawal(id, transaction);
             return NoContent();
-        }
-
-
-          
+        }       
 
     }
 }

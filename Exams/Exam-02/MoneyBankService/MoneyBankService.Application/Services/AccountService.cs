@@ -21,9 +21,9 @@ public class AccountService : IAccountService
 
         if (account.AccountType == 'A') 
         {
-            // El balance ya es el valor inicial proporcionado
+            // El balance ya es el valor que seproporciono inicialmente
         }
-        // Si la cuenta es corriente, sumamos el MAX_OVERDRAFT al balance inicial
+        
         else if (account.AccountType == 'C')  
         {
             account.BalanceAmount += MAX_OVERDRAFT;
