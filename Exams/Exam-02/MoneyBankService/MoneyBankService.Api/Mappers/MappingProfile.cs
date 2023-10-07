@@ -15,5 +15,9 @@ public class MappingProfile : Profile
         //    .ForMember(acc => acc.Id, opt => opt.MapFrom(trx => trx.Id));
         //    .ForMember( ....... Oher Fields
 
+
+        CreateMap<TransactionDto, Transaction>();
+        CreateMap<Transaction, TransactionDto>();
+
     }
 }
