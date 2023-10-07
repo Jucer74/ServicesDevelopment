@@ -12,5 +12,5 @@ public interface IAccountService
     Task<Account> GetAccountById(int id);
     Task<Account> UpdateAccount(int id , Account account);
     Task Deposit(int id, TransactionDto transactionDto);
-
+    Task Withdraw(int id, TransactionDto transactionDto);
 }
