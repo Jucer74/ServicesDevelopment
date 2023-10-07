@@ -12,7 +12,6 @@ namespace MoneyBankService.Api.Extensions;
 
 public static class ModuleExtensions
 {
-
     public static IServiceCollection AddServices(this IServiceCollection services)
     {
         services.AddScoped<IAccountService, AccountService>();
@@ -31,10 +30,7 @@ public static class ModuleExtensions
     public static IServiceCollection AddMapping(this IServiceCollection services)
     {
         // Auto Mapper Configurations
-        var mapperConfig = new MapperConfiguration(mc =>
-        {
-            mc.AddProfile(new MappingProfile());
-        });
+        var mapperConfig = new MapperConfiguration(mc => { mc.AddProfile(new MappingProfile()); });
 
         IMapper mapper = mapperConfig.CreateMapper();
         services.AddSingleton(mapper);

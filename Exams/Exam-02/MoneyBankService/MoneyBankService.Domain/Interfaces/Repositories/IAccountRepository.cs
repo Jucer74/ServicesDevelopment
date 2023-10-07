@@ -3,6 +3,6 @@ using MoneyBankService.Domain.Entities;
 
 namespace MoneyBankService.Domain.Interfaces.Repositories;
 
-public interface IAccountRepository : IRepository<Account>
+public interface IAccountRepository : IRepository<Accounts>
 {
 }

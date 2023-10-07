@@ -5,7 +5,7 @@ using MoneyBankService.Infrastructure.Context;
 
 namespace MoneyBankService.Infrastructure.Repositories;
 
-public class AccountRepository : Repository<Account>, IAccountRepository
+public class AccountRepository : Repository<Accounts>, IAccountRepository
 {
     public AccountRepository(AppDbContext appDbContext) : base(appDbContext)
     {

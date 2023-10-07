@@ -1,6 +1,6 @@
-﻿namespace MoneyBankService.Api.Dto;
+namespace MoneyBankService.Domain.Entities;
 
-public class TransactionDto
+public class Transactions
 {
     public int Id { get; set; }
     public string AccountNumber { get; set; } = null!;

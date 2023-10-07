@@ -8,12 +8,12 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        CreateMap<AccountDto, Account>();
-        CreateMap<Account, AccountDto>();
-        // TODO: Implement de Mapping ForMembers
-        //CreateMap<TransactionDto, Account>()
-        //    .ForMember(acc => acc.Id, opt => opt.MapFrom(trx => trx.Id));
-        //    .ForMember( ....... Oher Fields
-
+        // Accounts
+        CreateMap<AccountDto, Accounts>();
+        CreateMap<Accounts, AccountDto>();
+        
+        // Transactions
+        CreateMap<TransactionDto, Transactions>();
+        CreateMap<Transactions, TransactionDto>();
     }
 }

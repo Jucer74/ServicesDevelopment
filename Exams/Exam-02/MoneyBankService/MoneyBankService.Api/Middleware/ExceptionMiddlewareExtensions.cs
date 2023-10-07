@@ -18,9 +18,9 @@ public static class ExceptionMiddlewareExtensions
     public static ErrorDetails ConstructErrorMessages(this ActionContext context)
     {
         var errors = context.ModelState.Values.Where(v => v.Errors.Count >= 1)
-                .SelectMany(v => v.Errors)
-                .Select(v => v.ErrorMessage)
-                .ToList();
+            .SelectMany(v => v.Errors)
+            .Select(v => v.ErrorMessage)
+            .ToList();
 
         return new ErrorDetails
         {
@@ -49,8 +49,7 @@ public static class ExceptionMiddlewareExtensions
             {
                 errors.Add(innerException.Message);
             }
-        }
-        while (innerException != null);
+        } while (innerException != null);
 
         var errorDetails = new ErrorDetails()
         {

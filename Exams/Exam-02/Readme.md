@@ -1,19 +1,28 @@
 # Examen Tecnico
-Basaandose en la API **MoneyBankAPI**, que se utiliza para soportas transacciones bancarias, Implemente un microservicio que utilice arquitectura Limpia y manejando los conceptos de DTO, Services, Models y el patron de Exception Middleware Ahndler, vistos en clase.
 
-Para ello Utilice como base el proyecto **MoneyBankService** e implemente el codigo necesario para completar las funcionalidades.
+Basaandose en la API **MoneyBankAPI**, que se utiliza para soportas transacciones bancarias, Implemente un microservicio
+que utilice arquitectura Limpia y manejando los conceptos de DTO, Services, Models y el patron de Exception Middleware
+Ahndler, vistos en clase.
+
+Para ello Utilice como base el proyecto **MoneyBankService** e implemente el codigo necesario para completar las
+funcionalidades.
 
 # Base de Datos
-Utilizando el motor de Base de datos MySQL, ejecute los scripts de creacion de base de datos, creacion de usuario, creacion de tabla y el de insercion de datos para preparar el ambiente inicial de su proyecto.
+
+Utilizando el motor de Base de datos MySQL, ejecute los scripts de creacion de base de datos, creacion de usuario,
+creacion de tabla y el de insercion de datos para preparar el ambiente inicial de su proyecto.
 
 ## Scripts
+
 - 01_Create_Database.sql
 - 02_Create_User.sql
 - 03_TAB_Accounts.sql
 - 04_INS_Acounts.sql
 
 # Modelos
-Basandose en la tabla de Account cree el Modelo Necesario para realizar las acciones basicas de adminitracion de los datos (CRUD)
+
+Basandose en la tabla de Account cree el Modelo Necesario para realizar las acciones basicas de adminitracion de los
+datos (CRUD)
 
 ```csharp
 public class Account
@@ -27,7 +36,9 @@ public class Account
     public decimal OverdraftAmount { get; set; }
 }
 ```
+
 Tenga en cuenta complementarlo con las Anotaciones Necesarias para manejar los conceptos de :
+
 - Llave ([Key])
 - Requeridos (ej. El campo Nombre del Propietario es Requerido) ([Required])
 - Longitud (ej. El campo Numero de La Cuenta tiene una longitud maxima de 10 caracteres) ([MaxLength])
@@ -39,6 +50,7 @@ Tenga en cuenta complementarlo con las Anotaciones Necesarias para manejar los c
 Para mas informacion consulte [aqui](https://www.bytehide.com/blog/data-annotations-in-csharp)
 
 # Object Relational Mapping (ORM) - Entity Framework
+
 Recuerde adicionar los Paquetes (Nugets) necesarios para acceder a la base de datos:
 
 - Microsoft.EntityFrameworkCore
@@ -47,7 +59,8 @@ Recuerde adicionar los Paquetes (Nugets) necesarios para acceder a la base de da
 - MySql.EntityFrameworkCore (asegurese de que sea esta y no otra)
 
 # Contexto
-Utilice el siguiente Contexto  para enlazar el modelo a la base de datos basandose en la clase **AppDbContext**
+
+Utilice el siguiente Contexto para enlazar el modelo a la base de datos basandose en la clase **AppDbContext**
 
 ```csharp
 public class AppDbContext : DbContext
@@ -66,28 +79,33 @@ public class AppDbContext : DbContext
 
 Recuerde agregar el contexto de la base de datos al Scope de la aplicacion en la clse **Program**
 
-
 ```csharp
 // Add DBContext
 builder.Services.AddDbContext<AppDbContext>(options => options.UseMySQL(builder.Configuration.GetConnectionString("CnnStr")!));
 ```
 
 # Controlador
-Asegure que el Nuevo controlador El controlador **AccountsController** de tipo **API**, adicionando Acciones de Entity Framework, utilizando el Modelo de **Account** y el contexto de **AppDbContext**.
 
-
+Asegure que el Nuevo controlador El controlador **AccountsController** de tipo **API**, adicionando Acciones de Entity
+Framework, utilizando el Modelo de **Account** y el contexto de **AppDbContext**.
 
 # EndPoints
-Al seleccionar el Controlador con acciones que usan Entity Framework se crean las acciones principales de CRUD para las cuentas, en este punto ya es posible probrar estas acciones y confirmar su correcta ejecucion.
+
+Al seleccionar el Controlador con acciones que usan Entity Framework se crean las acciones principales de CRUD para las
+cuentas, en este punto ya es posible probrar estas acciones y confirmar su correcta ejecucion.
 
 ## GetAccounts
+
 ### Metodo
+
 GET /api/Accounts
 
 ### Request
+
 Sin Contenido
 
 ### Response
+
 Arreglo con los datos de las cuentas
 
 ```json
@@ -105,15 +123,19 @@ Arreglo con los datos de las cuentas
 ```
 
 ## GetAccounts
+
 Utilice el Modificador [FromQuery] para Pasar el Numero de la Cuenta
 
 ### Metodo
+
 GET /api/Accounts?AccountNumber={accountNumber}
 
 ### Request
+
 Se envia el **accountNumber**  o Numero de la Cuenta
 
 ### Response
+
 ```csharp
 [
   {
@@ -129,13 +151,17 @@ Se envia el **accountNumber**  o Numero de la Cuenta
 ```
 
 ## GetAccount
+
 ### Metodo
+
 GET /api/Accounts/{id}
 
 ### Request
-Se envia el **Id** 
+
+Se envia el **Id**
 
 ### Response
+
 ```csharp
 {
   "id": 1,
@@ -149,10 +175,13 @@ Se envia el **Id**
 ```
 
 ## PostAccount
+
 ### Metodo
+
 POST /api/Accounts
 
 ### Request
+
 ```csharp
 {
   "id": 0,
@@ -166,6 +195,7 @@ POST /api/Accounts
 ```
 
 ### Response
+
 ```csharp
 {
   "id": 4,
@@ -179,10 +209,13 @@ POST /api/Accounts
 ```
 
 ## PutAccount
+
 ### Metodo
+
 PUT /api/Accounts/{id}
 
 ### Request
+
 Se envia el **Id** y el body con el contenido a modificar.
 
 ```csharp
@@ -196,23 +229,29 @@ Se envia el **Id** y el body con el contenido a modificar.
   "overdraftAmount": 0
 }
 ```
+
 ### Response
+
 Sin contenido
 
 ## DeleteAccount
+
 ### Metodo
+
 DELETE /api/Accounts/{id}
 
 ### Request
+
 Se envia el **Id**
 
 ### Response
+
 Sin contenido
 
-
-
 # Acciones de Cajero
-Para cubrir las transcciones propias del cajero se deben implementar los endPoints para Deposito y Retiro, utilizando el Modelo **Transaction** para enviar los datos.
+
+Para cubrir las transcciones propias del cajero se deben implementar los endPoints para Deposito y Retiro, utilizando el
+Modelo **Transaction** para enviar los datos.
 
 ```csharp
 public class Transaction
@@ -226,9 +265,11 @@ public class Transaction
 ## Deposito
 
 ### Metodo
+
 PUT /api/Accounts/{id}/Deposit
 
 ### Request
+
 ```json
 {
   "id": 0,
@@ -236,15 +277,19 @@ PUT /api/Accounts/{id}/Deposit
   "valueAmount": 0
 }
 ```
+
 ### Response
+
 Sin Contenido
 
 ## Retiro
 
 ### Metodo
+
 PUT /api/Accounts/{id}/Withdrawal
 
 ### Request
+
 ```json
 {
   "id": 0,
@@ -254,20 +299,30 @@ PUT /api/Accounts/{id}/Withdrawal
 ```
 
 ### Response
+
 Sin Contenido
 
-
 # Consideraciones
-- Al Crear la Cuenta debe validar los campos requeridos, tipos y longitudes ademas que debe validar que el Balance debe ser Mayor a Cero para aperturar la Cuenta, de lo contrario debe retornar un **BadRequest**, Con el Mensaje: "El Balance debe ser mayor a cero".
+
+- Al Crear la Cuenta debe validar los campos requeridos, tipos y longitudes ademas que debe validar que el Balance debe
+  ser Mayor a Cero para aperturar la Cuenta, de lo contrario debe retornar un **BadRequest**, Con el Mensaje: "El
+  Balance debe ser mayor a cero".
 - El Valor Maximo de Sobregiro (MAX_OVERDRAFT) es de $1,000,000.00 (Un Millon)
 - Al Crear una Cuenta de Ahorros el Valor del Balance es igual al valor inicial de la apertura
-- Al Crear una cuenta Corriente, El valor del Balance inicial, es igual al Valor Ingresado mas el Valor Maximo de sobregiro, Por ejemplo si apertura una cuenta con un valor de $500,000.00 al crear la cuenta esta se crea sumandole el Monto Maximo de sobregiro, quedando entonces con un Valor Inicial de $1,500,000.00
+- Al Crear una cuenta Corriente, El valor del Balance inicial, es igual al Valor Ingresado mas el Valor Maximo de
+  sobregiro, Por ejemplo si apertura una cuenta con un valor de $500,000.00 al crear la cuenta esta se crea sumandole el
+  Monto Maximo de sobregiro, quedando entonces con un Valor Inicial de $1,500,000.00
 - Al Realizar un Deposito y la cuenta es de Ahorros, el Valor del Balance se incrementa en el valor Depositado
-- Al realizar un Deposito y la cuenta es Corriente, el Valor del Balance es igual al Valor valor actal mas el valor depositado y si el sobregiro es mayor a cero y el balance actualizado es menor que el MAX_OVERDRAFT, entonce el valor del sobregiro se actualiza con la diferencia del MAX_OVERDRAFT y el BAlance actualizado.
-- Debe retornar un **BadRequest** con el Mensaje de "Fondos Insificientes" si al momento de retirar el valor de Retiro es superior al Valor actual del Balance
+- Al realizar un Deposito y la cuenta es Corriente, el Valor del Balance es igual al Valor valor actal mas el valor
+  depositado y si el sobregiro es mayor a cero y el balance actualizado es menor que el MAX_OVERDRAFT, entonce el valor
+  del sobregiro se actualiza con la diferencia del MAX_OVERDRAFT y el BAlance actualizado.
+- Debe retornar un **BadRequest** con el Mensaje de "Fondos Insificientes" si al momento de retirar el valor de Retiro
+  es superior al Valor actual del Balance
 - Tenga Presente que los Mensajes de Error o de Exception deben utilizar la estructura de ErrorDetails
-- 
+-
+
 # Ejemplos
+
 A continuacion mostraremos algunos ejemplos de la Logica de Deposito y Retiro para los tipos de cuentas.
 
 ## Cuenta de Ahorros / Deposito
@@ -275,28 +330,29 @@ A continuacion mostraremos algunos ejemplos de la Logica de Deposito y Retiro pa
 Balance Actual = $200,000.00
 Sobregiro= $0.00
 
-Deposito =  $500,000.00
+Deposito = $500,000.00
 
 Nuevo Balance = $700,000.00
 Sobregiro = $0.00
 
 #### Regla
+
 ```csharp
 Balance += Deposit
 ```
-
 
 ### Cuenta de Ahorros / Retiro
 
 Balance Actual = $700,000.00
 Sobregiro= $0.00
 
-Retiro =  $300,000.00
+Retiro = $300,000.00
 
 Nuevo Balance = $400,000.00
 Sobregiro = $0.00
 
 #### Regla
+
 ```csharp
 if (Withdrawal <= Balance) 
 {
@@ -308,17 +364,15 @@ else
 }
 ```
 
-
 ### Cuenta Corriente / Deposito
 
 Balance Actual = $300,000.00
 Sobregiro= $700,000.00
 
-Deposito =  $500,000.00
+Deposito = $500,000.00
 
 Nuevo Balance = $800,000.00
 Sobregiro = $200,000.00
-
 
 #### Regla
 
@@ -340,7 +394,7 @@ else
 Balance Actual = $800,000.00
 Sobregiro= $200,000.00
 
-Retiro =  $500,000.00
+Retiro = $500,000.00
 
 Nuevo Balance = $300,000.00
 Sobregiro = $700,000.00
@@ -363,8 +417,8 @@ else
 }
 ```
 
-
 # Condiciones
+
 - Codigo debe quedar Cero errores y Cero Warnings
 - Debe Implementar utilizando Clean Code y Buenas practicas de programacion
 - Debe Adjuntar su archivo de POSTMAN con todas las Pruebas Necesarias para probrar el Servicio
