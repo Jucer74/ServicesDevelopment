@@ -1,22 +1,19 @@
-﻿using MoneyBankService.Application.Interfaces;
+﻿using MoneyBankService.Api.Dto;
+using MoneyBankService.Application.Interfaces;
 using MoneyBankService.Domain.Entities;
 using MoneyBankService.Domain.Exceptions;
 using MoneyBankService.Domain.Interfaces.Repositories;
-
-
 namespace MoneyBankService.Application.Services;
 
 public class AccountService : IAccountService
 {
-   
-    private const int MAX_OVERDRAFT = 1_000_000;
     private readonly IAccountRepository _accountRepository;
+    private const int MAX_OVERDRAFT = 1_000_000;
 
     public AccountService(IAccountRepository accountRepository)
     {
         _accountRepository = accountRepository;
     }
-
     public async Task<Account> CreateAccount(Account account)
     {
         if (account.AccountType == 'C')
@@ -158,10 +155,4 @@ public class AccountService : IAccountService
 
         throw new NotFoundException($"Accounts not found");
     }
-
-
-
-
-
-
 }
