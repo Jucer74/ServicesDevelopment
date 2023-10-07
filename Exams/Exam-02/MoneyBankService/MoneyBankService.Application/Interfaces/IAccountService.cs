@@ -1,7 +1,5 @@
 ﻿using MoneyBankService.Domain.Entities;
-using MoneyBankService.Domain.Interfaces.Repositories;
-
-
+using System.Transactions;
 
 
 namespace MoneyBankService.Application.Interfaces;
@@ -13,8 +11,11 @@ public interface IAccountService
     Task<IEnumerable<Account>> GetAllAccounts();
     Task<Account> GetAccountById(int id);
     Task<Account> UpdateAccount(int id , Account account);
-    Task Deposit(int id, TransactionDto transactionDto);
-    Task Withdraw(int id, TransactionDto transactionDto);
+  
 
-    Task<IEnumerable<Account>> FindAccountsByAccountNumber(string accountNumber);
+    Task<Account> DepositToAccount(int id, Domain.Entities.Transaction transaction);
+
+    Task<Account> WithDrawalToAccount(int id, Domain.Entities.Transaction transaction);
+
+    
 }

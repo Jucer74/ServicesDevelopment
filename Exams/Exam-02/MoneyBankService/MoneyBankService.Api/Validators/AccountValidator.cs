@@ -1,61 +1,53 @@
 ﻿using FluentValidation;
 using MoneyBankService.Api.Dto;
-using Org.BouncyCastle.Security;
 
-namespace MoneyBankService.Api.Validators;
-
-public class AccountValidator : AbstractValidator<AccountDto>
+namespace MoneyBankService.Api.Validators
 {
-    public AccountValidator()
+    public class AccountValidator : AbstractValidator<AccountDto>
     {
-        RuleFor(m => m.AccountType)
-            .NotEmpty()
-            .WithMessage("The AccountType is required.");
+        public AccountValidator()
+        {
+            RuleFor(m => m.Id)
+                .NotEmpty()
+                .WithMessage("The Id field is required.")
+                .GreaterThan(0)
+                .WithMessage("The Id field must be greater than zero.");
 
-        RuleFor(m => m.CreationDate)
-            .Must(BeAValidDate)
-            .WithMessage("The CreationDate must be a valid date.");
-        RuleFor(m => m.AccountNumber)
-            .NotEmpty()
-            .WithMessage("The AccountNumber is required.")
-            .MaximumLength(10)
-            .WithMessage("The AccountNumber has a maximum length of 10 characters.")
-            .Matches(@"\d{10}")
-            .WithMessage("The AccountNumber only accepts numbers.");
-        RuleFor(m => m.OwnerName)
-            .NotEmpty()
-            .WithMessage("The OwnerName is required.")
-            .MaximumLength(100)
-            .WithMessage("The OwnerName has a maximum length of 100 characters.");
-        RuleFor(m => m.BalanceAmount)
-            .NotEmpty()
-            .WithMessage("The BalanceAmount is required.")
-            .GreaterThan(0)
-            .WithMessage("The BalanceAmount must be greater than 0.");
-        RuleFor(m => m.OverdraftAmount)
-            .NotEmpty()
-            .WithMessage("The OverdraftAmount is required.");
+            RuleFor(m => m.AccountType)
+                .NotEmpty()
+                .WithMessage("The AccountType field is required.")
+                .Matches(@"[AC]")
+                .WithMessage("The Account Type field only allows 'A' or 'C'.");
 
+            RuleFor(m => m.CreationDate)
+                .NotEmpty()
+                .WithMessage("The CreationDate field is required.");
 
-    }
+            RuleFor(m => m.AccountNumber)
+                .NotEmpty()
+                .WithMessage("The Account number field is required.")
+                .MaximumLength(10)
+                .WithMessage("The Account number field must have a maximum length of 10 characters.")
+                .Matches(@"^\d{10}$")
+                .WithMessage("The Account number field only accepts 10-digit numbers.");
 
-    private static bool BeAValidDate(DateTime date)
-    {
-        return isValidYear(date.Year) && isValidMonth(date.Month) && isValidDay(date.Day);
-    }
+            RuleFor(m => m.OwnerName)
+                .NotEmpty()
+                .WithMessage("The Owner name field is required.")
+                .MaximumLength(100)
+                .WithMessage("The Owner name field must have a maximum length of 100 characters.");
 
-    private static bool isValidYear(int year)
-    {
-        return year >= DateTime.Now.Year;
-    }
+            RuleFor(m => m.BalanceAmount)
+                .NotEmpty()
+                .WithMessage("The Balance amount field is required.")
+                .Matches(@"^\d+(\.\d{1,2})?$")
+                .WithMessage("The Balance amount field must be in currency format (0.00).");
 
-    private static bool isValidMonth(int month)
-    {
-        return month >= 1 && month <= 12;
-    }
-
-    private static bool isValidDay(int day)
-    {
-        return day >= 1 && day <= 31;
+            RuleFor(m => m.OverdraftAmount)
+                .NotEmpty()
+                .WithMessage("The Overdraft amount field is required.")
+                .Matches(@"^\d+(\.\d{1,2})?$")
+                .WithMessage("The Overdraft amount field must be in currency format (0.00).");
+        }
     }
 }
