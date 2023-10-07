@@ -18,7 +18,7 @@ public class AccountService : IAccountService
     {
         if (account.AccountType == 'C')
         {
-            account.BalanceAmount = GetInitalBalanceAmount(account.BalanceAmount);
+            account.BalanceAmount+= MAX_OVERDRAFT;
         }
 
         return await _accountRepository.AddAsync(account);
@@ -142,10 +142,5 @@ public class AccountService : IAccountService
         }
 
         throw new NotFoundException($"Accounts not found");
-    }
-
-    private static decimal GetInitalBalanceAmount(decimal initalBalanceAmount)
-    {
-        return initalBalanceAmount += MAX_OVERDRAFT;
     }
 }
