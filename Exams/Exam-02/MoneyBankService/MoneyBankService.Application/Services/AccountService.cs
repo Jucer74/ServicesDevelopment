@@ -3,8 +3,6 @@ using MoneyBankService.Application.Interfaces;
 using MoneyBankService.Domain.Entities;
 using MoneyBankService.Domain.Exceptions;
 using MoneyBankService.Domain.Interfaces.Repositories;
-using System.Linq.Expressions;
-
 namespace MoneyBankService.Application.Services;
 
 public class AccountService : IAccountService
@@ -18,6 +16,11 @@ public class AccountService : IAccountService
     }
     public async Task<Account> CreateAccount(Account account)
     {
+        if (account.AccountType == 'C')
+        {
+            account.BalanceAmount = GetInitalBalanceAmount(account.BalanceAmount);
+        }
+
         return await _accountRepository.AddAsync(account);
     }
 
@@ -55,7 +58,7 @@ public class AccountService : IAccountService
     {
         if(id != account.Id)
         {
-            throw new BadRequestException($"Id [{id}] is different to Team.Id [{account.Id}]");
+            throw new BadRequestException($"Id [{id}] is different to Account.Id [{account.Id}]");
         }
 
         var original = await _accountRepository.GetByIdAsync(id);
@@ -141,4 +144,8 @@ public class AccountService : IAccountService
         throw new NotFoundException($"Accounts not found");
     }
 
+    private static decimal GetInitalBalanceAmount(decimal initalBalanceAmount)
+    {
+        return initalBalanceAmount += MAX_OVERDRAFT;
+    }
 }
