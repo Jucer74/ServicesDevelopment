@@ -20,11 +20,20 @@ namespace MoneyBankService.Api.Controllers
             _accountService = accountService;
             _mapper = mapper;
         }
+
         // GET: api/<AccountsController>
         [HttpGet]
         public async Task<IActionResult> GetAllAccounts()
         {
             var accounts = await _accountService.GetAllAccounts() as List<Account>;
+            return Ok(_mapper.Map<List<Account>, List<AccountDto>>(accounts!));
+        }
+
+        // GET api/<AccountsController>/ByAccountNumber?accountNumber=123456789
+        [HttpGet("ByAccountNumber")]
+        public async Task<IActionResult> GetAccountByAccountNumber([FromQuery] string accountNumber)
+        {
+            var accounts = await _accountService.FindAccountsByAccountNumber(accountNumber) as List<Account>;
             return Ok(_mapper.Map<List<Account>, List<AccountDto>>(accounts!));
         }
 
@@ -77,12 +86,5 @@ namespace MoneyBankService.Api.Controllers
             return Ok();
         }
 
-        //GET api/<AccountsController>?AccountNumber={AccountNumber}
-        [HttpGet]
-        public async Task<IActionResult> GetAccountByAccountNumber([FromQuery] string accountNumber)
-        {
-            var accounts = await _accountService.FindAccountsByAccountNumber(accountNumber) as List<Account>;
-            return Ok(_mapper.Map<List<Account>, List<AccountDto>>(accounts!));
-        }
     }
 }
