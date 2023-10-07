@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using StudentsApp.Domain.Entities;
+using MoneyBankService.Domain.Entities;
 
-namespace StudentsApp.Infrastructure.Context;
+namespace MoneyBankService.Infrastructure.Context;
 
 public class AppDbContext : DbContext
 {
@@ -13,5 +13,5 @@ public class AppDbContext : DbContext
     {
     }
 
-    public DbSet<Student> Students { get; set; }
+    public DbSet<Account> Accounts{ get; set; }
 }
