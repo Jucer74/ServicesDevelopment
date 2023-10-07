@@ -20,20 +20,21 @@ namespace MoneyBankAPI.Controllers
 
         // GET: api/Accounts
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Account>>> GetAccounts([FromQuery]string accountNumber=null!)
+        public async Task<ActionResult<IEnumerable<AccountDto>>> GetAccounts([FromQuery] string? accountNumber = null)
         {
-            if (_context.Accounts == null)
+            var accounts = await _accountService.GetAllAccounts();
+
+            if (!string.IsNullOrEmpty(accountNumber))
             {
-                return NotFound();
+                // Filtrar las cuentas por número de cuenta si se proporciona el parámetro accountNumber
+                accounts = accounts.Where(account => account.AccountNumber == accountNumber).ToList();
             }
 
-            if(!string.IsNullOrEmpty(accountNumber))
-            {
-                return await _context.Accounts.Where(x => x.AccountNumber == accountNumber).ToListAsync();
-            }
+            var accountDtos = _mapper.Map<IEnumerable<Account>, IEnumerable<AccountDto>>(accounts);
 
-            return await _context.Accounts.ToListAsync();
+            return Ok(accountDtos);
         }
+
 
         // GET: api/Accounts/5
         [HttpGet("{id}")]

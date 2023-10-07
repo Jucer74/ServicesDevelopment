@@ -10,10 +10,10 @@ public class MappingProfile : Profile
     {
         CreateMap<AccountDto, Account>();
         CreateMap<Account, AccountDto>();
-        // TODO: Implement de Mapping ForMembers
-        //CreateMap<TransactionDto, Account>()
-        //    .ForMember(acc => acc.Id, opt => opt.MapFrom(trx => trx.Id));
-        //    .ForMember( ....... Oher Fields
 
+        CreateMap<TransactionDto, Transaction>();
+        CreateMap<Transaction, TransactionDto>();
+
+    
     }
 }

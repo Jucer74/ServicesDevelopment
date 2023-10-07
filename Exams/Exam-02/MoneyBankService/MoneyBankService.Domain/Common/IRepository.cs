@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿using MoneyBankService.Domain.Entities;
+using System.Linq.Expressions;
 
 namespace MoneyBankService.Domain.Common;
 
@@ -11,6 +12,7 @@ public interface IRepository<T> where T : EntityBase
     public Task<T> GetByIdAsync(int id);
 
     public Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate);
+
 
     public Task<T> UpdateAsync(T entity);
 
