@@ -21,6 +21,13 @@ public class AccountService : IAccountService
             account.BalanceAmount+= MAX_OVERDRAFT;
         }
 
+        var accounts = await _accountRepository.FindAsync(a => a.AccountNumber == account.AccountNumber);
+
+        if (accounts.Any())
+        {
+            throw new BadRequestException($"Account Number [{account.AccountNumber}] already exists");
+        }
+
         return await _accountRepository.AddAsync(account);
     }
 
