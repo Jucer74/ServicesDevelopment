@@ -112,6 +112,11 @@ public class AccountService : IAccountService
             throw new NotFoundException($"Account with Id={id} Not Found");
         }
 
+        if (id != transactionDto.Id)
+        {
+            throw new BadRequestException($"Id [{id}] is different to Transaction.Id [{transactionDto.Id}]");
+        }
+
         if (account.AccountNumber != transactionDto.AccountNumber)
         {
            throw new BadRequestException($"Account Number [{transactionDto.AccountNumber}] is different to Account.AccountNumber [{account.AccountNumber}]");
