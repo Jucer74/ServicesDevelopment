@@ -26,7 +26,7 @@ namespace MoneyBankService.Api.Controllers
  
         // GET: api/Accounts
         [HttpGet]
-        public async Task<IActionResult> GetAccountsByAccountNumberAsync([FromQuery] string accountNumber = null)
+        public async Task<IActionResult> GetAccountsByAccountNumberAsync([FromQuery] string accountNumber = null!)
         {
             List<Account>? accounts;
 

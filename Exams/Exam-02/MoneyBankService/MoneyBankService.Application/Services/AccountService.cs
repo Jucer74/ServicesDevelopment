@@ -131,28 +131,29 @@ public class AccountService : IAccountService
             throw new NotFoundException($"Account with Id={id} Not Found");
         }
 
-        // Fondos totales disponibles, que son el balance más el sobregiro no utilizado.
-        decimal availableFunds = account.BalanceAmount + (MAX_OVERDRAFT - account.OverdraftAmount);
+        decimal totalAvailableFunds = account.BalanceAmount + (MAX_OVERDRAFT - account.OverdraftAmount);
 
-        // Si el monto de retiro solicitado es mayor a los fondos disponibles, lanzar excepción
-        if (transaction.ValueAmount > availableFunds)
+        // Verifica si el monto de retiro excede el total disponible
+        if (transaction.ValueAmount > totalAvailableFunds)
         {
             throw new BadRequestException("Fondos Insuficientes");
         }
 
-        // Actualizamos el balance de la cuenta
-        account.BalanceAmount -= transaction.ValueAmount;
-
-        // Si el balance baja de 1 millón, comenzamos a usar el sobregiro
-        if (account.BalanceAmount < MAX_OVERDRAFT && account.AccountType == 'C')
+        // Si el monto de retiro es mayor al balance actual, deducir del sobregiro
+        if (transaction.ValueAmount > account.BalanceAmount)
         {
-            // Calculamos cuánto del sobregiro hemos utilizado
-            account.OverdraftAmount = MAX_OVERDRAFT - account.BalanceAmount;
+            decimal requiredOverdraft = transaction.ValueAmount - account.BalanceAmount;
+            account.OverdraftAmount += requiredOverdraft;
+            account.BalanceAmount = 0;
+        }
+        else
+        {
+            account.BalanceAmount -= transaction.ValueAmount;
 
-            // Aseguramos que el sobregiro no exceda MAX_OVERDRAFT
-            if (account.OverdraftAmount > MAX_OVERDRAFT)
+            // Si la cuenta es tipo 'C' y el balance es menor al sobregiro máximo, ajusta el monto de sobregiro
+            if (account.AccountType == 'C' && account.BalanceAmount < MAX_OVERDRAFT)
             {
-                account.OverdraftAmount = MAX_OVERDRAFT;
+                account.OverdraftAmount = MAX_OVERDRAFT - account.BalanceAmount;
             }
         }
 
@@ -160,13 +161,16 @@ public class AccountService : IAccountService
     }
 
 
-
-
-
-
-
-
-
 }
+
+
+
+
+
+
+
+
+
+
 
 
