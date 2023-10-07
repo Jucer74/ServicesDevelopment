@@ -30,7 +30,7 @@ public static class ModuleExtensions
 
     public static IServiceCollection AddMapping(this IServiceCollection services)
     {
-        // Auto Mapper Configurations
+        
         var mapperConfig = new MapperConfiguration(mc =>
         {
             mc.AddProfile(new MappingProfile());
@@ -45,6 +45,8 @@ public static class ModuleExtensions
     public static IServiceCollection AddValidators(this IServiceCollection services)
     {
         services.AddScoped<IValidator<AccountDto>, AccountValidator>();
+
+        services.AddScoped<IValidator<TransactionDto>, TransactionValidator>();
 
         return services;
     }
