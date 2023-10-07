@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 using System.Text;
 using NetBank.Domain.Dto;
+=======
+﻿using System.Text;
+>>>>>>> 9f758cbdf2457f350595160a18f443a651c27b83
 
 namespace NetBank.Utilities;
 
@@ -36,7 +40,10 @@ public static class CreditCardValidator
 
             timesTwo = !timesTwo;
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9f758cbdf2457f350595160a18f443a651c27b83
         return (sum % 10) == 0;
     }
 
@@ -48,6 +55,7 @@ public static class CreditCardValidator
             if (char.IsDigit(character))
                 digitsOnly.Append(character);
         }
+<<<<<<< HEAD
 
         return digitsOnly;
     }
@@ -90,4 +98,8 @@ public static class CreditCardValidator
         // Check if range is valid
         return new RangeNumber(minValue, maxValue);
     }
+=======
+        return digitsOnly;
+    }
+>>>>>>> 9f758cbdf2457f350595160a18f443a651c27b83
 }

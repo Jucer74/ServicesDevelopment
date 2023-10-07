@@ -1,9 +1,18 @@
 using Microsoft.EntityFrameworkCore;
+<<<<<<< HEAD
 using NetBank.Application.Interfaces;
 using NetBank.Application.Services;
 using NetBank.Infrastructure.Context;
 using NetBank.Infrastructure.Repositories;
 using NetBank.Domain.Interfaces.Repositories;
+=======
+using Netbank.Application.Interfaces;
+using Netbank.Application.Services;
+using NetBank.Domain.Interfaces.Repositories;
+using NetBank.Infrastructure.Context;
+using NetBank.Infrastructure.Repositories;
+
+>>>>>>> 9f758cbdf2457f350595160a18f443a651c27b83
 
 var builder = WebApplication.CreateBuilder(args);
 

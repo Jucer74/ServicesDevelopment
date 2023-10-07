@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 using System;
+=======
+﻿using System;
+>>>>>>> 9f758cbdf2457f350595160a18f443a651c27b83
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 

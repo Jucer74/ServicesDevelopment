@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
@@ -6,5 +7,14 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+=======
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+>>>>>>> 9f758cbdf2457f350595160a18f443a651c27b83
 
 </Project>

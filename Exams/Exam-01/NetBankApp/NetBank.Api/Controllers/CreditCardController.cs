@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 using Microsoft.AspNetCore.Mvc;
 using NetBank.Application.Interfaces;
+=======
+﻿using Microsoft.AspNetCore.Mvc;
+using Netbank.Application.Interfaces;
+>>>>>>> 9f758cbdf2457f350595160a18f443a651c27b83
 using NetBank.Domain.Define;
 using NetBank.Domain.Dto;
 
@@ -17,7 +22,11 @@ public class CreditCardController : ControllerBase
     }
 
     [HttpGet("{creditcardNumber}")]
+<<<<<<< HEAD
     public async Task<IActionResult> GetCreditCarData(string creditcardNumber)
+=======
+    public async Task<IActionResult> GetCreditCarDatad(string creditcardNumber)
+>>>>>>> 9f758cbdf2457f350595160a18f443a651c27b83
     {
         var validateResult = await _creditCardService.Validate(creditcardNumber);
         var result = _creditCardService.Result;
