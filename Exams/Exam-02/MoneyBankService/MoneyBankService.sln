@@ -11,13 +11,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{990BB6D4-93AE-4708-A20B-6594DEA4DBA3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyBankService.Api", "MoneyBankService.Api\MoneyBankService.Api.csproj", "{70A5A46E-7E78-4E43-813D-39AB5D548FAA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoneyBankService.Api", "MoneyBankService.Api\MoneyBankService.Api.csproj", "{70A5A46E-7E78-4E43-813D-39AB5D548FAA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyBankService.Application", "MoneyBankService.Application\MoneyBankService.Application.csproj", "{F6BFA5CF-44AA-41E3-BAD4-1D999C19ADC1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoneyBankService.Application", "MoneyBankService.Application\MoneyBankService.Application.csproj", "{F6BFA5CF-44AA-41E3-BAD4-1D999C19ADC1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyBankService.Domain", "MoneyBankService.Domain\MoneyBankService.Domain.csproj", "{AC38985D-7B2C-4DC0-93C4-C0CE369FF4E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoneyBankService.Domain", "MoneyBankService.Domain\MoneyBankService.Domain.csproj", "{AC38985D-7B2C-4DC0-93C4-C0CE369FF4E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyBankService.Infrastructure", "MoneyBankService.Infrastructure\MoneyBankService.Infrastructure.csproj", "{AB25E49B-AF92-40BA-B450-05ADBBC77659}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoneyBankService.Infrastructure", "MoneyBankService.Infrastructure\MoneyBankService.Infrastructure.csproj", "{AB25E49B-AF92-40BA-B450-05ADBBC77659}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{710157B5-97AC-4E41-A67E-2CBE3FDFF1E0}"
+	ProjectSection(SolutionItems) = preProject
+		Postman.json = Postman.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
