@@ -2,10 +2,10 @@
 
 public class TransactionDto
 {
-    
-        public int Id { get; set; }
-        public string AccountNumber { get; set; } = null!;
-        public string  ValueAmount { get; set; } = null!;
+
+    public int Id { get; set; }
+    public string AccountNumber { get; set; } = null!;
+    public String ValueAmount { get; set; } = null!;
 }
 
 
