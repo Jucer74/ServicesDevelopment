@@ -8,7 +8,7 @@ namespace MoneyBankService.Domain.Entities
         [Required (ErrorMessage = "The AccountType is required.")]
         [RegularExpression("^[AC]$", ErrorMessage = "The AccountType must be 'A' or 'C'.")]
         [StringLength(1,ErrorMessage = "The maximum length of AccountType is 1 character.")]
-        public char AccountType { get; set; } = 'A';
+        public string AccountType { get; set; } = "A";
 
         [DataType(DataType.Date, ErrorMessage = "The CreationDate must be a valid date.")]
         public DateTime CreationDate { get; set; } = DateTime.Now;
