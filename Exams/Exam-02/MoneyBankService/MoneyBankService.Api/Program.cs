@@ -10,8 +10,6 @@ var builder = WebApplication.CreateBuilder(args);
 // Add the DB Context
 builder.Services.AddDbContext<AppDbContext>(options => options.UseMySQL(builder.Configuration.GetConnectionString("CnnStr")!));
 
-
-
 // Add services to the container.
 builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
 {
