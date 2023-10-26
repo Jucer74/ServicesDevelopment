@@ -1,7 +1,7 @@
-﻿using NetBank.Domain.Define;
+using NetBank.Domain.Define;
 using NetBank.Domain.Dto;
 
-namespace Netbank.Application.Interfaces
+namespace NetBank.Application.Interfaces
 {
     public interface ICreditCardService
     {
