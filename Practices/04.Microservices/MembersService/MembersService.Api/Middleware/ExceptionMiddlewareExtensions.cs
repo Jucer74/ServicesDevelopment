@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MembersService.Domain.Exceptions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Net;
-using MembersService.Domain.Exceptions;
 
 namespace MembersService.Api.Middleware
 {
+    /// <summary>
+    /// Extend the handler to capture the Exceptions
+    /// </summary>
     public static class ExceptionMiddlewareExtensions
     {
         /// <summary>

@@ -1,9 +1,10 @@
 ﻿using MembersService.Domain.Entities;
 
 namespace MembersService.Application.Interfaces;
+
 public interface IMemberService
-{ 
-    Task<Member> CreateMember(Member member);
+{
+    Task<Member> CreateMember(Member team);
 
     Task DeleteMember(int id);
 
@@ -11,7 +12,7 @@ public interface IMemberService
 
     Task<Member> GetMemberById(int id);
 
-    Task<Member> UpdateMember(int id, Member member);
+    Task<Member> UpdateMember(int id, Member team);
 
     Task<IEnumerable<Member>> GetMembersByTeamId(int id);
 }

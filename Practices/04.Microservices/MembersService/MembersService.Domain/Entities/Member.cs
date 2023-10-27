@@ -13,5 +13,6 @@ public class Member : EntityBase
 
     public string Position { get; set; } = null!;
 
+    [Required]
     public int TeamId { get; set; }
 }

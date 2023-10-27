@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using MembersService.Api.Dtos;
 using MembersService.Domain.Entities;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MembersService.Api.Mapping;
 

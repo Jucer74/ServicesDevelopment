@@ -2,10 +2,10 @@
 using FluentValidation;
 using MembersService.Api.Dtos;
 using MembersService.Api.Mapping;
+using MembersService.Api.Validators;
 using MembersService.Application.Interfaces;
 using MembersService.Application.Services;
 using MembersService.Domain.Interfaces.Repositories;
-using MembersService.Domain.Validators;
 using MembersService.Infrastructure.Repositories;
 
 namespace MembersService.Api.Extensions;

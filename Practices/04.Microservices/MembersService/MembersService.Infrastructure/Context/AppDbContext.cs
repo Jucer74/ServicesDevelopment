@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using MembersService.Domain.Entities;
+﻿using MembersService.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace MembersService.Infrastructure.Context
 {

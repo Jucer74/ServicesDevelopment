@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
-using MembersService.Domain.Common;
+﻿using MembersService.Domain.Common;
 using MembersService.Domain.Exceptions;
 using MembersService.Infrastructure.Context;
+using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
+
 
 namespace MembersService.Infrastructure.Common
 {

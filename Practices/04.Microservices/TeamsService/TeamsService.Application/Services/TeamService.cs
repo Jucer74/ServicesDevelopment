@@ -13,12 +13,14 @@ namespace TeamsService.Application.Services
     public class TeamService : ITeamService
     {
         private readonly ITeamRepository _teamRepository;
-        private IConfiguration _configuration;
+        private readonly IConfiguration _configuration;
         private readonly RestClient _restClient;
 
-        public TeamService(ITeamRepository teamRepository)
+        public TeamService(ITeamRepository teamRepository, IConfiguration configuration, RestClient restClient)
         {
             _teamRepository = teamRepository;
+            _configuration = configuration;
+            _restClient = restClient;
         }
 
         public async Task<Team> CreateTeam(Team team)
@@ -99,7 +101,6 @@ namespace TeamsService.Application.Services
             }
 
             return responseData!;
-
         }
     }
 }
