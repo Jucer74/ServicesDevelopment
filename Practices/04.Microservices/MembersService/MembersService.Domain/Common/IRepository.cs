@@ -1,20 +1,19 @@
 ﻿using System.Linq.Expressions;
 
-namespace MembersService.Domain.Common;
-
-public interface IRepository<T> where T : EntityBase
+namespace MembersService.Domain.Common
 {
-    public Task<T> AddAsync(T entity);
+    public interface IRepository<T> where T : EntityBase
+    {
+        public Task<T> AddAsync(T entity);
 
-    public Task<IEnumerable<T>> GetAllAsync();
+        public Task<IEnumerable<T>> GetAllAsync();
 
-    public Task<T> GetByIdAsync(int id);
+        public Task<T> GetByIdAsync(int id);
 
-    public Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate);
+        public Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate);
 
-    public Task<T> UpdateAsync(T entity);
+        public Task<T> UpdateAsync(T entity);
 
-    public Task RemoveAsync(T entity);
-
-    public Task RemoveAsync(Expression<Func<T, bool>> predicate, int id);
+        public Task RemoveAsync(T entity);
+    }
 }

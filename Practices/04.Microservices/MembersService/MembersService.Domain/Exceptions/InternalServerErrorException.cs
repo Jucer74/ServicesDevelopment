@@ -1,28 +1,29 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
-namespace MembersService.Domain.Exceptions;
-
-[ExcludeFromCodeCoverage]
-[Serializable]
-public class InternalServerErrorException : BusinessException
+namespace MembersService.Domain.Exceptions
 {
-    public InternalServerErrorException()
+    [ExcludeFromCodeCoverage]
+    [Serializable]
+    public class InternalServerErrorException : BusinessException
     {
-    }
+        public InternalServerErrorException()
+        {
+        }
 
-    public InternalServerErrorException(string message) : base(message)
-    {
-    }
+        public InternalServerErrorException(string message) : base(message)
+        {
+        }
 
-    public InternalServerErrorException(string message, Exception innerException)
-        : base(message, innerException)
-    {
-    }
+        public InternalServerErrorException(string message, Exception innerException)
+            : base(message, innerException)
+        {
+        }
 
-    // Without this constructor, deserialization will fail
-    protected InternalServerErrorException(SerializationInfo info, StreamingContext context)
-        : base(info, context)
-    {
+        // Without this constructor, deserialization will fail
+        protected InternalServerErrorException(SerializationInfo info, StreamingContext context)
+            : base(info, context)
+        {
+        }
     }
 }

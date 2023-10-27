@@ -1,79 +1,72 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using MembersService.Domain.Dtos;
-using MembersService.Domain.Entities;
+using MembersService.Api.Dtos;
 using MembersService.Application.Interfaces;
+using MembersService.Domain.Entities;
+using Microsoft.AspNetCore.Mvc;
 
-namespace MembersService.Api.Controllers;
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-[Route("api/[controller]")]
-[ApiController]
-public class MembersController : ControllerBase
+namespace MembersService.Api.Controllers
 {
-    private readonly IMemberService _MemberService;
-    private readonly IMapper _mapper;
-
-    public MembersController(IMemberService MemberService, IMapper mapper)
+    [Route("api/[controller]")]
+    [ApiController]
+    public class MembersController : ControllerBase
     {
-        _MemberService = MemberService;
-        _mapper = mapper;
-    }
+        private readonly IMemberService _memberService;
+        private readonly IMapper _mapper;
 
-    // GET: api/<MembersController>
-    [HttpGet]
-    public async Task<IActionResult> GetAllMembers()
-    {
-        var members = await _MemberService.GetAllAsync();
-        return Ok(_mapper.Map<List<Member>, List<MemberDto>>((List<Member>)members));
-    }
+        public MembersController(IMemberService teamMemberService, IMapper mapper)
+        {
+            _memberService = teamMemberService;
+            _mapper = mapper;
+        }
 
-    // GET api/<MembersController>/5
-    [HttpGet("{id}")]
-    public async Task<IActionResult> GetMemberById(int id)
-    {
-        var Member = await _MemberService.GetByIdAsync(id);
-        return Ok(_mapper.Map<Member, MemberDto>(Member));
-    }
+        // GET: api/<MembersController>
+        [HttpGet]
+        public async Task<IActionResult> GetAllMembers()
+        {
+            var teamMembers = await _memberService.GetAllMembers() as List<Member>;
+            return Ok(_mapper.Map<List<Member>, List<MemberDto>>(teamMembers!));
+        }
 
-    //GET api/<MembersController>/team/5
-    [HttpGet("team/{id}")]
-    public async Task<IActionResult> GetMembersByTeamId(int id)
-    {
-        var Members = await _MemberService.FindAsync(member => member.TeamId == id);
-        return Ok(_mapper.Map<List<Member>, List<MemberDto>>((List<Member>)Members));
-    }
+        // GET api/<MembersController>/5
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetMemberById(int id)
+        {
+            var teamMember = await _memberService.GetMemberById(id);
+            return Ok(_mapper.Map<Member, MemberDto>(teamMember));
+        }
 
-    // POST api/<MembersController>
-    [HttpPost]
-    public async Task<IActionResult> Post([FromBody] MemberDto MemberDto)
-    {
-        Member Member = await _MemberService.AddAsync(_mapper.Map<MemberDto, Member>(MemberDto));
+        // POST api/<MembersController>
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody] MemberDto teamMemberDto)
+        {
+            var teamMember = await _memberService.CreateMember(_mapper.Map<MemberDto, Member>(teamMemberDto));
+            return Ok(_mapper.Map<Member, MemberDto>(teamMember));
+        }
 
-        return Ok(_mapper.Map<Member, MemberDto>(Member));
-    }
+        // PUT api/<MembersController>/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, [FromBody] MemberDto teamMemberDto)
+        {
+            var teamMember = await _memberService.UpdateMember(id, _mapper.Map<MemberDto, Member>(teamMemberDto));
+            return Ok(_mapper.Map<Member, MemberDto>(teamMember));
+        }
 
-    // PUT api/<MembersController>/5
-    [HttpPut("{id}")]
-    public async Task<IActionResult> Put(int id, [FromBody] MemberDto MemberDto)
-    {
-        Member Member = await _MemberService.UpdateAsync(id, _mapper.Map<MemberDto, Member>(MemberDto));
+        // DELETE api/<MembersController>/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _memberService.DeleteMember(id);
+            return Ok();
+        }
 
-        return Ok(_mapper.Map<Member, MemberDto>(Member));
-    }
-
-    // DELETE api/<MembersController>/5
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(int id)
-    {
-        await _MemberService.RemoveAsync(id);
-        return Ok();
-    }
-
-    // DELETE api/<MembersController>/team/5
-    [HttpDelete("team/{id}")]
-    public async Task<IActionResult> DeleteByTeamId(int id)
-    {
-        await _MemberService.RemoveMembersByTeamId(member => member.TeamId == id, id);
-        return Ok();
+        // GET api/<MembersController>/Team/5
+        [HttpGet("Team/{id}")]
+        public async Task<IActionResult> GetMembersByTeamId(int id)
+        {
+            var teamMembers = await _memberService.GetMembersByTeamId(id) as List<Member>;
+            return Ok(_mapper.Map<List<Member>, List<MemberDto>>(teamMembers!));
+        }
     }
 }

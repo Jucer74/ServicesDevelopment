@@ -1,17 +1,18 @@
 ﻿using MembersService.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace MembersService.Infrastructure.Context;
-
-public class AppDbContext : DbContext
+namespace MembersService.Infrastructure.Context
 {
-    public AppDbContext()
+    public class AppDbContext : DbContext
     {
-    }
+        public AppDbContext()
+        {
+        }
 
-    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
-    {
-    }
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+        {
+        }
 
-    public DbSet<Member> Members { get; set; }
+        public DbSet<Member> Members { get; set; }
+    }
 }
