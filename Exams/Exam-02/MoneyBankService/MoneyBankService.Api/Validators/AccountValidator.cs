@@ -7,11 +7,12 @@ public class AccountValidator: AbstractValidator<AccountDto>
 {
     public AccountValidator()
     {
-        RuleFor(m => m.Id)
-            .NotEmpty()
-            .WithMessage("El campo Id es Requerido.")
-            .GreaterThan(0)
-            .WithMessage("El campo Id debe ser mayor a cero");
+        // El Id No se Valida
+        //RuleFor(m => m.Id)
+        //    .NotEmpty()
+        //    .WithMessage("El campo Id es Requerido.");
+        //    //.GreaterThan(0) // Esta Validacion no se puede dar cuando es un nuevo Registro
+        //    //.WithMessage("El campo Id debe ser mayor a cero");
 
         RuleFor(m => m.AccountType)
             .NotEmpty()
@@ -39,14 +40,16 @@ public class AccountValidator: AbstractValidator<AccountDto>
 
         RuleFor(m => m.BalanceAmount)
            .NotEmpty()
-           .WithMessage("El campo Balance amount es Requerido.")
-           .Matches(@"^\d+.?\d{0,2}$")
-           .WithMessage("El campo Balance amount debe ser en formato Moneda (0.00)");
+           .WithMessage("El campo Balance amount es Requerido.");
+        // El tipo de Dato define que sea Moneda
+        //.Matches(@"^\d+.?\d{0,2}$")
+        //.WithMessage("El campo Balance amount debe ser en formato Moneda (0.00)");
 
-        RuleFor(m => m.OverdraftAmount)
-           .NotEmpty()
-           .WithMessage("El campo Overdraft amount es Requerido.")
-           .Matches(@"^\d+.?\d{0,2}$")
-           .WithMessage("El campo Overdraft amount debe ser en formato Moneda (0.00)");
+        //RuleFor(m => m.OverdraftAmount)
+        //   .NotEmpty()
+        //   .WithMessage("El campo Overdraft amount es Requerido.");
+        // El tipo de Dato define que sea Moneda
+        //.Matches(@"^\d+.?\d{0,2}$")
+        //.WithMessage("El campo Overdraft amount debe ser en formato Moneda (0.00)");
     }
 }

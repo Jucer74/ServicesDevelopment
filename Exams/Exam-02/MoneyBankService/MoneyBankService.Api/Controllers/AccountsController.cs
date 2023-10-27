@@ -24,7 +24,8 @@ namespace MoneyBankService.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Account>>> GetAccounts()
+        // Incorrecta Ruta, Falta incluir el FromQuery del AccountNumber
+        public async Task<ActionResult<IEnumerable<Account>>> GetAccounts() // Incorrecto Tipo de Retorno debe ser Dto
         {
             var accounts = await _accountService.GetAllAccounts() as List<Account>;
             return Ok(_mapper.Map<List<Account>, List<AccountDto>>(accounts!));

@@ -154,7 +154,7 @@ public class AccountService : IAccountService
     {
         Boolean exist = false;
         var accounts = await _accountRepository.GetAllAsync() as List<Account>;
-        foreach (var account in accounts)
+        foreach (var account in accounts!)
         {
             if (account.Id == id)
             {
@@ -174,7 +174,7 @@ public class AccountService : IAccountService
     {
         Boolean exist=false;
         var accounts = await _accountRepository.GetAllAsync() as List<Account>;
-        foreach (var account in accounts) {
+        foreach (var account in accounts!) {
             if(account.AccountNumber == accountNumber)
             {
                 exist = true;
