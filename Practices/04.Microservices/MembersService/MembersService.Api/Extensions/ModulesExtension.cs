@@ -1,32 +1,30 @@
 ﻿using AutoMapper;
 using FluentValidation;
-using RestSharp;
-using TeamsService.Api.Dtos;
-using TeamsService.Api.Mapping;
-using TeamsService.Api.Validators;
-using TeamsService.Application.Interfaces;
-using TeamsService.Application.Services;
-using TeamsService.Domain.Interfaces.Repositories;
-using TeamsService.Infrastructure.Repositories;
+using MembersService.Api.Dtos;
+using MembersService.Api.Mapping;
+using MembersService.Api.Validators;
+using MembersService.Application.Interfaces;
+using MembersService.Application.Services;
+using MembersService.Domain.Interfaces.Repositories;
+using MembersService.Infrastructure.Repositories;
 
-namespace TeamsService.Api.Extensions;
+namespace MembersService.Api.Extensions;
 
 public static class ModulesExtension
 {
     public static IServiceCollection AddServices(this IServiceCollection services)
     {
-        services.AddScoped<ITeamService, TeamService>();
+        services.AddScoped<IMemberService, MemberService>();
 
         return services;
     }
 
     public static IServiceCollection AddRepositories(this IServiceCollection services)
     {
-        services.AddScoped<ITeamRepository, TeamRepository>();
+        services.AddScoped<IMemberRepository, MemberRepository>();
 
         return services;
     }
-
 
     public static IServiceCollection AddMapping(this IServiceCollection services)
     {
@@ -44,14 +42,7 @@ public static class ModulesExtension
 
     public static IServiceCollection AddValidators(this IServiceCollection services)
     {
-        services.AddScoped<IValidator<TeamDto>, TeamValidator>();
-
-        return services;
-    }
-
-    public static IServiceCollection AddRestClient(this IServiceCollection services)
-    {
-        services.AddSingleton<RestClient>();
+        services.AddScoped<IValidator<MemberDto>, MemberValidator>();
 
         return services;
     }

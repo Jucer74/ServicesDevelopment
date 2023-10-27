@@ -32,6 +32,7 @@ builder.Services.AddRepositories();
 builder.Services.AddServices();
 builder.Services.AddMapping();
 builder.Services.AddValidators();
+builder.Services.AddRestClient();
 
 var app = builder.Build();
 
