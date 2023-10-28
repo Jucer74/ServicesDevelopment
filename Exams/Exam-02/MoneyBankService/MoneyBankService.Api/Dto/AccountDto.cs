@@ -7,6 +7,6 @@ public class AccountDto
     public DateTime CreationDate { get; set; } = DateTime.Now;
     public string AccountNumber { get; set; } = null!;
     public string OwnerName { get; set; } = null!;
-    public String  BalanceAmount { get; set; } = null!;
-    public String OverdraftAmount { get; set; } = null!;
+    public decimal  BalanceAmount { get; set; } 
+    public decimal OverdraftAmount { get; set; } 
 }

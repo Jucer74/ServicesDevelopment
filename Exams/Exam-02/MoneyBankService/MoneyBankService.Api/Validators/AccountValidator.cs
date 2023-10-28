@@ -7,11 +7,11 @@ namespace MoneyBankService.Api.Validators
     {
         public AccountValidator()
         {
-            RuleFor(m => m.Id)
-                .NotEmpty()
-                .WithMessage("The Id field is required.")
-                .GreaterThan(0)
-                .WithMessage("The Id field must be greater than zero.");
+            //RuleFor(m => m.Id)
+            //    .NotEmpty()
+            //    .WithMessage("The Id field is required.");
+                //.GreaterThan(0)
+                //.WithMessage("The Id field must be greater than zero.");
 
             RuleFor(m => m.AccountType)
                 .NotEmpty()
@@ -39,15 +39,15 @@ namespace MoneyBankService.Api.Validators
 
             RuleFor(m => m.BalanceAmount)
                 .NotEmpty()
-                .WithMessage("The Balance amount field is required.")
-                .Matches(@"^\d+(\.\d{1,2})?$")
-                .WithMessage("The Balance amount field must be in currency format (0.00).");
+                .WithMessage("The Balance amount field is required.");
+                //.Matches(@"^\d+(\.\d{1,2})?$")
+                //.WithMessage("The Balance amount field must be in currency format (0.00).");
 
-            RuleFor(m => m.OverdraftAmount)
-                .NotEmpty()
-                .WithMessage("The Overdraft amount field is required.")
-                .Matches(@"^\d+(\.\d{1,2})?$")
-                .WithMessage("The Overdraft amount field must be in currency format (0.00).");
+            //RuleFor(m => m.OverdraftAmount)
+            //    .NotEmpty()
+            //    .WithMessage("The Overdraft amount field is required.")
+            //    .Matches(@"^\d+(\.\d{1,2})?$")
+            //    .WithMessage("The Overdraft amount field must be in currency format (0.00).");
         }
     }
 }
