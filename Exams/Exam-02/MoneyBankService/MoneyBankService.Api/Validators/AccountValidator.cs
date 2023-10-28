@@ -32,9 +32,9 @@ public class AccountValidator: AbstractValidator<AccountDto>
             .WithMessage("The BalanceAmount is required.")
             .GreaterThan(0)
             .WithMessage("The BalanceAmount must be greater than 0.");
-        RuleFor(m => m.OverdraftAmount)
-            .NotEmpty()
-            .WithMessage("The OverdraftAmount is required.");
+        //RuleFor(m => m.OverdraftAmount)
+        //    .NotEmpty()
+        //    .WithMessage("The OverdraftAmount is required.");
 
 
     }
