@@ -5,5 +5,7 @@ public class TransactionDto
 
     public int Id { get; set; }
     public string AccountNumber { get; set; } = null!;
-    public String ValueAmount { get; set; } = null!;
+
+    // El Valor debe ser un Decimal
+    public decimal ValueAmount { get; set; } 
 }

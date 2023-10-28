@@ -7,11 +7,11 @@ namespace MoneyBankService.Api.Validators
     {
         public AccountValidator()
         {
-            RuleFor(m => m.Id)
-                .NotEmpty()
-                .WithMessage("El campo Id es requerido.")
-                .GreaterThan(0)
-                .WithMessage("El campo Id debe ser mayor que cero.");
+            //RuleFor(m => m.Id)
+            //    .NotEmpty()
+            //    .WithMessage("El campo Id es requerido.")
+            //    .GreaterThan(0)
+            //    .WithMessage("El campo Id debe ser mayor que cero.");
 
             RuleFor(m => m.AccountType)
                 .NotEmpty()
@@ -27,9 +27,9 @@ namespace MoneyBankService.Api.Validators
                 .NotEmpty()
                 .WithMessage("El campo AccountNumber es requerido.")
                 .MaximumLength(10)
-                .WithMessage("El campo AccountNumber debe tener una longitud máxima de 10 caracteres.")
-                .Must(accountNumber => accountNumber.Length == 10 && accountNumber.All(char.IsDigit))
-                .WithMessage("El campo AccountNumber debe ser una cadena de 10 dígitos.");
+                .WithMessage("El campo AccountNumber debe tener una longitud máxima de 10 caracteres.");
+                //.Must(accountNumber => accountNumber.Length == 10 && accountNumber.All(char.IsDigit))
+                //.WithMessage("El campo AccountNumber debe ser una cadena de 10 dígitos.");
 
             RuleFor(m => m.OwnerName)
                 .NotEmpty()
@@ -42,9 +42,9 @@ namespace MoneyBankService.Api.Validators
            .WithMessage("El campo BalanceAmount es requerido.");
 
 
-            RuleFor(m => m.OverdraftAmount)
-           .NotEmpty()
-           .WithMessage("El campo OverdraftAmount es requerido.");
+           // RuleFor(m => m.OverdraftAmount)
+           //.NotEmpty()
+           //.WithMessage("El campo OverdraftAmount es requerido.");
 
         }
     }

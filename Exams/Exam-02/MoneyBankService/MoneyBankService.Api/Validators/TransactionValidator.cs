@@ -24,8 +24,10 @@ namespace MoneyBankService.Api.Validators
             RuleFor(m => m.ValueAmount)
                .NotEmpty()
                .WithMessage("The Value Amount field is required.")
-               .Matches(@"^\d+(\.\d{1,2})?$")
-               .WithMessage("The Value Amount field must have a currency format (0.00).");
+                .GreaterThan(0)
+                .WithMessage("The Id field must be greater than zero.");
+            //.Matches(@"^\d+(\.\d{1,2})?$")
+            //.WithMessage("The Value Amount field must have a currency format (0.00).");
         }
     }
 }
