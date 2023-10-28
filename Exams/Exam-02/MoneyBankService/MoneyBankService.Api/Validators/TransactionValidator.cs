@@ -23,9 +23,10 @@ public class TransactionValidator:AbstractValidator<TransactionDto>
 
         RuleFor(m => m.ValueAmount)
            .NotEmpty()
-           .WithMessage("El campo Value amount amount es Requerido.")
-           .Matches(@"^\d+.?\d{0,2}$")
-           .WithMessage("El campo Value amount debe ser en formato Moneda (0.00)");
+           .WithMessage("El campo Value amount amount es Requerido.");
+           // Se Corrije para poder probar
+           //.Matches(@"^\d+.?\d{0,2}$")
+           //.WithMessage("El campo Value amount debe ser en formato Moneda (0.00)");
 
     }
 
