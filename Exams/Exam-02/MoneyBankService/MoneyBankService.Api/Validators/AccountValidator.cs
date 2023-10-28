@@ -33,10 +33,10 @@ public class AccountValidator : AbstractValidator<AccountDto>
             .GreaterThan(0) // Aseguramos que el balance sea positivo
             .WithMessage("El monto de saldo debe ser mayor a cero");
 
-        RuleFor(m => m.OverdraftAmount)
-            .GreaterThan(0) // Aseguramos que el sobregiro sea positivo (si no es cero)
-            .WithMessage("El monto de sobregiro debe ser mayor a cero")
-            .LessThanOrEqualTo(MAX_OVERDRAFT)
-            .WithMessage($"El monto de sobregiro no puede exceder ${MAX_OVERDRAFT:N2}");
+        //RuleFor(m => m.OverdraftAmount)
+        //    .GreaterThan(0) // Aseguramos que el sobregiro sea positivo (si no es cero)
+        //    .WithMessage("El monto de sobregiro debe ser mayor a cero")
+        //    .LessThanOrEqualTo(MAX_OVERDRAFT)
+        //    .WithMessage($"El monto de sobregiro no puede exceder ${MAX_OVERDRAFT:N2}");
     }
 }
