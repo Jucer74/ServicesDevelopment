@@ -48,10 +48,10 @@ public class AccountValidator: AbstractValidator<AccountDto>
             .GreaterThan(0)
             .WithMessage("The BalanceAmount must be greater than 0.");
 
-        // Regla de validación para OverdraftAmount: No debe estar vacío.
-        RuleFor(m => m.OverdraftAmount)
-            .NotEmpty()
-            .WithMessage("The OverdraftAmount is required.");
+        //// Regla de validación para OverdraftAmount: No debe estar vacío.
+        //RuleFor(m => m.OverdraftAmount)
+        //    .NotEmpty()
+        //    .WithMessage("The OverdraftAmount is required.");
     }
 
     // Método para validar si una fecha es válida

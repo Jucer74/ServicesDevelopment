@@ -81,7 +81,7 @@ public class AccountsController : ControllerBase
     }
 
     // Realiza un retiro de una cuenta
-    [HttpPut("{id}/Withdraw")]
+    [HttpPut("{id}/Withdrawal")]
     public async Task<IActionResult> Withdraw(int id, [FromBody] TransactionDto transactionDto)
     {
         // Realiza un retiro de la cuenta
