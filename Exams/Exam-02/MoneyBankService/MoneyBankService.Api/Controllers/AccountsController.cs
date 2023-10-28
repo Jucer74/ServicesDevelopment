@@ -81,7 +81,7 @@ namespace MoneyBankService.Api.Controllers
         }
 
         //PUT api/<AccountsController>/5/Withdraw
-        [HttpPut("{id}/Withdraw")]
+        [HttpPut("{id}/Withdrawal")]
         public async Task<IActionResult> Withdraw(int id, [FromBody] TransactionDto transactionDto)
         {
             await _accountService.Withdraw(id, transactionDto);
