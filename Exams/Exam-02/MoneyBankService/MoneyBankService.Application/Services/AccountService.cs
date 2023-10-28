@@ -158,6 +158,9 @@ public class AccountService : IAccountService
         accountById.AccountType = account.AccountType;
         accountById.BalanceAmount = account.BalanceAmount;
         accountById.OverdraftAmount = account.OverdraftAmount;
+        
+        // ERROR: Falta el Mapeo del Camp OwnerName
+        accountById.OwnerName = account.OwnerName;
 
         // Update account
         var updatedAccount = await _accountRepository.UpdateAsync(accountById);
