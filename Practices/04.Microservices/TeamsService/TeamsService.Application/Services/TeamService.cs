@@ -1,4 +1,8 @@
-﻿using TeamsService.Application.Interfaces;
+﻿using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
+using RestSharp;
+using System.Net;
+using TeamsService.Application.Interfaces;
 using TeamsService.Domain.Dtos;
 using TeamsService.Domain.Entities;
 using TeamsService.Domain.Exceptions;
@@ -9,10 +13,14 @@ namespace TeamsService.Application.Services
     public class TeamService : ITeamService
     {
         private readonly ITeamRepository _teamRepository;
+        private readonly IConfiguration _configuration;
+        private readonly RestClient _restClient;
 
-        public TeamService(ITeamRepository teamRepository)
+        public TeamService(ITeamRepository teamRepository, IConfiguration configuration, RestClient restClient)
         {
             _teamRepository = teamRepository;
+            _configuration = configuration;
+            _restClient = restClient;
         }
 
         public async Task<Team> CreateTeam(Team team)
@@ -70,9 +78,29 @@ namespace TeamsService.Application.Services
         public async Task<IEnumerable<TeamMemberDto>> GetTeamMembersByTeamId(int id)
         {
             // Call the Members Service
-            var members = new List<TeamMemberDto>();
+            var membersResponse = await CallMembersService(id);
+            var members = JsonConvert.DeserializeObject<IEnumerable<TeamMemberDto>>(membersResponse);
+            return members!;
+        }
 
-            return members;
+        private async Task<string> CallMembersService(int teamId)
+        {
+            var membersServiceUrl = _configuration.GetSection("MembersServiceUrl").Value;
+
+            var membersEndPoint = $"{membersServiceUrl}/Team/{teamId}";
+
+            var request = new RestRequest(membersEndPoint);
+
+            var response = await _restClient.GetAsync(request);
+
+            var responseData = response.Content;
+
+            if (!response.IsSuccessful && response.StatusCode != HttpStatusCode.OK)
+            {
+                throw new InternalServerErrorException($"Error Getting Members By Teamd Id = {teamId}");
+            }
+
+            return responseData!;
         }
     }
 }
