@@ -16,7 +16,7 @@ public class AccountValidator: AbstractValidator<AccountDto>
         //    .WithMessage("El campo FIELD tiene una longitud maxima de 10 caracteres")
         //    .Matches(@"\d{10}")
         //    .WithMessage("El campo FIELD Solo Acepta Numeros")
-        //    .GreaterThan("0")
+        //    .GreaterThan(0)
         //    .WithMessage("El campo FIELD debe ser mayor a cero");
 
         RuleFor(m => m.AccountType)
