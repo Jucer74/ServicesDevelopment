@@ -1,0 +1,31 @@
+version: '3.8'
+services:
+  teamsdb:
+    image: mysql:8.0.34
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'teamsservicedb'
+      MYSQL_USER: 'teamsserviceuser'
+      MYSQL_PASSWORD: 'T34msS3rv1c3Us3r*01'
+      MYSQL_ROOT_PASSWORD: 'root'
+    ports:
+      - '3307:3306' 
+    volumes:
+      - teamsdb:/var/lib/mysql
+
+  membersdb:
+    image: mysql:8.0.34
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'membersservicedb'
+      MYSQL_USER: 'membersserviceuser'
+      MYSQL_PASSWORD: 'M3mb3rsS3rv1c3Us3r*01'
+      MYSQL_ROOT_PASSWORD: 'root'
+    ports:
+      - '3308:3306' 
+    volumes:
+      - membersdb:/var/lib/mysql
+
+volumes:
+  teamsdb:
+  membersdb:
