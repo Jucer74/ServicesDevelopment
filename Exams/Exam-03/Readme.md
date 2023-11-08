@@ -349,15 +349,24 @@ Crear una aplicacion de Front-End que permita consumir dichos microservicios, pe
 Dicha aplicacion debe mostrar las siguientes Opciones:
 
 - Login 
-[Login]()
+![Login](https://github.com/Jucer74/ServicesDevelopment/blob/main/Exams/Exam-03/Images/Image-01-Login.jpg)
 
 - Registro
+[Registro](https://github.com/Jucer74/ServicesDevelopment/blob/main/Exams/Exam-03/Images/Image-02-Register.jpg)
 
 - Menu Principal
+[Meanu Principal](https://github.com/Jucer74/ServicesDevelopment/blob/main/Exams/Exam-03/Images/Image-03-Menu.jpg)
 
 - Categorias
+[Categorias](https://github.com/Jucer74/ServicesDevelopment/blob/main/Exams/Exam-03/Images/Image-04-Categories.jpg)
 
 - Productos
+[Productos](https://github.com/Jucer74/ServicesDevelopment/blob/main/Exams/Exam-03/Images/Image-05-Products.jpg)
+
+- Productos por Categoria
+[Productos por Categoria](https://github.com/Jucer74/ServicesDevelopment/blob/main/Exams/Exam-03/Images/Image-06-Products-By-Category.jpg)
+
+ 
 
 - La aplicacion debe desplegarse por el puerto 7001 y debe estar desplegada en un container Linux (Linux Container) llamado (PricatApp)
 
