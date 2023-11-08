@@ -352,26 +352,26 @@ Dicha aplicacion debe mostrar las siguientes Opciones:
 ![Login](https://github.com/Jucer74/ServicesDevelopment/blob/main/Exams/Exam-03/Images/Image-01-Login.jpg)
 
 - Registro
-[Registro](https://github.com/Jucer74/ServicesDevelopment/blob/main/Exams/Exam-03/Images/Image-02-Register.jpg)
+![Registro](https://github.com/Jucer74/ServicesDevelopment/blob/main/Exams/Exam-03/Images/Image-02-Register.jpg)
 
 - Menu Principal
-[Meanu Principal](https://github.com/Jucer74/ServicesDevelopment/blob/main/Exams/Exam-03/Images/Image-03-Menu.jpg)
+![Menu Principal](https://github.com/Jucer74/ServicesDevelopment/blob/main/Exams/Exam-03/Images/Image-03-Menu.jpg)
 
 - Categorias
-[Categorias](https://github.com/Jucer74/ServicesDevelopment/blob/main/Exams/Exam-03/Images/Image-04-Categories.jpg)
+![Categorias](https://github.com/Jucer74/ServicesDevelopment/blob/main/Exams/Exam-03/Images/Image-04-Categories.jpg)
 
 - Productos
-[Productos](https://github.com/Jucer74/ServicesDevelopment/blob/main/Exams/Exam-03/Images/Image-05-Products.jpg)
+![Productos](https://github.com/Jucer74/ServicesDevelopment/blob/main/Exams/Exam-03/Images/Image-05-Products.jpg)
 
 - Productos por Categoria
-[Productos por Categoria](https://github.com/Jucer74/ServicesDevelopment/blob/main/Exams/Exam-03/Images/Image-06-Products-By-Category.jpg)
+![Productos por Categoria](https://github.com/Jucer74/ServicesDevelopment/blob/main/Exams/Exam-03/Images/Image-06-Products-By-Category.jpg)
 
- 
-
-- La aplicacion debe desplegarse por el puerto 7001 y debe estar desplegada en un container Linux (Linux Container) llamado (PricatApp)
+Se deben completar las operaciones de CRUD para Categorias y Productos, ademas de estas opciones ya mencionadas.
 
 # Despliegue
-
+- La aplicacion debe desplegarse por el puerto 7001 y debe estar desplegada en un container Linux (Linux Container) llamado (PricatApp)
+- Los Microservicios deben desplegarse en otro container exponiendo los puertos correspondientes
+- Las bases de datos deben desplegarse tambien en su propio contenedor con los ajustes necesarios
 
 
 # Reglas
@@ -379,6 +379,8 @@ Dicha aplicacion debe mostrar las siguientes Opciones:
 - Se debe Validar el EAN Code utilizando la verificacion de [digito de chequeo](https://en.wikipedia.org/wiki/International_Article_Number) para EAN 13 y en caso de no ser valido debe retornar una Exception de tipo 400-Bad Request. Puede implementar el algoritmo
 - Valide los campos requeridos y sus longitudes en las entidades, para ello puede utilizar **Annotations** (Required, StringLength).
 - Implemente el pattern, [Exception Middleware Handler](https://github.com/Jucer74/ExceptionHandler), para facilitar el control de errores y manejo de Excepciones de Negocio, pudiendo retornar estructuras de tipo **ErrorDetails** para estandarizar las respuestas de los errores.
+- Debe Implementarse la authenticacion y Autorizacio usando JWT para acceder a los servicios
+- Las Imagenes se deben subir al servidor Web con el mismo Nombre del EAN mas la extension .png, en el Directior de Products para poerse desplegar en la lista de Productos y/o de Productos por categoria.
 
 # Revision
 1. Validar que todos EndPoints funcionan correctamente. 
