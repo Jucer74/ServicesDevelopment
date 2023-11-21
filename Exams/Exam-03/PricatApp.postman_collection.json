@@ -32,9 +32,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BasePricatUrl}}/Categories",
+							"raw": "{{BaseCategoryUrl}}/Categories",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseCategoryUrl}}"
 							],
 							"path": [
 								"Categories"
@@ -70,9 +70,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BasePricatUrl}}/Categories/1",
+							"raw": "{{BaseCategoryUrl}}/Categories/1",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseCategoryUrl}}"
 							],
 							"path": [
 								"Categories",
@@ -110,9 +110,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BasePricatUrl}}/Categories/A",
+							"raw": "{{BaseCategoryUrl}}/Categories/A",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseCategoryUrl}}"
 							],
 							"path": [
 								"Categories",
@@ -150,9 +150,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BasePricatUrl}}/Categories/100",
+							"raw": "{{BaseCategoryUrl}}/Categories/100",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseCategoryUrl}}"
 							],
 							"path": [
 								"Categories",
@@ -195,9 +195,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BasePricatUrl}}/Categories",
+							"raw": "{{BaseCategoryUrl}}/Categories",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseCategoryUrl}}"
 							],
 							"path": [
 								"Categories"
@@ -242,9 +242,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BasePricatUrl}}/Categories",
+							"raw": "{{BaseCategoryUrl}}/Categories",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseCategoryUrl}}"
 							],
 							"path": [
 								"Categories"
@@ -289,9 +289,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BasePricatUrl}}/Categories",
+							"raw": "{{BaseCategoryUrl}}/Categories",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseCategoryUrl}}"
 							],
 							"path": [
 								"Categories"
@@ -336,9 +336,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BasePricatUrl}}/Categories",
+							"raw": "{{BaseCategoryUrl}}/Categories",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseCategoryUrl}}"
 							],
 							"path": [
 								"Categories"
@@ -376,9 +376,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BasePricatUrl}}/Categories/6",
+							"raw": "{{BaseCategoryUrl}}/Categories/6",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseCategoryUrl}}"
 							],
 							"path": [
 								"Categories",
@@ -424,9 +424,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BasePricatUrl}}/Categories/A",
+							"raw": "{{BaseCategoryUrl}}/Categories/A",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseCategoryUrl}}"
 							],
 							"path": [
 								"Categories",
@@ -472,9 +472,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BasePricatUrl}}/Categories/1",
+							"raw": "{{BaseCategoryUrl}}/Categories/1",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseCategoryUrl}}"
 							],
 							"path": [
 								"Categories",
@@ -520,9 +520,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BasePricatUrl}}/Categories/6",
+							"raw": "{{BaseCategoryUrl}}/Categories/6",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseCategoryUrl}}"
 							],
 							"path": [
 								"Categories",
@@ -568,9 +568,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BasePricatUrl}}/Categories/6",
+							"raw": "{{BaseCategoryUrl}}/Categories/6",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseCategoryUrl}}"
 							],
 							"path": [
 								"Categories",
@@ -616,9 +616,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BasePricatUrl}}/Categories/100",
+							"raw": "{{BaseCategoryUrl}}/Categories/100",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseCategoryUrl}}"
 							],
 							"path": [
 								"Categories",
@@ -648,9 +648,9 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{BasePricatUrl}}/Categories/6",
+							"raw": "{{BaseCategoryUrl}}/Categories/6",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseCategoryUrl}}"
 							],
 							"path": [
 								"Categories",
@@ -687,9 +687,9 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{BasePricatUrl}}/Categories/A",
+							"raw": "{{BaseCategoryUrl}}/Categories/A",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseCategoryUrl}}"
 							],
 							"path": [
 								"Categories",
@@ -726,9 +726,9 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{BasePricatUrl}}/Categories/100",
+							"raw": "{{BaseCategoryUrl}}/Categories/100",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseCategoryUrl}}"
 							],
 							"path": [
 								"Categories",
@@ -758,9 +758,9 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{BasePricatUrl}}/Categories/5",
+							"raw": "{{BaseCategoryUrl}}/Categories/5",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseCategoryUrl}}"
 							],
 							"path": [
 								"Categories",
@@ -798,9 +798,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BasePricatUrl}}/Products",
+							"raw": "{{BaseProductUrl}}/Products",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseProductUrl}}"
 							],
 							"path": [
 								"Products"
@@ -840,9 +840,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BasePricatUrl}}/Products/1",
+							"raw": "{{BaseProductUrl}}/Products/1",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseProductUrl}}"
 							],
 							"path": [
 								"Products",
@@ -878,9 +878,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BasePricatUrl}}/Products/A",
+							"raw": "{{BaseProductUrl}}/Products/A",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseProductUrl}}"
 							],
 							"path": [
 								"Products",
@@ -918,9 +918,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BasePricatUrl}}/Products/100",
+							"raw": "{{BaseProductUrl}}/Products/100",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseProductUrl}}"
 							],
 							"path": [
 								"Products",
@@ -968,9 +968,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BasePricatUrl}}/Products",
+							"raw": "{{BaseProductUrl}}/Products",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseProductUrl}}"
 							],
 							"path": [
 								"Products"
@@ -1017,9 +1017,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BasePricatUrl}}/Products",
+							"raw": "{{BaseProductUrl}}/Products",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseProductUrl}}"
 							],
 							"path": [
 								"Products"
@@ -1066,9 +1066,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BasePricatUrl}}/Products",
+							"raw": "{{BaseProductUrl}}/Products",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseProductUrl}}"
 							],
 							"path": [
 								"Products"
@@ -1113,9 +1113,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BasePricatUrl}}/Products",
+							"raw": "{{BaseProductUrl}}/Products",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseProductUrl}}"
 							],
 							"path": [
 								"Products"
@@ -1160,9 +1160,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BasePricatUrl}}/Products",
+							"raw": "{{BaseProductUrl}}/Products",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseProductUrl}}"
 							],
 							"path": [
 								"Products"
@@ -1200,9 +1200,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BasePricatUrl}}/Products/11",
+							"raw": "{{BaseProductUrl}}/Products/11",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseProductUrl}}"
 							],
 							"path": [
 								"Products",
@@ -1247,9 +1247,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BasePricatUrl}}/Products/A",
+							"raw": "{{BaseProductUrl}}/Products/A",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseProductUrl}}"
 							],
 							"path": [
 								"Products",
@@ -1297,9 +1297,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BasePricatUrl}}/Products/11",
+							"raw": "{{BaseProductUrl}}/Products/11",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseProductUrl}}"
 							],
 							"path": [
 								"Products",
@@ -1347,9 +1347,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BasePricatUrl}}/Products/11",
+							"raw": "{{BaseProductUrl}}/Products/11",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseProductUrl}}"
 							],
 							"path": [
 								"Products",
@@ -1395,9 +1395,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BasePricatUrl}}/Products/11",
+							"raw": "{{BaseProductUrl}}/Products/11",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseProductUrl}}"
 							],
 							"path": [
 								"Products",
@@ -1443,9 +1443,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BasePricatUrl}}/Products/11",
+							"raw": "{{BaseProductUrl}}/Products/11",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseProductUrl}}"
 							],
 							"path": [
 								"Products",
@@ -1491,9 +1491,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BasePricatUrl}}/Products/11",
+							"raw": "{{BaseProductUrl}}/Products/11",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseProductUrl}}"
 							],
 							"path": [
 								"Products",
@@ -1539,9 +1539,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BasePricatUrl}}/Products/100",
+							"raw": "{{BaseProductUrl}}/Products/100",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseProductUrl}}"
 							],
 							"path": [
 								"Products",
@@ -1571,9 +1571,9 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{BasePricatUrl}}/Products/11",
+							"raw": "{{BaseProductUrl}}/Products/11",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseProductUrl}}"
 							],
 							"path": [
 								"Products",
@@ -1610,9 +1610,9 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{BasePricatUrl}}/Products/A",
+							"raw": "{{BaseProductUrl}}/Products/A",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseProductUrl}}"
 							],
 							"path": [
 								"Products",
@@ -1649,9 +1649,9 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{BasePricatUrl}}/Products/100",
+							"raw": "{{BaseProductUrl}}/Products/100",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseProductUrl}}"
 							],
 							"path": [
 								"Products",
@@ -1702,9 +1702,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BasePricatUrl}}/Products/Category/1",
+							"raw": "{{BaseProductUrl}}/Products/Category/1",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseProductUrl}}"
 							],
 							"path": [
 								"Products",
@@ -1741,9 +1741,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BasePricatUrl}}/Products/Category/A",
+							"raw": "{{BaseProductUrl}}/Products/Category/A",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseProductUrl}}"
 							],
 							"path": [
 								"Products",
@@ -1781,9 +1781,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BasePricatUrl}}/Products/Category/100",
+							"raw": "{{BaseProductUrl}}/Products/Category/100",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseProductUrl}}"
 							],
 							"path": [
 								"Products",
@@ -1821,6 +1821,16 @@
 		{
 			"key": "BasePricatUrl",
 			"value": "https://localhost:5001/api/v1.0",
+			"type": "string"
+		},
+		{
+			"key": "BaseCategoryUrl",
+			"value": "https://localhost:3001/api/v1.0",
+			"type": "string"
+		},
+		{
+			"key": "BaseProductUrl",
+			"value": "https://localhost:4001/api/v1.0",
 			"type": "string"
 		}
 	]
