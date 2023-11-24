@@ -1,0 +1,11 @@
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace CategoryService.Domain.Common
+{
+   public abstract class EntityBase
+   {
+      [Key]
+     
+      public int Id { get; set; }
+   }
+}
