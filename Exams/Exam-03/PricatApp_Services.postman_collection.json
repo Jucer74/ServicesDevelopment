@@ -70,9 +70,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BaseProductUrl}}/Categories/1",
+							"raw": "{{BaseCategoryUrl}}/Categories/1",
 							"host": [
-								"{{BaseProductUrl}}"
+								"{{BaseCategoryUrl}}"
 							],
 							"path": [
 								"Categories",
