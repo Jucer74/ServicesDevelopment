@@ -1,13 +1,11 @@
-import React, { useState } from 'react'
-import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button'
-import { NavLink } from 'react-router-dom'
-import { useNavigate } from 'react-router-dom'
+import React, { useState } from 'react';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
-  import 'react-toastify/dist/ReactToastify.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
-
     const history = useNavigate();
 
     const [inpval, setInpval] = useState({
@@ -15,29 +13,20 @@ const Login = () => {
         email: "",
         date: "",
         password: ""
-    })
+    });
 
-   
-
-    const [data,setData] = useState([]);
+    const [data, setData] = useState([]);
     console.log(inpval);
 
     const getdata = (e) => {
-        // console.log(e.target.value);
-
-
         const { value, name } = e.target;
-        // console.log(value,name);
-
-
-        setInpval(() => {
+        setInpval((prevInput) => {
             return {
-                ...inpval,
+                ...prevInput,
                 [name]: value
-            }
-        })
-
-    }
+            };
+        });
+    };
 
     const addData = (e) => {
         e.preventDefault();
@@ -45,84 +34,76 @@ const Login = () => {
         const { name, email, date, password } = inpval;
 
         if (name === "") {
-            toast.error(' name field is requred!',{
+            toast.error('Name field is required!', {
                 position: "top-center",
             });
         } else if (email === "") {
-             toast.error('email field is requred',{
+            toast.error('Email field is required', {
                 position: "top-center",
             });
         } else if (!email.includes("@")) {
-             toast.error('plz enter valid email addres',{
+            toast.error('Please enter a valid email address', {
                 position: "top-center",
             });
         } else if (date === "") {
-             toast.error('date field is requred',{
+            toast.error('Date field is required', {
                 position: "top-center",
             });
         } else if (password === "") {
-             toast.error('password field is requred',{
+            toast.error('Password field is required', {
                 position: "top-center",
             });
         } else if (password.length < 5) {
-             toast.error('password length greater five',{
+            toast.error('Password length should be greater than five', {
                 position: "top-center",
             });
         } else {
-            console.log("data added succesfully");
-            history("/login")
-            localStorage.setItem("useryoutube",JSON.stringify([...data,inpval]));
-
+            console.log("Data added successfully");
+            localStorage.setItem("useryoutube", JSON.stringify([...data, inpval]));
+            history("/Homes"); // Redirige a la página Homes después de guardar los datos
         }
-
-    }
+    };
 
     return (
         <>
             <section className="py-4 bg-primary">
-            <div className="container">
-              <div className="row">
-                <div className="col-md-12 text-center">
-                  <h2>Inicie Sesion</h2>
+                <div className="container">
+                    <div className="row">
+                        <div className="col-md-12 text-center">
+                            <h2>Inicie Sesion</h2>
+                        </div>
+                    </div>
                 </div>
-              </div>
-            </div>
-          </section>
+            </section>
 
             <div className="container bg-white mt-3">
                 <section className='d-flex justify-content-between'>
                     <div className="left_data mt-3 p-3" style={{ width: "100%" }}>
                         <h3 className='text-center col-lg-6'>Registrate</h3>
-                        <Form >
+                        <Form>
                             <Form.Group className="mb-3 col-lg-6" controlId="formBasicEmail">
-
                                 <Form.Control type="text" name='name' onChange={getdata} placeholder="Escribe tu nombre" />
                             </Form.Group>
                             <Form.Group className="mb-3 col-lg-6" controlId="formBasicEmail">
-
                                 <Form.Control type="email" name='email' onChange={getdata} placeholder="Ingrese su correo electronico" />
                             </Form.Group>
-
                             <Form.Group className="mb-3 col-lg-6" controlId="formBasicEmail">
-
                                 <Form.Control onChange={getdata} name='date' type="date" />
                             </Form.Group>
-
                             <Form.Group className="mb-3 col-lg-6" controlId="formBasicPassword">
-
                                 <Form.Control type="password" name='password' onChange={getdata} placeholder="Contraseña" />
                             </Form.Group>
                             <Button variant="primary" className='col-lg-6' onClick={addData} style={{ background: "rgb(13, 110, 235)" }} type="submit">
                                 Enviar
                             </Button>
                         </Form>
-                        <p className='mt-3'>Ya tienes cuenta? <span><NavLink to="/Homes">Inicia Session</NavLink></span> </p>
+                        <p className='mt-3'>Ya tienes cuenta? <span><NavLink to="/Homes">Inicia Sesion</NavLink></span> </p>
                     </div>
                 </section>
                 <ToastContainer />
             </div>
         </>
-    )
-}
+    );
+};
 
-export default Login
+export default Login;
