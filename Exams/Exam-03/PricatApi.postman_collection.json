@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "e98e67fc-d3f2-49de-abe7-d8e6afea7166",
-		"name": "PricatApp",
+		"name": "PricatApi",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "7220587"
 	},

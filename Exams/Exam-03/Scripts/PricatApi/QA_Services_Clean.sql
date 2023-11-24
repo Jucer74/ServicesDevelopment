@@ -1,5 +1,18 @@
+-- Clean Products
 DELETE FROM `productservicedb`.`Products` WHERE Id >= 0;
 ALTER TABLE `productservicedb`.`Products` AUTO_INCREMENT = 1;
+-- Clean Categories
+DELETE FROM `categoryservicedb`.`Categories` WHERE Id >= 0;
+ALTER TABLE `categoryservicedb`.`Categories` AUTO_INCREMENT = 1;
+
+-- Insert Categories
+INSERT INTO `categoryservicedb`.`Categories`(`Description`) VALUES('Alimentos');
+INSERT INTO `categoryservicedb`.`Categories`(`Description`) VALUES('Bebidas');
+INSERT INTO `categoryservicedb`.`Categories`(`Description`) VALUES('Productos de Aseo');
+INSERT INTO `categoryservicedb`.`Categories`(`Description`) VALUES('Ropa');
+INSERT INTO `categoryservicedb`.`Categories`(`Description`) VALUES('Medicamentos');
+
+-- Insert Products
 INSERT INTO `productservicedb`.`Products` (`CategoryId`, `CategoryName`,`EanCode`, `Description`, `Unit`, `Price`) VALUES ( 1, 'Alimentos', '7707548516286', 'Arroz', 'Lb', 500.00);
 INSERT INTO `productservicedb`.`Products` (`CategoryId`, `CategoryName`,`EanCode`, `Description`, `Unit`, `Price`) VALUES ( 1, 'Alimentos', '7707548941507', 'Papa', 'Lb', 1500.00);
 INSERT INTO `productservicedb`.`Products` (`CategoryId`, `CategoryName`,`EanCode`, `Description`, `Unit`, `Price`) VALUES ( 2, 'Bebidas', '7707548160274', 'Cocacola', 'Lb', 2500.00);
