@@ -1,0 +1,41 @@
+version: '3.8'
+services:
+  categoryservice:
+    image: santig012/categoryservice:latest
+    networks:
+      - pricatNetwork
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+      - "3001:443"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=password*1
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/category-certificate.pfx
+    volumes:
+      - ~/.aspnet/https:/https:ro
+    depends_on:
+      - categoryservicedb
+  categoryservicedb:
+    image: mysql:8.0.34
+    restart: always
+    networks:
+      - pricatNetwork
+    environment:
+      MYSQL_DATABASE: 'categoryservicedb'
+      MYSQL_USER: 'categoryserviceuser'
+      MYSQL_PASSWORD: 'C4t3g0ryS3rv1c3Us3r'
+      MYSQL_ROOT_PASSWORD: 'root'
+    ports:
+      - "3308:3306"
+    volumes:
+      - categoryservicedb:/var/lib/mysql
+volumes:
+  categoryservicedb:
+networks:
+  pricatNetwork:
+    driver: bridge
+    name: pricatNetwork
