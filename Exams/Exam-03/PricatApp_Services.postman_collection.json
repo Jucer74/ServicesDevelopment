@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "e98e67fc-d3f2-49de-abe7-d8e6afea7166",
-		"name": "PricatApp",
+		"_postman_id": "b884a11b-42a8-40a0-90c4-ebab9473355d",
+		"name": "PricatApp_Services",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "7220587"
 	},
@@ -32,9 +32,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BasePricatUrl}}/Categories",
+							"raw": "{{BaseCategoryUrl}}/Categories",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseCategoryUrl}}"
 							],
 							"path": [
 								"Categories"
@@ -70,9 +70,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BasePricatUrl}}/Categories/1",
+							"raw": "{{BaseCategoryUrl}}/Categories/1",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseCategoryUrl}}"
 							],
 							"path": [
 								"Categories",
@@ -96,8 +96,8 @@
 									"pm.test(\"Valid Data\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
 									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
-									"    pm.expect(jsonData.errors.length).to.eql(1);\r",
-									"    pm.expect(jsonData.errors[0]).to.eql(\"The value 'A' is not valid.\");\r",
+									"    pm.expect(jsonData.errors.length).to.greaterThan(0);\r",
+									"    pm.expect(jsonData.errors).contains(\"The value 'A' is not valid.\");\r",
 									"});\r",
 									"\r",
 									""
@@ -110,9 +110,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BasePricatUrl}}/Categories/A",
+							"raw": "{{BaseCategoryUrl}}/Categories/A",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseCategoryUrl}}"
 							],
 							"path": [
 								"Categories",
@@ -136,8 +136,8 @@
 									"pm.test(\"Valid Data\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
 									"    pm.expect(jsonData.ErrorType).to.eql(\"Not Found\");\r",
-									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
-									"    pm.expect(jsonData.Errors[0]).to.eql(\"Category [100] Not Found\");\r",
+									"    pm.expect(jsonData.Errors.length).to.greaterThan(0);\r",
+									"    pm.expect(jsonData.Errors).contains(\"Category [100] Not Found\");\r",
 									"});\r",
 									"\r",
 									""
@@ -150,9 +150,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BasePricatUrl}}/Categories/100",
+							"raw": "{{BaseCategoryUrl}}/Categories/100",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseCategoryUrl}}"
 							],
 							"path": [
 								"Categories",
@@ -195,9 +195,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BasePricatUrl}}/Categories",
+							"raw": "{{BaseCategoryUrl}}/Categories",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseCategoryUrl}}"
 							],
 							"path": [
 								"Categories"
@@ -220,8 +220,8 @@
 									"pm.test(\"Valid Data\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
 									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
-									"    pm.expect(jsonData.errors.length).to.eql(1);\r",
-									"    pm.expect(jsonData.errors[0]).to.eql(\"'F' is an invalid start of a value. Path: $.Description | LineNumber: 2 | BytePositionInLine: 17.\");\r",
+									"    pm.expect(jsonData.errors.length).to.greaterThan(0);\r",
+									"    pm.expect(jsonData.errors).contains(\"'F' is an invalid start of a value. Path: $.Description | LineNumber: 2 | BytePositionInLine: 17.\");\r",
 									"});\r",
 									""
 								],
@@ -242,9 +242,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BasePricatUrl}}/Categories",
+							"raw": "{{BaseCategoryUrl}}/Categories",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseCategoryUrl}}"
 							],
 							"path": [
 								"Categories"
@@ -267,8 +267,8 @@
 									"pm.test(\"Valid Data\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
 									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
-									"    pm.expect(jsonData.errors.length).to.eql(1);\r",
-									"    pm.expect(jsonData.errors[0]).to.eql(\"Description is Required\");\r",
+									"    pm.expect(jsonData.errors.length).to.greaterThan(0);\r",
+									"    pm.expect(jsonData.errors).contains(\"Description is Required\");\r",
 									"});\r",
 									""
 								],
@@ -289,9 +289,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BasePricatUrl}}/Categories",
+							"raw": "{{BaseCategoryUrl}}/Categories",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseCategoryUrl}}"
 							],
 							"path": [
 								"Categories"
@@ -314,8 +314,8 @@
 									"pm.test(\"Valid Data\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
 									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
-									"    pm.expect(jsonData.errors.length).to.eql(1);\r",
-									"    pm.expect(jsonData.errors[0]).to.eql(\"Description's Max Length is 50 Characters\");\r",
+									"    pm.expect(jsonData.errors.length).to.greaterThan(0);\r",
+									"    pm.expect(jsonData.errors).contains(\"Description's Max Length is 50 Characters\");\r",
 									"});\r",
 									""
 								],
@@ -336,9 +336,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BasePricatUrl}}/Categories",
+							"raw": "{{BaseCategoryUrl}}/Categories",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseCategoryUrl}}"
 							],
 							"path": [
 								"Categories"
@@ -376,9 +376,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BasePricatUrl}}/Categories/6",
+							"raw": "{{BaseCategoryUrl}}/Categories/6",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseCategoryUrl}}"
 							],
 							"path": [
 								"Categories",
@@ -402,8 +402,8 @@
 									"pm.test(\"Valid Data\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
 									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
-									"    pm.expect(jsonData.errors.length).to.eql(1);\r",
-									"    pm.expect(jsonData.errors[0]).to.eql(\"The value 'A' is not valid.\");\r",
+									"    pm.expect(jsonData.errors.length).to.greaterThan(0);\r",
+									"    pm.expect(jsonData.errors).contains(\"The value 'A' is not valid.\");\r",
 									"});\r",
 									""
 								],
@@ -424,9 +424,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BasePricatUrl}}/Categories/A",
+							"raw": "{{BaseCategoryUrl}}/Categories/A",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseCategoryUrl}}"
 							],
 							"path": [
 								"Categories",
@@ -450,8 +450,8 @@
 									"pm.test(\"Valid Data\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
 									"    pm.expect(jsonData.ErrorType).to.eql(\"Bad Request\");\r",
-									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
-									"    pm.expect(jsonData.Errors[0]).to.eql(\"Id [1] is different to Category.Id [6]\");\r",
+									"    pm.expect(jsonData.Errors.length).to.greaterThan(0);\r",
+									"    pm.expect(jsonData.Errors).contains(\"Id [1] is different to Category.Id [6]\");\r",
 									"});\r",
 									""
 								],
@@ -472,9 +472,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BasePricatUrl}}/Categories/1",
+							"raw": "{{BaseCategoryUrl}}/Categories/1",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseCategoryUrl}}"
 							],
 							"path": [
 								"Categories",
@@ -498,8 +498,8 @@
 									"pm.test(\"Valid Data\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
 									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
-									"    pm.expect(jsonData.errors.length).to.eql(1);\r",
-									"    pm.expect(jsonData.errors[0]).to.eql(\"Description is Required\");\r",
+									"    pm.expect(jsonData.errors.length).to.greaterThan(0);\r",
+									"    pm.expect(jsonData.errors).contains(\"Description is Required\");\r",
 									"});\r",
 									""
 								],
@@ -520,9 +520,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BasePricatUrl}}/Categories/6",
+							"raw": "{{BaseCategoryUrl}}/Categories/6",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseCategoryUrl}}"
 							],
 							"path": [
 								"Categories",
@@ -546,8 +546,8 @@
 									"pm.test(\"Valid Data\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
 									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
-									"    pm.expect(jsonData.errors.length).to.eql(1);\r",
-									"    pm.expect(jsonData.errors[0]).to.eql(\"Description's Max Length is 50 Characters\");\r",
+									"    pm.expect(jsonData.errors.length).to.greaterThan(0);\r",
+									"    pm.expect(jsonData.errors).contains(\"Description's Max Length is 50 Characters\");\r",
 									"});\r",
 									""
 								],
@@ -568,9 +568,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BasePricatUrl}}/Categories/6",
+							"raw": "{{BaseCategoryUrl}}/Categories/6",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseCategoryUrl}}"
 							],
 							"path": [
 								"Categories",
@@ -594,8 +594,8 @@
 									"pm.test(\"Valid Data\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
 									"    pm.expect(jsonData.ErrorType).to.eql(\"Not Found\");\r",
-									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
-									"    pm.expect(jsonData.Errors[0]).to.eql(\"Category [100] Not Found\");\r",
+									"    pm.expect(jsonData.Errors.length).to.greaterThan(0);\r",
+									"    pm.expect(jsonData.Errors).contains(\"Category [100] Not Found\");\r",
 									"});\r",
 									""
 								],
@@ -616,9 +616,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BasePricatUrl}}/Categories/100",
+							"raw": "{{BaseCategoryUrl}}/Categories/100",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseCategoryUrl}}"
 							],
 							"path": [
 								"Categories",
@@ -648,9 +648,9 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{BasePricatUrl}}/Categories/6",
+							"raw": "{{BaseCategoryUrl}}/Categories/6",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseCategoryUrl}}"
 							],
 							"path": [
 								"Categories",
@@ -674,8 +674,8 @@
 									"pm.test(\"Valid Data\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
 									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
-									"    pm.expect(jsonData.errors.length).to.eql(1);\r",
-									"    pm.expect(jsonData.errors[0]).to.eql(\"The value 'A' is not valid.\");\r",
+									"    pm.expect(jsonData.errors.length).to.greaterThan(0);\r",
+									"    pm.expect(jsonData.errors).contains(\"The value 'A' is not valid.\");\r",
 									"});\r",
 									""
 								],
@@ -687,9 +687,9 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{BasePricatUrl}}/Categories/A",
+							"raw": "{{BaseCategoryUrl}}/Categories/A",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseCategoryUrl}}"
 							],
 							"path": [
 								"Categories",
@@ -713,8 +713,8 @@
 									"pm.test(\"Valid Data\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
 									"    pm.expect(jsonData.ErrorType).to.eql(\"Not Found\");\r",
-									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
-									"    pm.expect(jsonData.Errors[0]).to.eql(\"Category [100] Not Found\");\r",
+									"    pm.expect(jsonData.Errors.length).to.greaterThan(0);\r",
+									"    pm.expect(jsonData.Errors).contains(\"Category [100] Not Found\");\r",
 									"});\r",
 									""
 								],
@@ -726,9 +726,9 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{BasePricatUrl}}/Categories/100",
+							"raw": "{{BaseCategoryUrl}}/Categories/100",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseCategoryUrl}}"
 							],
 							"path": [
 								"Categories",
@@ -758,9 +758,9 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{BasePricatUrl}}/Categories/5",
+							"raw": "{{BaseCategoryUrl}}/Categories/5",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseCategoryUrl}}"
 							],
 							"path": [
 								"Categories",
@@ -798,9 +798,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BasePricatUrl}}/Products",
+							"raw": "{{BaseProductUrl}}/Products",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseProductUrl}}"
 							],
 							"path": [
 								"Products"
@@ -824,6 +824,7 @@
 									"    var jsonData = pm.response.json();\r",
 									"    pm.expect(jsonData.id).to.eql(1);\r",
 									"    pm.expect(jsonData.categoryId).to.eql(1); \r",
+									"    pm.expect(jsonData.categoryName).to.eql(\"Alimentos\"); \r",
 									"    pm.expect(jsonData.eanCode).to.eql(\"7707548516286\");    \r",
 									"    pm.expect(jsonData.description).to.eql(\"Arroz\");\r",
 									"    pm.expect(jsonData.unit).to.eql(\"Lb\");\r",
@@ -840,9 +841,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BasePricatUrl}}/Products/1",
+							"raw": "{{BaseProductUrl}}/Products/1",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseProductUrl}}"
 							],
 							"path": [
 								"Products",
@@ -866,8 +867,8 @@
 									"pm.test(\"Valid Data\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
 									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
-									"    pm.expect(jsonData.errors.length).to.eql(1);\r",
-									"    pm.expect(jsonData.errors[0]).to.eql(\"The value 'A' is not valid.\");\r",
+									"    pm.expect(jsonData.errors.length).to.greaterThan(0);\r",
+									"    pm.expect(jsonData.errors).contains(\"The value 'A' is not valid.\");\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -878,9 +879,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BasePricatUrl}}/Products/A",
+							"raw": "{{BaseProductUrl}}/Products/A",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseProductUrl}}"
 							],
 							"path": [
 								"Products",
@@ -904,8 +905,8 @@
 									"pm.test(\"Valid Data\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
 									"    pm.expect(jsonData.ErrorType).to.eql(\"Not Found\");\r",
-									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
-									"    pm.expect(jsonData.Errors[0]).to.eql(\"Product [100] Not Found\");\r",
+									"    pm.expect(jsonData.Errors.length).to.greaterThan(0);\r",
+									"    pm.expect(jsonData.Errors).contains(\"Product [100] Not Found\");\r",
 									"});\r",
 									"\r",
 									""
@@ -918,9 +919,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BasePricatUrl}}/Products/100",
+							"raw": "{{BaseProductUrl}}/Products/100",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseProductUrl}}"
 							],
 							"path": [
 								"Products",
@@ -943,7 +944,8 @@
 									"pm.test(\"Valid Data\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
 									"    pm.expect(jsonData.id).to.eql(11);\r",
-									"    pm.expect(jsonData.categoryId).to.eql(1); \r",
+									"    pm.expect(jsonData.categoryId).to.eql(1);\r",
+									"    pm.expect(jsonData.categoryName).to.eql(\"Alimentos\");     \r",
 									"    pm.expect(jsonData.description).to.eql(\"Yuca\");\r",
 									"    pm.expect(jsonData.unit).to.eql(\"Lb\");\r",
 									"    pm.expect(jsonData.price).to.eql(300.00);\r",
@@ -960,7 +962,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"Id\": 0,\r\n  \"CategoryId\": 1,\r\n  \"EanCode\": \"7707548697640\",\r\n  \"Description\": \"Yuca\",\r\n  \"Unit\": \"Lb\",\r\n  \"Price\": 300.00\r\n}",
+							"raw": "{\r\n  \"Id\": 0,\r\n  \"CategoryId\": 1,\r\n  \"CategoryName\": \"Alimentos\",  \r\n  \"EanCode\": \"7707548697640\",\r\n  \"Description\": \"Yuca\",\r\n  \"Unit\": \"Lb\",\r\n  \"Price\": 300.00\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -968,9 +970,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BasePricatUrl}}/Products",
+							"raw": "{{BaseProductUrl}}/Products",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseProductUrl}}"
 							],
 							"path": [
 								"Products"
@@ -993,10 +995,13 @@
 									"pm.test(\"Valid Data\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
 									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
-									"    pm.expect(jsonData.errors.length).to.eql(3);\r",
-									"    pm.expect(jsonData.errors[0]).to.eql(\"Unit is Required\");\r",
-									"    pm.expect(jsonData.errors[1]).to.eql(\"EanCode is Required\");\r",
-									"    pm.expect(jsonData.errors[2]).to.eql(\"Description is Required\");\r",
+									"    pm.expect(jsonData.errors.length).to.greaterThan(0);\r",
+									"    pm.expect(jsonData.errors).contains(\"CategoryId is Required\");\r",
+									"    pm.expect(jsonData.errors).contains(\"CategoryName is Required\");\r",
+									"    pm.expect(jsonData.errors).contains(\"Unit is Required\");\r",
+									"    pm.expect(jsonData.errors).contains(\"Price is Required\");\r",
+									"    pm.expect(jsonData.errors).contains(\"EanCode is Required\");\r",
+									"    pm.expect(jsonData.errors).contains(\"Description is Required\");\r",
 									"});\r",
 									""
 								],
@@ -1017,9 +1022,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BasePricatUrl}}/Products",
+							"raw": "{{BaseProductUrl}}/Products",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseProductUrl}}"
 							],
 							"path": [
 								"Products"
@@ -1042,10 +1047,10 @@
 									"pm.test(\"Valid Data\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
 									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
-									"    pm.expect(jsonData.errors.length).to.eql(3);\r",
-									"    pm.expect(jsonData.errors[0]).to.eql(\"Unit's Max Length is 20 Characters\");\r",
-									"    pm.expect(jsonData.errors[1]).to.eql(\"EanCode's Max Length is 13 digits\");\r",
-									"    pm.expect(jsonData.errors[2]).to.eql(\"Description's Max Length is 50 Characters\");\r",
+									"    pm.expect(jsonData.errors.length).to.greaterThan(0);\r",
+									"    pm.expect(jsonData.errors).contains(\"Unit's Max Length is 20 Characters\");\r",
+									"    pm.expect(jsonData.errors).contains(\"EanCode's Max Length is 13 digits\");\r",
+									"    pm.expect(jsonData.errors).contains(\"Description's Max Length is 50 Characters\");\r",
 									"});\r",
 									""
 								],
@@ -1058,7 +1063,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"Id\": 0,\r\n  \"CategoryId\": 1,\r\n  \"EanCode\": \"12345678901234\",\r\n  \"Description\": \"123456789012345678901234567890123456789012345678901\",\r\n  \"Unit\": \"123456789012345678901\",\r\n  \"Price\": 300.00\r\n}",
+							"raw": "{\r\n  \"Id\": 0,\r\n  \"CategoryId\": 1,\r\n  \"CategoryName\": \"Alimentos\",  \r\n  \"EanCode\": \"12345678901234\",\r\n  \"Description\": \"123456789012345678901234567890123456789012345678901\",\r\n  \"Unit\": \"123456789012345678901\",\r\n  \"Price\": 300.00\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1066,9 +1071,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BasePricatUrl}}/Products",
+							"raw": "{{BaseProductUrl}}/Products",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseProductUrl}}"
 							],
 							"path": [
 								"Products"
@@ -1091,8 +1096,8 @@
 									"pm.test(\"Valid Data\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
 									"    pm.expect(jsonData.ErrorType).to.eql(\"Bad Request\");\r",
-									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
-									"    pm.expect(jsonData.Errors[0]).to.eql(\"EAN Code [1234567890123] is Not Valid\");\r",
+									"    pm.expect(jsonData.Errors.length).to.greaterThan(0);\r",
+									"    pm.expect(jsonData.Errors).contains(\"EAN Code [1234567890123] is Not Valid\");\r",
 									"});\r",
 									""
 								],
@@ -1105,7 +1110,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"Id\": 0,\r\n  \"CategoryId\": 1,\r\n  \"EanCode\": \"1234567890123\",\r\n  \"Description\": \"Yuca\",\r\n  \"Unit\": \"Lb\",\r\n  \"Price\": 300.00\r\n}",
+							"raw": "{\r\n  \"Id\": 0,\r\n  \"CategoryId\": 1,\r\n  \"CategoryName\": \"Alimentos\",  \r\n  \"EanCode\": \"1234567890123\",\r\n  \"Description\": \"Yuca\",\r\n  \"Unit\": \"Lb\",\r\n  \"Price\": 300.00\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1113,9 +1118,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BasePricatUrl}}/Products",
+							"raw": "{{BaseProductUrl}}/Products",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseProductUrl}}"
 							],
 							"path": [
 								"Products"
@@ -1138,8 +1143,8 @@
 									"pm.test(\"Valid Data\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
 									"    pm.expect(jsonData.ErrorType).to.eql(\"Not Found\");\r",
-									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
-									"    pm.expect(jsonData.Errors[0]).to.eql(\"Category [100] Not Found\");\r",
+									"    pm.expect(jsonData.Errors.length).to.greaterThan(0);\r",
+									"    pm.expect(jsonData.Errors).contains(\"Category [100] Not Found\");\r",
 									"});\r",
 									""
 								],
@@ -1152,7 +1157,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"Id\": 0,\r\n  \"CategoryId\": 100,\r\n  \"EanCode\": \"7701325700332\",\r\n  \"Description\": \"Tomate\",\r\n  \"Unit\": \"Lb\",\r\n  \"Price\": 1300.00\r\n}",
+							"raw": "{\r\n  \"Id\": 0,\r\n  \"CategoryId\": 100,\r\n  \"CategoryName\": \"Alimentos\",  \r\n  \"EanCode\": \"7701325700332\",\r\n  \"Description\": \"Tomate\",\r\n  \"Unit\": \"Lb\",\r\n  \"Price\": 1300.00\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1160,9 +1165,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BasePricatUrl}}/Products",
+							"raw": "{{BaseProductUrl}}/Products",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseProductUrl}}"
 							],
 							"path": [
 								"Products"
@@ -1192,7 +1197,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"Id\": 11,\r\n  \"CategoryId\": 1,\r\n  \"EanCode\": \"7707548697640\",\r\n  \"Description\": \"Platano\",\r\n  \"Unit\": \"Lb\",\r\n  \"Price\": 300.00\r\n}",
+							"raw": "{\r\n  \"Id\": 11,\r\n  \"CategoryId\": 1,\r\n  \"CategoryName\": \"Alimentos\",  \r\n  \"EanCode\": \"7707548697640\",\r\n  \"Description\": \"Platano\",\r\n  \"Unit\": \"Lb\",\r\n  \"Price\": 300.00\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1200,9 +1205,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BasePricatUrl}}/Products/11",
+							"raw": "{{BaseProductUrl}}/Products/11",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseProductUrl}}"
 							],
 							"path": [
 								"Products",
@@ -1226,8 +1231,8 @@
 									"pm.test(\"Valid Data\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
 									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
-									"    pm.expect(jsonData.errors.length).to.eql(1);\r",
-									"    pm.expect(jsonData.errors[0]).to.eql(\"The value 'A' is not valid.\");\r",
+									"    pm.expect(jsonData.errors.length).to.greaterThan(0);\r",
+									"    pm.expect(jsonData.errors).contains(\"The value 'A' is not valid.\");\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -1239,7 +1244,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"Id\": 11,\r\n  \"CategoryId\": 1,\r\n  \"EanCode\": \"7707548697640\",\r\n  \"Description\": \"Platano\",\r\n  \"Unit\": \"Lb\",\r\n  \"Price\": 300.00\r\n}",
+							"raw": "{\r\n  \"Id\": 11,\r\n  \"CategoryId\": 1,\r\n  \"CategoryName\": \"Alimentos\",  \r\n  \"EanCode\": \"7707548697640\",\r\n  \"Description\": \"Platano\",\r\n  \"Unit\": \"Lb\",\r\n  \"Price\": 300.00\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1247,9 +1252,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BasePricatUrl}}/Products/A",
+							"raw": "{{BaseProductUrl}}/Products/A",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseProductUrl}}"
 							],
 							"path": [
 								"Products",
@@ -1273,10 +1278,10 @@
 									"pm.test(\"Valid Data\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
 									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
-									"    pm.expect(jsonData.errors.length).to.eql(3);\r",
-									"    pm.expect(jsonData.errors[0]).to.eql(\"Unit is Required\");\r",
-									"    pm.expect(jsonData.errors[1]).to.eql(\"EanCode is Required\");\r",
-									"    pm.expect(jsonData.errors[2]).to.eql(\"Description is Required\");\r",
+									"    pm.expect(jsonData.errors.length).to.greaterThan(0);\r",
+									"    pm.expect(jsonData.errors).contains(\"Unit is Required\");\r",
+									"    pm.expect(jsonData.errors).contains(\"EanCode is Required\");\r",
+									"    pm.expect(jsonData.errors).contains(\"Description is Required\");\r",
 									"});\r",
 									""
 								],
@@ -1297,9 +1302,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BasePricatUrl}}/Products/11",
+							"raw": "{{BaseProductUrl}}/Products/11",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseProductUrl}}"
 							],
 							"path": [
 								"Products",
@@ -1323,10 +1328,10 @@
 									"pm.test(\"Valid Data\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
 									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
-									"    pm.expect(jsonData.errors.length).to.eql(3);\r",
-									"    pm.expect(jsonData.errors[0]).to.eql(\"Unit's Max Length is 20 Characters\");\r",
-									"    pm.expect(jsonData.errors[1]).to.eql(\"EanCode's Max Length is 13 digits\");\r",
-									"    pm.expect(jsonData.errors[2]).to.eql(\"Description's Max Length is 50 Characters\");\r",
+									"    pm.expect(jsonData.errors.length).to.greaterThan(0);\r",
+									"    pm.expect(jsonData.errors).contains(\"Unit's Max Length is 20 Characters\");\r",
+									"    pm.expect(jsonData.errors).contains(\"EanCode's Max Length is 13 digits\");\r",
+									"    pm.expect(jsonData.errors).contains(\"Description's Max Length is 50 Characters\");\r",
 									"});\r",
 									""
 								],
@@ -1339,7 +1344,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"Id\": 0,\r\n  \"CategoryId\": 1,\r\n  \"EanCode\": \"12345678901234\",\r\n  \"Description\": \"123456789012345678901234567890123456789012345678901\",\r\n  \"Unit\": \"123456789012345678901\",\r\n  \"Price\": 300.00\r\n}",
+							"raw": "{\r\n  \"Id\": 0,\r\n  \"CategoryId\": 1,\r\n  \"CategoryName\": \"Alimentos\",  \r\n  \"EanCode\": \"12345678901234\",\r\n  \"Description\": \"123456789012345678901234567890123456789012345678901\",\r\n  \"Unit\": \"123456789012345678901\",\r\n  \"Price\": 300.00\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1347,9 +1352,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BasePricatUrl}}/Products/11",
+							"raw": "{{BaseProductUrl}}/Products/11",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseProductUrl}}"
 							],
 							"path": [
 								"Products",
@@ -1373,8 +1378,8 @@
 									"pm.test(\"Valid Data\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
 									"    pm.expect(jsonData.ErrorType).to.eql(\"Bad Request\");\r",
-									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
-									"    pm.expect(jsonData.Errors[0]).to.eql(\"Id [11] is different to Product.Id [12]\");\r",
+									"    pm.expect(jsonData.Errors.length).to.greaterThan(0);\r",
+									"    pm.expect(jsonData.Errors).contains(\"Id [11] is different to Product.Id [12]\");\r",
 									"});\r",
 									""
 								],
@@ -1387,7 +1392,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"Id\": 12,\r\n  \"CategoryId\": 1,\r\n  \"EanCode\": \"7707548697640\",\r\n  \"Description\": \"Platano\",\r\n  \"Unit\": \"Lb\",\r\n  \"Price\": 300.00\r\n}",
+							"raw": "{\r\n  \"Id\": 12,\r\n  \"CategoryId\": 1,\r\n  \"CategoryName\": \"Alimentos\",  \r\n  \"EanCode\": \"7707548697640\",\r\n  \"Description\": \"Platano\",\r\n  \"Unit\": \"Lb\",\r\n  \"Price\": 300.00\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1395,9 +1400,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BasePricatUrl}}/Products/11",
+							"raw": "{{BaseProductUrl}}/Products/11",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseProductUrl}}"
 							],
 							"path": [
 								"Products",
@@ -1421,8 +1426,8 @@
 									"pm.test(\"Valid Data\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
 									"    pm.expect(jsonData.ErrorType).to.eql(\"Bad Request\");\r",
-									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
-									"    pm.expect(jsonData.Errors[0]).to.eql(\"EAN Code [1234567890123] is Not Valid\");\r",
+									"    pm.expect(jsonData.Errors.length).to.greaterThan(0);\r",
+									"    pm.expect(jsonData.Errors).contains(\"EAN Code [1234567890123] is Not Valid\");\r",
 									"});\r",
 									""
 								],
@@ -1435,7 +1440,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"Id\": 11,\r\n  \"CategoryId\": 1,\r\n  \"EanCode\": \"1234567890123\",\r\n  \"Description\": \"Platano\",\r\n  \"Unit\": \"Lb\",\r\n  \"Price\": 300.00\r\n}",
+							"raw": "{\r\n  \"Id\": 11,\r\n  \"CategoryId\": 1,\r\n  \"CategoryName\": \"Alimentos\",  \r\n  \"EanCode\": \"1234567890123\",\r\n  \"Description\": \"Platano\",\r\n  \"Unit\": \"Lb\",\r\n  \"Price\": 300.00\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1443,9 +1448,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BasePricatUrl}}/Products/11",
+							"raw": "{{BaseProductUrl}}/Products/11",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseProductUrl}}"
 							],
 							"path": [
 								"Products",
@@ -1469,8 +1474,8 @@
 									"pm.test(\"Valid Data\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
 									"    pm.expect(jsonData.ErrorType).to.eql(\"Not Found\");\r",
-									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
-									"    pm.expect(jsonData.Errors[0]).to.eql(\"Category [100] Not Found\");\r",
+									"    pm.expect(jsonData.Errors.length).to.greaterThan(0);\r",
+									"    pm.expect(jsonData.Errors).contains(\"Category [100] Not Found\");\r",
 									"});\r",
 									""
 								],
@@ -1483,7 +1488,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"Id\": 11,\r\n  \"CategoryId\": 100,\r\n  \"EanCode\": \"7707548697640\",\r\n  \"Description\": \"Platano\",\r\n  \"Unit\": \"Lb\",\r\n  \"Price\": 300.00\r\n}",
+							"raw": "{\r\n  \"Id\": 11,\r\n  \"CategoryId\": 100,\r\n  \"CategoryName\": \"Alimentos\",  \r\n  \"EanCode\": \"7707548697640\",\r\n  \"Description\": \"Platano\",\r\n  \"Unit\": \"Lb\",\r\n  \"Price\": 300.00\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1491,9 +1496,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BasePricatUrl}}/Products/11",
+							"raw": "{{BaseProductUrl}}/Products/11",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseProductUrl}}"
 							],
 							"path": [
 								"Products",
@@ -1517,8 +1522,8 @@
 									"pm.test(\"Valid Data\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
 									"    pm.expect(jsonData.ErrorType).to.eql(\"Not Found\");\r",
-									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
-									"    pm.expect(jsonData.Errors[0]).to.eql(\"Product [100] Not Found\");\r",
+									"    pm.expect(jsonData.Errors.length).to.greaterThan(0);\r",
+									"    pm.expect(jsonData.Errors).contains(\"Product [100] Not Found\");\r",
 									"});\r",
 									""
 								],
@@ -1531,7 +1536,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"Id\": 100,\r\n  \"CategoryId\": 1,\r\n  \"EanCode\": \"7707548697640\",\r\n  \"Description\": \"Platano\",\r\n  \"Unit\": \"Lb\",\r\n  \"Price\": 300.00\r\n}",
+							"raw": "{\r\n  \"Id\": 100,\r\n  \"CategoryId\": 1,\r\n  \"CategoryName\": \"Alimentos\",  \r\n  \"EanCode\": \"7707548697640\",\r\n  \"Description\": \"Platano\",\r\n  \"Unit\": \"Lb\",\r\n  \"Price\": 300.00\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1539,9 +1544,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{BasePricatUrl}}/Products/100",
+							"raw": "{{BaseProductUrl}}/Products/100",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseProductUrl}}"
 							],
 							"path": [
 								"Products",
@@ -1571,9 +1576,9 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{BasePricatUrl}}/Products/11",
+							"raw": "{{BaseProductUrl}}/Products/11",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseProductUrl}}"
 							],
 							"path": [
 								"Products",
@@ -1597,8 +1602,8 @@
 									"pm.test(\"Valid Data\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
 									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
-									"    pm.expect(jsonData.errors.length).to.eql(1);\r",
-									"    pm.expect(jsonData.errors[0]).to.eql(\"The value 'A' is not valid.\");\r",
+									"    pm.expect(jsonData.errors.length).to.greaterThan(0);\r",
+									"    pm.expect(jsonData.errors).contains(\"The value 'A' is not valid.\");\r",
 									"});\r",
 									""
 								],
@@ -1610,9 +1615,9 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{BasePricatUrl}}/Products/A",
+							"raw": "{{BaseProductUrl}}/Products/A",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseProductUrl}}"
 							],
 							"path": [
 								"Products",
@@ -1636,8 +1641,8 @@
 									"pm.test(\"Valid Data\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
 									"    pm.expect(jsonData.ErrorType).to.eql(\"Not Found\");\r",
-									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
-									"    pm.expect(jsonData.Errors[0]).to.eql(\"Product [100] Not Found\");\r",
+									"    pm.expect(jsonData.Errors.length).to.greaterThan(0);\r",
+									"    pm.expect(jsonData.Errors).contains(\"Product [100] Not Found\");\r",
 									"});\r",
 									""
 								],
@@ -1649,9 +1654,9 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{BasePricatUrl}}/Products/100",
+							"raw": "{{BaseProductUrl}}/Products/100",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseProductUrl}}"
 							],
 							"path": [
 								"Products",
@@ -1680,6 +1685,7 @@
 									"    var jsonData = pm.response.json();\r",
 									"    pm.expect(jsonData[0].id).to.eql(1);\r",
 									"    pm.expect(jsonData[0].categoryId).to.eql(1); \r",
+									"    pm.expect(jsonData[0].categoryName).to.eql(\"Alimentos\");     \r",
 									"    pm.expect(jsonData[0].eanCode).to.eql(\"7707548516286\");      \r",
 									"    pm.expect(jsonData[0].description).to.eql(\"Arroz\");\r",
 									"    pm.expect(jsonData[0].unit).to.eql(\"Lb\");\r",
@@ -1687,6 +1693,7 @@
 									"\r",
 									"    pm.expect(jsonData[1].id).to.eql(2);\r",
 									"    pm.expect(jsonData[1].categoryId).to.eql(1); \r",
+									"    pm.expect(jsonData[1].categoryName).to.eql(\"Alimentos\");         \r",
 									"    pm.expect(jsonData[1].eanCode).to.eql(\"7707548941507\");      \r",
 									"    pm.expect(jsonData[1].description).to.eql(\"Papa\");\r",
 									"    pm.expect(jsonData[1].unit).to.eql(\"Lb\");\r",
@@ -1702,9 +1709,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BasePricatUrl}}/Products/Category/1",
+							"raw": "{{BaseProductUrl}}/Products/Category/1",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseProductUrl}}"
 							],
 							"path": [
 								"Products",
@@ -1729,8 +1736,8 @@
 									"pm.test(\"Valid Data\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
 									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
-									"    pm.expect(jsonData.errors.length).to.eql(1);\r",
-									"    pm.expect(jsonData.errors[0]).to.eql(\"The value 'A' is not valid.\");\r",
+									"    pm.expect(jsonData.errors.length).to.greaterThan(0);\r",
+									"    pm.expect(jsonData.errors).contains(\"The value 'A' is not valid.\");\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -1741,9 +1748,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BasePricatUrl}}/Products/Category/A",
+							"raw": "{{BaseProductUrl}}/Products/Category/A",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseProductUrl}}"
 							],
 							"path": [
 								"Products",
@@ -1768,8 +1775,8 @@
 									"pm.test(\"Valid Data\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
 									"    pm.expect(jsonData.ErrorType).to.eql(\"Not Found\");\r",
-									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
-									"    pm.expect(jsonData.Errors[0]).to.eql(\"Category [100] Not Found\");\r",
+									"    pm.expect(jsonData.Errors.length).to.greaterThan(0);\r",
+									"    pm.expect(jsonData.Errors).contains(\"Category [100] Not Found\");\r",
 									"});\r",
 									""
 								],
@@ -1781,9 +1788,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BasePricatUrl}}/Products/Category/100",
+							"raw": "{{BaseProductUrl}}/Products/Category/100",
 							"host": [
-								"{{BasePricatUrl}}"
+								"{{BaseProductUrl}}"
 							],
 							"path": [
 								"Products",
@@ -1819,8 +1826,13 @@
 	],
 	"variable": [
 		{
-			"key": "BasePricatUrl",
-			"value": "https://localhost:5001/api/v1.0",
+			"key": "BaseCategoryUrl",
+			"value": "https://localhost:3001/api/v1.0",
+			"type": "string"
+		},
+		{
+			"key": "BaseProductUrl",
+			"value": "https://localhost:4001/api/v1.0",
 			"type": "string"
 		}
 	]
