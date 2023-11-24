@@ -962,7 +962,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"Id\": 0,\r\n  \"CategoryId\": 1,\r\n  \"EanCode\": \"7707548697640\",\r\n  \"Description\": \"Yuca\",\r\n  \"Unit\": \"Lb\",\r\n  \"Price\": 300.00\r\n}",
+							"raw": "{\r\n  \"Id\": 0,\r\n  \"CategoryId\": 1,\r\n  \"CategoryName\": \"Alimentos\",  \r\n  \"EanCode\": \"7707548697640\",\r\n  \"Description\": \"Yuca\",\r\n  \"Unit\": \"Lb\",\r\n  \"Price\": 300.00\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -996,7 +996,10 @@
 									"    var jsonData = pm.response.json();\r",
 									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
 									"    pm.expect(jsonData.errors.length).to.greaterThan(0);\r",
+									"    pm.expect(jsonData.errors).contains(\"CategoryId is Required\");\r",
+									"    pm.expect(jsonData.errors).contains(\"CategoryName is Required\");\r",
 									"    pm.expect(jsonData.errors).contains(\"Unit is Required\");\r",
+									"    pm.expect(jsonData.errors).contains(\"Price is Required\");\r",
 									"    pm.expect(jsonData.errors).contains(\"EanCode is Required\");\r",
 									"    pm.expect(jsonData.errors).contains(\"Description is Required\");\r",
 									"});\r",
@@ -1060,7 +1063,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"Id\": 0,\r\n  \"CategoryId\": 1,\r\n  \"EanCode\": \"12345678901234\",\r\n  \"Description\": \"123456789012345678901234567890123456789012345678901\",\r\n  \"Unit\": \"123456789012345678901\",\r\n  \"Price\": 300.00\r\n}",
+							"raw": "{\r\n  \"Id\": 0,\r\n  \"CategoryId\": 1,\r\n  \"CategoryName\": \"Alimentos\",  \r\n  \"EanCode\": \"12345678901234\",\r\n  \"Description\": \"123456789012345678901234567890123456789012345678901\",\r\n  \"Unit\": \"123456789012345678901\",\r\n  \"Price\": 300.00\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1107,7 +1110,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"Id\": 0,\r\n  \"CategoryId\": 1,\r\n  \"EanCode\": \"1234567890123\",\r\n  \"Description\": \"Yuca\",\r\n  \"Unit\": \"Lb\",\r\n  \"Price\": 300.00\r\n}",
+							"raw": "{\r\n  \"Id\": 0,\r\n  \"CategoryId\": 1,\r\n  \"CategoryName\": \"Alimentos\",  \r\n  \"EanCode\": \"1234567890123\",\r\n  \"Description\": \"Yuca\",\r\n  \"Unit\": \"Lb\",\r\n  \"Price\": 300.00\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1154,7 +1157,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"Id\": 0,\r\n  \"CategoryId\": 100,\r\n  \"EanCode\": \"7701325700332\",\r\n  \"Description\": \"Tomate\",\r\n  \"Unit\": \"Lb\",\r\n  \"Price\": 1300.00\r\n}",
+							"raw": "{\r\n  \"Id\": 0,\r\n  \"CategoryId\": 100,\r\n  \"CategoryName\": \"Alimentos\",  \r\n  \"EanCode\": \"7701325700332\",\r\n  \"Description\": \"Tomate\",\r\n  \"Unit\": \"Lb\",\r\n  \"Price\": 1300.00\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1194,7 +1197,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"Id\": 11,\r\n  \"CategoryId\": 1,\r\n  \"EanCode\": \"7707548697640\",\r\n  \"Description\": \"Platano\",\r\n  \"Unit\": \"Lb\",\r\n  \"Price\": 300.00\r\n}",
+							"raw": "{\r\n  \"Id\": 11,\r\n  \"CategoryId\": 1,\r\n  \"CategoryName\": \"Alimentos\",  \r\n  \"EanCode\": \"7707548697640\",\r\n  \"Description\": \"Platano\",\r\n  \"Unit\": \"Lb\",\r\n  \"Price\": 300.00\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1241,7 +1244,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"Id\": 11,\r\n  \"CategoryId\": 1,\r\n  \"EanCode\": \"7707548697640\",\r\n  \"Description\": \"Platano\",\r\n  \"Unit\": \"Lb\",\r\n  \"Price\": 300.00\r\n}",
+							"raw": "{\r\n  \"Id\": 11,\r\n  \"CategoryId\": 1,\r\n  \"CategoryName\": \"Alimentos\",  \r\n  \"EanCode\": \"7707548697640\",\r\n  \"Description\": \"Platano\",\r\n  \"Unit\": \"Lb\",\r\n  \"Price\": 300.00\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1341,7 +1344,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"Id\": 0,\r\n  \"CategoryId\": 1,\r\n  \"EanCode\": \"12345678901234\",\r\n  \"Description\": \"123456789012345678901234567890123456789012345678901\",\r\n  \"Unit\": \"123456789012345678901\",\r\n  \"Price\": 300.00\r\n}",
+							"raw": "{\r\n  \"Id\": 0,\r\n  \"CategoryId\": 1,\r\n  \"CategoryName\": \"Alimentos\",  \r\n  \"EanCode\": \"12345678901234\",\r\n  \"Description\": \"123456789012345678901234567890123456789012345678901\",\r\n  \"Unit\": \"123456789012345678901\",\r\n  \"Price\": 300.00\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1389,7 +1392,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"Id\": 12,\r\n  \"CategoryId\": 1,\r\n  \"EanCode\": \"7707548697640\",\r\n  \"Description\": \"Platano\",\r\n  \"Unit\": \"Lb\",\r\n  \"Price\": 300.00\r\n}",
+							"raw": "{\r\n  \"Id\": 12,\r\n  \"CategoryId\": 1,\r\n  \"CategoryName\": \"Alimentos\",  \r\n  \"EanCode\": \"7707548697640\",\r\n  \"Description\": \"Platano\",\r\n  \"Unit\": \"Lb\",\r\n  \"Price\": 300.00\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1437,7 +1440,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"Id\": 11,\r\n  \"CategoryId\": 1,\r\n  \"EanCode\": \"1234567890123\",\r\n  \"Description\": \"Platano\",\r\n  \"Unit\": \"Lb\",\r\n  \"Price\": 300.00\r\n}",
+							"raw": "{\r\n  \"Id\": 11,\r\n  \"CategoryId\": 1,\r\n  \"CategoryName\": \"Alimentos\",  \r\n  \"EanCode\": \"1234567890123\",\r\n  \"Description\": \"Platano\",\r\n  \"Unit\": \"Lb\",\r\n  \"Price\": 300.00\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1485,7 +1488,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"Id\": 11,\r\n  \"CategoryId\": 100,\r\n  \"EanCode\": \"7707548697640\",\r\n  \"Description\": \"Platano\",\r\n  \"Unit\": \"Lb\",\r\n  \"Price\": 300.00\r\n}",
+							"raw": "{\r\n  \"Id\": 11,\r\n  \"CategoryId\": 100,\r\n  \"CategoryName\": \"Alimentos\",  \r\n  \"EanCode\": \"7707548697640\",\r\n  \"Description\": \"Platano\",\r\n  \"Unit\": \"Lb\",\r\n  \"Price\": 300.00\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1533,7 +1536,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"Id\": 100,\r\n  \"CategoryId\": 1,\r\n  \"EanCode\": \"7707548697640\",\r\n  \"Description\": \"Platano\",\r\n  \"Unit\": \"Lb\",\r\n  \"Price\": 300.00\r\n}",
+							"raw": "{\r\n  \"Id\": 100,\r\n  \"CategoryId\": 1,\r\n  \"CategoryName\": \"Alimentos\",  \r\n  \"EanCode\": \"7707548697640\",\r\n  \"Description\": \"Platano\",\r\n  \"Unit\": \"Lb\",\r\n  \"Price\": 300.00\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1599,7 +1602,7 @@
 									"pm.test(\"Valid Data\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
 									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
-									"    pm.expect(jsonData.errors.length).to.greaterThan();\r",
+									"    pm.expect(jsonData.errors.length).to.greaterThan(0);\r",
 									"    pm.expect(jsonData.errors).contains(\"The value 'A' is not valid.\");\r",
 									"});\r",
 									""
@@ -1734,7 +1737,7 @@
 									"    var jsonData = pm.response.json();\r",
 									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
 									"    pm.expect(jsonData.errors.length).to.greaterThan(0);\r",
-									"    pm.expect(jsonData.errors).contains.eql(\"The value 'A' is not valid.\");\r",
+									"    pm.expect(jsonData.errors).contains(\"The value 'A' is not valid.\");\r",
 									"});"
 								],
 								"type": "text/javascript"
