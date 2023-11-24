@@ -59,7 +59,8 @@ namespace Categoryservice.Application.Services
                 return category;
             }
 
-            throw new NotFoundException($"Category with Id={id} Not Found");
+            throw new NotFoundException($"Category [{id}] Not Found");
+
         }
 
         public async Task<Category> UpdateCategory(int id, Category category)
