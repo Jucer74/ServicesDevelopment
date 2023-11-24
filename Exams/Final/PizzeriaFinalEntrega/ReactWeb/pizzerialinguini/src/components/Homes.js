@@ -61,7 +61,6 @@ export const Homes = () => {
                     console.log('Inicio de sesión exitoso');
                     setIsLoginSuccess(true);
 
-                    // Limpiar campos de entrada
                     setInpval({
                         email: '',
                         password: '',

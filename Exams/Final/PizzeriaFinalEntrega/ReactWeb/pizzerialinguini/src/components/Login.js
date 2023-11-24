@@ -34,33 +34,33 @@ const Login = () => {
         const { name, email, date, password } = inpval;
 
         if (name === "") {
-            toast.error('Name field is required!', {
+            toast.error('Nombre es requerido!', {
                 position: "top-center",
             });
         } else if (email === "") {
-            toast.error('Email field is required', {
+            toast.error('correo electronico es requerido', {
                 position: "top-center",
             });
         } else if (!email.includes("@")) {
-            toast.error('Please enter a valid email address', {
+            toast.error('Please enter a valid correo electronico', {
                 position: "top-center",
             });
         } else if (date === "") {
-            toast.error('Date field is required', {
+            toast.error('Fecha es requerida', {
                 position: "top-center",
             });
         } else if (password === "") {
-            toast.error('Password field is required', {
+            toast.error('contraseña es requerida', {
                 position: "top-center",
             });
         } else if (password.length < 5) {
-            toast.error('Password length should be greater than five', {
+            toast.error('la contraseña debe ser mayor a 5 letras', {
                 position: "top-center",
             });
         } else {
             console.log("Data added successfully");
             localStorage.setItem("useryoutube", JSON.stringify([...data, inpval]));
-            history("/Homes"); // Redirige a la página Homes después de guardar los datos
+            history("/Homes"); 
         }
     };
 
