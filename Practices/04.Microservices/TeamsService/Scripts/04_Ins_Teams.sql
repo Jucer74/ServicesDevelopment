@@ -1,4 +1,4 @@
-INSERT INTO `teamsservicedb`.`teams` (Name, Coach, Conference) VALUES 
+INSERT INTO `teamsservicedb`.`Teams` (Name, Coach, Conference) VALUES 
   ('Atlanta Hawks', 'Nate McMillan', 'East'),
   ('Boston Celtics', 'Ime Udoka', 'East'),
   ('Brooklyn Nets', 'Steve Nash', 'East'),

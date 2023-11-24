@@ -13,11 +13,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CategoryService.Api", "CategoryService.Api\CategoryService.Api.csproj", "{6804D5A9-DB2C-44E0-9236-61F4505FD3F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CategoryService.Application", "CategoryService.Application\CategoryService.Application.csproj", "{C3DAC233-C7B8-4671-9982-5BB462199FDD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CategoryService.Application", "CategoryService.Application\CategoryService.Application.csproj", "{C3DAC233-C7B8-4671-9982-5BB462199FDD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CategoryService.Domain", "CategoryService.Domain\CategoryService.Domain.csproj", "{001DC897-8FD1-4928-A722-BFC8139B409B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CategoryService.Domain", "CategoryService.Domain\CategoryService.Domain.csproj", "{001DC897-8FD1-4928-A722-BFC8139B409B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CategoryService.Infrastructure", "CategoryService.Infrastructure\CategoryService.Infrastructure.csproj", "{80455DC6-EDE2-4090-A821-9C75103EAEA1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CategoryService.Infrastructure", "CategoryService.Infrastructure\CategoryService.Infrastructure.csproj", "{80455DC6-EDE2-4090-A821-9C75103EAEA1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

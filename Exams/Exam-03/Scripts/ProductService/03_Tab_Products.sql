@@ -7,5 +7,4 @@ CREATE TABLE `productservicedb`.`Products` (
   `Unit` VARCHAR(20) NOT NULL,
   `Price` DECIMAL(13,2) NOT NULL,
   PRIMARY KEY (`Id`),
-  UNIQUE INDEX `EanCode_UNIQUE` (`EanCode` ASC) VISIBLE
-);
+  UNIQUE INDEX `EanCode_UNIQUE` (`EanCode` ASC) VISIBLE);
