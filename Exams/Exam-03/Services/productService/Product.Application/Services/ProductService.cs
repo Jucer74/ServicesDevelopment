@@ -57,6 +57,11 @@ namespace Product.Application.Services
 
         public async Task<IEnumerable<EProduct>> GetProductsByCategoryId(int categoryId)
         {
+            Category category = await FetchCategoryById(categoryId);
+            if (category is null)
+            {
+                throw new NotFoundException($"Category [{categoryId}] Not Found");
+            }
             return await _productRepository.FindAsync(p => p.CategoryId == categoryId);
         }
 
