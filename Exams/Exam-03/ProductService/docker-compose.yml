@@ -1,0 +1,35 @@
+version: '3.8'
+services:
+  productservice:
+    image: image_products:latest
+    networks:
+      - trabajoFinal
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - 4000:80
+      - 4001:443
+    depends_on:
+      - productservicedb
+  productservicedb:
+    image: mysql:8.0.34
+    restart: always
+    networks:
+      - trabajoFinal
+    environment:
+      MYSQL_DATABASE: 'productservicedb'
+      MYSQL_USER: 'productserviceuser'
+      MYSQL_PASSWORD: 'Pr0ductS3rv1c3Us3r'
+      MYSQL_ROOT_PASSWORD: 'root'
+    ports:
+      - '3308:3306'
+    volumes:
+      - productservicedb:/var/lib/mysql
+volumes:
+  productservicedb:
+networks:
+  trabajoFinal:
+    external: true

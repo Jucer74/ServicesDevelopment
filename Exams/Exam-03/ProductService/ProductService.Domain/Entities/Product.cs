@@ -1,0 +1,36 @@
+﻿using ProductService.Domain.Common;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ProductService.Domain.Entities
+{
+    public class Product : EntityBase
+    {
+        [Required(ErrorMessage = "CategoryId is Required")]
+        public int CategoryId { get; set; }
+
+        [Required(ErrorMessage = "CategoryName is Required")]
+        [StringLength(30, ErrorMessage = "CategoryName's Max Length is 30 Characters")]
+        public string CategoryName { get; set; } = null!;
+
+
+        [Required(ErrorMessage = "EanCode is Required")]
+        [StringLength(13, ErrorMessage = "EanCode's Max Length is 13 digits")]
+        public string EanCode { get; set; } = null!;
+
+        [Required(ErrorMessage = "Description is Required")]
+        [StringLength(50, ErrorMessage = "Description's Max Length is 50 Characters")]
+        public string Description { get; set; } = null!;
+
+        [Required(ErrorMessage = "Unit is Required")]
+        [StringLength(20, ErrorMessage = "Unit's Max Length is 20 Characters")]
+        public string Unit { get; set; } = null!;
+
+        [Required(ErrorMessage = "Price is Required")]
+        public decimal Price { get; set; }
+    }
+}
