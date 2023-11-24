@@ -13,15 +13,3 @@ INSERT INTO `productservicedb`.`Products` (`CategoryId`, `CategoryName`,`EanCode
 INSERT INTO `productservicedb`.`Products` (`CategoryId`, `CategoryName`,`EanCode`, `Description`, `Unit`, `Price`) VALUES ( 4, 'Ropa', '7707548427902', 'Pantalon', 'Und', 1500.00);
 INSERT INTO `productservicedb`.`Products` (`CategoryId`, `CategoryName`,`EanCode`, `Description`, `Unit`, `Price`) VALUES ( 5, 'Medicamentos', '7707548799412', 'Jarabe para la Tos', 'Und', 32500.00);
 INSERT INTO `productservicedb`.`Products` (`CategoryId`, `CategoryName`,`EanCode`, `Description`, `Unit`, `Price`) VALUES ( 5, 'Medicamentos', '7707548861546', 'Aspirina 500 mg x 20 Unidades', 'Caja', 42500.00);
-
-
--- Clean Categories
-DELETE FROM `categoryservicedb`.`Categories` WHERE Id >= 0;
-ALTER TABLE `categoryservicedb`.`Categories` AUTO_INCREMENT = 1;
-
--- Insert Categories
-INSERT INTO `categoryservicedb`.`Categories`(`Description`) VALUES('Alimentos');
-INSERT INTO `categoryservicedb`.`Categories`(`Description`) VALUES('Bebidas');
-INSERT INTO `categoryservicedb`.`Categories`(`Description`) VALUES('Productos de Aseo');
-INSERT INTO `categoryservicedb`.`Categories`(`Description`) VALUES('Ropa');
-INSERT INTO `categoryservicedb`.`Categories`(`Description`) VALUES('Medicamentos');
