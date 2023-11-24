@@ -30,4 +30,5 @@
 *.log
 *.db
 .vs/
+.vscode/
 Publish/
