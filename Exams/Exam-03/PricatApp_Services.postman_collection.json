@@ -996,7 +996,10 @@
 									"    var jsonData = pm.response.json();\r",
 									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
 									"    pm.expect(jsonData.errors.length).to.greaterThan(0);\r",
+									"    pm.expect(jsonData.errors).contains(\"CategoryId is Required\");\r",
+									"    pm.expect(jsonData.errors).contains(\"CategoryName is Required\");\r",
 									"    pm.expect(jsonData.errors).contains(\"Unit is Required\");\r",
+									"    pm.expect(jsonData.errors).contains(\"Price is Required\");\r",
 									"    pm.expect(jsonData.errors).contains(\"EanCode is Required\");\r",
 									"    pm.expect(jsonData.errors).contains(\"Description is Required\");\r",
 									"});\r",
@@ -1599,7 +1602,7 @@
 									"pm.test(\"Valid Data\", function () {\r",
 									"    var jsonData = pm.response.json();\r",
 									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
-									"    pm.expect(jsonData.errors.length).to.greaterThan();\r",
+									"    pm.expect(jsonData.errors.length).to.greaterThan(0);\r",
 									"    pm.expect(jsonData.errors).contains(\"The value 'A' is not valid.\");\r",
 									"});\r",
 									""
@@ -1734,7 +1737,7 @@
 									"    var jsonData = pm.response.json();\r",
 									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
 									"    pm.expect(jsonData.errors.length).to.greaterThan(0);\r",
-									"    pm.expect(jsonData.errors).contains.eql(\"The value 'A' is not valid.\");\r",
+									"    pm.expect(jsonData.errors).contains(\"The value 'A' is not valid.\");\r",
 									"});"
 								],
 								"type": "text/javascript"
