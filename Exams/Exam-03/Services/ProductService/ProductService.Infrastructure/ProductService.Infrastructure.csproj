@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ProductService.Domain\ProductService.Domain.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.13" />
+    <PackageReference Include="MySql.EntityFrameworkCore" Version="7.0.5" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Common\" />
+    <None Remove="Context\" />
+    <None Remove="Repository\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Common\" />
+    <Folder Include="Context\" />
+    <Folder Include="Repository\" />
+  </ItemGroup>
+</Project>

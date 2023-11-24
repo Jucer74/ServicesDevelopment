@@ -13,5 +13,9 @@ public class AppDbContext : DbContext
     {
     }
 
+<<<<<<< HEAD
     public DbSet<Account> Accounts { get; set; }
+=======
+    public DbSet<Account> Accounts{ get; set; }
+>>>>>>> main
 }
