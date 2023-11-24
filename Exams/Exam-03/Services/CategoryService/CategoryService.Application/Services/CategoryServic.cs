@@ -77,7 +77,7 @@ namespace Categoryservice.Application.Services
                 return await _categoryRepository.UpdateAsync(category);
             }
 
-            throw new NotFoundException($"Category with Id={id} Not Found");
+            throw new NotFoundException($"Category [{id}] Not Found");
         }
 
         public async Task<IEnumerable<CategoryProductDto>> GetProductByCategoryId(int id)

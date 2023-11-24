@@ -20,6 +20,5 @@ namespace CategoryService.Application.Interfaces
         
 
 
-        //Task<IEnumerable<CategoryProductsDto>> GetProductsByCategoryId(int categoryId);
     }
 }
