@@ -385,5 +385,7 @@ Se deben completar las operaciones de CRUD para Categorias y Productos, ademas d
 # Revision
 1. Validar que todos EndPoints funcionan correctamente. 
 2. Validar Los casos especiales y el manejo de los errores y las excepciones se siguen soportando correctamente.
-
+3. Validar que la ejecucion se realiza mediante el uso de los contedores
+4. Validar que se esta Usando Clean Architecture
+5. Validar que La compilacion No genera Erroes Ni Warnings
 
