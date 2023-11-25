@@ -56,7 +56,7 @@ namespace ProductService.Application.Services
         {
             if (id != category.Id)
             {
-                throw new BadRequestException($"Id [{id}] is different to TeamProduct.Id [{category.Id}]");
+                throw new BadRequestException($"Id [{id}] is different to CategoryProduct.Id [{category.Id}]");
             }
 
             var original = await _productRepository.GetByIdAsync(id);
