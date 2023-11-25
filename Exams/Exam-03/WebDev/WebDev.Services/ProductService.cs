@@ -9,12 +9,12 @@ using WebDev.Services.Entities;
 
 namespace WebDev.Services
 {
-    public class LibrosService
+    public class ProductService
     {
         private string BaseUrl { get; }
         private HttpClient _httpClient;
 
-        public LibrosService(string baseUrl)
+        public ProductService(string baseUrl)
         {
             BaseUrl = baseUrl;
             _httpClient = new HttpClient();
@@ -28,80 +28,80 @@ namespace WebDev.Services
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        public async Task<List<LibroDto>> GetLibros()
+        public async Task<List<ProductDto>> GetProducts()
         {
-            var librosList = new List<LibroDto>();
+            var librosList = new List<ProductDto>();
 
-            HttpResponseMessage response = await _httpClient.GetAsync("api/Libros");
+            HttpResponseMessage response = await _httpClient.GetAsync("api/Products");
 
             if (response.IsSuccessStatusCode)
             {
                 var responseContent = response.Content.ReadAsStringAsync().Result;
-                librosList = JsonConvert.DeserializeObject<List<LibroDto>>(responseContent);
+                librosList = JsonConvert.DeserializeObject<List<ProductDto>>(responseContent);
             }
 
             return librosList;
         }
 
-        public async Task<LibroDto> GetLibroById(int id)
+        public async Task<ProductDto> GetProductById(int id)
         {
-            LibroDto libro = null;
+            ProductDto libro = null;
 
-            HttpResponseMessage response = await _httpClient.GetAsync($"api/Libros/{id}");
+            HttpResponseMessage response = await _httpClient.GetAsync($"api/Products/{id}");
 
             if (response.IsSuccessStatusCode)
             {
                 var responseContent = response.Content.ReadAsStringAsync().Result;
-                libro = JsonConvert.DeserializeObject<LibroDto>(responseContent);
+                libro = JsonConvert.DeserializeObject<ProductDto>(responseContent);
             }
 
             return libro;
         }
 
-        public async Task<LibroDto> AddLibro(LibroDto libro)
+        public async Task<ProductDto> AddProduct(ProductDto libro)
         {
-            LibroDto libroDtoResponse = null;
+            ProductDto libroDtoResponse = null;
 
             StringContent content = new StringContent(JsonConvert.SerializeObject(libro), Encoding.UTF8, "application/json");
 
-            HttpResponseMessage response = await _httpClient.PostAsync($"api/Libros", content);
+            HttpResponseMessage response = await _httpClient.PostAsync($"api/Products", content);
 
             if (response.IsSuccessStatusCode)
             {
                 var responseContent = response.Content.ReadAsStringAsync().Result;
-                libroDtoResponse = JsonConvert.DeserializeObject<LibroDto>(responseContent);
+                libroDtoResponse = JsonConvert.DeserializeObject<ProductDto>(responseContent);
             }
 
             return libroDtoResponse;
         }
 
-        public async Task<LibroDto> UpdateLibro(LibroDto libro)
+        public async Task<ProductDto> UpdateProduct(ProductDto libro)
         {
-            LibroDto libroDtoResponse = null;
+            ProductDto libroDtoResponse = null;
 
             StringContent content = new StringContent(JsonConvert.SerializeObject(libro), Encoding.UTF8, "application/json");
 
-            HttpResponseMessage response = await _httpClient.PutAsync($"api/Libros/{libro.Id}", content);
+            HttpResponseMessage response = await _httpClient.PutAsync($"api/Products/{libro.Id}", content);
 
             if (response.IsSuccessStatusCode)
             {
                 var responseContent = response.Content.ReadAsStringAsync().Result;
-                libroDtoResponse = JsonConvert.DeserializeObject<LibroDto>(responseContent);
+                libroDtoResponse = JsonConvert.DeserializeObject<ProductDto>(responseContent);
             }
 
             return libroDtoResponse;
         }
 
-        public async Task<LibroDto> DeleteLibro(int id)
+        public async Task<ProductDto> DeleteProduct(int id)
         {
-            LibroDto libroDtoResponse = null;
+            ProductDto libroDtoResponse = null;
 
-            HttpResponseMessage response = await _httpClient.DeleteAsync($"api/Libros/{id}");
+            HttpResponseMessage response = await _httpClient.DeleteAsync($"api/Products/{id}");
 
             if (response.IsSuccessStatusCode)
             {
                 var responseContent = response.Content.ReadAsStringAsync().Result;
-                libroDtoResponse = JsonConvert.DeserializeObject<LibroDto>(responseContent);
+                libroDtoResponse = JsonConvert.DeserializeObject<ProductDto>(responseContent);
             }
 
             return libroDtoResponse;

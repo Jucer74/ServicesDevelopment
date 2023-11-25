@@ -2,7 +2,7 @@
 
 namespace WebDev.Application.Models
 {
-    public class Libro
+    public class Producto
     {
         [Key]
         public int Id { get; set; }
@@ -10,8 +10,6 @@ namespace WebDev.Application.Models
         [Required(ErrorMessage = "El título es obligatorio")]
         public string Titulo { get; set; }
 
-        [Required(ErrorMessage = "El autor es obligatorio")]
-        public string Autor { get; set; }
 
         [Required(ErrorMessage = "El precio es obligatorio")]
         public double Precio { get; set; }

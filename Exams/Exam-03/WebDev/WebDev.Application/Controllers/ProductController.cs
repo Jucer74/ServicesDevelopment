@@ -10,58 +10,58 @@ using WebDev.Services.Entities;
 
 namespace WebDev.Application.Controllers
 {
-    public class LibrosController : Controller
+    public class ProductsController : Controller
     {
         private readonly ApiConfiguration _apiConfiguration;
-        private LibrosService librosService;
+        private ProductService librosService;
 
-        public LibrosController(IOptions<ApiConfiguration> apiConfiguration)
+        public ProductsController(IOptions<ApiConfiguration> apiConfiguration)
         {
             _apiConfiguration = apiConfiguration.Value;
-            librosService = new LibrosService(_apiConfiguration.ApiLibrosUrl);
+            librosService = new ProductsService(_apiConfiguration.ApiProductsUrl);
         }
 
-        // GET: LibrosController
+        // GET: ProductsController
         [HttpGet]
         public async Task<ActionResult> Index()
         {
-            IList<LibroDto> libros = await librosService.GetLibros();
+            IList<ProductDto> libros = await librosService.GetProducts();
 
-            return View(libros.Select(libroDto => MapperToLibro(libroDto)).ToList());
+            return View(libros.Select(libroDto => MapperToProduct(libroDto)).ToList());
         }
 
-        // GET: LibrosController/Details/5
+        // GET: ProductsController/Details/5
         [HttpGet]
         public async Task<ActionResult> Details(int id)
         {
-            var libroFound = await librosService.GetLibroById(id);
+            var libroFound = await librosService.GetProductById(id);
 
             if (libroFound == null)
             {
                 return NotFound();
             }
 
-            return View(MapperToLibro(libroFound));
+            return View(MapperToProduct(libroFound));
         }
 
-        // GET: LibrosController/Create
+        // GET: ProductsController/Create
         [HttpGet]
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: LibrosController/Create
+        // POST: ProductsController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(Libro libro)
+        public async Task<ActionResult> Create(Producto libro)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var libroDto = MapperToLibroDto(libro);
-                    await librosService.AddLibro(libroDto);
+                    var libroDto = MapperToProductDto(libro);
+                    await librosService.AddProduct(libroDto);
                     return RedirectToAction(nameof(Index));
                 }
                 return View();
@@ -72,31 +72,31 @@ namespace WebDev.Application.Controllers
             }
         }
 
-        // GET: LibrosController/Edit/5
+        // GET: ProductsController/Edit/5
         [HttpGet]
         public async Task<ActionResult> Edit(int id)
         {
-            var libroFound = await librosService.GetLibroById(id);
+            var libroFound = await librosService.GetProductById(id);
 
             if (libroFound == null)
             {
                 return NotFound();
             }
 
-            return View(MapperToLibro(libroFound));
+            return View(MapperToProduct(libroFound));
         }
 
-        // POST: LibrosController/Edit/5
+        // POST: ProductsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(Libro libro)
+        public async Task<ActionResult> Edit(Producto libro)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var libroDto = MapperToLibroDto(libro);
-                    await librosService.UpdateLibro(libroDto);
+                    var libroDto = MapperToProductDto(libro);
+                    await librosService.UpdateProduct(libroDto);
                     return RedirectToAction(nameof(Index));
                 }
                 return View(libro);
@@ -107,35 +107,35 @@ namespace WebDev.Application.Controllers
             }
         }
 
-        // GET: LibrosController/Delete/5
+        // GET: ProductsController/Delete/5
         [HttpGet]
         public async Task<ActionResult> Delete(int id)
         {
-            var libroFound = await librosService.GetLibroById(id);
+            var libroFound = await librosService.GetProductById(id);
 
             if (libroFound == null)
             {
                 return NotFound();
             }
 
-            return View(MapperToLibro(libroFound));
+            return View(MapperToProduct(libroFound));
         }
 
-        // POST: LibrosController/Delete/5
+        // POST: ProductsController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Delete(Libro libro)
+        public async Task<ActionResult> Delete(Producto libro)
         {
             try
             {
-                var libroFound = await librosService.GetLibroById(libro.Id);
+                var libroFound = await librosService.GetProductById(libro.Id);
 
                 if (libroFound == null)
                 {
                     return View();
                 }
 
-                await librosService.DeleteLibro(libro.Id);
+                await librosService.DeleteProduct(libro.Id);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -144,9 +144,9 @@ namespace WebDev.Application.Controllers
             }
         }
 
-        private Libro MapperToLibro(LibroDto libroDto)
+        private Producto MapperToProduct(ProductDto libroDto)
         {
-            return new Libro
+            return new Producto
             {
                 Id = libroDto.Id,
                 Titulo = libroDto.Titulo,
@@ -157,9 +157,9 @@ namespace WebDev.Application.Controllers
             };
         }
 
-        private LibroDto MapperToLibroDto(Libro libro)
+        private ProductDto MapperToProductDto(Producto libro)
         {
-            return LibroDto.Build(
+            return ProductDto.Build(
                 id: libro.Id,
                 titulo: libro.Titulo,
                 autor: libro.Autor,

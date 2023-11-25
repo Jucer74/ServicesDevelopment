@@ -47,8 +47,8 @@
     <Reference Include="Microsoft.Analytics.Types" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\LibroDto.cs" />
-    <Compile Include="LibrosService.cs" />
+    <Compile Include="Entities\ProductDto.cs" />
+    <Compile Include="ProductService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

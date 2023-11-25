@@ -6,27 +6,25 @@ using System.Threading.Tasks;
 
 namespace WebDev.Services.Entities
 {
-    public class LibroDto
+    public class ProductDto
     {
         public int Id { get; set; }
         public string Titulo { get; set; }
-        public string Autor { get; set; }
         public double Precio { get; set; }
         public int Cantidad { get; set; }
         public string Imagen { get; set; }
 
-        private LibroDto()
+        private ProductDto()
         {
 
         }
 
-        public static LibroDto Build(int id, string titulo, string autor, double precio, int cantidad, string imagen)
+        public static ProductDto Build(int id, string titulo, , double precio, int cantidad, string imagen)
         {
-            return new LibroDto
+            return new ProductDto
             {
                 Id = id,
                 Titulo = titulo,
-                Autor = autor,
                 Precio = precio,
                 Cantidad = cantidad,
                 Imagen = imagen

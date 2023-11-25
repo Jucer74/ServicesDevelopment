@@ -43,10 +43,10 @@ app.UseEndpoints(endpoints =>
     endpoints.MapControllerRoute(
         name: "Users",
         pattern: "{controller=Users}/{action=Index}/{id?}");
-    // Libros
+    // Products
     endpoints.MapControllerRoute(
-        name: "Libros",
-        pattern: "{controller=Libros}/{action=Index}/{id?}");
+        name: "Products",
+        pattern: "{controller=Products}/{action=Index}/{id?}");
 });
 
 app.Run();

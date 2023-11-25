@@ -3,7 +3,7 @@
     public class ApiConfiguration
     {
         public string ApiUsersUrl { get; set; }
-        public string ApiLibrosUrl { get; set; }
+        public string ApiProductosUrl { get; set; }
 
         public string ApiLoginUrl { get; set; }
     }
