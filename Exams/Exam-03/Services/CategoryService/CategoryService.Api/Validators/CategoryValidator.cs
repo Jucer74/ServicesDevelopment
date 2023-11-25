@@ -10,8 +10,8 @@ namespace CategoryService.Api.Validators
             RuleFor(m => m.Description)
                 .NotEmpty()
                 .WithMessage("The Description is required.")
-                .MaximumLength(100)
-                .WithMessage("The maximum length of Description is 100 characters.");
+                .MaximumLength(50)
+                .WithMessage("The maximum length of Description is 50 characters.");
         }
     }
 }
