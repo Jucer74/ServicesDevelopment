@@ -11,7 +11,7 @@
 </div>
 
 <div class="container">
-    <table class="table table-bordered" id="librosTable" width="100%" cellspacing="0">
+    <table class="table table-bordered" id="Productos" width="100%" cellspacing="0">
         <thead>
             <tr>
                 <th>
@@ -20,9 +20,7 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Titulo)
                 </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Autor)
-                </th>
+
                 <th>
                     @Html.DisplayNameFor(model => model.Precio)
                 </th>
@@ -45,9 +43,7 @@
                     <td>
                         @Html.DisplayFor(modelItem => libro.Titulo)
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => libro.Autor)
-                    </td>
+
                     <td>
                         @Html.DisplayFor(modelItem => libro.Precio)
                     </td>
