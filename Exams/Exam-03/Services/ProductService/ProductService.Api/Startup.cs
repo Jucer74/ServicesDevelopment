@@ -26,7 +26,10 @@ namespace ProductService.Api
         public void ConfigureServices(IServiceCollection services)
         {
             var connectionString = Configuration.GetConnectionString("CnnStr");
-            services.AddDbContext<AppDbContext>(options => options.UseMySQL(connectionString));
+            if (connectionString != null)
+            {
+                services.AddDbContext<AppDbContext>(options => options.UseMySQL(connectionString));
+            }
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

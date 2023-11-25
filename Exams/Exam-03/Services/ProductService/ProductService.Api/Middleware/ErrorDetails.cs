@@ -11,12 +11,12 @@ namespace ProductService.Api.Middleware
         /// <summary>
         /// Error Type Description
         /// </summary>
-        public string ErrorType { get; set; }
+        public string? ErrorType { get; set; }
 
         /// <summary>
         /// Mesage Error or Exception Message
         /// </summary>
-        public List<string> Errors { get; set; }
+        public List<string>? Errors { get; set; }
 
         /// <summary>
         /// Serialize the Objet to response the Details

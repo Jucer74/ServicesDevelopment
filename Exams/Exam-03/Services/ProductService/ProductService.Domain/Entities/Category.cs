@@ -7,6 +7,6 @@ namespace ProductService.Domain.Entities
     {
         [Required(ErrorMessage = "Description is Required")]
         [StringLength(50, ErrorMessage = "Description's Max Length is 50 Characters")]
-        public string Description { get; set; }
+        public string? Description { get; set; }
     }
 }

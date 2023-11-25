@@ -85,7 +85,7 @@ namespace CategoryService.Api.Middleware
         /// <returns>The HttpStatus Code</returns>
         private static HttpStatusCode GetStatusResponse(Exception exception)
         {
-            var nameOfException = exception.GetType().BaseType.Name;
+            string nameOfException = exception.GetType().BaseType?.Name ?? "";
 
             if (nameOfException.Equals("BusinessException"))
             {

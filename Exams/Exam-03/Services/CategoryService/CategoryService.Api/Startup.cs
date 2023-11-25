@@ -26,7 +26,10 @@ namespace CategoryService.Api
         public void ConfigureServices(IServiceCollection services)
         {
             var connectionString = Configuration.GetConnectionString("CnnStr");
-            services.AddDbContext<AppDbContext>(options => options.UseMySQL(connectionString));
+            if (connectionString != null)
+            {
+                _ = services.AddDbContext<AppDbContext>(options => options.UseMySQL(connectionString: connectionString));
+            }
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

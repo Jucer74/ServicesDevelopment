@@ -8,6 +8,6 @@ namespace ProductService.Infrastructure.Proxies
 {
     public class ApiUrls
     {
-        public string Categories { get; set; }
+        public string? Categories { get; set; }
     }
 }

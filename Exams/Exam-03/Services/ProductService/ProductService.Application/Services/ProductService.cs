@@ -23,7 +23,12 @@ namespace ProductService.Application.Services
 
         public async Task<Product> AddAsync(ProductDto product)
         {
-            if (!Ean13Calculator.IsValid(product.EanCode))
+            if (product.EanCode == null)
+            {
+                throw new BadRequestException($"EAN Code is Not Valid");
+            }
+
+            if (!Ean13Calculator.IsValid(eanNumber: product.EanCode))
             {
                 throw new BadRequestException($"EAN Code [{product.EanCode}] is Not Valid");
             }
@@ -90,6 +95,11 @@ namespace ProductService.Application.Services
             if (id != product.Id)
             {
                 throw new BadRequestException($"Id [{id}] is different to Product.Id [{product.Id}]");
+            }
+
+            if (product.EanCode == null)
+            {
+                throw new BadRequestException($"EAN Code is Not Valid");
             }
 
             if (!Ean13Calculator.IsValid(product.EanCode))

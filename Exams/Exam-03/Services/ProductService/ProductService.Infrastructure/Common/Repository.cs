@@ -36,7 +36,7 @@ namespace ProductService.Infrastructure.Common
             return await _appDbContext.Set<T>().ToListAsync<T>();
         }
 
-        public async Task<T> GetByIdAsync(int id)
+        public async Task<T?> GetByIdAsync(int id)
         {
             return await _appDbContext.Set<T>().FindAsync(id);
         }
