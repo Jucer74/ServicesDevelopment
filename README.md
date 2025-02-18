@@ -15,3 +15,15 @@ Nickname: Se construye utilizando las siguientes reglas
 
 Nueva Rama: <br>
 *2025-01/julroburi*
+
+# Herramientas
+- Git
+- Github Desktop
+- Visual Studio Code
+- sdk .Net Ultima version
+- Postman
+- Docker Desktop
+- MySql
+
+## Mobil
+-Authy
