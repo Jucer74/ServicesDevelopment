@@ -57,7 +57,7 @@ namespace UserManagementApp.UI
 
             User newUser = new User
             {
-                Id = userService.GetUsers().Count + 1,
+                Id = null,
                 Name = name,
                 Email = email
             };
