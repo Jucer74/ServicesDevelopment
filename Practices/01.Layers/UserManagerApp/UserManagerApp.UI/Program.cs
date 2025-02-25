@@ -81,15 +81,6 @@ namespace UserManagerApp.UI
             Console.Write("Email: ");
             string email = Console.ReadLine();
 
-            foreach (var user in _userService.GetUsers())
-            {
-                if (user.Name == name && user.Email == email)
-                {
-                    Console.WriteLine("El usuario ya existe");
-                    return;
-                }
-            }
-
             User newUser = new User
             {
                 Id = _userService.GetUsers().Count + 1,
@@ -98,7 +89,6 @@ namespace UserManagerApp.UI
             };
 
             _userService.AddUser(newUser);
-            Console.WriteLine("Usuario añadido");
         }
 
         private void ListUsers()

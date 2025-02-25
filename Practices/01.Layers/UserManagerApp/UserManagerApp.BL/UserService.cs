@@ -14,7 +14,18 @@ namespace UserManagerApp.BL
 
         public void AddUser(User user)
         {
+            var existingUsers = _userRepository.GetUsers();
+            foreach (var existingUser in existingUsers)
+            {
+                if (existingUser.Name == user.Name && existingUser.Email == user.Email)
+                {
+                    Console.WriteLine("Error: Ya existe un usuario con el mismo nombre y email.");
+                    return;
+                }
+            }
+
             _userRepository.AddUser(user);
+            Console.WriteLine("Usuario añadido");
         }
 
         public List<User> GetUsers()
