@@ -4,25 +4,18 @@ using UserManagerApp.Entities;
 
 namespace UserManagerApp.BL
 {
-    public class UserService
+    public class UserService : ICrudService<User>
     {
-        private readonly UserRepository _userRepository;
+        private readonly List<User> _users = new List<User>();
 
-        public UserService()
+        public void Add(User user)
         {
-            _userRepository = new UserRepository();
+            _users.Add(user);
         }
 
-        public void AddUser(User user)
+        public List<User> GetAll()
         {
-            // Aquí podrías agregar validaciones o lógica adicional
-            _userRepository.AddUser(user);
-        }
-
-        public List<User> GetUsers()
-        {
-            // Aquí podrías agregar lógica adicional, como filtros o transformaciones
-            return _userRepository.GetUsers();
+            return _users;
         }
     }
 }
