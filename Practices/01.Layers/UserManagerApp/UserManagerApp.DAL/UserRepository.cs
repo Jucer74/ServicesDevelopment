@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UserManagerApp.Entities;
 namespace UserManagerApp.DAL;
 
 public class UserRepository

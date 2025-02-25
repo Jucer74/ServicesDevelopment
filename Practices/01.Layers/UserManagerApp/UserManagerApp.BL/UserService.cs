@@ -1,5 +1,6 @@
 ﻿// BL/UserService.cs
 using UserManagerApp.DAL;
+using UserManagerApp.Entities;
 
 namespace UserManagerApp.BL;
 

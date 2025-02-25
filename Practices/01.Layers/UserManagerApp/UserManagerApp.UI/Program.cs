@@ -1,8 +1,9 @@
 ﻿// See https://aka.ms/new-console-template for more information
 // Program.cs
 using System;
-using UserManagementApp.BL;
-using UserManagementApp.DAL;
+using UserManagerApp.BL;
+using UserManagerApp.DAL;
+using UserManagerApp.Entities;
 
 namespace UserManagementApp.UI
 {
