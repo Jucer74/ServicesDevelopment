@@ -1,0 +1,73 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v9.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v9.0": {
+      "UserManagerApp.UI/1.0.0": {
+        "dependencies": {
+          "UserManagerApp.BL": "1.0.0",
+          "UserManagerApp.Entities": "1.0.0"
+        },
+        "runtime": {
+          "UserManagerApp.UI.dll": {}
+        }
+      },
+      "UserManagerApp.BL/1.0.0": {
+        "dependencies": {
+          "UserManagerApp.DAL": "1.0.0",
+          "UserManagerApp.Entities": "1.0.0"
+        },
+        "runtime": {
+          "UserManagerApp.BL.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "UserManagerApp.DAL/1.0.0": {
+        "dependencies": {
+          "UserManagerApp.Entities": "1.0.0"
+        },
+        "runtime": {
+          "UserManagerApp.DAL.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "UserManagerApp.Entities/1.0.0": {
+        "runtime": {
+          "UserManagerApp.Entities.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "UserManagerApp.UI/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "UserManagerApp.BL/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "UserManagerApp.DAL/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "UserManagerApp.Entities/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

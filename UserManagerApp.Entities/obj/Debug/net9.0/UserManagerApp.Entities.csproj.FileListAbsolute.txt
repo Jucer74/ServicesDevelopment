@@ -1,0 +1,11 @@
+C:\Users\David Hernández\Desktop\Principal\San Buenaventura\semestre 6\Sistemas de servicios\Practicas\Practica Layers\UserManagerApp\UserManagerApp.Entities\bin\Debug\net9.0\UserManagerApp.Entities.deps.json
+C:\Users\David Hernández\Desktop\Principal\San Buenaventura\semestre 6\Sistemas de servicios\Practicas\Practica Layers\UserManagerApp\UserManagerApp.Entities\bin\Debug\net9.0\UserManagerApp.Entities.dll
+C:\Users\David Hernández\Desktop\Principal\San Buenaventura\semestre 6\Sistemas de servicios\Practicas\Practica Layers\UserManagerApp\UserManagerApp.Entities\bin\Debug\net9.0\UserManagerApp.Entities.pdb
+C:\Users\David Hernández\Desktop\Principal\San Buenaventura\semestre 6\Sistemas de servicios\Practicas\Practica Layers\UserManagerApp\UserManagerApp.Entities\obj\Debug\net9.0\UserManagerApp.Entities.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\David Hernández\Desktop\Principal\San Buenaventura\semestre 6\Sistemas de servicios\Practicas\Practica Layers\UserManagerApp\UserManagerApp.Entities\obj\Debug\net9.0\UserManagerApp.Entities.AssemblyInfoInputs.cache
+C:\Users\David Hernández\Desktop\Principal\San Buenaventura\semestre 6\Sistemas de servicios\Practicas\Practica Layers\UserManagerApp\UserManagerApp.Entities\obj\Debug\net9.0\UserManagerApp.Entities.AssemblyInfo.cs
+C:\Users\David Hernández\Desktop\Principal\San Buenaventura\semestre 6\Sistemas de servicios\Practicas\Practica Layers\UserManagerApp\UserManagerApp.Entities\obj\Debug\net9.0\UserManagerApp.Entities.csproj.CoreCompileInputs.cache
+C:\Users\David Hernández\Desktop\Principal\San Buenaventura\semestre 6\Sistemas de servicios\Practicas\Practica Layers\UserManagerApp\UserManagerApp.Entities\obj\Debug\net9.0\UserManagerApp.Entities.dll
+C:\Users\David Hernández\Desktop\Principal\San Buenaventura\semestre 6\Sistemas de servicios\Practicas\Practica Layers\UserManagerApp\UserManagerApp.Entities\obj\Debug\net9.0\refint\UserManagerApp.Entities.dll
+C:\Users\David Hernández\Desktop\Principal\San Buenaventura\semestre 6\Sistemas de servicios\Practicas\Practica Layers\UserManagerApp\UserManagerApp.Entities\obj\Debug\net9.0\UserManagerApp.Entities.pdb
+C:\Users\David Hernández\Desktop\Principal\San Buenaventura\semestre 6\Sistemas de servicios\Practicas\Practica Layers\UserManagerApp\UserManagerApp.Entities\obj\Debug\net9.0\ref\UserManagerApp.Entities.dll

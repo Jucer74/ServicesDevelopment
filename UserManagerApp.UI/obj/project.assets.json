@@ -1,0 +1,136 @@
+{
+  "version": 3,
+  "targets": {
+    "net9.0": {
+      "UserManagerApp.BL/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v9.0",
+        "dependencies": {
+          "UserManagerApp.DAL": "1.0.0",
+          "UserManagerApp.Entities": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/UserManagerApp.BL.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/UserManagerApp.BL.dll": {}
+        }
+      },
+      "UserManagerApp.DAL/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v9.0",
+        "dependencies": {
+          "UserManagerApp.Entities": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/UserManagerApp.DAL.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/UserManagerApp.DAL.dll": {}
+        }
+      },
+      "UserManagerApp.Entities/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v9.0",
+        "compile": {
+          "bin/placeholder/UserManagerApp.Entities.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/UserManagerApp.Entities.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "UserManagerApp.BL/1.0.0": {
+      "type": "project",
+      "path": "../UserManagerApp.BL/UserManagerApp.BL.csproj",
+      "msbuildProject": "../UserManagerApp.BL/UserManagerApp.BL.csproj"
+    },
+    "UserManagerApp.DAL/1.0.0": {
+      "type": "project",
+      "path": "../UserManagerApp.DAL/UserManagerApp.DAL.csproj",
+      "msbuildProject": "../UserManagerApp.DAL/UserManagerApp.DAL.csproj"
+    },
+    "UserManagerApp.Entities/1.0.0": {
+      "type": "project",
+      "path": "../UserManagerApp.Entities/UserManagerApp.Entities.csproj",
+      "msbuildProject": "../UserManagerApp.Entities/UserManagerApp.Entities.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net9.0": [
+      "UserManagerApp.BL >= 1.0.0",
+      "UserManagerApp.Entities >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\David Hernández\\.nuget\\packages\\": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "C:\\Users\\David Hernández\\Desktop\\Principal\\San Buenaventura\\semestre 6\\Sistemas de servicios\\Practicas\\Practica Layers\\UserManagerApp\\UserManagerApp.UI\\UserManagerApp.UI.csproj",
+      "projectName": "UserManagerApp.UI",
+      "projectPath": "C:\\Users\\David Hernández\\Desktop\\Principal\\San Buenaventura\\semestre 6\\Sistemas de servicios\\Practicas\\Practica Layers\\UserManagerApp\\UserManagerApp.UI\\UserManagerApp.UI.csproj",
+      "packagesPath": "C:\\Users\\David Hernández\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\David Hernández\\Desktop\\Principal\\San Buenaventura\\semestre 6\\Sistemas de servicios\\Practicas\\Practica Layers\\UserManagerApp\\UserManagerApp.UI\\obj\\",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "C:\\Users\\David Hernández\\AppData\\Roaming\\NuGet\\NuGet.Config"
+      ],
+      "originalTargetFrameworks": [
+        "net9.0"
+      ],
+      "sources": {
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "projectReferences": {
+            "C:\\Users\\David Hernández\\Desktop\\Principal\\San Buenaventura\\semestre 6\\Sistemas de servicios\\Practicas\\Practica Layers\\UserManagerApp\\UserManagerApp.BL\\UserManagerApp.BL.csproj": {
+              "projectPath": "C:\\Users\\David Hernández\\Desktop\\Principal\\San Buenaventura\\semestre 6\\Sistemas de servicios\\Practicas\\Practica Layers\\UserManagerApp\\UserManagerApp.BL\\UserManagerApp.BL.csproj"
+            },
+            "C:\\Users\\David Hernández\\Desktop\\Principal\\San Buenaventura\\semestre 6\\Sistemas de servicios\\Practicas\\Practica Layers\\UserManagerApp\\UserManagerApp.Entities\\UserManagerApp.Entities.csproj": {
+              "projectPath": "C:\\Users\\David Hernández\\Desktop\\Principal\\San Buenaventura\\semestre 6\\Sistemas de servicios\\Practicas\\Practica Layers\\UserManagerApp\\UserManagerApp.Entities\\UserManagerApp.Entities.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
+      },
+      "SdkAnalysisLevel": "9.0.200"
+    },
+    "frameworks": {
+      "net9.0": {
+        "targetAlias": "net9.0",
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}

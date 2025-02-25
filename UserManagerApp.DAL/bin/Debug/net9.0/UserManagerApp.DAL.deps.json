@@ -1,0 +1,39 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v9.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v9.0": {
+      "UserManagerApp.DAL/1.0.0": {
+        "dependencies": {
+          "UserManagerApp.Entities": "1.0.0"
+        },
+        "runtime": {
+          "UserManagerApp.DAL.dll": {}
+        }
+      },
+      "UserManagerApp.Entities/1.0.0": {
+        "runtime": {
+          "UserManagerApp.Entities.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "UserManagerApp.DAL/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "UserManagerApp.Entities/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

@@ -1,0 +1,17 @@
+C:\Users\David Hernández\Desktop\Principal\San Buenaventura\semestre 6\Sistemas de servicios\Practicas\Practica Layers\UserManagerApp\UserManagerApp.BL\bin\Debug\net9.0\UserManagerApp.BL.deps.json
+C:\Users\David Hernández\Desktop\Principal\San Buenaventura\semestre 6\Sistemas de servicios\Practicas\Practica Layers\UserManagerApp\UserManagerApp.BL\bin\Debug\net9.0\UserManagerApp.BL.dll
+C:\Users\David Hernández\Desktop\Principal\San Buenaventura\semestre 6\Sistemas de servicios\Practicas\Practica Layers\UserManagerApp\UserManagerApp.BL\bin\Debug\net9.0\UserManagerApp.BL.pdb
+C:\Users\David Hernández\Desktop\Principal\San Buenaventura\semestre 6\Sistemas de servicios\Practicas\Practica Layers\UserManagerApp\UserManagerApp.BL\bin\Debug\net9.0\UserManagerApp.DAL.dll
+C:\Users\David Hernández\Desktop\Principal\San Buenaventura\semestre 6\Sistemas de servicios\Practicas\Practica Layers\UserManagerApp\UserManagerApp.BL\bin\Debug\net9.0\UserManagerApp.Entities.dll
+C:\Users\David Hernández\Desktop\Principal\San Buenaventura\semestre 6\Sistemas de servicios\Practicas\Practica Layers\UserManagerApp\UserManagerApp.BL\bin\Debug\net9.0\UserManagerApp.DAL.pdb
+C:\Users\David Hernández\Desktop\Principal\San Buenaventura\semestre 6\Sistemas de servicios\Practicas\Practica Layers\UserManagerApp\UserManagerApp.BL\bin\Debug\net9.0\UserManagerApp.Entities.pdb
+C:\Users\David Hernández\Desktop\Principal\San Buenaventura\semestre 6\Sistemas de servicios\Practicas\Practica Layers\UserManagerApp\UserManagerApp.BL\obj\Debug\net9.0\UserManagerApp.BL.csproj.AssemblyReference.cache
+C:\Users\David Hernández\Desktop\Principal\San Buenaventura\semestre 6\Sistemas de servicios\Practicas\Practica Layers\UserManagerApp\UserManagerApp.BL\obj\Debug\net9.0\UserManagerApp.BL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\David Hernández\Desktop\Principal\San Buenaventura\semestre 6\Sistemas de servicios\Practicas\Practica Layers\UserManagerApp\UserManagerApp.BL\obj\Debug\net9.0\UserManagerApp.BL.AssemblyInfoInputs.cache
+C:\Users\David Hernández\Desktop\Principal\San Buenaventura\semestre 6\Sistemas de servicios\Practicas\Practica Layers\UserManagerApp\UserManagerApp.BL\obj\Debug\net9.0\UserManagerApp.BL.AssemblyInfo.cs
+C:\Users\David Hernández\Desktop\Principal\San Buenaventura\semestre 6\Sistemas de servicios\Practicas\Practica Layers\UserManagerApp\UserManagerApp.BL\obj\Debug\net9.0\UserManagerApp.BL.csproj.CoreCompileInputs.cache
+C:\Users\David Hernández\Desktop\Principal\San Buenaventura\semestre 6\Sistemas de servicios\Practicas\Practica Layers\UserManagerApp\UserManagerApp.BL\obj\Debug\net9.0\UserMana.2356FA03.Up2Date
+C:\Users\David Hernández\Desktop\Principal\San Buenaventura\semestre 6\Sistemas de servicios\Practicas\Practica Layers\UserManagerApp\UserManagerApp.BL\obj\Debug\net9.0\UserManagerApp.BL.dll
+C:\Users\David Hernández\Desktop\Principal\San Buenaventura\semestre 6\Sistemas de servicios\Practicas\Practica Layers\UserManagerApp\UserManagerApp.BL\obj\Debug\net9.0\refint\UserManagerApp.BL.dll
+C:\Users\David Hernández\Desktop\Principal\San Buenaventura\semestre 6\Sistemas de servicios\Practicas\Practica Layers\UserManagerApp\UserManagerApp.BL\obj\Debug\net9.0\UserManagerApp.BL.pdb
+C:\Users\David Hernández\Desktop\Principal\San Buenaventura\semestre 6\Sistemas de servicios\Practicas\Practica Layers\UserManagerApp\UserManagerApp.BL\obj\Debug\net9.0\ref\UserManagerApp.BL.dll

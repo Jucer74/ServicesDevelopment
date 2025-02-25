@@ -1,0 +1,15 @@
+C:\Users\David Hernández\Desktop\Principal\San Buenaventura\semestre 6\Sistemas de servicios\Practicas\Practica Layers\UserManagerApp\UserManagerApp.DAL\bin\Debug\net9.0\UserManagerApp.DAL.deps.json
+C:\Users\David Hernández\Desktop\Principal\San Buenaventura\semestre 6\Sistemas de servicios\Practicas\Practica Layers\UserManagerApp\UserManagerApp.DAL\bin\Debug\net9.0\UserManagerApp.DAL.dll
+C:\Users\David Hernández\Desktop\Principal\San Buenaventura\semestre 6\Sistemas de servicios\Practicas\Practica Layers\UserManagerApp\UserManagerApp.DAL\bin\Debug\net9.0\UserManagerApp.DAL.pdb
+C:\Users\David Hernández\Desktop\Principal\San Buenaventura\semestre 6\Sistemas de servicios\Practicas\Practica Layers\UserManagerApp\UserManagerApp.DAL\bin\Debug\net9.0\UserManagerApp.Entities.dll
+C:\Users\David Hernández\Desktop\Principal\San Buenaventura\semestre 6\Sistemas de servicios\Practicas\Practica Layers\UserManagerApp\UserManagerApp.DAL\bin\Debug\net9.0\UserManagerApp.Entities.pdb
+C:\Users\David Hernández\Desktop\Principal\San Buenaventura\semestre 6\Sistemas de servicios\Practicas\Practica Layers\UserManagerApp\UserManagerApp.DAL\obj\Debug\net9.0\UserManagerApp.DAL.csproj.AssemblyReference.cache
+C:\Users\David Hernández\Desktop\Principal\San Buenaventura\semestre 6\Sistemas de servicios\Practicas\Practica Layers\UserManagerApp\UserManagerApp.DAL\obj\Debug\net9.0\UserManagerApp.DAL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\David Hernández\Desktop\Principal\San Buenaventura\semestre 6\Sistemas de servicios\Practicas\Practica Layers\UserManagerApp\UserManagerApp.DAL\obj\Debug\net9.0\UserManagerApp.DAL.AssemblyInfoInputs.cache
+C:\Users\David Hernández\Desktop\Principal\San Buenaventura\semestre 6\Sistemas de servicios\Practicas\Practica Layers\UserManagerApp\UserManagerApp.DAL\obj\Debug\net9.0\UserManagerApp.DAL.AssemblyInfo.cs
+C:\Users\David Hernández\Desktop\Principal\San Buenaventura\semestre 6\Sistemas de servicios\Practicas\Practica Layers\UserManagerApp\UserManagerApp.DAL\obj\Debug\net9.0\UserManagerApp.DAL.csproj.CoreCompileInputs.cache
+C:\Users\David Hernández\Desktop\Principal\San Buenaventura\semestre 6\Sistemas de servicios\Practicas\Practica Layers\UserManagerApp\UserManagerApp.DAL\obj\Debug\net9.0\UserMana.B137DB79.Up2Date
+C:\Users\David Hernández\Desktop\Principal\San Buenaventura\semestre 6\Sistemas de servicios\Practicas\Practica Layers\UserManagerApp\UserManagerApp.DAL\obj\Debug\net9.0\UserManagerApp.DAL.dll
+C:\Users\David Hernández\Desktop\Principal\San Buenaventura\semestre 6\Sistemas de servicios\Practicas\Practica Layers\UserManagerApp\UserManagerApp.DAL\obj\Debug\net9.0\refint\UserManagerApp.DAL.dll
+C:\Users\David Hernández\Desktop\Principal\San Buenaventura\semestre 6\Sistemas de servicios\Practicas\Practica Layers\UserManagerApp\UserManagerApp.DAL\obj\Debug\net9.0\UserManagerApp.DAL.pdb
+C:\Users\David Hernández\Desktop\Principal\San Buenaventura\semestre 6\Sistemas de servicios\Practicas\Practica Layers\UserManagerApp\UserManagerApp.DAL\obj\Debug\net9.0\ref\UserManagerApp.DAL.dll
