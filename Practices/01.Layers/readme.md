@@ -1,5 +1,5 @@
 # Practica Layers
-A continuacion realizaremos un ejercicio prctico creando un proyecto donde vamos a integrar las capas (Layers) principales (UI, BL, DAL) para mostrar su uso.
+A continuacion realizaremos un ejercicio practico creando un proyecto donde vamos a integrar las capas (Layers) principales (UI, BL, DAL) para mostrar su uso.
 
 Recuerde realizar el desarrollo de este ejercicio en su pripia rama.
 
@@ -211,9 +211,10 @@ dotnet new classlib -n UserManagerApp.Entities
 ```
 4. Agregue los proyectos a la solucion
 ```code
-dotnet new console -n UserManagerApp.UI
-dotnet new classlib -n UserManagerApp.BL
-dotnet new classlib -n UserManagerApp.DAL
+dotnet sln UserManagerApp.sln add UserManagerApp.UI/UserManagerApp.UI.csproj
+dotnet sln UserManagerApp.sln add UserManagerApp.BL/UserManagerApp.BL.csproj
+dotnet sln UserManagerApp.sln add UserManagerApp.DAL/UserManagerApp.DAL.csproj
+dotnet sln UserManagerApp.sln add UserManagerApp.Entities/UserManagerApp.Entities.csproj
 ```
 
 ## Paso 2: Configurar las Dependencias
@@ -224,10 +225,10 @@ dotnet new classlib -n UserManagerApp.DAL
 Ejecuta los siguientes comandos para agregar las referencias:
 ```code
 dotnet add UserManagerApp.UI/UserManagerApp.UI.csproj reference UserManagerApp.BL/UserManagerApp.BL.csproj
-dotnet add UserManagerApp.UI/UserManagerApp.UI.csproj reference UserManagerApp.BL/UserManagerApp.Entities.csproj
+dotnet add UserManagerApp.UI/UserManagerApp.UI.csproj reference UserManagerApp.Entities/UserManagerApp.Entities.csproj
 dotnet add UserManagerApp.BL/UserManagerApp.BL.csproj reference UserManagerApp.DAL/UserManagerApp.DAL.csproj
-dotnet add UserManagerApp.BL/UserManagerApp.BL.csproj reference UserManagerApp.DAL/UserManagerApp.Entities.csproj
-dotnet add UserManagerApp.DAL/UserManagerApp.DAL.csproj reference UserManagerApp.DAL/UserManagerApp.Entities.csproj 
+dotnet add UserManagerApp.BL/UserManagerApp.BL.csproj reference UserManagerApp.Entities/UserManagerApp.Entities.csproj
+dotnet add UserManagerApp.DAL/UserManagerApp.DAL.csproj reference UserManagerApp.Entities/UserManagerApp.Entities.csproj 
 ```
 
 ## Paso 3: Codifique
