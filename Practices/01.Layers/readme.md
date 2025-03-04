@@ -283,3 +283,4 @@ Asegúrate de que los namespaces estén correctamente configurados en cada archi
 - *BL:* DAL, Entites
 - *DAL:* Entities
 
+yay
