@@ -215,6 +215,7 @@ dotnet new console -n UserManagerApp.UI
 dotnet new classlib -n UserManagerApp.BL
 dotnet new classlib -n UserManagerApp.DAL
 ```
+Cambiar para agregar a la solucion e Incluir las entities*
 
 ## Paso 2: Configurar las Dependencias
 - *UserManagerApp.UI* debe referenciar a *UserManagerApp.BL* y *UserManagerApp.Entities*.
