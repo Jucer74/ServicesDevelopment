@@ -1,4 +1,6 @@
-[{"id":1,"first_name":"Roi","last_name":"Puckham","sex":"M","date_of_birth":"2017/09/14"},
+{
+    "students": [
+        {"id":1,"first_name":"Roi","last_name":"Puckham","sex":"M","date_of_birth":"2017/09/14"},
 {"id":2,"first_name":"Adolphe","last_name":"Rudgley","sex":"M","date_of_birth":"2009/12/14"},
 {"id":3,"first_name":"Ruperto","last_name":"Vorley","sex":"M","date_of_birth":"2018/08/02"},
 {"id":4,"first_name":"Gail","last_name":"Starsmeare","sex":"F","date_of_birth":"2017/03/29"},
@@ -998,3 +1000,5 @@
 {"id":998,"first_name":"Stafani","last_name":"Emmanuele","sex":"F","date_of_birth":"2021/08/25"},
 {"id":999,"first_name":"Marlowe","last_name":"Lowings","sex":"M","date_of_birth":"2008/03/09"},
 {"id":1000,"first_name":"Minerva","last_name":"Crissil","sex":"F","date_of_birth":"2008/02/17"}]
+
+}
