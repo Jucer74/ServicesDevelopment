@@ -4,6 +4,8 @@ namespace BankApp.entities
 
     public class BankAccount
     {
+
+        public string id {get; set;}
         public string AccountNumber  { get; set; }
         public string AccountOwner { get; set; }
         public decimal BalanceAmount { get; set; }
@@ -15,6 +17,7 @@ namespace BankApp.entities
 
         public BankAccount(string accountNumber, string accountOwner, decimal balanceAmount, int accountType ,decimal overdraftAmount)
         {
+            id = accountNumber;
             AccountNumber = accountNumber;
             AccountOwner = accountOwner;
             BalanceAmount = balanceAmount;

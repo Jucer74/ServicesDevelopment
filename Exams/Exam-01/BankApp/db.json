@@ -1,21 +1,41 @@
-{   "accounts": 
-    [{
-    "AccountNumber": "2096596321",
-    "AccountOwner": "Neel",
-    "BalanceAmount": 433262,
-    "AccountType": false,
-    "OverdraftAmount": false
-  }, {
-    "AccountNumber": "3489970153",
-    "AccountOwner": "Tadd",
-    "BalanceAmount": 6493,
-    "AccountType": false,
-    "OverdraftAmount": false
-  }, {
-    "AccountNumber": "8938814486",
-    "AccountOwner": "Yulma",
-    "BalanceAmount": 592956,
-    "AccountType": true,
-    "OverdraftAmount": true
-  }]
+{
+  "accounts": [
+    {
+      "AccountNumber": "2096596321",
+      "AccountOwner": "Neel",
+      "BalanceAmount": 433262,
+      "AccountType": 1,
+      "OverdraftAmount": 0
+    },
+    {
+      "AccountNumber": "3489970153",
+      "AccountOwner": "Tadd",
+      "BalanceAmount": 6493,
+      "AccountType": 2,
+      "OverdraftAmount": 1000000
+    },
+    {
+      "AccountNumber": "8938814486",
+      "AccountOwner": "Yulma",
+      "BalanceAmount": 592956,
+      "AccountType": 1,
+      "OverdraftAmount": 0
+    },
+    {
+      "id": "f733",
+      "AccountNumber": "2535325",
+      "AccountOwner": "andres",
+      "BalanceAmount": 0,
+      "AccountType": 1,
+      "OverdraftAmount": 0
+    },
+    {
+      "id": "5436564543",
+      "AccountNumber": "5436564543",
+      "AccountOwner": "martin",
+      "BalanceAmount": 0,
+      "AccountType": 2,
+      "OverdraftAmount": 900000
+    }
+  ]
 }
