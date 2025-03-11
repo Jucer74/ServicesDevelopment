@@ -56,8 +56,14 @@ private const string ApiUrl = "http://localhost:3000/accounts";
             if (account == null)
                 throw new InvalidOperationException("Account not found.");
 
-            account.Withdrawal(amount);
-            await _repository.UpdateAccountAsync(account);
+            if(account.Withdrawal(amount))
+            {
+                await _repository.UpdateAccountAsync(account);
+            }
+            else
+            {
+                throw new InvalidOperationException("Insufficient funds.");
+            }
         }
         
     }

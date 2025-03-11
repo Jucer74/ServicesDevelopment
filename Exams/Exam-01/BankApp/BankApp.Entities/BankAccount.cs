@@ -17,7 +17,7 @@ namespace BankApp.Entities
         decimal BalanceAmount { get; set; }
         AccountType AccountType { get; set; }
         void Deposit(decimal amount);
-        void Withdrawal(decimal amount);
+        bool Withdrawal(decimal amount); 
     }
 
     public class SavingAccount : IBankAccount
@@ -30,12 +30,14 @@ namespace BankApp.Entities
 
         public void Deposit(decimal amount) => BalanceAmount += amount;
 
-        public void Withdrawal(decimal amount)
+        public bool Withdrawal(decimal amount)
         {
             if (BalanceAmount >= amount)
+            {
                 BalanceAmount -= amount;
-            else
-                throw new InvalidOperationException("Insufficient funds.");
+                return true;
+            }
+            return false;
         }
     }
 
@@ -52,75 +54,87 @@ namespace BankApp.Entities
 
         public void Deposit(decimal amount) => BalanceAmount += amount;
 
-        public void Withdrawal(decimal amount)
+        public bool Withdrawal(decimal amount)
         {
             if (BalanceAmount + OverdraftAmount >= amount)
-                BalanceAmount -= amount;
-            else
-                throw new InvalidOperationException("Overdraft limit exceeded.");
+            {
+                if (BalanceAmount >= amount)
+                {
+                    BalanceAmount -= amount;
+                }
+                else
+                {
+
+                    decimal overdraftUsed = amount - BalanceAmount;
+                    BalanceAmount = 0;
+                    OverdraftAmount -= overdraftUsed;
+                }
+                return true;
+            }
+            return false;
         }
     }
 
- public static class BankAccountFactory
-{
-    public static IBankAccount FromJson(JsonElement element)
+    public static class BankAccountFactory
     {
-        if (!element.TryGetProperty("AccountNumber", out var accountNumberElement))
+        public static IBankAccount FromJson(JsonElement element)
         {
-            throw new InvalidOperationException("Missing 'accountNumber' property in JSON.");
-        }
-
-        if (!element.TryGetProperty("AccountOwner", out var accountOwnerElement))
-        {
-            throw new InvalidOperationException("Missing 'accountOwner' property in JSON.");
-        }
-
-        if (!element.TryGetProperty("BalanceAmount", out var balanceAmountElement))
-        {
-            throw new InvalidOperationException("Missing 'balanceAmount' property in JSON.");
-        }
-
-        if (!element.TryGetProperty("AccountType", out var accountTypeElement))
-        {
-            throw new InvalidOperationException("Missing 'accountType' property in JSON.");
-        }
-
-        // Get the AccountType as an integer (since it's represented as a number in JSON)
-        var accountType = accountTypeElement.GetInt32(); // Corrected to GetInt32
-        var accountNumber = accountNumberElement.GetString();
-        var accountOwner = accountOwnerElement.GetString();
-        var balanceAmount = balanceAmountElement.GetDecimal();
-
-        if (accountType == 1) // Checking account
-        {
-            if (!element.TryGetProperty("OverdraftAmount", out var overdraftAmountElement))
+            if (!element.TryGetProperty("AccountNumber", out var accountNumberElement))
             {
-                throw new InvalidOperationException("Missing 'overdraftAmount' property for Checking account.");
+                throw new InvalidOperationException("Missing 'accountNumber' property in JSON.");
             }
 
-            return new CheckingAccount
-            {   
-                id = accountNumber,
-                AccountNumber = accountNumber,
-                AccountOwner = accountOwner,
-                BalanceAmount = balanceAmount,
-                OverdraftAmount = overdraftAmountElement.GetDecimal()
-            };
-        }
-        else if (accountType == 0) // Saving account
-        {
-            return new SavingAccount
+            if (!element.TryGetProperty("AccountOwner", out var accountOwnerElement))
             {
-                id = accountNumber,
-                AccountNumber = accountNumber,
-                AccountOwner = accountOwner,
-                BalanceAmount = balanceAmount
-            };
-        }
-        else
-        {
-            throw new InvalidOperationException($"Unknown account type: {accountType}");
+                throw new InvalidOperationException("Missing 'accountOwner' property in JSON.");
+            }
+
+            if (!element.TryGetProperty("BalanceAmount", out var balanceAmountElement))
+            {
+                throw new InvalidOperationException("Missing 'balanceAmount' property in JSON.");
+            }
+
+            if (!element.TryGetProperty("AccountType", out var accountTypeElement))
+            {
+                throw new InvalidOperationException("Missing 'accountType' property in JSON.");
+            }
+
+            // Get the AccountType as an integer (since it's represented as a number in JSON)
+            var accountType = accountTypeElement.GetInt32();
+            var accountNumber = accountNumberElement.GetString();
+            var accountOwner = accountOwnerElement.GetString();
+            var balanceAmount = balanceAmountElement.GetDecimal();
+
+            if (accountType == 1) // Checking account
+            {
+                if (!element.TryGetProperty("OverdraftAmount", out var overdraftAmountElement))
+                {
+                    throw new InvalidOperationException("Missing 'overdraftAmount' property for Checking account.");
+                }
+
+                return new CheckingAccount
+                {
+                    id = accountNumber,
+                    AccountNumber = accountNumber,
+                    AccountOwner = accountOwner,
+                    BalanceAmount = balanceAmount,
+                    OverdraftAmount = overdraftAmountElement.GetDecimal()
+                };
+            }
+            else if (accountType == 0) // Saving account
+            {
+                return new SavingAccount
+                {
+                    id = accountNumber,
+                    AccountNumber = accountNumber,
+                    AccountOwner = accountOwner,
+                    BalanceAmount = balanceAmount
+                };
+            }
+            else
+            {
+                throw new InvalidOperationException($"Unknown account type: {accountType}");
+            }
         }
     }
-}
 }
