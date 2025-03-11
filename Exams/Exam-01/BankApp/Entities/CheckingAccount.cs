@@ -2,7 +2,8 @@ namespace Entities
 {
     public class CheckingAccount : BankAccount
     {
-        public CheckingAccount()
+        public CheckingAccount(string accountNumber, string accountOwner)
+            : base(accountNumber, accountOwner)
         {
             AccountType = AccountType.Checking;
             OverdraftAmount = 1000000;
@@ -21,4 +22,5 @@ namespace Entities
             }
         }
     }
+
 }

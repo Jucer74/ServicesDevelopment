@@ -1,36 +1,76 @@
-using Entities;
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Text.Json;
+using System.Threading.Tasks;
+using Entities;
 
 namespace BL
 {
     public class BankService
     {
-        private List<BankAccount> _accounts = new List<BankAccount>();
+        private readonly HttpClient _httpClient;
+        private readonly string _baseUrl;
 
-        public BankAccount CreateAccount(BankAccount bankAccount)
+        public BankService(HttpClient httpClient, string baseUrl)
         {
-           
-            return bankAccount;
+            _httpClient = httpClient;
+            _baseUrl = baseUrl;
         }
 
-        public BankAccount GetBalanceAccount(string accountNumber)
+        public async Task<BankAccount?> CreateAccountAsync(BankAccount account)
         {
-           
+            var existingAccount = await GetBalanceAsync(account.AccountNumber);
+            if (existingAccount != null)
+            {
+                throw new InvalidOperationException("La cuenta ya existe.");
+            }
+
+            var json = JsonSerializer.Serialize(account);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync(_baseUrl, content);
+            response.EnsureSuccessStatusCode();
+            var responseContent = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<BankAccount>(responseContent);
+        }
+
+        public async Task<BankAccount?> GetBalanceAsync(string accountNumber)
+        {
+            var response = await _httpClient.GetAsync(_baseUrl);
+            response.EnsureSuccessStatusCode();
+            var content = await response.Content.ReadAsStringAsync();
+            var accounts = JsonSerializer.Deserialize<List<BankAccount>>(content);
+
+            return accounts?.FirstOrDefault(a => a.AccountNumber == accountNumber);
+        }
+
+        public async Task<BankAccount> DepositAsync(string accountNumber, decimal amount)
+        {
+            var account = await GetBalanceAsync(accountNumber);
+            if (account == null)
+            {
+                throw new InvalidOperationException("La cuenta no existe.");
+            }
+            account.Deposit(amount);
+            var json = JsonSerializer.Serialize(account);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _httpClient.PutAsync($"{_baseUrl}/{accountNumber}", content);
+            response.EnsureSuccessStatusCode();
             return account;
         }
 
-        public BankAccount DepositAmount(string accountNumber, decimal amountValue)
+        public async Task<BankAccount> WithdrawalAsync(string accountNumber, decimal amount)
         {
-            var account = GetBalanceAccount(accountNumber);
-            account.Deposit(amountValue);
-            return account;
-        }
-
-        public BankAccount WithdrawalAmount(string accountNumber, decimal amountValue)
-        {
-             
+            var account = await GetBalanceAsync(accountNumber);
+            if (account == null)
+            {
+                throw new InvalidOperationException("La cuenta no existe.");
+            }
+            account.Withdrawal(amount);
+            var json = JsonSerializer.Serialize(account);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _httpClient.PutAsync($"{_baseUrl}/{accountNumber}", content);
+            response.EnsureSuccessStatusCode();
             return account;
         }
     }
