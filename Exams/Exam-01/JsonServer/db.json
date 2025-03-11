@@ -1,0 +1,28 @@
+{
+  "accounts": [
+    {
+      "id": "1111111111",
+      "AccountNumber": "1111111111",
+      "AccountOwner": "Sylvie",
+      "BalanceAmount": 799999,
+      "AccountType": 1,
+      "OverdraftAmount": 1000000
+    },
+    {
+      "id": "1334666111890",
+      "AccountNumber": "1334666111890",
+      "AccountOwner": "Pepepga",
+      "BalanceAmount": 100000,
+      "AccountType": 0,
+      "OverdraftAmount": 0
+    },
+    {
+      "id": "0987654321",
+      "AccountNumber": "0987654321",
+      "AccountOwner": "silv",
+      "BalanceAmount": 30000,
+      "AccountType": 1,
+      "OverdraftAmount": 1000000
+    }
+  ]
+}

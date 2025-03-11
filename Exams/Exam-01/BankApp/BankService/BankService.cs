@@ -15,7 +15,6 @@ namespace BankServices {
             _httpClient = new HttpClient(); 
         }
 
-
         public class AccountNotFoundException : Exception
         {
         public AccountNotFoundException(string message) : base(message) { }
@@ -45,8 +44,6 @@ namespace BankServices {
 
             throw new AccountNotFoundException("Account does not exist.");
         }
-
-
         public async Task<BankAccount> CreateAccount(BankAccount bankAccount)
         {
             try
@@ -100,14 +97,14 @@ namespace BankServices {
             {
                 var account = await GetAccount(accountNumber);
             
-                if (account.AccountType == 1 || account.BalanceAmount >= amount )
+                if (account.AccountType == 0 || account.BalanceAmount >= amount )
                 {
                     account.BalanceAmount -= amount;
                     string json = JsonConvert.SerializeObject(account);
                     var content = new StringContent(json, Encoding.UTF8, "application/json");
                     var response = await _httpClient.PutAsync($"{ApiUrl}/accounts/{accountNumber}", content);
                     response.EnsureSuccessStatusCode();
-                }
+                } 
                 else 
                 {
                     throw new Exception("Insufficient funds.");

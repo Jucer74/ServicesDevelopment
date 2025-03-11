@@ -2,8 +2,7 @@
 using System.Threading.Tasks;
 using Models;
 using BankServices;
-using System.ComponentModel.Design;
-using System.Linq.Expressions;
+
 
 namespace Models
 {
@@ -52,9 +51,7 @@ namespace Models
                     break;
                 }
             }
-
         }
-
         async static void CreateAccount()
         {
             try {
@@ -187,7 +184,5 @@ namespace Models
 
             return accountOwner;
         }
-
-
     }
 }
