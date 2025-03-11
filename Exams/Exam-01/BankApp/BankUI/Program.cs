@@ -2,8 +2,6 @@
 using System.Threading.Tasks;
 using Models;
 using BankServices;
-
-
 namespace Models
 {
     class Program
@@ -55,14 +53,16 @@ namespace Models
         async static void CreateAccount()
         {
             try {
+                
                 int accountType = GetValidAccountType();
                 string accountNumber = GetValidAccountNumber();
                 string accountOwner = GetValidAccountOwnwer();
                 decimal initialBalance = GetValidAmount();
                 decimal overdraftAmount = (accountType == 1) ? 1000000 : 0;
 
-                var newAccount = new BankAccount(accountNumber, accountOwner, initialBalance, accountType, overdraftAmount);
-                var createdAccount = await _bankService.CreateAccount(newAccount);
+                BankAccount newAccount = CreateBankAccount(accountType, accountNumber, accountOwner, initialBalance, overdraftAmount);
+
+                await _bankService.CreateAccount(newAccount);
                 Console.Write("Account Created Successfully!");
                 
             } catch (Exception ex)
@@ -183,6 +183,12 @@ namespace Models
             } while (!IsValidAccountOwner(accountOwner));
 
             return accountOwner;
+        }
+
+        static BankAccount CreateBankAccount(int accountType, string accountNumber, string accountOwner, decimal initialBalance, decimal overdraftAmount)
+        {
+            var newAccount = new BankAccount(accountNumber, accountOwner, initialBalance, accountType, overdraftAmount);
+            return newAccount;
         }
     }
 }

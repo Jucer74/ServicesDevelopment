@@ -8,7 +8,7 @@ namespace BankServices {
     public class BankService 
     {
         private readonly HttpClient _httpClient;
-        private const string ApiUrl = "http://localhost:3000/api/v1";
+        private string ApiUrl = ConfigManager.GetApiUrl();
 
         public BankService()
         {
@@ -96,20 +96,44 @@ namespace BankServices {
             try
             {
                 var account = await GetAccount(accountNumber);
-            
-                if (account.AccountType == 0 || account.BalanceAmount >= amount )
+
+                if (account.AccountType == 0 || account.BalanceAmount >= amount)
                 {
                     account.BalanceAmount -= amount;
-                    string json = JsonConvert.SerializeObject(account);
-                    var content = new StringContent(json, Encoding.UTF8, "application/json");
-                    var response = await _httpClient.PutAsync($"{ApiUrl}/accounts/{accountNumber}", content);
-                    response.EnsureSuccessStatusCode();
                 } 
-                else 
+                else if (account.AccountType == 1)
                 {
-                    throw new Exception("Insufficient funds.");
+                    decimal totalBalance = account.BalanceAmount + account.OverdraftAmount;
+
+                    if (totalBalance >= amount)
+                    {
+                        if (account.BalanceAmount >= amount)
+                        {
+                            account.BalanceAmount -= amount;
+                        }
+                        else
+                        {
+                            decimal residualDebt = amount - account.BalanceAmount;
+                            account.BalanceAmount = 0;
+                            account.OverdraftAmount -= residualDebt;
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception("Insufficient funds.");
+                    }
                 }
-                
+                else
+                {
+                    throw new Exception("Invalid account type.");
+                }
+
+                // update account after withdrawal
+                string json = JsonConvert.SerializeObject(account);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PutAsync($"{ApiUrl}/accounts/{accountNumber}", content);
+                response.EnsureSuccessStatusCode();
+
                 return account;
             } 
             catch (AccountNotFoundException)
@@ -118,6 +142,5 @@ namespace BankServices {
             }
         }
     }
-
 }
 
