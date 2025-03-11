@@ -1,0 +1,11 @@
+[
+  {
+    "Id": 0,
+    "AccountNumber": "6666666666",
+    "AccountOwner": "fernando",
+    "BalanceAmount": 200000,
+    "AccountType": 2,
+    "OverdraftAmount": 1000000,
+    "Balance": 0
+  }
+]

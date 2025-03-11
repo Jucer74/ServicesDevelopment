@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using BankApp.BL;
+using System.Net.Http;
 using BankApp.DAL;
 using BankApp.Entities;
 
@@ -12,8 +12,7 @@ namespace BankApp.UI
         static async Task Main(string[] args)
         {
             HttpClient httpClient = new HttpClient();
-            BankAccountRepository bankAccountRepository = new BankAccountRepository(httpClient);
-            BankAccountService bankAccountService = new BankAccountService(bankAccountRepository);
+            BankAccountRepository accountService = new BankAccountRepository();
 
             while (true)
             {
@@ -23,11 +22,11 @@ namespace BankApp.UI
                 Console.WriteLine("4. Check Balance");
                 Console.WriteLine("0. Exit");
                 Console.Write("Select an option: ");
-                string? option = Console.ReadLine()?.Trim(); 
+                string? option = Console.ReadLine()?.Trim();
 
                 try
                 {
-                    if (option == "1")
+                    if (option == "1") // Crear cuenta
                     {
                         string? accountNumber;
                         while (true)
@@ -44,6 +43,7 @@ namespace BankApp.UI
                                 break;
                             }
                         }
+
                         string? accountOwner;
                         while (true)
                         {
@@ -59,6 +59,7 @@ namespace BankApp.UI
                                 break;
                             }
                         }
+
                         int accountType;
                         while (true)
                         {
@@ -74,6 +75,7 @@ namespace BankApp.UI
                                 break;
                             }
                         }
+
                         decimal balanceAmount;
                         while (true)
                         {
@@ -89,121 +91,86 @@ namespace BankApp.UI
                                 break;
                             }
                         }
+
                         var account = new BankAccount
                         {
                             AccountNumber = accountNumber,
                             AccountOwner = accountOwner,
                             BalanceAmount = balanceAmount,
                             AccountType = (AccountType)accountType,
-                            OverdraftAmount = (AccountType)accountType == AccountType.Checking ? 1000000 : 0
+                            OverdraftAmount = accountType == 2 ? 1000000 : 0,
                         };
 
-                        await bankAccountService.CreateAccountAsync(account);
+                        await accountService.AddAccountAsync(account);
                         Console.WriteLine("Account created successfully!");
                     }
-                    else if (option == "2")
+                    else if (option == "2") // Depositar
                     {
-                        string? accountNumber;
-                        while (true)
-                        {
-                            Console.Write("Account Number: ");
-                            accountNumber = Console.ReadLine();
+                        Console.Write("Account Number: ");
+                        string? accountNumber = Console.ReadLine();
 
-                            if (string.IsNullOrEmpty(accountNumber) || !Regex.IsMatch(accountNumber, @"^\d{10}$"))
-                            {
-                                Console.WriteLine("Invalid account number. It must be exactly 10 digits.");
-                            }
-                            else
-                            {
-                                break;
-                            }
+                        if (string.IsNullOrEmpty(accountNumber))
+                        {
+                            Console.WriteLine("Account number cannot be empty.");
+                            continue;
                         }
 
-                        decimal amount;
-                        while (true)
+                        Console.Write("Amount to Deposit: ");
+                        string? amountInput = Console.ReadLine();
+                        if (!decimal.TryParse(amountInput, out decimal amount) || amount <= 0)
                         {
-                            Console.Write("Amount to Deposit: ");
-                            string? amountInput = Console.ReadLine();
-
-                            if (!decimal.TryParse(amountInput, out amount) || amount <= 0)
-                            {
-                                Console.WriteLine("Invalid amount. It must be a positive number.");
-                            }
-                            else
-                            {
-                                break;
-                            }
+                            Console.WriteLine("Invalid amount. It must be a positive number.");
+                            continue;
                         }
 
-                        await bankAccountService.DepositAsync(accountNumber, amount);
+                        await accountService.DepositAsync(accountNumber, amount);
                         Console.WriteLine("Deposit successful!");
                     }
-                    else if (option == "3")
+                    else if (option == "3") // Retirar
                     {
-                        string? accountNumber;
-                        while (true)
-                        {
-                            Console.Write("Account Number: ");
-                            accountNumber = Console.ReadLine();
+                        Console.Write("Account Number: ");
+                        string? accountNumber = Console.ReadLine();
 
-                            if (string.IsNullOrEmpty(accountNumber) || !Regex.IsMatch(accountNumber, @"^\d{10}$"))
-                            {
-                                Console.WriteLine("Invalid account number. It must be exactly 10 digits.");
-                            }
-                            else
-                            {
-                                break;
-                            }
+                        if (string.IsNullOrEmpty(accountNumber))
+                        {
+                            Console.WriteLine("Account number cannot be empty.");
+                            continue;
                         }
 
-                        decimal amount;
-                        while (true)
+                        Console.Write("Amount to Withdraw: ");
+                        string? amountInput = Console.ReadLine();
+                        if (!decimal.TryParse(amountInput, out decimal amount) || amount <= 0)
                         {
-                            Console.Write("Amount to Withdraw: ");
-                            string? amountInput = Console.ReadLine();
-
-                            if (!decimal.TryParse(amountInput, out amount) || amount <= 0)
-                            {
-                                Console.WriteLine("Invalid amount. It must be a positive number.");
-                            }
-                            else
-                            {
-                                break;
-                            }
+                            Console.WriteLine("Invalid amount. It must be a positive number.");
+                            continue;
                         }
 
-                        await bankAccountService.WithdrawAsync(accountNumber, amount);
+                        await accountService.WithdrawAsync(accountNumber, amount);
                         Console.WriteLine("Withdrawal successful!");
                     }
-                    else if (option == "4")
+                    else if (option == "4") // Consultar saldo
                     {
-                        string? accountNumber;
-                        while (true)
-                        {
-                            Console.Write("Account Number: ");
-                            accountNumber = Console.ReadLine();
+                        Console.Write("Account Number: ");
+                        string? accountNumber = Console.ReadLine();
 
-                            if (string.IsNullOrEmpty(accountNumber) || !Regex.IsMatch(accountNumber, @"^\d{10}$"))
-                            {
-                                Console.WriteLine("Invalid account number. It must be exactly 10 digits.");
-                            }
-                            else
-                            {
-                                break;
-                            }
+                        if (string.IsNullOrEmpty(accountNumber))
+                        {
+                            Console.WriteLine("Account number cannot be empty.");
+                            continue;
                         }
 
-                        var account = await bankAccountService.GetAccountAsync(accountNumber);
+                        var account = await accountService.GetAccountAsync(accountNumber);
                         if (account != null)
                         {
                             Console.WriteLine($"Balance: {account.BalanceAmount}");
+                            Console.WriteLine($"Account Type: {account.AccountType}");
                         }
                         else
                         {
                             Console.WriteLine("Account not found.");
                         }
                     }
-                    else if (option == "0")
+                    else if (option == "0") // Salir
                     {
                         break;
                     }
