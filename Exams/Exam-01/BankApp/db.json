@@ -1,0 +1,21 @@
+{   "accounts": 
+    [{
+    "AccountNumber": "2096596321",
+    "AccountOwner": "Neel",
+    "BalanceAmount": 433262,
+    "AccountType": false,
+    "OverdraftAmount": false
+  }, {
+    "AccountNumber": "3489970153",
+    "AccountOwner": "Tadd",
+    "BalanceAmount": 6493,
+    "AccountType": false,
+    "OverdraftAmount": false
+  }, {
+    "AccountNumber": "8938814486",
+    "AccountOwner": "Yulma",
+    "BalanceAmount": 592956,
+    "AccountType": true,
+    "OverdraftAmount": true
+  }]
+}
