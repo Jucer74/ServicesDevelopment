@@ -1,0 +1,10 @@
+{
+  "accounts": [
+    {
+      "id": 1,
+      "accountNumber": "1234567890",
+      "owner": "Juan Pérez",
+      "balance": 1000
+    }
+  ]
+}
