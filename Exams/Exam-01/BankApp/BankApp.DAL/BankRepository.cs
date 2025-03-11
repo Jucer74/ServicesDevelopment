@@ -68,7 +68,7 @@ namespace BankApp.DAL
         account.BalanceAmount,
         account.AccountType,
         OverdraftAmount = account is CheckingAccount checkingAcc ? checkingAcc.OverdraftAmount : (decimal?)null,
-        Id = existingAccount.id 
+        id = existingAccount.id 
     });
 
     var content = new StringContent(json, Encoding.UTF8, "application/json");
