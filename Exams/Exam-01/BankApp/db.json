@@ -1,0 +1,25 @@
+{
+    "accounts": [
+      {
+        "accountNumber": "1111111111",
+        "accountOwner": "Julio Robles",
+        "balanceAmount": 100000,
+        "accountType": "Saving",
+        "overdraftAmount": 0
+      },
+      {
+        "accountNumber": "2222222222",
+        "accountOwner": "Pilar Lopez",
+        "balanceAmount": 500000,
+        "accountType": "Checking",
+        "overdraftAmount": 1000000
+      },
+      {
+        "accountNumber": "3333333333",
+        "accountOwner": "Carlos Gomez",
+        "balanceAmount": 200000,
+        "accountType": "Saving",
+        "overdraftAmount": 0
+      }
+    ]
+  }
