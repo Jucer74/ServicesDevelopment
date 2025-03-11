@@ -34,15 +34,16 @@ namespace BankApp.DAL
 
         public async Task CreateAccountAsync(IBankAccount account)
 {
-    var randomId = Guid.NewGuid().ToString("N")[..4]; // Genera un ID aleatorio de 4 caracteres
+    var randomId = Guid.NewGuid().ToString("N")[..4];
+    
     var json = JsonSerializer.Serialize(new
     {
-        id = randomId,
         account.AccountNumber,
         account.AccountOwner,
         account.BalanceAmount,
         account.AccountType,
-        OverdraftAmount = account is CheckingAccount checkingAcc ? checkingAcc.OverdraftAmount : (decimal?)null
+        OverdraftAmount = account is CheckingAccount checkingAcc ? checkingAcc.OverdraftAmount : (decimal?)null,
+        id = randomId
     });
 
     var content = new StringContent(json, Encoding.UTF8, "application/json");

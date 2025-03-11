@@ -1,17 +1,19 @@
-{"accounts":[
-  {
-      "accountNumber": "1234567890",
-      "accountOwner": "Camilo Rios",
-      "balanceAmount": 100000,
-      "accountType": "Saving",
+{
+  "accounts": [
+    {
+      "AccountNumber": "1234567890",
+      "AccountOwner": "Camilo Rios",
+      "BalanceAmount": 100000,
+      "AccountType": "Saving",
       "id": "f692"
-  },
-  {
-      "accountNumber": "2222222222",
-      "accountOwner": "Pilar Lopez",
-      "balanceAmount": 900000,
-      "accountType": "Checking",
-      "overdraftAmount": 100000,
+    },
+    {
+      "AccountNumber": "2222222222",
+      "AccountOwner": "Pilar Lopez",
+      "BalanceAmount": 900000,
+      "AccountType": "Checking",
+      "OverdraftAmount": 100000,
       "id": "1dc0"
-  }
-]}
+    }
+  ]
+}

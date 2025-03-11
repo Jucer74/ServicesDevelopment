@@ -58,6 +58,7 @@ namespace BankApp.UI
             Console.Write("Select Account Type (1: Saving, 2: Checking): ");
             int type = int.Parse(Console.ReadLine());
 
+
             IBankAccount account = type == 1
                 ? new SavingAccount { AccountNumber = accountNumber, AccountOwner = accountOwner, BalanceAmount = balanceAmount }
                 : new CheckingAccount { AccountNumber = accountNumber, AccountOwner = accountOwner, BalanceAmount = balanceAmount };

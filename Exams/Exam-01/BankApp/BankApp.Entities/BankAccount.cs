@@ -39,7 +39,7 @@ namespace BankApp.Entities
 
     public class CheckingAccount : IBankAccount
     {
-        private const decimal MIN_OVERDRAFT_AMOUNT = 100000;
+        private const decimal MIN_OVERDRAFT_AMOUNT = 1000000;
 
         public string AccountNumber { get; set; }
         public string AccountOwner { get; set; }
@@ -62,34 +62,41 @@ namespace BankApp.Entities
 {
     public static IBankAccount FromJson(JsonElement element)
     {
-        if (!element.TryGetProperty("accountNumber", out var accountNumberElement))
+        if (!element.TryGetProperty("AccountNumber", out var accountNumberElement))
         {
             throw new InvalidOperationException("Missing 'accountNumber' property in JSON.");
         }
 
-        if (!element.TryGetProperty("accountOwner", out var accountOwnerElement))
+        if (!element.TryGetProperty("AccountOwner", out var accountOwnerElement))
         {
             throw new InvalidOperationException("Missing 'accountOwner' property in JSON.");
         }
 
-        if (!element.TryGetProperty("balanceAmount", out var balanceAmountElement))
+        if (!element.TryGetProperty("BalanceAmount", out var balanceAmountElement))
         {
             throw new InvalidOperationException("Missing 'balanceAmount' property in JSON.");
         }
 
-        if (!element.TryGetProperty("accountType", out var accountTypeElement))
+        if (!element.TryGetProperty("AccountType", out var accountTypeElement))
         {
             throw new InvalidOperationException("Missing 'accountType' property in JSON.");
         }
 
         var accountType = accountTypeElement.GetString();
+        if(accountType==1)
+        {
+            accountType="Checking";
+        }else
+        {
+            accountType="Saving";
+        }
         var accountNumber = accountNumberElement.GetString();
         var accountOwner = accountOwnerElement.GetString();
         var balanceAmount = balanceAmountElement.GetDecimal();
 
         if (accountType == "Checking")
         {
-            if (!element.TryGetProperty("overdraftAmount", out var overdraftAmountElement))
+            if (!element.TryGetProperty("OverdraftAmount", out var overdraftAmountElement))
             {
                 throw new InvalidOperationException("Missing 'overdraftAmount' property for Checking account.");
             }
