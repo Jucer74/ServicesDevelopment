@@ -84,33 +84,6 @@ namespace BankApp
             var response = await request.Content.ReadAsStringAsync();
             var bankAccount = JsonConvert.DeserializeObject<List<BankAccount>>(response);
             return bankAccount.First();
-
-            // try
-            // {
-            //     var request = await _client.GetAsync(_urlBase + "?account_number=" + accountNumber);
-
-            //     if (!request.IsSuccessStatusCode)
-            //     {
-            //         throw new Exception($"Error retrieving account. Status code: {request.StatusCode}");
-            //     }
-
-            //     var response = await request.Content.ReadAsStringAsync();
-            //     var bankAccountList = JsonConvert.DeserializeObject<List<BankAccount>>(response);
-
-            //     if (bankAccountList == null || !bankAccountList.Any())
-            //     {
-            //         throw new Exception($"No account found with account number {accountNumber}");
-            //     }
-
-            //     return bankAccountList.First();
-            // }
-            // catch (Exception ex)
-            // {
-            //     Console.WriteLine($"An error occurred: {ex.Message}");
-            //     return null;
-            // }
-
-
         }
 
         public async Task<int> GetLastAccountId()
