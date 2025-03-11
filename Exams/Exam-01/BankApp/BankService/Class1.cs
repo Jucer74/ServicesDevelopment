@@ -14,7 +14,7 @@ namespace BankService {
             _httpClient = new HttpClient(); 
         }
 
-        public async Task<BankAccount> GetAccount(string accountNumber) 
+        public async Task<BankAccount?> GetAccount(string accountNumber) 
         {
             var response = await _httpClient.GetAsync($"{ApiUrl}/accounts/{accountNumber}");
             
@@ -28,7 +28,7 @@ namespace BankService {
             return await GetAccount(accountNumber) != null;
         } 
 
-        public async Task<IBankAccount> CreateAccount(IBankAccount bankAccount)
+        public async Task<BankAccount?> CreateAccount(BankAccount bankAccount)
         {
             if (await ExistsAccount(bankAccount.AccountNumber))
             {
@@ -55,7 +55,51 @@ namespace BankService {
 
            return account.BalanceAmount;
         }
+
+        public async Task<BankAccount?> DepositAmount(string accountNumber, decimal amountValue)
+        {
+            var account = await GetAccount(accountNumber);
+            if (account == null)
+            {
+                Console.WriteLine("Account not found.");
+                return null;
+            }
+
+            account.BalanceAmount += amountValue;
+            string json = JsonSerializer.Serialize(account);
+            var content = new StringContent(json, Encoding.UTF8, "aplication/json");
+            var response = await _httpClient.PutAsync($"{ApiUrl}/accounts/{accountNumber}", content);
+            response.EnsureSuccessStatusCode();
+
+            return account;
+        }
        
+       public async Task<BankAccount?> WithdrawalAccount(string accountNumber, decimal amount) 
+       {
+            var account = await GetAccount(accountNumber);
+            if (account == null)
+            {
+                Console.WriteLine("Account not found.");
+                return null;
+            }
+
+            if (account.AccountType == 1 || account.BalanceAmount >= amount )
+            {
+                account.BalanceAmount -= amount;
+                string json = JsonSerializer.Serialize(account);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PutAsync($"{ApiUrl}/accounts/{accountNumber}", content);
+                response.EnsureSuccessStatusCode();
+            }
+            else 
+            {
+                Console.WriteLine("Insufficient funds.");
+                return null;
+            }
+            
+            return account;
+       }
+        
     }
 
 }

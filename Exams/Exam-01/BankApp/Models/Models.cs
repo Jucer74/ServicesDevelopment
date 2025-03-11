@@ -1,19 +1,22 @@
 ﻿namespace Models {
-      public interface IBankAccount
+  
+    public class BankAccount
     {
-        string AccountNumber { get; }
-        string AccountOwner { get; }
-        decimal BalanceAmount { get; }
-        int AccountType {get; }
+        public string AccountNumber { get; set; }
+        public string AccountOwner { get; set; }
+        public decimal BalanceAmount { get; set; }
+        public int AccountType { get; set; }
+        public decimal OverdraftAmount { get; set; }
+    
 
-
-    }
-    public class BankAccount : IBankAccount
-    {
-    public string AccountNumber { get; private set; }
-    public string AccountOwner { get; private set; }
-    public decimal BalanceAmount { get; private set; }
-    public int AccountType { get; private set; }
+        public BankAccount(string accountNumber, string accountOwner, decimal balanceAmount, int accountType, decimal overdraftAmount)
+        {
+            AccountNumber = accountNumber;
+            AccountOwner = accountOwner;
+            BalanceAmount = balanceAmount;
+            AccountType = accountType;
+            OverdraftAmount = overdraftAmount;
+        }
     }
 }
 
