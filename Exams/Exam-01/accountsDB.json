@@ -1,0 +1,12 @@
+{
+  "accounts": [
+    {
+      "id": "0123456789",
+      "accountNumber": "0123456789",
+      "accountOwner": "brian",
+      "balanceAmount": 100000,
+      "accountType": "Saving",
+      "overdraftAmount": null
+    }
+  ]
+}

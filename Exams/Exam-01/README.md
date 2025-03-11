@@ -13,7 +13,7 @@ Tome como *referencia* el siguiente diagrama de Clases:
 ## Cuenta Bancaria
 Define las propiedades principales de la cuenta asi:
 
-## IBankAcount 
+## BankAcount
 **Propiedades**
  + AccountNumber  : string  => Numero de la Cuenta, Solo Digitos y longitud exacta de 10 digitos
  + AccountOwner   : string   => Nombre del Titular de la cuenta y longitud menor o igual a 50 caracteres
