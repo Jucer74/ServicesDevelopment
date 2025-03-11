@@ -1,0 +1,44 @@
+{
+    "accounts": [
+        {
+            "accountNumber": "1111111111",
+            "accountOwner": "Julio Robles",
+            "balanceAmount": 250000,
+            "accountType": "Saving"
+        },
+        {
+            "accountNumber": "2222222222",
+            "accountOwner": "Pilar Lopez",
+            "balanceAmount": 1500000,
+            "accountType": "Checking",
+            "overdraftAmount": 1000000
+        },
+        {
+            "accountNumber": "3333333333",
+            "accountOwner": "Carlos Méndez",
+            "balanceAmount": 500000,
+            "accountType": "Saving"
+        },
+        {
+            "accountNumber": "4444444444",
+            "accountOwner": "Ana Torres",
+            "balanceAmount": 2000000,
+            "accountType": "Checking",
+            "overdraftAmount": 1000000
+        },
+        {
+            "accountNumber": "5555555555",
+            "accountOwner": "Luis Fernández",
+            "balanceAmount": 750000,
+            "accountType": "Saving"
+        },
+        {
+            "accountNumber": "6666666666",
+            "accountOwner": "María Gómez",
+            "balanceAmount": 3000000,
+            "accountType": "Checking",
+            "overdraftAmount": 1000000
+        }
+        ]
+    }
+    
