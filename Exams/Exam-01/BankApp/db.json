@@ -1,39 +1,46 @@
 {
   "accounts": [
     {
-      "AccountNumber": "1234567890",
-      "AccountOwner": "Juan Pérez",
-      "BalanceAmount": 50000,
-      "AccountType": "Saving",
+      "accountNumber": "1234567890",
+      "accountOwner": "Juan Pérez",
+      "balanceAmount": 50000,
+      "accountType": "Saving",
       "id": "7cec"
     },
     {
-      "AccountNumber": "0987654321",
-      "AccountOwner": "María Gómez",
-      "BalanceAmount": 1000000,
-      "AccountType": "Checking",
-      "OverdraftAmount": 1000000,
+      "accountNumber": "0987654321",
+      "accountOwner": "María Gómez",
+      "balanceAmount": 1000000,
+      "accountType": "Checking",
+      "overdraftAmount": 1000000,
       "id": "b206"
     },
     {
       "id": "d25b",
-      "AccountNumber": "1111111111",
-      "AccountOwner": "juan pizo",
-      "BalanceAmount": 10000,
-      "AccountType": 1
+      "accountNumber": "1111111111",
+      "accountOwner": "juan pizo",
+      "balanceAmount": 10000,
+      "accountType": 1
     },
     {
       "id": "6762",
-      "AccountNumber": "1222222222",
-      "AccountOwner": "lina m",
-      "BalanceAmount": 0,
-      "AccountType": 1
+      "accountNumber": "1222222222",
+      "accountOwner": "lina m",
+      "balanceAmount": 0,
+      "accountType": 1
     },
     {
       "id": "87cd",
-      "AccountNumber": "1255555555",
-      "AccountOwner": "sebastian s",
-      "BalanceAmount": 2000000,
+      "accountNumber": "1255555555",
+      "accountOwner": "sebastian s",
+      "balanceAmount": 2000000,
+      "accountType": 2
+    },
+    {
+      "id": "798a",
+      "AccountNumber": "1666666666",
+      "AccountOwner": "julian",
+      "BalanceAmount": 1100000,
       "AccountType": 2
     }
   ]

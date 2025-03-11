@@ -20,6 +20,7 @@ public interface IBankAccount
 
 public class SavingAccount : IBankAccount
 {   
+    public int Id { get; set; }
     public string AccountNumber { get; set; }
     public string AccountOwner { get; set; }
     public decimal BalanceAmount { get; set; }
