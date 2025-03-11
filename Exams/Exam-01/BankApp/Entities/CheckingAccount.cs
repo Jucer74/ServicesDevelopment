@@ -1,30 +1,33 @@
-namespace Entities
+using BankApp.Interfaces;
+
+namespace BankApp.Entities
 {
     public class CheckingAccount : IBankAccount
     {
-        private const decimal MIN_OVERDRAFT_AMOUNT = 1000000;
+        public string AccountNumber { get; private set; }
+        public decimal Balance { get; private set; }
+        public decimal OverdraftAmount { get; private set; }
 
-        public string AccountNumber { get; set; }
-        public string AccountOwner { get; set; }
-        public decimal BalanceAmount { get; set; }
-        public AccountType AccountType { get; set; } = AccountType.Checking;
-        public decimal OverdraftAmount { get; set; } = MIN_OVERDRAFT_AMOUNT;
+        public CheckingAccount(string accountNumber, decimal initialBalance, decimal overdraftAmount)
+        {
+            AccountNumber = accountNumber;
+            Balance = initialBalance;
+            OverdraftAmount = overdraftAmount;
+        }
 
         public void Deposit(decimal amount)
         {
-            BalanceAmount += amount;
+            Balance += amount;
         }
 
-        public void Withdrawal(decimal amount)
+        public bool Withdraw(decimal amount)
         {
-            if (BalanceAmount + OverdraftAmount >= amount)
+            if (Balance + OverdraftAmount >= amount)
             {
-                BalanceAmount -= amount;
+                Balance -= amount;
+                return true;
             }
-            else
-            {
-                throw new InvalidOperationException("Insufficient funds");
-            }
+            return false;
         }
     }
 }

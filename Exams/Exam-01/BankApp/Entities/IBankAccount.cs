@@ -1,14 +1,11 @@
-namespace Entities
+namespace BankApp.Interfaces
 {
     public interface IBankAccount
     {
-        string AccountNumber { get; set; }
-        string AccountOwner { get; set; }
-        decimal BalanceAmount { get; set; }
-        AccountType AccountType { get; set; }
-        decimal OverdraftAmount { get; set; }
+        string AccountNumber { get; }
+        decimal Balance { get; }
 
         void Deposit(decimal amount);
-        void Withdrawal(decimal amount);
+        bool Withdraw(decimal amount);
     }
 }

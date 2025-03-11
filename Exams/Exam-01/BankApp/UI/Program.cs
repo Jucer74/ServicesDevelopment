@@ -1,7 +1,7 @@
-﻿// UI/Program.cs
-using System;
-using Entities;
-using Services;
+﻿using BankApp.Interfaces;
+using BankApp.Entities;
+using BankApp.Services;
+
 
 namespace BankApp
 {

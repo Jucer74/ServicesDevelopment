@@ -1,14 +1,15 @@
 // Services/BankService.cs
+using BankApp.Interfaces;
+using BankApp.Entities;
 using System.Collections.Generic;
-using System.Linq;
-using Entities;
+
 
 namespace Services
 {
 
     public class BankService
 {
-    private List<IBankAccount> _accounts = new List<IBankAccount>();
+    private readonly List<IBankAccount> _accounts = new List<IBankAccount>();
 
     public IBankAccount CreateAccount(IBankAccount bankAccount)
     {

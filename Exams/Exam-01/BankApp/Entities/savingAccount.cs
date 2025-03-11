@@ -1,28 +1,31 @@
-namespace Entities
+using BankApp.Interfaces;
+
+namespace BankApp.Entities
 {
     public class SavingAccount : IBankAccount
     {
-        public string AccountNumber { get; set; }
-        public string AccountOwner { get; set; }
-        public decimal BalanceAmount { get; set; }
-        public AccountType AccountType { get; set; } = AccountType.Saving;
-        public decimal OverdraftAmount { get; set; } = 0;
+        public string AccountNumber { get; private set; }
+        public decimal Balance { get; private set; }
+
+        public SavingAccount(string accountNumber, decimal initialBalance)
+        {
+            AccountNumber = accountNumber;
+            Balance = initialBalance;
+        }
 
         public void Deposit(decimal amount)
         {
-            BalanceAmount += amount;
+            Balance += amount;
         }
 
-        public void Withdrawal(decimal amount)
+        public bool Withdraw(decimal amount)
         {
-            if (BalanceAmount >= amount)
+            if (Balance >= amount)
             {
-                BalanceAmount -= amount;
+                Balance -= amount;
+                return true;
             }
-            else
-            {
-                throw new InvalidOperationException("Insufficient funds");
-            }
+            return false;
         }
     }
 }

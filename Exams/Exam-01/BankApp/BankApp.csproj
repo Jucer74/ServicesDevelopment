@@ -2,14 +2,15 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework> <!-- o la versión que estés usando -->
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="Program.cs" />
-    <Compile Include="Entities\AccountType.cs" />
-    <Compile Include="Entities\IBankAccount.cs" />
-    <Compile Include="Entities\SavingAccount.cs" />
-    <Compile Include="Entities\CheckingAccount.cs" />
-    <Compile Include="Services\BankService.cs" />
+      <Compile Include="UI\Program.cs" />
+      <Compile Include="Entities\AccountType.cs" />
+      <Compile Include="Entities\IBankAccount.cs" />
+      <Compile Include="Entities\SavingAccount.cs" />
+      <Compile Include="Entities\CheckingAccount.cs" />
+      <Compile Include="Services\BankService.cs" />
   </ItemGroup>
 </Project>
