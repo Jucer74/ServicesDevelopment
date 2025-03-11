@@ -1,0 +1,20 @@
+{
+  "accounts": [
+    {
+      "id": "8849",
+      "type": "Checking",
+      "accountNumber": "1111111111",
+      "accountOwner": "david",
+      "balanceAmount": 1500000,
+      "overdraftAmount": 0
+    },
+    {
+      "id": "0de5",
+      "type": "Checking",
+      "accountNumber": "1111111111",
+      "accountOwner": "david",
+      "balanceAmount": 500000,
+      "overdraftAmount": 0
+    }
+  ]
+}

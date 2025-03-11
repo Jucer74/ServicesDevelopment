@@ -1,0 +1,4466 @@
+{
+	"info": {
+		"_postman_id": "73b7c123-6eb0-420f-bbc2-2221d2e376ae",
+		"name": "ArepasApp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7220587"
+	},
+	"item": [
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "GetAllProducts_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Count Records == 13\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.length).to.eql(13);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Products",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllProducts_BadRequest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.errors.length).to.eql(1);\r",
+									"    pm.expect(jsonData.errors.includes(\"The value 'A' is not valid.\"));    \r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Products/A",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Products",
+								"A"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetProducts_ByPage_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Count Records == 5\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.length).to.eql(5);\r",
+									"});\r",
+									"pm.test(\"Pagination Data: X-Pagination\", function () {\r",
+									"    pm.response.to.have.header(\"X-Pagination\");\r",
+									"    var xPaginationHeader = pm.response.headers.get(\"X-Pagination\");\r",
+									"    var xPagination = JSON.parse(xPaginationHeader);\r",
+									"    pm.expect(xPagination.First).to.eql(1);\r",
+									"    pm.expect(xPagination.Last).to.eql(3);\r",
+									"    pm.expect(xPagination.Limit).to.eql(5);\r",
+									"    pm.expect(xPagination.Next).to.eql(3);\r",
+									"    pm.expect(xPagination.Page).to.eql(2);\r",
+									"    pm.expect(xPagination.Previous).to.eql(1);\r",
+									"    pm.expect(xPagination.TotalCount).to.eql(13);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Products?page=2&limit=5",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Products"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								},
+								{
+									"key": "limit",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetProducts_ByPage_BadRequest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.errors.length).to.eql(2);\r",
+									"    pm.expect(jsonData.errors.includes(\"The value 'A' is not valid for Page.\"));\r",
+									"    pm.expect(jsonData.errors.includes(\"The value 'B' is not valid for Limit.\"));\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Products?page=A&limit=B",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Products"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "A"
+								},
+								{
+									"key": "limit",
+									"value": "B"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetProducts_ByPage_First_Page_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Count Records == 5\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.length).to.eql(5);\r",
+									"});\r",
+									"pm.test(\"Pagination Data: X-Pagination\", function () {\r",
+									"    pm.response.to.have.header(\"X-Pagination\");\r",
+									"    var xPaginationHeader = pm.response.headers.get(\"X-Pagination\");\r",
+									"    var xPagination = JSON.parse(xPaginationHeader);\r",
+									"    pm.expect(xPagination.First).to.eql(1);\r",
+									"    pm.expect(xPagination.Last).to.eql(3);\r",
+									"    pm.expect(xPagination.Limit).to.eql(5);\r",
+									"    pm.expect(xPagination.Next).to.eql(2);\r",
+									"    pm.expect(xPagination.Page).to.eql(1);\r",
+									"    pm.expect(xPagination.Previous).to.eql(1);\r",
+									"    pm.expect(xPagination.TotalCount).to.eql(13);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Products?Page=1&Limit=5",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Products"
+							],
+							"query": [
+								{
+									"key": "Page",
+									"value": "1"
+								},
+								{
+									"key": "Limit",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetProducts_ByPage_Last_Page_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Count Records == 3\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.length).to.eql(3);\r",
+									"});\r",
+									"pm.test(\"Pagination Data: X-Pagination\", function () {\r",
+									"    pm.response.to.have.header(\"X-Pagination\");\r",
+									"    var xPaginationHeader = pm.response.headers.get(\"X-Pagination\");\r",
+									"    var xPagination = JSON.parse(xPaginationHeader);\r",
+									"    pm.expect(xPagination.First).to.eql(1);\r",
+									"    pm.expect(xPagination.Last).to.eql(3);\r",
+									"    pm.expect(xPagination.Limit).to.eql(5);\r",
+									"    pm.expect(xPagination.Next).to.eql(3);\r",
+									"    pm.expect(xPagination.Page).to.eql(3);\r",
+									"    pm.expect(xPagination.Previous).to.eql(2);\r",
+									"    pm.expect(xPagination.TotalCount).to.eql(13);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Products?Page=3&Limit=5",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Products"
+							],
+							"query": [
+								{
+									"key": "Page",
+									"value": "3"
+								},
+								{
+									"key": "Limit",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetProducts_ByPage_With_Page_Greater_Than_Last_Page_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Count Records == 3\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.length).to.eql(3);\r",
+									"});\r",
+									"pm.test(\"Pagination Data: X-Pagination\", function () {\r",
+									"    pm.response.to.have.header(\"X-Pagination\");\r",
+									"    var xPaginationHeader = pm.response.headers.get(\"X-Pagination\");\r",
+									"    var xPagination = JSON.parse(xPaginationHeader);\r",
+									"    pm.expect(xPagination.First).to.eql(1);\r",
+									"    pm.expect(xPagination.Last).to.eql(3);\r",
+									"    pm.expect(xPagination.Limit).to.eql(5);\r",
+									"    pm.expect(xPagination.Next).to.eql(3);\r",
+									"    pm.expect(xPagination.Page).to.eql(3);\r",
+									"    pm.expect(xPagination.Previous).to.eql(2);\r",
+									"    pm.expect(xPagination.TotalCount).to.eql(13);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Products?Page=100&Limit=5",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Products"
+							],
+							"query": [
+								{
+									"key": "Page",
+									"value": "100"
+								},
+								{
+									"key": "Limit",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetProducts_ByPage_Page_Zero_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Count Records == 5\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.length).to.eql(5);\r",
+									"});\r",
+									"pm.test(\"Pagination Data: X-Pagination\", function () {\r",
+									"    pm.response.to.have.header(\"X-Pagination\");\r",
+									"    var xPaginationHeader = pm.response.headers.get(\"X-Pagination\");\r",
+									"    var xPagination = JSON.parse(xPaginationHeader);\r",
+									"    pm.expect(xPagination.First).to.eql(1);\r",
+									"    pm.expect(xPagination.Last).to.eql(3);\r",
+									"    pm.expect(xPagination.Limit).to.eql(5);\r",
+									"    pm.expect(xPagination.Next).to.eql(2);\r",
+									"    pm.expect(xPagination.Page).to.eql(1);\r",
+									"    pm.expect(xPagination.Previous).to.eql(1);\r",
+									"    pm.expect(xPagination.TotalCount).to.eql(13);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Products?Page=0&Limit=5",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Products"
+							],
+							"query": [
+								{
+									"key": "Page",
+									"value": "0"
+								},
+								{
+									"key": "Limit",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetProducts_ByPage_Limit_Zero_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Count Records == 3\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.length).to.eql(3);\r",
+									"});\r",
+									"pm.test(\"Pagination Data: X-Pagination\", function () {\r",
+									"    pm.response.to.have.header(\"X-Pagination\");\r",
+									"    var xPaginationHeader = pm.response.headers.get(\"X-Pagination\");\r",
+									"    var xPagination = JSON.parse(xPaginationHeader);\r",
+									"    pm.expect(xPagination.First).to.eql(1);\r",
+									"    pm.expect(xPagination.Last).to.eql(5);\r",
+									"    pm.expect(xPagination.Limit).to.eql(3);\r",
+									"    pm.expect(xPagination.Next).to.eql(2);\r",
+									"    pm.expect(xPagination.Page).to.eql(1);\r",
+									"    pm.expect(xPagination.Previous).to.eql(1);\r",
+									"    pm.expect(xPagination.TotalCount).to.eql(13);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Products?Page=1&Limit=0",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Products"
+							],
+							"query": [
+								{
+									"key": "Page",
+									"value": "1"
+								},
+								{
+									"key": "Limit",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetProductById_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.id).to.eql(1);\r",
+									"    pm.expect(jsonData.name).to.eql(\"Arepa Sencilla\"); \r",
+									"    pm.expect(jsonData.description).to.eql(null);\r",
+									"    pm.expect(jsonData.price).to.eql(2000.00);\r",
+									"    pm.expect(jsonData.image).to.eql(\"Arepa-Sencilla.jpg\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Products/1",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Products",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetProductById_NotFound",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404-NotFound\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.ErrorType).to.eql(\"Not Found\");\r",
+									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+									"    //pm.expect(jsonData.Errors.includes(\"Registro con Id=12345 No Encontrado\"));\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Products/12345",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Products",
+								"12345"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostProduct_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    var productId = jsonData.id;\r",
+									"    pm.collectionVariables.set(\"productId\", productId)\r",
+									"    pm.expect(jsonData.id).to.eql(productId);\r",
+									"    pm.expect(jsonData.id).to.not.eql(0);\r",
+									"    pm.expect(jsonData.name).to.eql(\"Arepas con Camaron\"); \r",
+									"    pm.expect(jsonData.description).to.eql(\"Deliciosa Arepa rellena de Camaron\");\r",
+									"    pm.expect(jsonData.price).to.eql(20000.00);\r",
+									"    pm.expect(jsonData.image).to.eql(\"Arepa-Rellena-Camaron.jpg\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"name\": \"Arepas con Camaron\",\r\n  \"description\": \"Deliciosa Arepa rellena de Camaron\",\r\n  \"price\": 20000.00,\r\n  \"image\": \"Arepa-Rellena-Camaron.jpg\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/Products",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostProduct_RequiredFields_BadRequest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.errors.length).to.eql(3);\r",
+									"    // pm.expect(jsonData.errors.includes(\"El Campo Id es Requerido\"));\r",
+									"    // pm.expect(jsonData.errors.includes(\"El Nombre del Producto es Requerido\"));\r",
+									"    // pm.expect(jsonData.errors.includes(\"El Precio es Requerido\"));\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"description\": \"ProductDescription1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/Products",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostProduct_FieldsMaxLength_BadRequest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.errors.length).to.eql(3);\r",
+									"    // pm.expect(jsonData.errors.includes(\"La Longitud Maxima del Nombre es de 100 Caracteres\"));\r",
+									"    // pm.expect(jsonData.errors.includes(\"El Nombre de la Imagen es de Maximo 250 caracteres\"));\r",
+									"    // pm.expect(jsonData.errors.includes(\"La Longitud Maxima de la Descripcion es de 250 Caracteres\"));\r",
+									"    \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"name\": \"12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901\",\r\n  \"description\": \"12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901\",\r\n  \"price\": 1234.00,\r\n  \"image\": \"12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/Products",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PutProduct_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    var productId = jsonData.id;\r",
+									"    var currentProductId = pm.collectionVariables.get(\"productId\");\r",
+									"    pm.expect(currentProductId).to.eql(productId);\r",
+									"    pm.expect(jsonData.id).to.not.eql(0);\r",
+									"    pm.expect(jsonData.name).to.eql(\"Arepa Rellena con Camaron\"); \r",
+									"    pm.expect(jsonData.description).to.eql(\"Deliciosa Arepa rellena de Camaron\");\r",
+									"    pm.expect(jsonData.price).to.eql(20000.00);\r",
+									"    pm.expect(jsonData.image).to.eql(\"Arepa-Rellena-Camaron.jpg\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": {{productId}},\r\n    \"name\": \"Arepa Rellena con Camaron\",\r\n    \"description\": \"Deliciosa Arepa rellena de Camaron\",\r\n    \"price\": 20000.00,\r\n    \"image\": \"Arepa-Rellena-Camaron.jpg\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/Products/{{productId}}",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Products",
+								"{{productId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PutProduct_Different_Id_BadRequest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.ErrorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+									"    //pm.expect(jsonData.Errors.includes(\"El Id=12345 No Corresponde con el Id=14 del Registro\"));    \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": {{productId}},\r\n    \"name\": \"Arepa Rellena con Camaron\",\r\n    \"description\": \"Deliciosa Arepa rellena de Camaron\",\r\n    \"price\": 20000.00,\r\n    \"image\": \"Arepa-Rellena-Camaron.jpg\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/Products/12345",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Products",
+								"12345"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PutProduct_Invalid_Id_NotFound",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404-NotFound\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.ErrorType).to.eql(\"Not Found\");\r",
+									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+									"    //pm.expect(jsonData.Errors.includes(\"Registro con Id=12345 No Encontrado\"));    \r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 12345,\r\n    \"name\": \"Arepa Rellena con Camaron\",\r\n    \"description\": \"Deliciosa Arepa rellena de Camaron\",\r\n    \"price\": 20000.00,\r\n    \"image\": \"Arepa-Rellena-Camaron.jpg\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/Products/12345",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Products",
+								"12345"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteProduct_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Products/{{productId}}",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Products",
+								"{{productId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteProduct_Invalid_Id_NotFound",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404-NotFound\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.ErrorType).to.eql(\"Not Found\");\r",
+									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+									"    //pm.expect(jsonData.Errors.includes(\"Registro con Id=12345 No Encontrado\"));    \r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Products/12345",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Products",
+								"12345"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteProduct_With_OrderDetails_InternalServerError",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500-InternalServerError\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.ErrorType).to.eql(\"Internal Server Error\");\r",
+									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+									"    //pm.expect(jsonData.Errors.includes(\"No es Posible Eliminar el Registro 1 por Valores Dependientes Asociados\"));    \r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Products/1",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Products",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Customers",
+			"item": [
+				{
+					"name": "GetAllCustomers_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Count Records == 20\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.length).to.eql(20);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Customers",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllCustomers_BadRequest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.errors.length).to.eql(1);\r",
+									"    pm.expect(jsonData.errors.includes(\"The value 'A' is not valid.\"));\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Customers/A",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Customers",
+								"A"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCustomers_ByPage_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Count Records == 5\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.length).to.eql(5);\r",
+									"});\r",
+									"pm.test(\"Pagination Data: X-Pagination\", function () {\r",
+									"    pm.response.to.have.header(\"X-Pagination\");\r",
+									"    var xPaginationHeader = pm.response.headers.get(\"X-Pagination\");\r",
+									"    var xPagination = JSON.parse(xPaginationHeader);\r",
+									"    pm.expect(xPagination.First).to.eql(1);\r",
+									"    pm.expect(xPagination.Last).to.eql(4);\r",
+									"    pm.expect(xPagination.Limit).to.eql(5);\r",
+									"    pm.expect(xPagination.Next).to.eql(3);\r",
+									"    pm.expect(xPagination.Page).to.eql(2);\r",
+									"    pm.expect(xPagination.Previous).to.eql(1);\r",
+									"    pm.expect(xPagination.TotalCount).to.eql(20);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Customers?Page=2&Limit=5",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Customers"
+							],
+							"query": [
+								{
+									"key": "Page",
+									"value": "2"
+								},
+								{
+									"key": "Limit",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCustomers_ByPage_First_Page_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Count Records == 5\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.length).to.eql(5);\r",
+									"});\r",
+									"pm.test(\"Pagination Data: X-Pagination\", function () {\r",
+									"    pm.response.to.have.header(\"X-Pagination\");\r",
+									"    var xPaginationHeader = pm.response.headers.get(\"X-Pagination\");\r",
+									"    var xPagination = JSON.parse(xPaginationHeader);\r",
+									"    pm.expect(xPagination.First).to.eql(1);\r",
+									"    pm.expect(xPagination.Last).to.eql(4);\r",
+									"    pm.expect(xPagination.Limit).to.eql(5);\r",
+									"    pm.expect(xPagination.Next).to.eql(2);\r",
+									"    pm.expect(xPagination.Page).to.eql(1);\r",
+									"    pm.expect(xPagination.Previous).to.eql(1);\r",
+									"    pm.expect(xPagination.TotalCount).to.eql(20);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Customers?Page=1&Limit=5",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Customers"
+							],
+							"query": [
+								{
+									"key": "Page",
+									"value": "1"
+								},
+								{
+									"key": "Limit",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCustomers_ByPage_Last_Page_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Count Records == 5\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.length).to.eql(5);\r",
+									"});\r",
+									"pm.test(\"Pagination Data: X-Pagination\", function () {\r",
+									"    pm.response.to.have.header(\"X-Pagination\");\r",
+									"    var xPaginationHeader = pm.response.headers.get(\"X-Pagination\");\r",
+									"    var xPagination = JSON.parse(xPaginationHeader);\r",
+									"    pm.expect(xPagination.First).to.eql(1);\r",
+									"    pm.expect(xPagination.Last).to.eql(4);\r",
+									"    pm.expect(xPagination.Limit).to.eql(5);\r",
+									"    pm.expect(xPagination.Next).to.eql(4);\r",
+									"    pm.expect(xPagination.Page).to.eql(4);\r",
+									"    pm.expect(xPagination.Previous).to.eql(3);\r",
+									"    pm.expect(xPagination.TotalCount).to.eql(20);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Customers?Page=4&Limit=5",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Customers"
+							],
+							"query": [
+								{
+									"key": "Page",
+									"value": "4"
+								},
+								{
+									"key": "Limit",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCustomers_ByPage_With_Page_Greater_Than_Last_Page_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Count Records == 5\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.length).to.eql(5);\r",
+									"});\r",
+									"pm.test(\"Pagination Data: X-Pagination\", function () {\r",
+									"    pm.response.to.have.header(\"X-Pagination\");\r",
+									"    var xPaginationHeader = pm.response.headers.get(\"X-Pagination\");\r",
+									"    var xPagination = JSON.parse(xPaginationHeader);\r",
+									"    pm.expect(xPagination.First).to.eql(1);\r",
+									"    pm.expect(xPagination.Last).to.eql(4);\r",
+									"    pm.expect(xPagination.Limit).to.eql(5);\r",
+									"    pm.expect(xPagination.Next).to.eql(4);\r",
+									"    pm.expect(xPagination.Page).to.eql(4);\r",
+									"    pm.expect(xPagination.Previous).to.eql(3);\r",
+									"    pm.expect(xPagination.TotalCount).to.eql(20);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Customers?Page=100&Limit=5",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Customers"
+							],
+							"query": [
+								{
+									"key": "Page",
+									"value": "100"
+								},
+								{
+									"key": "Limit",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCustomers_ByPage_Page_Zero_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Count Records == 5\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.length).to.eql(5);\r",
+									"});\r",
+									"pm.test(\"Pagination Data: X-Pagination\", function () {\r",
+									"    pm.response.to.have.header(\"X-Pagination\");\r",
+									"    var xPaginationHeader = pm.response.headers.get(\"X-Pagination\");\r",
+									"    var xPagination = JSON.parse(xPaginationHeader);\r",
+									"    pm.expect(xPagination.First).to.eql(1);\r",
+									"    pm.expect(xPagination.Last).to.eql(4);\r",
+									"    pm.expect(xPagination.Limit).to.eql(5);\r",
+									"    pm.expect(xPagination.Next).to.eql(2);\r",
+									"    pm.expect(xPagination.Page).to.eql(1);\r",
+									"    pm.expect(xPagination.Previous).to.eql(1);\r",
+									"    pm.expect(xPagination.TotalCount).to.eql(20);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Customers?Page=0&Limit=5",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Customers"
+							],
+							"query": [
+								{
+									"key": "Page",
+									"value": "0"
+								},
+								{
+									"key": "Limit",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCustomers_ByPage_Limit_Zero_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Count Records == 3\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.length).to.eql(3);\r",
+									"});\r",
+									"pm.test(\"Pagination Data: X-Pagination\", function () {\r",
+									"    pm.response.to.have.header(\"X-Pagination\");\r",
+									"    var xPaginationHeader = pm.response.headers.get(\"X-Pagination\");\r",
+									"    var xPagination = JSON.parse(xPaginationHeader);\r",
+									"    pm.expect(xPagination.First).to.eql(1);\r",
+									"    pm.expect(xPagination.Last).to.eql(7);\r",
+									"    pm.expect(xPagination.Limit).to.eql(3);\r",
+									"    pm.expect(xPagination.Next).to.eql(2);\r",
+									"    pm.expect(xPagination.Page).to.eql(1);\r",
+									"    pm.expect(xPagination.Previous).to.eql(1);\r",
+									"    pm.expect(xPagination.TotalCount).to.eql(20);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Customers?Page=1&Limit=0",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Customers"
+							],
+							"query": [
+								{
+									"key": "Page",
+									"value": "1"
+								},
+								{
+									"key": "Limit",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCustomerById_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.id).to.eql(1);\r",
+									"    pm.expect(jsonData.userEmail).to.eql(\"Alejandro.Gonzalez@email.com\"); \r",
+									"    pm.expect(jsonData.fullName).to.eql(\"Alejandro Gonzalez\"); \r",
+									"    pm.expect(jsonData.address).to.eql(\"Calle 5 # 12-34, Barrio San Fernando\"); \r",
+									"    pm.expect(jsonData.phoneNumber).to.eql(\"310-123-4567\");\r",
+									"    pm.expect(jsonData.password).to.eql(null);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Customers/1",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Customers",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCustomerById_NotFound",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404-NotFound\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.ErrorType).to.eql(\"Not Found\");\r",
+									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+									"    // pm.expect(jsonData.Errors.includes(\"Registro con Id=12345 No Encontrado\"));\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Customers/12345",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Customers",
+								"12345"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostCustomer_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    var customerId = jsonData.id;\r",
+									"    pm.collectionVariables.set(\"customerId\", customerId);\r",
+									"    pm.expect(jsonData.id).to.not.eql(0);\r",
+									"    pm.expect(jsonData.fullName).to.eql(\"John Doe\");\r",
+									"    pm.expect(jsonData.userEmail).to.eql(\"John.Doe@email.com\");\r",
+									"    pm.expect(jsonData.address).to.eql(\"Cra 80B #48A-41, Barrio el Caney\"); \r",
+									"    pm.expect(jsonData.phoneNumber).to.eql(\"318-555-2345\"); \r",
+									"    pm.expect(jsonData.password).to.eql(null); \r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"userEmail\": \"John.Doe@email.com\",\r\n  \"fullName\": \"John Doe\",\r\n  \"address\": \"Cra 80B #48A-41, Barrio el Caney\",\r\n  \"phoneNumber\": \"318-555-2345\",\r\n  \"password\": \"P4ssw0rd*01\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/Customers",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostCustomer_RequiredFields_BadRequest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.errors.length).to.eql(6);\r",
+									"    // pm.expect(jsonData.errors.includes(\"El Campo Id es Requerido\"));\r",
+									"    // pm.expect(jsonData.errors.includes(\"El Nombre Completo del Cliente es Requerido\"));\r",
+									"    // pm.expect(jsonData.errors.includes(\"La Direccion del Cliente es Requerida\"));\r",
+									"    // pm.expect(jsonData.errors.includes(\"El Telefono del Cliente es Requerido\"));\r",
+									"    // pm.expect(jsonData.errors.includes(\"La Contraseña del Cliente es Requerida\"));\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/Customers",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostCustomer_FieldsMaxLength_BadRequest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.errors.length).to.eql(5);\r",
+									"    // pm.expect(jsonData.errors.includes(\"La Longitud Maxima para Nombre Completo del Cliente es de 100 Caracteres\"));\r",
+									"    // pm.expect(jsonData.errors.includes(\"La Longitud Maxima para la Direccion del Cliente es de 250 Caracteres\"));\r",
+									"    // pm.expect(jsonData.errors.includes(\"La Longitud Maxima para el Campo UserEmail es de 250 Caracteres\"));\r",
+									"    // pm.expect(jsonData.errors.includes(\"La Longitud Maxima para el Telefono del cliente es de 50 Caracteres\"));\r",
+									"    // pm.expect(jsonData.errors.includes(\"La Longitud Maxima para La Contraseña es de 50 Caracteres\"));\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"userEmail\": \"1234567890.1234567890.1234567890.1234567890.1234567890@1234567890.1234567890.1234567890.1234567890.1234567890.1234567890.1234567890.1234567890.1234567890.1234567890.1234567890.1234567890.1234567890.1234567890.1234567890.1234567890.1234567890.1234567890.1234567890.1234567890.com\",\r\n  \"fullName\": \"12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901\",\r\n  \"address\": \"12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901\",\r\n  \"phoneNumber\": \"123456789012345678901234567890123456789012345678901\",\r\n  \"password\": \"123456789012345678901234567890123456789012345678901\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/Customers",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostCustomer_Invalid_Email_BadRequest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.errors.length).to.eql(1);\r",
+									"    // pm.expect(jsonData.errors.includes(\"El Campo UserEmail Debe Ser un Email Valido\"));\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"userEmail\": \"Invalid_Email\",\r\n  \"fullName\": \"John Doe\",\r\n  \"address\": \"Cra 80B #48A-41, Barrio el Caney\",\r\n  \"phoneNumber\": \"318-555-2345\",\r\n  \"password\": \"P4ssw0rd*01\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/Customers",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostCustomer_Duplicate_UserEmail_InternalServerError",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500-InternalServerError\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.ErrorType).to.eql(\"Internal Server Error\");\r",
+									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+									"    // pm.expect(jsonData.Errors.includes(\"El UserEmail 'John.Doe@email.com' Ya Existe\"));\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"userEmail\": \"John.Doe@email.com\",\r\n  \"fullName\": \"John Doe\",\r\n  \"address\": \"Cra 80B #48A-41, Barrio el Caney\",\r\n  \"phoneNumber\": \"318-555-2345\",\r\n  \"password\": \"P4ssw0rd*01\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/Customers",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PutCustomer_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    var customerId = pm.collectionVariables.get(\"customerId\");\r",
+									"    pm.expect(jsonData.id).to.eql(customerId);\r",
+									"    pm.expect(jsonData.fullName).to.eql(\"John Doe\");\r",
+									"    pm.expect(jsonData.userEmail).to.eql(\"John.Doe@email.com\");\r",
+									"    pm.expect(jsonData.address).to.eql(\"Cra 80B #48A-41, Barrio el Caney\"); \r",
+									"    pm.expect(jsonData.phoneNumber).to.eql(\"321-234-5678\"); \r",
+									"    pm.expect(jsonData.password).to.eql(null); \r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": {{customerId}},\r\n  \"userEmail\": \"John.Doe@email.com\",\r\n  \"fullName\": \"John Doe\",\r\n  \"address\": \"Cra 80B #48A-41, Barrio el Caney\",\r\n  \"phoneNumber\": \"321-234-5678\",\r\n  \"password\": \"P4ssw0rd*01\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/Customers/{{customerId}}",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Customers",
+								"{{customerId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PutCustomer_Different_Id_BadRequest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+									"    var customerId = pm.collectionVariables.get(\"customerId\");\r",
+									"    // pm.expect(jsonData.Errors.includes(\"El Id=12345 No Corresponde con el Id={{customerId}} del Registro\"));\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": {{customerId}},\r\n  \"userEmail\": \"John.Doe@email.com\",\r\n  \"fullName\": \"John Doe\",\r\n  \"address\": \"Cra 80B #48A-41, Barrio el Caney\",\r\n  \"phoneNumber\": \"321-234-5678\",\r\n  \"password\": \"P4ssw0rd*01\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/Customers/12345",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Customers",
+								"12345"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PutCustomer_CustomerId_NotFound",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404-NotFound\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+									"    // pm.expect(jsonData.Errors.includes(\"Registro con Id=12345 No Encontrado\"));\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 12345,\r\n  \"userEmail\": \"John.Doe@email.com\",\r\n  \"fullName\": \"John Doe\",\r\n  \"address\": \"Cra 80B #48A-41, Barrio el Caney\",\r\n  \"phoneNumber\": \"321-234-5678\",\r\n  \"password\": \"P4ssw0rd*01\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/Customers/12345",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Customers",
+								"12345"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostCustomer_Login_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-oK\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userEmail\": \"John.Doe@email.com\",\r\n  \"password\": \"P4ssw0rd*01\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/Customers/Login",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Customers",
+								"Login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostCustomer_Login_InternalServerError",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500-InernalServerError\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+									"    // pm.expect(jsonData.Errors.includes(\"El UserEmail o la Contraseña son Invalidos\"));\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userEmail\": \"NoFoundUser@email.com\",\r\n  \"password\": \"NoPassword\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/Customers/Login",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Customers",
+								"Login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostCustomer_Login_RequiredFields_BadRequest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.errors.length).to.eql(2);\r",
+									"    // pm.expect(jsonData.errors.includes(\"El UserEmail es Requerido\"));\r",
+									"    // pm.expect(jsonData.errors.includes(\"La Contraseña del Cliente es Requerida\"));\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/Customers/Login",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Customers",
+								"Login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostCustomer_Login_FieldsMaxLength_InternalServerError",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500-InernalServerError\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+									"    // pm.expect(jsonData.Errors.includes(\"El UserEmail o la Contraseña son Invalidos\"));\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userEmail\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.cccccccccccccccccccccccccccccccccccccccccccccccccc.dddddddddddddddddddddddddddddddddddddddddddddddddd.eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee.ffffffffffffffffffffffffffffffffffffffffffffffffff.com\",\r\n  \"password\": \"123456789012345678901234567890123456789012345678901234567890\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/Customers/Login",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Customers",
+								"Login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostCustomer_Login_Invalid_Email_BadRequest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.errors.length).to.eql(1);\r",
+									"    // pm.expect(jsonData.errors.includes(\"El Campo UserEmail Debe Ser un Email Valido\"));\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userEmail\": \"invalid_email\",\r\n  \"password\": \"MyP4ssword\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/Customers/Login",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Customers",
+								"Login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetOrdersByCustomerId_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.customer.id).to.eql(1);\r",
+									"    pm.expect(jsonData.customer.userEmail).to.eql(\"Alejandro.Gonzalez@email.com\"); \r",
+									"    pm.expect(jsonData.customer.fullName).to.eql(\"Alejandro Gonzalez\"); \r",
+									"    pm.expect(jsonData.customer.address).to.eql(\"Calle 5 # 12-34, Barrio San Fernando\"); \r",
+									"    pm.expect(jsonData.customer.phoneNumber).to.eql(\"310-123-4567\");\r",
+									"    pm.expect(jsonData.customer.password).to.eql(null);\r",
+									"    pm.expect(jsonData.orders.length).to.eql(2);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Customers/1/Orders",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Customers",
+								"1",
+								"Orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetOrdersByCustomerId_BadRequest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.errors.length).to.eql(1);\r",
+									"    pm.expect(jsonData.errors.includes(\"The value 'A' is not valid.\"));\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Customers/A/Orders",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Customers",
+								"A",
+								"Orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetOrdersByCustomerId_NotFound",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404-NotFound\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+									"    // pm.expect(jsonData.Errors.includes(\"Registro con Id=12345 No Encontrado\"));\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Customers/12345/Orders",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Customers",
+								"12345",
+								"Orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetOrdersByCustomerId_Without_Orders_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.customer.id).to.eql(10);\r",
+									"    pm.expect(jsonData.customer.userEmail).to.eql(\"Valeria.Torres@email.com\"); \r",
+									"    pm.expect(jsonData.customer.fullName).to.eql(\"Valeria Torres\"); \r",
+									"    pm.expect(jsonData.customer.address).to.eql(\"Calle 9 # 18-76, Barrio La Flora\"); \r",
+									"    pm.expect(jsonData.customer.phoneNumber).to.eql(\"319-012-3456\");\r",
+									"    pm.expect(jsonData.customer.password).to.eql(null);\r",
+									"    pm.expect(jsonData.orders.length).to.eql(0);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Customers/10/Orders",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Customers",
+								"10",
+								"Orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteCustomer_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Customers/{{customerId}}",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Customers",
+								"{{customerId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PutCustomer_CustomerId_NotFound",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404-NotFound\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+									"    // pm.expect(jsonData.Errors.includes(\"Registro con Id=12345 No Encontradoo\"));\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Customers/12345",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Customers",
+								"12345"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteCustomer_With_Orders_InternalServerError",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500-InternalServerError\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.ErrorType).to.eql(\"Internal Server Error\");\r",
+									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+									"    // pm.expect(jsonData.Errors.includes(\"No es Posible Eliminar el Registro 1 por Valores Dependientes Asociados\"));    \r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Customers/1",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Customers",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "GetAllOrders_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Count Records == 5\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.length).to.eql(5);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Orders",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllOrders_BadRequest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.errors.length).to.eql(1);\r",
+									"    pm.expect(jsonData.errors.includes(\"The value 'A' is not valid.\"));\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Orders/A",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Orders",
+								"A"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetOrders_ByPage_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Count Records == 2\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.length).to.eql(2);\r",
+									"});\r",
+									"pm.test(\"Pagination Data: X-Pagination\", function () {\r",
+									"    pm.response.to.have.header(\"X-Pagination\");\r",
+									"    var xPaginationHeader = pm.response.headers.get(\"X-Pagination\");\r",
+									"    var xPagination = JSON.parse(xPaginationHeader);\r",
+									"    pm.expect(xPagination.First).to.eql(1);\r",
+									"    pm.expect(xPagination.Last).to.eql(3);\r",
+									"    pm.expect(xPagination.Limit).to.eql(2);\r",
+									"    pm.expect(xPagination.Next).to.eql(3);\r",
+									"    pm.expect(xPagination.Page).to.eql(2);\r",
+									"    pm.expect(xPagination.Previous).to.eql(1);\r",
+									"    pm.expect(xPagination.TotalCount).to.eql(5);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Orders?Page=2&Limit=2",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Orders"
+							],
+							"query": [
+								{
+									"key": "Page",
+									"value": "2"
+								},
+								{
+									"key": "Limit",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetOrders_ByPage_First_Page_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Count Records == 2\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.length).to.eql(2);\r",
+									"});\r",
+									"pm.test(\"Pagination Data: X-Pagination\", function () {\r",
+									"    pm.response.to.have.header(\"X-Pagination\");\r",
+									"    var xPaginationHeader = pm.response.headers.get(\"X-Pagination\");\r",
+									"    var xPagination = JSON.parse(xPaginationHeader);\r",
+									"    pm.expect(xPagination.First).to.eql(1);\r",
+									"    pm.expect(xPagination.Last).to.eql(3);\r",
+									"    pm.expect(xPagination.Limit).to.eql(2);\r",
+									"    pm.expect(xPagination.Next).to.eql(2);\r",
+									"    pm.expect(xPagination.Page).to.eql(1);\r",
+									"    pm.expect(xPagination.Previous).to.eql(1);\r",
+									"    pm.expect(xPagination.TotalCount).to.eql(5);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Orders?Page=1&Limit=2",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Orders"
+							],
+							"query": [
+								{
+									"key": "Page",
+									"value": "1"
+								},
+								{
+									"key": "Limit",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetOrders_ByPage_Last_Page_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Count Records == 1\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.length).to.eql(1);\r",
+									"});\r",
+									"pm.test(\"Pagination Data: X-Pagination\", function () {\r",
+									"    pm.response.to.have.header(\"X-Pagination\");\r",
+									"    var xPaginationHeader = pm.response.headers.get(\"X-Pagination\");\r",
+									"    var xPagination = JSON.parse(xPaginationHeader);\r",
+									"    pm.expect(xPagination.First).to.eql(1);\r",
+									"    pm.expect(xPagination.Last).to.eql(3);\r",
+									"    pm.expect(xPagination.Limit).to.eql(2);\r",
+									"    pm.expect(xPagination.Next).to.eql(3);\r",
+									"    pm.expect(xPagination.Page).to.eql(3);\r",
+									"    pm.expect(xPagination.Previous).to.eql(2);\r",
+									"    pm.expect(xPagination.TotalCount).to.eql(5);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Orders?Page=3&Limit=2",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Orders"
+							],
+							"query": [
+								{
+									"key": "Page",
+									"value": "3"
+								},
+								{
+									"key": "Limit",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetOrders_ByPage_Page_Greater_Than_Last_Page_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Count Records == 1\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.length).to.eql(1);\r",
+									"});\r",
+									"pm.test(\"Pagination Data: X-Pagination\", function () {\r",
+									"    pm.response.to.have.header(\"X-Pagination\");\r",
+									"    var xPaginationHeader = pm.response.headers.get(\"X-Pagination\");\r",
+									"    var xPagination = JSON.parse(xPaginationHeader);\r",
+									"    pm.expect(xPagination.First).to.eql(1);\r",
+									"    pm.expect(xPagination.Last).to.eql(3);\r",
+									"    pm.expect(xPagination.Limit).to.eql(2);\r",
+									"    pm.expect(xPagination.Next).to.eql(3);\r",
+									"    pm.expect(xPagination.Page).to.eql(3);\r",
+									"    pm.expect(xPagination.Previous).to.eql(2);\r",
+									"    pm.expect(xPagination.TotalCount).to.eql(5);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Orders?Page=100&Limit=2",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Orders"
+							],
+							"query": [
+								{
+									"key": "Page",
+									"value": "100"
+								},
+								{
+									"key": "Limit",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetOrderById_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.id).to.eql(1);\r",
+									"    pm.expect(jsonData.customerId).to.eql(1);\r",
+									"    pm.expect(jsonData.deliveryFullName).to.eql(\"Alejandro Gonzalez\"); \r",
+									"    pm.expect(jsonData.deliveryAddress).to.eql(\"Calle 5 # 12-34, Barrio San Fernando\");\r",
+									"    pm.expect(jsonData.deliveryPhoneNumber).to.eql(\"310-123-4567\");\r",
+									"    pm.expect(jsonData.totalPrice).to.eql(5500);\r",
+									"    pm.expect(jsonData.notes).to.eql(\"Tocar el Timbre\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Orders/1",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Orders",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetOrderById_NotFound",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404-NotFound\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.ErrorType).to.eql(\"Not Found\");\r",
+									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+									"    // pm.expect(jsonData.Errors[0]).to.eql(\"Registro con Id=12345 No Encontrado\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Orders/12345",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Orders",
+								"12345"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostOrder_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    var orderId = jsonData.id;\r",
+									"    pm.collectionVariables.set(\"orderId\", orderId);\r",
+									"    pm.expect(jsonData.id).to.not.eql(0);\r",
+									"    pm.expect(jsonData.customerId).to.eql(10);\r",
+									"    pm.expect(jsonData.deliveryFullName).to.eql(\"Valeria Torres\"); \r",
+									"    pm.expect(jsonData.deliveryAddress).to.eql(\"Calle 9 # 18-76, Barrio La Flora\"); \r",
+									"    pm.expect(jsonData.deliveryPhoneNumber).to.eql(\"319-012-3456\"); \r",
+									"    pm.expect(jsonData.notes).to.eql(\"Preguntar por Andrea\"); \r",
+									"    pm.expect(jsonData.totalPrice).to.eql(6000.00); \r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"customerId\": 10,\r\n  \"deliveryFullName\": \"Valeria Torres\",\r\n  \"deliveryAddress\": \"Calle 9 # 18-76, Barrio La Flora\",\r\n  \"deliveryPhoneNumber\": \"319-012-3456\",\r\n  \"notes\": \"Preguntar por Andrea\",\r\n  \"totalPrice\": 6000.00\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/Orders",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostOrder_RequiredFields_BadRequest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.errors.length).to.eql(6);\r",
+									"    // pm.expect(jsonData.errors.includes(\"El Campo Id es Requerido\"));\r",
+									"    // pm.expect(jsonData.errors.includes(\"El Campo CustomerId es Requerido\"));\r",
+									"    // pm.expect(jsonData.errors.includes(\"El Nombre Completo para la Entrega es Requerido\"));\r",
+									"    // pm.expect(jsonData.errors.includes(\"La Direccion para la Entrega es Requerida\"));\r",
+									"    // pm.expect(jsonData.errors.includes(\"El Telefono para la Entrega es Requerido\"));\r",
+									"    // pm.expect(jsonData.errors.includes(\"El Precio Total es Requerido\"));\r",
+									"\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/Orders",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostOrder_FieldsMaxLength_BadRequest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.errors.length).to.eql(5);\r",
+									"    // pm.expect(jsonData.errors.includes(\"La Longitud Maxima para Nombre Completo para la Entrega es de 100 Caracteres\"));\r",
+									"    // pm.expect(jsonData.errors.includes(\"La Longitud Maxima para la Direccion de Entrega es de 250 Caracteres\"));\r",
+									"    // pm.expect(jsonData.errors.includes(\"La Longitud Maxima para el Telefono de Entrega es de 50 Caracteres\"));\r",
+									"    // pm.expect(jsonData.errors.includes(\"La Longitud Maxima para las Notas es de 250 Caracteres\"));\r",
+									"    // pm.expect(jsonData.errors.includes(\"El Precio Total debe ser Mayor a Cero\"));\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"customerId\": 0,\r\n  \"deliveryFullName\": \"12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901\",\r\n  \"deliveryAddress\": \"12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901\",\r\n  \"deliveryPhoneNumber\": \"123456789012345678901234567890123456789012345678901\",\r\n  \"notes\": \"12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901\",\r\n  \"totalPrice\": 0.00\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/Orders",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostOrder_TotalOrder_Zero_BadRequest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.errors.length).to.eql(1);\r",
+									"    // pm.expect(jsonData.errors.includes(\"El Precio Total debe ser Mayor a Cero\"));\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"customerId\": 10,\r\n  \"deliveryFullName\": \"Valeria Torres\",\r\n  \"deliveryAddress\": \"Calle 9 # 18-76, Barrio La Flora\",\r\n  \"deliveryPhoneNumber\": \"319-012-3456\",\r\n  \"notes\": \"Preguntar por Andrea\",\r\n  \"totalPrice\": 0.00\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/Orders",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostOrder_CustomerId_NotFound",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404-NotFound\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.ErrorType).to.eql(\"Not Found\");\r",
+									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+									"    // pm.expect(jsonData.Errors.includes(\"El Cliente con id=12345 No existe\"));\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"customerId\": 12345,\r\n  \"deliveryFullName\": \"Peter Parker\",\r\n  \"deliveryAddress\": \"Calle 13 #43-21, Barrio Junin\",\r\n  \"deliveryPhoneNumber\": \"321-111-2222\",\r\n  \"notes\": null,\r\n  \"totalPrice\": 6000.00\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/Orders",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostOrder_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    var orderId = pm.collectionVariables.get(\"orderId\");\r",
+									"    pm.expect(jsonData.id).to.eql(orderId);\r",
+									"    pm.expect(jsonData.customerId).to.eql(10);\r",
+									"    pm.expect(jsonData.deliveryFullName).to.eql(\"Valeria Torres\"); \r",
+									"    pm.expect(jsonData.deliveryAddress).to.eql(\"Calle 9 # 18-76, Barrio La Flora\"); \r",
+									"    pm.expect(jsonData.deliveryPhoneNumber).to.eql(\"319-012-3456\"); \r",
+									"    pm.expect(jsonData.notes).to.eql(\"Preguntar por Valeria\"); \r",
+									"    pm.expect(jsonData.totalPrice).to.eql(6000.00); \r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": {{orderId}},\r\n  \"customerId\": 10,\r\n  \"deliveryFullName\": \"Valeria Torres\",\r\n  \"deliveryAddress\": \"Calle 9 # 18-76, Barrio La Flora\",\r\n  \"deliveryPhoneNumber\": \"319-012-3456\",\r\n  \"notes\": \"Preguntar por Valeria\",\r\n  \"totalPrice\": 6000.00\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/Orders/{{orderId}}",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Orders",
+								"{{orderId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostOrder_DifferentId_BadRequest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+									"    var orderId = pm.collectionVariables.get(\"orderId\");\r",
+									"    // pm.expect(jsonData.Errors.includes(\"El Id=12345 No Corresponde con el Id={{orderId}} del Registro\"));\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": {{orderId}},\r\n  \"customerId\": 10,\r\n  \"deliveryFullName\": \"Valeria Torres\",\r\n  \"deliveryAddress\": \"Calle 9 # 18-76, Barrio La Flora\",\r\n  \"deliveryPhoneNumber\": \"319-012-3456\",\r\n  \"notes\": \"Preguntar por Valeria\",\r\n  \"totalPrice\": 6000.00\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/Orders/12345",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Orders",
+								"12345"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostOrder_OrderId_NotFound",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404-NotFound\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+									"    // pm.expect(jsonData.Errors.includes(\"Registro con Id=12345 No Encontrado\"));\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 12345,\r\n  \"customerId\": 10,\r\n  \"deliveryFullName\": \"Valeria Torres\",\r\n  \"deliveryAddress\": \"Calle 9 # 18-76, Barrio La Flora\",\r\n  \"deliveryPhoneNumber\": \"319-012-3456\",\r\n  \"notes\": \"Preguntar por Valeria\",\r\n  \"totalPrice\": 6000.00\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/Orders/12345",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Orders",
+								"12345"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostOrder_CustomerId_NotFound",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404-NotFound\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+									"    // pm.expect(jsonData.Errors.includes(\"El Cliente con id=12345 No existe\"));\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": {{orderId}},\r\n  \"customerId\": 12345,\r\n  \"deliveryFullName\": \"Valeria Torres\",\r\n  \"deliveryAddress\": \"Calle 9 # 18-76, Barrio La Flora\",\r\n  \"deliveryPhoneNumber\": \"319-012-3456\",\r\n  \"notes\": \"Preguntar por Valeria\",\r\n  \"totalPrice\": 6000.00\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/Orders/{{orderId}}",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Orders",
+								"{{orderId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllOrders_Details_BadRequest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.errors.length).to.eql(1);\r",
+									"    pm.expect(jsonData.errors.includes(\"The value 'A' is not valid.\"));\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Orders/A/Details",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Orders",
+								"A",
+								"Details"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllOrders_Details_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.order.id).to.eql(1);\r",
+									"    pm.expect(jsonData.order.customerId).to.eql(1);\r",
+									"    pm.expect(jsonData.order.deliveryFullName).to.eql(\"Alejandro Gonzalez\"); \r",
+									"    pm.expect(jsonData.order.deliveryAddress).to.eql(\"Calle 5 # 12-34, Barrio San Fernando\"); \r",
+									"    pm.expect(jsonData.order.deliveryPhoneNumber).to.eql(\"310-123-4567\");\r",
+									"    pm.expect(jsonData.order.totalPrice).to.eql(5500.00);\r",
+									"    pm.expect(jsonData.order.notes).to.eql(\"Tocar el Timbre\");\r",
+									"    pm.expect(jsonData.detailProducts.length).to.eql(2);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Orders/1/Details",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Orders",
+								"1",
+								"Details"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllOrders_Details_OrderId_NotFound",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404-NotFound\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+									"    // pm.expect(jsonData.Errors.includes(\"Registro con Id=12345 No Encontrado\"));\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Orders/12345/Details",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Orders",
+								"12345",
+								"Details"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllOrders_Details_Without_Products_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.order.id).to.eql(6);\r",
+									"    pm.expect(jsonData.order.customerId).to.eql(10);\r",
+									"    pm.expect(jsonData.order.deliveryFullName).to.eql(\"Valeria Torres\"); \r",
+									"    pm.expect(jsonData.order.deliveryAddress).to.eql(\"Calle 9 # 18-76, Barrio La Flora\"); \r",
+									"    pm.expect(jsonData.order.deliveryPhoneNumber).to.eql(\"319-012-3456\");\r",
+									"    pm.expect(jsonData.order.totalPrice).to.eql(6000.00);\r",
+									"    pm.expect(jsonData.order.notes).to.eql(\"Preguntar por Valeria\");\r",
+									"    pm.expect(jsonData.detailProducts.length).to.eql(0);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Orders/{{orderId}}/Details",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Orders",
+								"{{orderId}}",
+								"Details"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteOrder_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Orders/{{orderId}}",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Orders",
+								"{{orderId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteOrder_OrderId_NotFound",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404-NotFound\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+									"    // pm.expect(jsonData.Errors.includes(\"Registro con Id=12345 No Encontrado\"));\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Orders/12345",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Orders",
+								"12345"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteOrder_OrderId_With_OrderDetail_InternalServerError",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 500-InternalServerError\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+									"    // pm.expect(jsonData.Errors.includes(\"No es Posible Eliminar el Registro 1 por Valores Dependientes Asociados\"));\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/Orders/1",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Orders",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "OrderDetails",
+			"item": [
+				{
+					"name": "GetAllOrdersDetails_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Count Records == 10\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.length).to.eql(10);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/OrderDetails",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"OrderDetails"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllOrdersDetails_BadRequest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.errors.length).to.eql(1);\r",
+									"    pm.expect(jsonData.errors.includes(\"The value 'A' is not valid.\"));\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/OrderDetails/A",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"OrderDetails",
+								"A"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllOrdersDetails_ByPage_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Count Records == 3\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.length).to.eql(3);\r",
+									"});\r",
+									"pm.test(\"Pagination Data: X-Pagination\", function () {\r",
+									"    pm.response.to.have.header(\"X-Pagination\");\r",
+									"    var xPaginationHeader = pm.response.headers.get(\"X-Pagination\");\r",
+									"    var xPagination = JSON.parse(xPaginationHeader);\r",
+									"    pm.expect(xPagination.First).to.eql(1);\r",
+									"    pm.expect(xPagination.Last).to.eql(4);\r",
+									"    pm.expect(xPagination.Limit).to.eql(3);\r",
+									"    pm.expect(xPagination.Next).to.eql(3);\r",
+									"    pm.expect(xPagination.Page).to.eql(2);\r",
+									"    pm.expect(xPagination.Previous).to.eql(1);\r",
+									"    pm.expect(xPagination.TotalCount).to.eql(10);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/OrderDetails?Page=2&Limit=3",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"OrderDetails"
+							],
+							"query": [
+								{
+									"key": "Page",
+									"value": "2"
+								},
+								{
+									"key": "Limit",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllOrdersDetails_ByPage_First_Page_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Count Records == 3\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.length).to.eql(3);\r",
+									"});\r",
+									"pm.test(\"Pagination Data: X-Pagination\", function () {\r",
+									"    pm.response.to.have.header(\"X-Pagination\");\r",
+									"    var xPaginationHeader = pm.response.headers.get(\"X-Pagination\");\r",
+									"    var xPagination = JSON.parse(xPaginationHeader);\r",
+									"    pm.expect(xPagination.First).to.eql(1);\r",
+									"    pm.expect(xPagination.Last).to.eql(4);\r",
+									"    pm.expect(xPagination.Limit).to.eql(3);\r",
+									"    pm.expect(xPagination.Next).to.eql(2);\r",
+									"    pm.expect(xPagination.Page).to.eql(1);\r",
+									"    pm.expect(xPagination.Previous).to.eql(1);\r",
+									"    pm.expect(xPagination.TotalCount).to.eql(10);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/OrderDetails?Page=1&Limit=3",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"OrderDetails"
+							],
+							"query": [
+								{
+									"key": "Page",
+									"value": "1"
+								},
+								{
+									"key": "Limit",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllOrdersDetails_ByPage_Last_Page_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Count Records == 1\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.length).to.eql(1);\r",
+									"});\r",
+									"pm.test(\"Pagination Data: X-Pagination\", function () {\r",
+									"    pm.response.to.have.header(\"X-Pagination\");\r",
+									"    var xPaginationHeader = pm.response.headers.get(\"X-Pagination\");\r",
+									"    var xPagination = JSON.parse(xPaginationHeader);\r",
+									"    pm.expect(xPagination.First).to.eql(1);\r",
+									"    pm.expect(xPagination.Last).to.eql(4);\r",
+									"    pm.expect(xPagination.Limit).to.eql(3);\r",
+									"    pm.expect(xPagination.Next).to.eql(4);\r",
+									"    pm.expect(xPagination.Page).to.eql(4);\r",
+									"    pm.expect(xPagination.Previous).to.eql(3);\r",
+									"    pm.expect(xPagination.TotalCount).to.eql(10);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/OrderDetails?Page=4&Limit=3",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"OrderDetails"
+							],
+							"query": [
+								{
+									"key": "Page",
+									"value": "4"
+								},
+								{
+									"key": "Limit",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllOrdersDetails_ByPage_Page_Greater_Than_Last_Page_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Count Records == 1\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.length).to.eql(1);\r",
+									"});\r",
+									"pm.test(\"Pagination Data: X-Pagination\", function () {\r",
+									"    pm.response.to.have.header(\"X-Pagination\");\r",
+									"    var xPaginationHeader = pm.response.headers.get(\"X-Pagination\");\r",
+									"    var xPagination = JSON.parse(xPaginationHeader);\r",
+									"    pm.expect(xPagination.First).to.eql(1);\r",
+									"    pm.expect(xPagination.Last).to.eql(4);\r",
+									"    pm.expect(xPagination.Limit).to.eql(3);\r",
+									"    pm.expect(xPagination.Next).to.eql(4);\r",
+									"    pm.expect(xPagination.Page).to.eql(4);\r",
+									"    pm.expect(xPagination.Previous).to.eql(3);\r",
+									"    pm.expect(xPagination.TotalCount).to.eql(10);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/OrderDetails?Page=100&Limit=3",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"OrderDetails"
+							],
+							"query": [
+								{
+									"key": "Page",
+									"value": "100"
+								},
+								{
+									"key": "Limit",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostOrder_NewOrder_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    var orderId = jsonData.id;\r",
+									"    pm.collectionVariables.set(\"orderId\", orderId);\r",
+									"    pm.expect(jsonData.id).to.not.eql(0);\r",
+									"    pm.expect(jsonData.customerId).to.eql(10);\r",
+									"    pm.expect(jsonData.deliveryFullName).to.eql(\"Valeria Torres\"); \r",
+									"    pm.expect(jsonData.deliveryAddress).to.eql(\"Calle 9 # 18-76, Barrio La Flora\"); \r",
+									"    pm.expect(jsonData.deliveryPhoneNumber).to.eql(\"319-012-3456\"); \r",
+									"    pm.expect(jsonData.notes).to.eql(\"Preguntar por Andrea\"); \r",
+									"    pm.expect(jsonData.totalPrice).to.eql(6000.00); \r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"customerId\": 10,\r\n  \"deliveryFullName\": \"Valeria Torres\",\r\n  \"deliveryAddress\": \"Calle 9 # 18-76, Barrio La Flora\",\r\n  \"deliveryPhoneNumber\": \"319-012-3456\",\r\n  \"notes\": \"Preguntar por Andrea\",\r\n  \"totalPrice\": 6000.00\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/Orders",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostOrderDetails_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.id).to.not.eql(0);\r",
+									"    var orderDetailId = jsonData.id;\r",
+									"    pm.collectionVariables.set(\"orderDetailId\", orderDetailId);\r",
+									"    var orderId = pm.collectionVariables.get(\"orderId\");\r",
+									"    pm.expect(jsonData.orderId).to.eql(orderId);\r",
+									"    pm.expect(jsonData.productId).to.eql(1); \r",
+									"    pm.expect(jsonData.quantity).to.eql(3); \r",
+									"    pm.expect(jsonData.priceOrd).to.eql(6000.00); \r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"orderId\": {{orderId}},\r\n  \"productId\": 1,\r\n  \"quantity\": 3,\r\n  \"priceOrd\": 6000.00\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/OrderDetails",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"OrderDetails"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostOrderDetails_RequiredFields_BadRequest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.errors.length).to.eql(5);\r",
+									"    // pm.expect(jsonData.errors.includes(\"El Campo Id es Requerido\"));\r",
+									"    // pm.expect(jsonData.errors.includes(\"El Campo ProductId es Requerido\"));\r",
+									"    // pm.expect(jsonData.errors.includes(\"El Campo OrderId es Requerido\"));\r",
+									"    // pm.expect(jsonData.errors.includes(\"El Campo Quantity es Requerido\"));\r",
+									"    // pm.expect(jsonData.errors.includes(\"El Campo PriceOrd es Requerido\"));\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/OrderDetails",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"OrderDetails"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostOrderDetails_OrderId_NotFound",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404-NotFound\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.ErrorType).to.eql(\"Not Found\");\r",
+									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+									"    // pm.expect(jsonData.Errors.includes(\"La Orden con Id=12345 No existe\"));    \r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"orderId\": 12345,\r\n  \"productId\": 1,\r\n  \"quantity\": 3,\r\n  \"priceOrd\": 6000.00\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/OrderDetails",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"OrderDetails"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostOrderDetails_ProductId_NotFound",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404-NotFound\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.ErrorType).to.eql(\"Not Found\");\r",
+									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+									"    // pm.expect(jsonData.Errors.includes(\"El Producto con Id=12345 No existe\"));\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"orderId\": {{orderId}},\r\n  \"productId\": 12345,\r\n  \"quantity\": 3,\r\n  \"priceOrd\": 6000.00\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/OrderDetails",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"OrderDetails"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostOrderDetails_Quantity_Zero_BadRequest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.errors.length).to.eql(1);\r",
+									"    // pm.expect(jsonData.errors.includes(\"La Cantidad debe ser Mayor a Cero\"));\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"orderId\": {{orderId}},\r\n  \"productId\": 1,\r\n  \"quantity\": 0,\r\n  \"priceOrd\": 6000.00\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/OrderDetails",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"OrderDetails"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostOrderDetails_PriceOrd_Zero_BadRequest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.errors.length).to.eql(1);\r",
+									"    // pm.expect(jsonData.errors.includes(\"El Precio debe ser Mayor a Cero\"));\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"orderId\": {{orderId}},\r\n  \"productId\": 1,\r\n  \"quantity\": 3,\r\n  \"priceOrd\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/OrderDetails",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"OrderDetails"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PutOrderDetails_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    var orderDetailId = pm.collectionVariables.get(\"orderDetailId\");\r",
+									"    pm.expect(jsonData.id).to.eql(orderDetailId);\r",
+									"    var orderId = pm.collectionVariables.get(\"orderId\");\r",
+									"    pm.expect(jsonData.orderId).to.eql(orderId);\r",
+									"    pm.expect(jsonData.productId).to.eql(1); \r",
+									"    pm.expect(jsonData.quantity).to.eql(2); \r",
+									"    pm.expect(jsonData.priceOrd).to.eql(4000.00); \r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": {{orderDetailId}},\r\n  \"orderId\": {{orderId}},\r\n  \"productId\": 1,\r\n  \"quantity\": 2,\r\n  \"priceOrd\": 4000.00\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/OrderDetails/{{orderDetailId}}",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"OrderDetails",
+								"{{orderDetailId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PutOrderDetails_DifferentId_BadRequest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+									"    var orderDetailId = pm.collectionVariables.get(\"orderDetailId\");\r",
+									"    // pm.expect(jsonData.Errors.includes(\"El Id=12345 No Corresponde con el Id={{orderDetailId}} del Registro\"));\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": {{orderDetailId}},\r\n  \"orderId\": {{orderId}},\r\n  \"productId\": 1,\r\n  \"quantity\": 2,\r\n  \"priceOrd\": 4000.00\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/OrderDetails/12345",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"OrderDetails",
+								"12345"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PutOrderDetails_OrderDetailId_NotFound",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404-NotFound\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+									"    // pm.expect(jsonData.Errors.includes(\"Registro con Id=12345 No Encontrado\"));\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 12345,\r\n  \"orderId\": {{orderId}},\r\n  \"productId\": 1,\r\n  \"quantity\": 2,\r\n  \"priceOrd\": 4000.00\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/OrderDetails/12345",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"OrderDetails",
+								"12345"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PutOrderDetails_OrderID_NotFound",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404-NotFound\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+									"    // pm.expect(jsonData.Errors.includes(\"La Orden con Id=12345 No existe\"));\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": {{orderDetailId}},\r\n  \"orderId\": 12345,\r\n  \"productId\": 1,\r\n  \"quantity\": 2,\r\n  \"priceOrd\": 4000.00\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/OrderDetails/{{orderDetailId}}",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"OrderDetails",
+								"{{orderDetailId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteOrderDetails_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/OrderDetails/{{orderDetailId}}",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"OrderDetails",
+								"{{orderDetailId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteOrderDetails_OrderDetailId_NotFound",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404-NotFound\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+									"    // pm.expect(jsonData.Errors.includes(\"Registro con Id=12345 No Encontrado\"));\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl}}/OrderDetails/12345",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"OrderDetails",
+								"12345"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BaseUrl",
+			"value": "https://localhost:5001/api/v1.0",
+			"type": "string"
+		},
+		{
+			"key": "productId",
+			"value": "0",
+			"type": "string"
+		},
+		{
+			"key": "customerId",
+			"value": "0",
+			"type": "string"
+		},
+		{
+			"key": "orderId",
+			"value": "0",
+			"type": "string"
+		},
+		{
+			"key": "orderDetailId",
+			"value": ""
+		}
+	]
+}
