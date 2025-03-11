@@ -1,20 +1,44 @@
 {
   "accounts": [
     {
-      "id": "8849",
-      "type": "Checking",
+      "id": "5090",
+      "type": "Saving",
       "accountNumber": "1111111111",
       "accountOwner": "david",
-      "balanceAmount": 1500000,
+      "balanceAmount": 300000,
       "overdraftAmount": 0
     },
     {
-      "id": "0de5",
-      "type": "Checking",
+      "id": "cd1c",
+      "type": "Saving",
       "accountNumber": "1111111111",
       "accountOwner": "david",
       "balanceAmount": 500000,
       "overdraftAmount": 0
+    },
+    {
+      "id": "20cd",
+      "type": "Checking",
+      "accountNumber": "2222222222",
+      "accountOwner": "jose",
+      "balanceAmount": 1500000,
+      "overdraftAmount": 0
+    },
+    {
+      "id": "4fb2",
+      "type": "Saving",
+      "accountNumber": "1111111111",
+      "accountOwner": "david",
+      "balanceAmount": 300000,
+      "overdraftAmount": 0
+    },
+    {
+      "id": "bf6c",
+      "type": "Checking",
+      "accountNumber": "2222222222",
+      "accountOwner": "jose",
+      "balanceAmount": 600000,
+      "overdraftAmount": 400000
     }
   ]
 }

@@ -108,7 +108,7 @@ namespace BankApp.Services
         public IBankAccount GetByAccountNumber(string accountNumber)
         {
             var all = LoadAll();
-            return all.FirstOrDefault(a => a.AccountNumber == accountNumber);
+            return all.LastOrDefault(a => a.AccountNumber == accountNumber);
         }
 
         public void Create(IBankAccount account)

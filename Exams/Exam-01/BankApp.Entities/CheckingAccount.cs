@@ -29,8 +29,6 @@ namespace BankApp.Entities
             if (string.IsNullOrWhiteSpace(accountOwner) || accountOwner.Length > 50)
                 throw new ArgumentException("Account owner is required and max length is 50 characters.");
 
-            if (initialDeposit <= 0)
-                throw new ArgumentException("Initial deposit must be greater than zero.");
 
             AccountNumber = accountNumber;
             AccountOwner = accountOwner;
