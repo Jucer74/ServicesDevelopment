@@ -1,65 +1,92 @@
-﻿using System.Threading.Tasks;
-using BankApp.DAL;
+﻿using System;
+using System.Net.Http;
+using System.Text.Json;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Linq;
 using BankApp.Entities;
 
 namespace BankApp.BL
 {
-    public class BankAccountService
+    public class BankAccountRepository
     {
-        private readonly BankAccountRepository _bankAccountRepository;
+        private readonly HttpClient _httpClient;
+        private const string ApiUrl = "http://localhost:3000/accounts";
 
-        public BankAccountService()
+        public BankAccountRepository(HttpClient httpClient)
         {
-            _bankAccountRepository = new BankAccountRepository();
+            _httpClient = httpClient;
         }
 
-        public async Task CreateAccount(BankAccount account)
+        public async Task AddAccountAsync(BankAccount account)
         {
-            await _bankAccountRepository.AddAccount(account);
-        }
+            var content = new StringContent(JsonSerializer.Serialize(account), System.Text.Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync(ApiUrl, content);
 
-        public async Task<BankAccount?> GetAccount(string accountNumber)
-        {
-            return await _bankAccountRepository.GetAccount(accountNumber);
-        }
-
-        public async Task Deposit(string accountNumber, decimal amount)
-        {
-            var account = await _bankAccountRepository.GetAccount(accountNumber);
-            if (account != null)
+            if (!response.IsSuccessStatusCode)
             {
-                account.BalanceAmount += amount;
-                await _bankAccountRepository.UpdateAccount(account);
-            }
-            else
-            {
-                throw new InvalidOperationException("Account not found.");
+                var errorResponse = await response.Content.ReadAsStringAsync();
+                throw new InvalidOperationException($"Failed to create account. Server response: {errorResponse}");
             }
         }
 
-        public async Task Withdraw(string accountNumber, decimal amount)
+        public async Task<BankAccount?> GetAccountAsync(string accountNumber)
         {
-            var account = await _bankAccountRepository.GetAccount(accountNumber);
-            if (account != null)
+            var response = await _httpClient.GetAsync(ApiUrl);
+            if (response.IsSuccessStatusCode)
             {
-                if (account.AccountType == AccountType.Checking && account.BalanceAmount + account.OverdraftAmount >= amount)
-                {
-                    account.BalanceAmount -= amount;
-                }
-                else if (account.AccountType == AccountType.Saving && account.BalanceAmount >= amount)
-                {
-                    account.BalanceAmount -= amount;
-                }
-                else
-                {
-                    throw new InvalidOperationException("Insufficient funds.");
-                }
-                await _bankAccountRepository.UpdateAccount(account);
+                var responseData = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"Response from server: {responseData}"); // Depuración
+
+                var accounts = JsonSerializer.Deserialize<List<BankAccount>>(responseData);
+
+                // Buscar la cuenta por AccountNumber
+                return accounts?.FirstOrDefault(a => a.AccountNumber == accountNumber);
             }
-            else
+            Console.WriteLine($"Failed to retrieve accounts. Status code: {response.StatusCode}"); // Depuración
+            return null;
+        }
+
+        public async Task UpdateAccountAsync(BankAccount account)
+        {
+            // Obtener la cuenta existente por su AccountNumber
+            var existingAccount = await GetAccountAsync(account.AccountNumber);
+            if (existingAccount == null)
             {
                 throw new InvalidOperationException("Account not found.");
             }
+
+            // Actualizar la cuenta usando su id
+            var url = $"{ApiUrl}/{existingAccount.Id}";
+            Console.WriteLine($"Updating account at URL: {url}"); // Depuración
+
+            var content = new StringContent(JsonSerializer.Serialize(account), System.Text.Encoding.UTF8, "application/json");
+            var response = await _httpClient.PutAsync(url, content);
+            response.EnsureSuccessStatusCode();
         }
+  public async Task DepositAsync(string accountNumber, decimal amount)
+{
+    Console.WriteLine($"🔹 Intentando depositar {amount} en la cuenta {accountNumber}");
+
+    var account = await GetAccountAsync(accountNumber);
+    if (account == null)
+    {
+        Console.WriteLine("ERROR: Cuenta no encontrada. No se puede depositar.");
+        throw new Exception("Cuenta no encontrada");
+    }
+
+    Console.WriteLine($" Saldo actual antes del depósito: {account.Balance}");
+    account.Balance += amount;
+    Console.WriteLine($"Nuevo saldo después del depósito: {account.Balance}");
+
+    await UpdateAccountAsync(account);
+    Console.WriteLine("Depósito realizado exitosamente.");
+
+    // Verifica el saldo después de actualizarlo
+    var updatedAccount = await GetAccountAsync(accountNumber);
+    Console.WriteLine($"Saldo final en la API: {updatedAccount?.Balance}");
+}
+
+
     }
 }

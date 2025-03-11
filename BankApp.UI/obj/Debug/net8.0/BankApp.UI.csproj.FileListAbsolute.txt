@@ -1,0 +1,6 @@
+C:\Users\TMK CORP\BankApp\BankApp.UI\obj\Debug\net8.0\BankApp.UI.csproj.AssemblyReference.cache
+C:\Users\TMK CORP\BankApp\BankApp.UI\obj\Debug\net8.0\BankApp.UI.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\TMK CORP\BankApp\BankApp.UI\obj\Debug\net8.0\BankApp.UI.AssemblyInfoInputs.cache
+C:\Users\TMK CORP\BankApp\BankApp.UI\obj\Debug\net8.0\BankApp.UI.AssemblyInfo.cs
+C:\Users\TMK CORP\BankApp\BankApp.UI\obj\Debug\net8.0\BankApp.UI.csproj.CoreCompileInputs.cache
+C:\Users\TMK CORP\BankApp\BankApp.UI\obj\Debug\net8.0\BankApp.UI.sourcelink.json

@@ -1,3 +1,38 @@
 {
-    "accounts": []
-  }
+  "accounts": [
+    {
+      "id": "8389",
+      "AccountNumber": "2222222222",
+      "AccountOwner": "juan",
+      "BalanceAmount": 1000000,
+      "AccountType": 2,
+      "OverdraftAmount": 1000000
+    },
+    {
+      "id": "91ef",
+      "AccountNumber": "2222222222",
+      "AccountOwner": "juan",
+      "BalanceAmount": 1000000,
+      "AccountType": 2,
+      "OverdraftAmount": 1000000
+    },
+    {
+      "id": "c420",
+      "Id": null,
+      "AccountNumber": "1111111111",
+      "AccountOwner": "juan david",
+      "BalanceAmount": 1000000,
+      "AccountType": 2,
+      "OverdraftAmount": 1000000
+    },
+    {
+      "id": "aa44",
+      "Id": null,
+      "AccountNumber": "3333333333",
+      "AccountOwner": "diego",
+      "BalanceAmount": 1000000,
+      "AccountType": 2,
+      "OverdraftAmount": 1000000
+    }
+  ]
+}

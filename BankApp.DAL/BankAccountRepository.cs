@@ -1,7 +1,7 @@
-﻿using System.Net.Http;
+﻿using BankApp.Entities;
 using System.Text.Json;
-using System.Threading.Tasks;
-using BankApp.Entities;
+using System.Net.Http.Headers;
+using System.Text;
 
 namespace BankApp.DAL
 {
@@ -10,36 +10,60 @@ namespace BankApp.DAL
         private readonly HttpClient _httpClient;
         private const string ApiUrl = "http://localhost:3000/accounts";
 
-        public BankAccountRepository()
+        public BankAccountRepository(HttpClient httpClient)
         {
-            _httpClient = new HttpClient();
+            _httpClient = httpClient;
         }
 
-        public async Task AddAccount(BankAccount account)
+        public async Task AddAccountAsync(BankAccount account)
         {
-            var content = new StringContent(JsonSerializer.Serialize(account), System.Text.Encoding.UTF8, "application/json");
+            var content = new StringContent(JsonSerializer.Serialize(account), Encoding.UTF8);
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
             var response = await _httpClient.PostAsync(ApiUrl, content);
-            response.EnsureSuccessStatusCode();
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorResponse = await response.Content.ReadAsStringAsync();
+                throw new InvalidOperationException($"Failed to create account. Server response: {errorResponse}");
+            }
         }
 
-        public async Task<BankAccount?> GetAccount(string accountNumber)
+        public async Task<BankAccount?> GetAccountAsync(string accountNumber)
         {
-            var response = await _httpClient.GetAsync($"{ApiUrl}?accountNumber={accountNumber}");
-            response.EnsureSuccessStatusCode();
+            var url = $"{ApiUrl}/{accountNumber}";
+            Console.WriteLine($"Fetching account from: {url}"); // Depuración
 
-            var responseBody = await response.Content.ReadAsStringAsync();
-            var accounts = JsonSerializer.Deserialize<List<BankAccount>>(responseBody);
+            var response = await _httpClient.GetAsync(url);
+            if (response.IsSuccessStatusCode)
+            {
+                var responseData = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"Response from server: {responseData}"); // Depuración
 
-            return accounts?.FirstOrDefault();
+                return JsonSerializer.Deserialize<BankAccount>(responseData);
+            }
+
+            Console.WriteLine($"ERROR: Failed to get account. Status code: {response.StatusCode}");
+            return null;
         }
 
-        public async Task<List<BankAccount>> GetAccounts()
+        public async Task UpdateAccountAsync(BankAccount account)
         {
-            var response = await _httpClient.GetAsync(ApiUrl);
-            response.EnsureSuccessStatusCode();
+            var url = $"{ApiUrl}/{account.AccountNumber}";
+            Console.WriteLine($"Updating account at URL: {url}");
 
-            var responseBody = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<List<BankAccount>>(responseBody) ?? new List<BankAccount>();
+            var content = new StringContent(JsonSerializer.Serialize(account), Encoding.UTF8);
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            var response = await _httpClient.PutAsync(url, content);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorResponse = await response.Content.ReadAsStringAsync();
+                throw new InvalidOperationException($"ERROR: Failed to update account. Server response: {errorResponse}");
+            }
+
+            Console.WriteLine("Cuenta actualizada exitosamente.");
         }
     }
 }
