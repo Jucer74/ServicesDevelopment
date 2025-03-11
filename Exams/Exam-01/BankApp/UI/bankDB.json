@@ -1,11 +1,36 @@
 {
   "accounts": [
     {
-      "id": "fd36",
-      "AccountNumber": "111111",
+      "id": "90000",
+      "AccountNumber": "90000",
+      "AccountOwner": "tomas",
+      "BalanceAmount": 9000,
+      "AccountType": "Saving",
+      "OverdraftAmount": 0
+    },
+    {
+      "id": "9000",
+      "AccountNumber": "9000",
       "AccountOwner": "tomas",
       "BalanceAmount": 1000,
-      "AccountType": 1
+      "AccountType": "Saving",
+      "OverdraftAmount": 0
+    },
+    {
+      "id": "12345678",
+      "AccountNumber": "12345678",
+      "AccountOwner": "pepe",
+      "BalanceAmount": 94000,
+      "AccountType": "Saving",
+      "OverdraftAmount": 0
+    },
+    {
+      "id": "987",
+      "AccountNumber": "987",
+      "AccountOwner": "rufus",
+      "BalanceAmount": 1000,
+      "AccountType": "Checking",
+      "OverdraftAmount": 1000000
     }
   ]
 }

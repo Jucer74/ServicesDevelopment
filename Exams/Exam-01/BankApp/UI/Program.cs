@@ -59,9 +59,21 @@ namespace BankApp.UI
             Console.Write("Enter Account Type (1 = Saving, 2 = Checking): ");
             int type = Convert.ToInt32(Console.ReadLine());
 
-            IBankAccount account = type == 1
-                ? new SavingAccount { AccountNumber = accountNumber, AccountOwner = accountOwner, BalanceAmount = balance }
-                : new CheckingAccount { AccountNumber = accountNumber, AccountOwner = accountOwner, BalanceAmount = balance };
+            decimal overdraftAmount = 0;
+            if (type == 2) // Si es cuenta corriente, preguntar por el sobregiro
+            {
+                Console.Write("Enter Overdraft Limit: ");
+                overdraftAmount = Convert.ToDecimal(Console.ReadLine());
+            }
+
+            BankAccount account = new BankAccount
+            {
+                AccountNumber = accountNumber,
+                AccountOwner = accountOwner,
+                BalanceAmount = balance,
+                AccountType = type == 1 ? AccountType.Saving : AccountType.Checking,
+                OverdraftAmount = overdraftAmount
+            };
 
             bool success = await bankService.CreateAccountAsync(account);
             if (success) Console.WriteLine("Account created successfully!");
