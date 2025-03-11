@@ -37,7 +37,7 @@ namespace BankApp.Entities.Models
         public decimal BalanceAmount
         {
             get => balanceAmount;
-             set
+            set
             {
                 balanceAmount = value;
             }
@@ -48,7 +48,7 @@ namespace BankApp.Entities.Models
         public decimal OverdraftAmount
         {
             get => overdraftAmount;
-             set
+            set
             {
                 overdraftAmount = value;
             }
@@ -72,27 +72,38 @@ namespace BankApp.Entities.Models
             }
         }
 
-        public BankAccount(){
+        public BankAccount()
+        {
 
         }
 
-        public void Deposit(decimal amount)
+        public void Deposit(decimal amount, AccountType accountType)
         {
             BalanceAmount += amount;
-            CalculateOverdraft();
+            if (accountType == AccountType.Checking)
+            {
+                CalculateOverdraft();
+            }
         }
 
-        public void Withdrawal(decimal amount)
+        public void Withdrawal(decimal amount, AccountType accountType)
         {
             BalanceAmount -= amount;
-            CalculateOverdraft();
+            if (accountType == AccountType.Checking)
+            {
+                CalculateOverdraft();
+            }
         }
 
-        public void CalculateOverdraft(){
+        public void CalculateOverdraft()
+        {
             decimal overdraft = MIN_OVERDRAFT_AMOUNT - BalanceAmount;
-            if (overdraft > 0){
+            if (overdraft > 0)
+            {
                 OverdraftAmount = overdraft;
-            } else {
+            }
+            else
+            {
                 OverdraftAmount = 0;
             }
         }

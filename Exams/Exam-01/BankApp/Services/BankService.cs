@@ -23,7 +23,7 @@ namespace BankApp.Services
         {
             if (await ExistsAccount(account.AccountNumber))
             {
-                return null;
+                throw new Exception("Existing account");
             }
 
             var jsonContent = new StringContent(JsonSerializer.Serialize(account), Encoding.UTF8, "application/json");
@@ -31,7 +31,7 @@ namespace BankApp.Services
 
             if (!response.IsSuccessStatusCode)
             {
-                return null;
+                throw new Exception("Error creating account");
             }
             return account;
         }
@@ -41,7 +41,7 @@ namespace BankApp.Services
             var account = await GetAccountByNumber(accountNumber);
             if (account == null)
             {
-                return null;
+                throw new Exception("Account does NOT exist");
             }
             return account;
         }
@@ -51,41 +51,43 @@ namespace BankApp.Services
             var account = await GetAccountByNumber(accountNumber);
             if (account == null)
             {
-                Console.WriteLine("La cuenta no existe.");
-                return null;
+                throw new Exception("Account does NOT exist");
             }
 
-            account.Deposit(amount);
-            await UpdateAccount(account);
+            account.Deposit(amount, account.AccountType);
+            bool code = await UpdateAccount(account);
+            if (!code)
+            {
+                throw new Exception("Error updating account.");
+            }
+
             return account;
         }
 
-        public async Task<BankAccount?> WithdrawalAmount(string accountNumber, decimal amount)
+
+        public async Task<BankAccount> WithdrawalAmount(string accountNumber, decimal amount)
         {
             var account = await GetAccountByNumber(accountNumber);
             if (account == null)
             {
-                Console.WriteLine("Error: La cuenta no existe.");
-                return null;
+                throw new Exception("Account does NOT exist.");
             }
 
-            if (account.AccountType == AccountType.Checking && account.BalanceAmount < amount)
+            if (account.BalanceAmount < amount)
             {
-                Console.WriteLine("Error: Fondos insuficientes.");
-                return null;
+                throw new Exception("Account without funds.");
             }
 
-            account.Withdrawal(amount);
+            account.Withdrawal(amount, account.AccountType);
             bool code = await UpdateAccount(account);
-            if (code)
+            if (!code)
             {
-                return account;
+                throw new Exception("Error updating account.");
             }
-            else
-            {
-                return null;
-            }
+
+            return account;
         }
+
 
         public async Task<bool> ExistsAccount(string accountNumber)
         {
@@ -112,7 +114,6 @@ namespace BankApp.Services
             var getResponse = await _httpClient.GetAsync($"{_apiUrl}?AccountNumber={account.AccountNumber}");
             if (!getResponse.IsSuccessStatusCode)
             {
-                Console.WriteLine("Cuenta no encontrada.");
                 return false;
             }
 
@@ -123,7 +124,6 @@ namespace BankApp.Services
 
             if (!root.EnumerateArray().Any()) // Si no hay cuentas
             {
-                Console.WriteLine("Cuenta no encontrada.");
                 return false;
             }
 

@@ -47,22 +47,28 @@ Create Account
 Select account type (1-Saving | 2-Checking): ");
                         int typeOption;
                         int.TryParse(Console.ReadLine(), out typeOption);
-                        AccountType accountType;
+                        AccountType accountType = AccountType.Saving;
 
-                        if (typeOption == 1)
+                        if (typeOption != 1 && typeOption != 2)
+                        {
+                            Console.WriteLine("Choose an option between 1 or 2");
+                            break;
+
+                        }
+                        else if (typeOption == 1)
                         {
                             accountType = AccountType.Saving;
                         }
                         else
                         {
                             accountType = AccountType.Checking;
-                        } 
+                        }
 
                         Console.WriteLine("Account Number: ");
                         string? accountNumber = Console.ReadLine();
                         if (!string.IsNullOrEmpty(accountNumber) && !IsValidAccountNumber(accountNumber))
                         {
-                            Console.WriteLine("Revisa que el numero de cuenta tenga 10 dígitos.");
+                            Console.WriteLine("Account number must have 10 digits");
                             break;
                         }
 
@@ -70,7 +76,7 @@ Select account type (1-Saving | 2-Checking): ");
                         string? accountOwner = Console.ReadLine();
                         if (!string.IsNullOrEmpty(accountOwner) && !IsValidAccountOwner(accountOwner))
                         {
-                            Console.WriteLine("Revisa que el nombre de propietario.");
+                            Console.WriteLine("Account owwner name must have only letters.");
                             break;
                         }
 
@@ -79,17 +85,18 @@ Select account type (1-Saving | 2-Checking): ");
                         decimal.TryParse(Console.ReadLine(), out initialAmount);
                         if (!IsValidAmount(initialAmount))
                         {
-                            Console.WriteLine("El monto debe ser mayor a 0.");
+                            Console.WriteLine("Amount must be greater than 0");
                             break;
                         }
-                        
-                        BankAccount bankAccount = CreateBankAccount(accountType, accountNumber, accountOwner, initialAmount);
-                        BankAccount result = await bankService.CreateAccount(bankAccount);
 
-                        if (result != null){
-                            Console.WriteLine("Cuenta creada con éxito.");
-                        } else {
-                            Console.WriteLine("La cuenta ya existe o hubo un error al crearla.");
+                        BankAccount bankAccount = CreateBankAccount(accountType, accountNumber, accountOwner, initialAmount);
+
+                        try {
+                        BankAccount result = await bankService.CreateAccount(bankAccount);
+                        Console.WriteLine("Account created successfully");
+                        }catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.Message); // Imprime el mensaje de error en la UI
                         }
                         break;
                     case 2:
@@ -102,28 +109,32 @@ Account Number: ");
 
                         if (!string.IsNullOrEmpty(accountNumber) && !IsValidAccountNumber(accountNumber))
                         {
-                            Console.WriteLine("Revisa que el numero de cuenta tenga 10 dígitos.");
+                            Console.WriteLine("Account number must have 10 digits");
                             break;
                         }
 
-                        bankAccount = await bankService.GetBalance(accountNumber);
-
-                        if (bankAccount == null){
-                            Console.WriteLine("Cuenta NO existe.");
-                            break;
-                        }
-
-                        if (bankAccount.AccountType == AccountType.Saving)
+                        try
                         {
-                            Console.WriteLine("Account Owner: " + bankAccount.AccountOwner);
-                            Console.WriteLine("Account Type: " + bankAccount.AccountType);
-                            Console.WriteLine("Balance Amount: " + bankAccount.BalanceAmount);
-                        } else {
-                            Console.WriteLine("Account Owner: " + bankAccount.AccountOwner);
-                            Console.WriteLine("Account Type: " + bankAccount.AccountType);
-                            Console.WriteLine("Balance Amount: " + bankAccount.BalanceAmount);
-                            Console.WriteLine("Overdraft Amount: " + bankAccount.OverdraftAmount);
+                            bankAccount = await bankService.GetBalance(accountNumber);
+                            if (bankAccount.AccountType == AccountType.Saving)
+                            {
+                                Console.WriteLine("Account Owner: " + bankAccount.AccountOwner);
+                                Console.WriteLine("Account Type: " + bankAccount.AccountType);
+                                Console.WriteLine("Balance Amount: " + bankAccount.BalanceAmount);
+                            }
+                            else
+                            {
+                                Console.WriteLine("Account Owner: " + bankAccount.AccountOwner);
+                                Console.WriteLine("Account Type: " + bankAccount.AccountType);
+                                Console.WriteLine("Balance Amount: " + bankAccount.BalanceAmount);
+                                Console.WriteLine("Overdraft Amount: " + bankAccount.OverdraftAmount);
+                            }
+                        } catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.Message); // Imprime el mensaje de error en la UI
                         }
+
+
 
                         break;
                     case 3:
@@ -133,26 +144,31 @@ Account Number: ");
 -----------------------------------
 Account Number: ");
                         accountNumber = Console.ReadLine();
+                        if (!string.IsNullOrEmpty(accountNumber) && !IsValidAccountNumber(accountNumber))
+                        {
+                            Console.WriteLine("Account number must have 10 digits");
+                            break;
+                        }
 
                         Console.WriteLine("Amount: ");
                         decimal amount;
                         decimal.TryParse(Console.ReadLine(), out amount);
-
-                        if (!string.IsNullOrEmpty(accountNumber) && !IsValidAccountNumber(accountNumber))
-                        {
-                            Console.WriteLine("Revisa que el numero de cuenta tenga 10 dígitos.");
-                            break;
-                        }
-
                         if (!IsValidAmount(amount))
                         {
-                            Console.WriteLine("El monto debe ser mayor a 0.");
+                            Console.WriteLine("Amount must be greater than 0");
                             break;
                         }
 
-                        await bankService.DepositAmount(accountNumber, amount);
+                        try
+                        {
+                            bankAccount = await bankService.DepositAmount(accountNumber, amount);
+                            Console.WriteLine("Deposit has been made");
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.Message); // Imprime el mensaje de error en la UI
+                        }
 
-                        Console.WriteLine("Deposito realizado.");
                         break;
                     case 4:
                         Console.Clear();
@@ -161,41 +177,45 @@ Account Number: ");
 -----------------------------------
 Account Number: ");
                         accountNumber = Console.ReadLine();
+                        if (!string.IsNullOrEmpty(accountNumber) && !IsValidAccountNumber(accountNumber))
+                        {
+                            Console.WriteLine("Account number must have 10 digits");
+                            break;
+                        }
 
                         Console.WriteLine("Amount: ");
                         decimal.TryParse(Console.ReadLine(), out amount);
-
-                        if (!string.IsNullOrEmpty(accountNumber) && !IsValidAccountNumber(accountNumber))
-                        {
-                            Console.WriteLine("Revisa que el numero de cuenta tenga 10 dígitos.");
-                            break;
-                        }
-
                         if (!IsValidAmount(amount))
                         {
-                            Console.WriteLine("El monto debe ser mayor a 0.");
+                            Console.WriteLine("Amount must be greater than 0");
                             break;
                         }
 
-                        await bankService.WithdrawalAmount(accountNumber, amount);
-
-                        Console.WriteLine("Retiro realizado.");
+                        try
+                        {
+                            bankAccount = await bankService.WithdrawalAmount(accountNumber, amount);
+                            Console.WriteLine("Successful withdrawal");
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.Message); // Aquí se imprime el error en la UI
+                        }
                         break;
                     case 0:
-                        Console.WriteLine("Saliendo del programa...");
+                        Console.WriteLine("Leaving the program...");
                         break;
                     default:
-                        Console.WriteLine("Opción no válida. Intente de nuevo.");
+                        Console.WriteLine("Invalid option. Please try again.");
                         break;
                 }
             }
             else
             {
-                Console.WriteLine("Por favor, ingrese un número válido.");
+                Console.WriteLine("Please enter a valid number.");
             }
 
-            Console.WriteLine("\nPresiona Enter para continuar...");
-            Console.ReadLine();
+            Console.WriteLine("\nPress any key to continue...");
+            Console.ReadKey();
         } while (option != 0);
 
     }
