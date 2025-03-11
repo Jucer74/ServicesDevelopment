@@ -1,8 +1,8 @@
-﻿using System.Reflection.Metadata.Ecma335;
-using System.Text;
-using System.Text.Json;
+﻿using System.Text;
 using Models;
 using Newtonsoft.Json;
+using System.Net;
+
 
 namespace BankServices {
     public class BankService 
@@ -15,87 +15,111 @@ namespace BankServices {
             _httpClient = new HttpClient(); 
         }
 
-        public async Task<BankAccount?> GetAccount(string accountNumber) 
+
+        public class AccountNotFoundException : Exception
+        {
+        public AccountNotFoundException(string message) : base(message) { }
+        }
+
+        public async Task<BankAccount> GetAccount(string accountNumber)
         {
             var response = await _httpClient.GetAsync($"{ApiUrl}/accounts/{accountNumber}");
-            
-            if (!response.IsSuccessStatusCode) return null;
+
+            if (response.StatusCode == HttpStatusCode.NotFound)
+            {
+                throw new AccountNotFoundException("Account does not exist.");
+            }
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new InvalidOperationException("Server Error.");
+            }
+
             var json = await response.Content.ReadAsStringAsync();
-            return  JsonConvert.DeserializeObject<BankAccount>(json)!;
+            var account = JsonConvert.DeserializeObject<BankAccount>(json);
+
+            if (account != null)
+            {
+                return account;
+            }
+
+            throw new AccountNotFoundException("Account does not exist.");
         }
-        public async Task<BankAccount?> CreateAccount(BankAccount bankAccount)
+
+
+        public async Task<BankAccount> CreateAccount(BankAccount bankAccount)
         {
-            var existingAccount = await GetAccount(bankAccount.AccountNumber);
-            if (existingAccount != null)
+            try
             {
-                Console.WriteLine("Account already exists!");
-                return null;
-            }   
+                await GetAccount(bankAccount.AccountNumber);
+                throw new Exception("Account already exists!");
+            }
+            catch (AccountNotFoundException)
+            {
+                string json = JsonConvert.SerializeObject(bankAccount);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PostAsync($"{ApiUrl}/accounts", content);
+                response.EnsureSuccessStatusCode();
 
-            Console.WriteLine(bankAccount);
-            string json = JsonConvert.SerializeObject(bankAccount);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await _httpClient.PostAsync($"{ApiUrl}/accounts", content);
-            response.EnsureSuccessStatusCode();
-
-            return bankAccount;
+                return bankAccount;
+            }
         }
-   
-        public async Task<decimal?> GetBalance(string accountNumber)
+
+        public async Task<BankAccount> GetBalance(string accountNumber)
         {
-            var account = await GetAccount(accountNumber);
-            if (account == null)
+            try {
+                var account = await GetAccount(accountNumber);
+                return account;
+            } catch (AccountNotFoundException)
             {
-                    Console.WriteLine("Account Not Found");
-                    return null;
+                throw new Exception("Account does not exist.");
             }
-
-           return account.BalanceAmount;
         }
-        
-        public async Task<BankAccount?> DepositAmount(string accountNumber, decimal amountValue)
+        public async Task<BankAccount> DepositAmount(string accountNumber, decimal amountValue)
+        {
+            try
             {
-            var account = await GetAccount(accountNumber);
-            if (account == null)
-            {
-                Console.WriteLine("Account not found.");
-                return null;
-            }
-
-            account.BalanceAmount += amountValue;
-            string json = JsonConvert.SerializeObject(account);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await _httpClient.PutAsync($"{ApiUrl}/accounts/{accountNumber}", content);
-            response.EnsureSuccessStatusCode();
-
-            return account;
-        }
-
-        public async Task<BankAccount?> WithdrawalAccount(string accountNumber, decimal amount) 
-       {
-            var account = await GetAccount(accountNumber);
-            if (account == null)
-            {
-                Console.WriteLine("Account not found.");
-                return null;
-            }
-
-            if (account.AccountType == 1 || account.BalanceAmount >= amount )
-            {
-                account.BalanceAmount -= amount;
+                var account = await GetAccount(accountNumber);
+                
+                account.BalanceAmount += amountValue;
                 string json = JsonConvert.SerializeObject(account);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
                 var response = await _httpClient.PutAsync($"{ApiUrl}/accounts/{accountNumber}", content);
                 response.EnsureSuccessStatusCode();
+
+                return account;
             }
-            else 
+            catch (AccountNotFoundException)
             {
-                Console.WriteLine("Insufficient funds.");
-                return null;
+                throw new Exception("Account does not exist.");
             }
+        }
+        public async Task<BankAccount> WithdrawalAccount(string accountNumber, decimal amount) 
+        {
+            try
+            {
+                var account = await GetAccount(accountNumber);
             
-            return account;
-       }
+                if (account.AccountType == 1 || account.BalanceAmount >= amount )
+                {
+                    account.BalanceAmount -= amount;
+                    string json = JsonConvert.SerializeObject(account);
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+                    var response = await _httpClient.PutAsync($"{ApiUrl}/accounts/{accountNumber}", content);
+                    response.EnsureSuccessStatusCode();
+                }
+                else 
+                {
+                    throw new Exception("Insufficient funds.");
+                }
+                
+                return account;
+            } 
+            catch (AccountNotFoundException)
+            {
+                throw new Exception("Account does not exist.");
+            }
+        }
     }
 
 }
