@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Text.Json;
 using System.Threading.Tasks;
 using BankApp.Entities;
 
@@ -18,10 +19,8 @@ namespace BankApp.Services
             _httpClient = new HttpClient();
         }
 
-        // Crea una nueva cuenta en json‑server después de verificar que no exista.
         public async Task<bool> CreateAccountAsync(IBankAccount account)
         {
-            // Verificar si la cuenta ya existe
             var existingAccount = await GetAccountAsync(account.AccountNumber);
             if (existingAccount != null)
             {
@@ -29,15 +28,13 @@ namespace BankApp.Services
                 return false;
             }
 
-            // Para que json‑server use nuestro número de cuenta como identificador (id),
-            // creamos un objeto anónimo que incluya la propiedad "id" igual a AccountNumber.
             var accountToPost = new
             {
                 id = account.AccountNumber,
                 account.AccountNumber,
                 account.AccountOwner,
-                account.BalanceAmount,
-                AccountType = account.AccountType.ToString(), // se almacena como cadena
+                BalanceAmount = account.BalanceAmount,
+                AccountType = account.AccountType.ToString(),
                 OverdraftAmount = (account is CheckingAccount checking) ? checking.OverdraftAmount : (decimal?)null
             };
 
@@ -54,7 +51,7 @@ namespace BankApp.Services
             }
         }
 
-        // Obtiene una cuenta por AccountNumber (usado también como id en json‑server)
+        // Método actualizado para obtener una cuenta usando JsonElement
         public async Task<IBankAccount> GetAccountAsync(string accountNumber)
         {
             try
@@ -65,17 +62,44 @@ namespace BankApp.Services
                 {
                     foreach (var dict in accounts)
                     {
+                        // Comprobamos que la clave "id" (que se usó como AccountNumber) coincida
                         if (dict.ContainsKey("id") && dict["id"].ToString() == accountNumber)
                         {
-                            // Reconstruimos el objeto a partir de los datos obtenidos.
-                            string accountTypeStr = dict.ContainsKey("AccountType") ? dict["AccountType"].ToString() : "Saving";
+                            // Leer "accountType" usando JsonElement
+                            string accountTypeStr = "Saving";
+                            if (dict.ContainsKey("accountType"))
+                            {
+                                var typeElement = (JsonElement)dict["accountType"];
+                                accountTypeStr = typeElement.GetString();
+                            }
                             AccountType accountType = (AccountType)Enum.Parse(typeof(AccountType), accountTypeStr);
-                            string owner = dict.ContainsKey("AccountOwner") ? dict["AccountOwner"].ToString() : "";
-                            decimal balance = dict.ContainsKey("BalanceAmount") ? Convert.ToDecimal(dict["BalanceAmount"]) : 0;
+
+                            // Leer "accountOwner"
+                            string owner = "";
+                            if (dict.ContainsKey("accountOwner"))
+                            {
+                                var ownerElement = (JsonElement)dict["accountOwner"];
+                                owner = ownerElement.GetString();
+                            }
+
+                            // Leer "balanceAmount"
+                            decimal balance = 0;
+                            if (dict.ContainsKey("balanceAmount"))
+                            {
+                                var balanceElement = (JsonElement)dict["balanceAmount"];
+                                balance = balanceElement.GetDecimal();
+                            }
 
                             if (accountType == AccountType.Checking)
                             {
-                                decimal overdraft = dict.ContainsKey("OverdraftAmount") ? Convert.ToDecimal(dict["OverdraftAmount"]) : 0;
+                                decimal overdraft = 0;
+                                if (dict.ContainsKey("overdraftAmount"))
+                                {
+                                    var overdraftElement = (JsonElement)dict["overdraftAmount"];
+                                    if (overdraftElement.ValueKind != JsonValueKind.Null)
+                                        overdraft = overdraftElement.GetDecimal();
+                                }
+                                // Para una cuenta de Checking, se resta el sobregiro mínimo (1,000,000) del balance almacenado.
                                 return new CheckingAccount(accountNumber, owner, balance - 1000000) { OverdraftAmount = overdraft };
                             }
                             else
@@ -94,7 +118,6 @@ namespace BankApp.Services
             }
         }
 
-        // Realiza un depósito en la cuenta indicada
         public async Task<bool> DepositAccountAsync(string accountNumber, decimal amount)
         {
             var account = await GetAccountAsync(accountNumber);
@@ -128,7 +151,6 @@ namespace BankApp.Services
             }
         }
 
-        // Realiza un retiro de la cuenta indicada
         public async Task<bool> WithdrawalAccountAsync(string accountNumber, decimal amount)
         {
             var account = await GetAccountAsync(accountNumber);
@@ -170,7 +192,6 @@ namespace BankApp.Services
             }
         }
 
-        // Muestra la información de la cuenta consultándola en json‑server.
         public async Task GetBalanceAccountAsync(string accountNumber)
         {
             var account = await GetAccountAsync(accountNumber);
