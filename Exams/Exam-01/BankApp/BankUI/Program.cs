@@ -2,48 +2,128 @@
 using System.Threading.Tasks;
 using Models;
 using BankServices;
+using System.ComponentModel.Design;
 
 namespace Models
 {
     class Program
     {
-        static async Task Main(string[] args)
+        static void Main()
         {
-            BankService bankService = new BankService();
-
-            // string testAccountNumber = "1234567890";
-            // decimal initialBalance = 1000m;
-            // Console.WriteLine($"Testing with Account: {testAccountNumber}");
-
-            // Console.WriteLine("Getting initial balance...");
-            // Console.WriteLine($"Balance: {initialBalance}");
-
-            // Console.WriteLine("Depositing 500...");
-            // decimal depositAmount = 500m;
-            // initialBalance += depositAmount;
-            // Console.WriteLine($"New Balance: {initialBalance}");
-            Console.WriteLine("Hello");
-
-            Console.WriteLine("Fetching Users");
-            var account = await bankService.GetAccount("1111111111");
-             Console.WriteLine($"ID: {account.AccountNumber}, Name: {account.AccountOwner}, Balance: {account.BalanceAmount}");
-           
-            
-
-            BankAccount newBank = new BankAccount("1334666111890", "Pepepga", 100000, 0, 0);
-
-            Console.WriteLine("Enter User");
-            await bankService.CreateAccount(newBank);
-
-            Console.WriteLine("Get Balance");
-            Console.WriteLine(await bankService.GetBalance("1111111111"));
-            
-            Console.WriteLine("Deposit Ammount");
-            Console.WriteLine(await bankService.DepositAmount("1111111111", 100000));
-
-            Console.WriteLine("Witdraw");
-            Console.WriteLine(await bankService.WithdrawalAccount("1111111111", 1));
-  
+            Menu();
         }
+
+        static void Menu()
+        {
+            while (true)
+                {
+                Console.WriteLine("\nBank System Menu:");
+                Console.WriteLine("1. Create Account");
+                Console.WriteLine("2. Deposit Amount");
+                Console.WriteLine("3. Withdraw Amount");
+                Console.WriteLine("4. Get Balance");
+                Console.WriteLine("0. Exit");
+                Console.Write("Choose an option: ");
+
+                string choice = Console.ReadLine();
+
+                switch (choice)
+                {
+                case "1":
+                    CreateAccount();
+                    break;
+                case "2":
+                    DepositAmount();
+                    break;
+                case "3":
+                    WithdrawalAmount();
+                    break;
+                case "4":
+                    GetBalance();
+                    break;
+                case "0":
+                    Console.WriteLine("Exiting...");
+                    return;
+                default:
+                    Console.WriteLine("Invalid option. Try again.");
+                    break;
+                }
+            }
+
+        }
+
+        static void CreateAccount()
+        {
+            string accountNumber = GetValidAccountNumber();
+            string accountOwner = GetValidAccountOwnwer();
+        }
+
+        static void DepositAmount()
+        {
+
+        }
+
+        static void WithdrawalAmount()
+        {
+
+        }
+
+        static void GetBalance()
+        {
+
+        }
+
+        static bool IsValidAccountNumber(string accountNumber) 
+        {
+            return accountNumber.Length == 10 &&accountNumber.All(char.IsDigit);
+        }
+
+        static bool IsValidAmount(string inputAmount)
+        {
+            return true;
+        }
+
+        static bool IsValidAccountOwner(string accountNumber)
+        {
+            return true;
+        }
+
+        static int GetValidAccountType()
+        {
+            return 1;
+        }
+
+        static string GetValidAccountNumber()
+        {
+            string accountNumber;
+            do
+            {   
+
+                Console.WriteLine("Enter account number (10-Digit Number): ");
+                accountNumber = Console.ReadLine();
+                   
+                
+            } while (!IsValidAccountNumber(accountNumber));
+            return accountNumber;
+        }
+
+        static decimal GetValidAmount(string title)
+        {
+            return 1;
+        }
+
+        static string GetValidAccountOwnwer()
+        {
+            string accountOwner;
+            do
+            {
+                Console.Write("Enter account owner: ");
+                accountOwner = Console.ReadLine();
+            } while (!IsValidAccountOwner(accountOwner));
+
+            return accountOwner;
+        }
+
+
     }
 }
