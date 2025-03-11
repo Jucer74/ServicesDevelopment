@@ -1,5 +1,44 @@
 {
-    "accounts" :[
-    {}
-]
+  "accounts": [
+    {
+      "id": "1234567890",
+      "AccountNumber": "1234567890",
+      "AccountOwner": "asd",
+      "BalanceAmount": 12579,
+      "AccountType": 1,
+      "OverdraftAmount": 0
+    },
+    {
+      "id": "2222222222",
+      "AccountNumber": "2222222222",
+      "AccountOwner": "asdasdad",
+      "BalanceAmount": 510000,
+      "AccountType": 2,
+      "OverdraftAmount": 0
+    },
+    {
+      "id": "3333333333",
+      "AccountNumber": "3333333333",
+      "AccountOwner": "asdasdads",
+      "BalanceAmount": 700000,
+      "AccountType": 2,
+      "OverdraftAmount": 0
+    },
+    {
+      "id": "4444444444",
+      "AccountNumber": "4444444444",
+      "AccountOwner": "asdasd",
+      "BalanceAmount": 511111,
+      "AccountType": 2,
+      "OverdraftAmount": 0
+    },
+    {
+      "id": "1111111111",
+      "AccountNumber": "1111111111",
+      "AccountOwner": "asdasd",
+      "BalanceAmount": 900000,
+      "AccountType": 2,
+      "OverdraftAmount": 100000
+    }
+  ]
 }
