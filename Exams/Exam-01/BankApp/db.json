@@ -1,0 +1,40 @@
+{
+  "accounts": [
+    {
+      "AccountNumber": "1234567890",
+      "AccountOwner": "Juan Pérez",
+      "BalanceAmount": 50000,
+      "AccountType": "Saving",
+      "id": "7cec"
+    },
+    {
+      "AccountNumber": "0987654321",
+      "AccountOwner": "María Gómez",
+      "BalanceAmount": 1000000,
+      "AccountType": "Checking",
+      "OverdraftAmount": 1000000,
+      "id": "b206"
+    },
+    {
+      "id": "d25b",
+      "AccountNumber": "1111111111",
+      "AccountOwner": "juan pizo",
+      "BalanceAmount": 10000,
+      "AccountType": 1
+    },
+    {
+      "id": "6762",
+      "AccountNumber": "1222222222",
+      "AccountOwner": "lina m",
+      "BalanceAmount": 0,
+      "AccountType": 1
+    },
+    {
+      "id": "87cd",
+      "AccountNumber": "1255555555",
+      "AccountOwner": "sebastian s",
+      "BalanceAmount": 2000000,
+      "AccountType": 2
+    }
+  ]
+}
