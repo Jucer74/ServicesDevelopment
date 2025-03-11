@@ -112,14 +112,12 @@ namespace Models
             try {
                 string accountNumber = GetValidAccountNumber(); 
                 BankAccount bankAccount = await _bankService.GetBalance(accountNumber);
-                Console.WriteLine($"\nAccount Number: {accountNumber} | Balance: {bankAccount.BalanceAmount}\n");
+                Console.WriteLine($"\nAccount Number: {accountNumber}\n Name: {bankAccount.AccountOwner} \n Balance: {bankAccount.BalanceAmount} \n Overdraft Amount {bankAccount.OverdraftAmount}");
             } 
             catch (Exception ex)
             {
                 Console.WriteLine($"An error occurred: {ex.Message}");
             }
-            
-
         }
 
         static bool IsValidAccountNumber(string accountNumber) 
