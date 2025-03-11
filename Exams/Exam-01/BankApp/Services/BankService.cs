@@ -34,7 +34,7 @@ namespace BankApp.Services
                 account.AccountNumber,
                 account.AccountOwner,
                 BalanceAmount = account.BalanceAmount,
-                AccountType = account.AccountType.ToString(),
+                AccountType = account.AccountType.ToString(), // se almacena como cadena
                 OverdraftAmount = (account is CheckingAccount checking) ? checking.OverdraftAmount : (decimal?)null
             };
 
@@ -51,7 +51,7 @@ namespace BankApp.Services
             }
         }
 
-        // Método actualizado para obtener una cuenta usando JsonElement
+        // Método actualizado para obtener una cuenta usando JsonElement y asignar propiedades manualmente.
         public async Task<IBankAccount> GetAccountAsync(string accountNumber)
         {
             try
@@ -62,10 +62,9 @@ namespace BankApp.Services
                 {
                     foreach (var dict in accounts)
                     {
-                        // Comprobamos que la clave "id" (que se usó como AccountNumber) coincida
                         if (dict.ContainsKey("id") && dict["id"].ToString() == accountNumber)
                         {
-                            // Leer "accountType" usando JsonElement
+                            // Leer propiedades usando JsonElement y las claves en minúsculas
                             string accountTypeStr = "Saving";
                             if (dict.ContainsKey("accountType"))
                             {
@@ -74,7 +73,6 @@ namespace BankApp.Services
                             }
                             AccountType accountType = (AccountType)Enum.Parse(typeof(AccountType), accountTypeStr);
 
-                            // Leer "accountOwner"
                             string owner = "";
                             if (dict.ContainsKey("accountOwner"))
                             {
@@ -82,7 +80,6 @@ namespace BankApp.Services
                                 owner = ownerElement.GetString();
                             }
 
-                            // Leer "balanceAmount"
                             decimal balance = 0;
                             if (dict.ContainsKey("balanceAmount"))
                             {
@@ -99,8 +96,14 @@ namespace BankApp.Services
                                     if (overdraftElement.ValueKind != JsonValueKind.Null)
                                         overdraft = overdraftElement.GetDecimal();
                                 }
-                                // Para una cuenta de Checking, se resta el sobregiro mínimo (1,000,000) del balance almacenado.
-                                return new CheckingAccount(accountNumber, owner, balance - 1000000) { OverdraftAmount = overdraft };
+                                // Se usa el constructor por defecto y se asignan las propiedades manualmente para evitar sumar el sobregiro nuevamente.
+                                var checking = new CheckingAccount();
+                                checking.AccountNumber = accountNumber;
+                                checking.AccountOwner = owner;
+                                checking.BalanceAmount = balance; // El balance ya incluye el sobregiro mínimo
+                                checking.AccountType = AccountType.Checking;
+                                checking.OverdraftAmount = overdraft;
+                                return checking;
                             }
                             else
                             {
