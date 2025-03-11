@@ -1,0 +1,128 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\TMK CORP\\BankApp\\BankApp.DAL\\BankApp.DAL.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\TMK CORP\\BankApp\\BankApp.DAL\\BankApp.DAL.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\TMK CORP\\BankApp\\BankApp.DAL\\BankApp.DAL.csproj",
+        "projectName": "BankApp.DAL",
+        "projectPath": "C:\\Users\\TMK CORP\\BankApp\\BankApp.DAL\\BankApp.DAL.csproj",
+        "packagesPath": "C:\\Users\\TMK CORP\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\TMK CORP\\BankApp\\BankApp.DAL\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\TMK CORP\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\TMK CORP\\BankApp\\BankApp.Entities\\BankApp.Entities.csproj": {
+                "projectPath": "C:\\Users\\TMK CORP\\BankApp\\BankApp.Entities\\BankApp.Entities.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.406/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\TMK CORP\\BankApp\\BankApp.Entities\\BankApp.Entities.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\TMK CORP\\BankApp\\BankApp.Entities\\BankApp.Entities.csproj",
+        "projectName": "BankApp.Entities",
+        "projectPath": "C:\\Users\\TMK CORP\\BankApp\\BankApp.Entities\\BankApp.Entities.csproj",
+        "packagesPath": "C:\\Users\\TMK CORP\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\TMK CORP\\BankApp\\BankApp.Entities\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\TMK CORP\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.406/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
