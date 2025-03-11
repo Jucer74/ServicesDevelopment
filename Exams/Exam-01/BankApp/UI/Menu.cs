@@ -16,6 +16,8 @@ namespace BankApp.UI
             while (true)
             {
                 Console.Clear();
+                Console.WriteLine("Banking Operations");
+                Console.WriteLine("-------------------------");
                 Console.WriteLine("1- Create Account");
                 Console.WriteLine("2- Get Balance Account");
                 Console.WriteLine("3- Deposit Account");
@@ -52,6 +54,8 @@ namespace BankApp.UI
         private async Task CreateAccountUIAsync()
         {
             // 1. Validar el tipo de cuenta
+            Console.WriteLine("Create Account");
+            Console.WriteLine("-------------------------");
             Console.Write("Account Type (1-Saving, 2-Checking): ");
             string typeInput = Console.ReadLine();
             if (!int.TryParse(typeInput, out int type) || (type != 1 && type != 2))
@@ -129,6 +133,8 @@ namespace BankApp.UI
         // Método asíncrono para mostrar el balance de una cuenta
         private async Task GetBalanceUIAsync()
         {
+            Console.WriteLine("Get Balance");
+            Console.WriteLine("-------------------------");
             Console.Write("Account Number: ");
             string accountNumber = Console.ReadLine();
             await bankService.GetBalanceAccountAsync(accountNumber);
@@ -139,6 +145,8 @@ namespace BankApp.UI
         // Método asíncrono para realizar un depósito
         private async Task DepositAccountUIAsync()
         {
+            Console.WriteLine("Deposit Account");
+            Console.WriteLine("-------------------------");
             Console.Write("Account Number: ");
             string accountNumber = Console.ReadLine();
 
@@ -169,6 +177,8 @@ namespace BankApp.UI
         // Método asíncrono para realizar un retiro
         private async Task WithdrawalAccountUIAsync()
         {
+            Console.WriteLine("Withdrawal Account");
+            Console.WriteLine("-------------------------");
             Console.Write("Account Number: ");
             string accountNumber = Console.ReadLine();
 
