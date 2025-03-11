@@ -1,0 +1,11 @@
+{
+  "accounts": [
+    {
+      "id": "fd36",
+      "AccountNumber": "111111",
+      "AccountOwner": "tomas",
+      "BalanceAmount": 1000,
+      "AccountType": 1
+    }
+  ]
+}
