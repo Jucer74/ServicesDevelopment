@@ -5,17 +5,18 @@ namespace Entities
 {
     public class BankAccount
     {
-        // Propiedades
+        public string id { get; set; }
         public string AccountNumber { get; set; }
         public string AccountOwner { get; set; }
         public decimal BalanceAmount { get; set; }
-        
+
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public AccountType AccountType { get; set; }
         public decimal OverdraftAmount { get; set; }
 
         public BankAccount(string accountNumber, string accountOwner)
         {
+            id = accountNumber;
             AccountNumber = accountNumber;
             AccountOwner = accountOwner;
         }

@@ -14,8 +14,10 @@ namespace UI
         {
             while (true)
             {
+                Console.Clear();
                 Menu();
                 var choice = Console.ReadLine();
+                Console.Clear();
                 switch (choice)
                 {
                     case "1":
@@ -49,18 +51,18 @@ namespace UI
 
         static async Task CreateAccount(BankService bankService)
         {
+            Console.Clear();
             Console.WriteLine("Create Account");
             Console.WriteLine("--------------");
             var accountType = GetValidAccountType();
             var accountNumber = GetValidAccountNumber();
             var accountOwner = GetValidAccountOwner();
-            var initialBalanceAmount = GetValidAmount("Initial Balance Amount");
+            var initialBalanceAmount = GetValidAmount("Balance Amount");
 
             BankAccount account = accountType == AccountType.Saving
                 ? new SavingAccount(accountNumber, accountOwner)
-                : new CheckingAccount(accountNumber, accountOwner);
+                : new CheckingAccount(accountNumber, accountOwner, initialBalanceAmount);
 
-            account.BalanceAmount = initialBalanceAmount;
 
             try
             {
@@ -70,10 +72,6 @@ namespace UI
             catch (InvalidOperationException ex)
             {
                 Console.WriteLine(ex.Message);
-            }
-            catch (HttpRequestException ex)
-            {
-                Console.WriteLine($"Error: {ex.Message}");
             }
 
             Console.WriteLine("Press any key to continue...");
@@ -91,13 +89,17 @@ namespace UI
                 Console.WriteLine("La cuenta no existe.");
                 return;
             }
-            Console.WriteLine($"Account Type: {account.AccountType}");
-            Console.WriteLine($"Account Owner: {account.AccountOwner}");
-            Console.WriteLine($"Balance Amount: {account.BalanceAmount}");
-            if (account.AccountType == AccountType.Checking)
+
+            Console.WriteLine($"Account Type= {account.AccountType}");
+            Console.WriteLine($"Placeholder= {account.AccountOwner}");
+            Console.WriteLine($"Balance Amount= {account.BalanceAmount}");
+
+            if (account is CheckingAccount checkingAccount)
             {
-                Console.WriteLine($"Overdraft Amount: {account.OverdraftAmount}");
+                decimal overdraftAvailable = checkingAccount.OverdraftLimit - checkingAccount.OverdraftUsed;
+                Console.WriteLine($"Overdraft Amount: {checkingAccount.OverdraftUsed}");
             }
+
             Console.WriteLine("Press any key to continue...");
             Console.ReadKey();
         }

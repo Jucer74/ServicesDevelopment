@@ -2,19 +2,27 @@ namespace Entities
 {
     public class CheckingAccount : BankAccount
     {
-        public CheckingAccount(string accountNumber, string accountOwner)
+        public decimal OverdraftLimit { get; set; } = 1000000;
+        public decimal OverdraftUsed { get; set; } = 0;
+
+        public CheckingAccount(string accountNumber, string accountOwner, decimal initialBalance = 0)
             : base(accountNumber, accountOwner)
         {
             AccountType = AccountType.Checking;
-            OverdraftAmount = 1000000;
-            BalanceAmount += OverdraftAmount;
+            BalanceAmount = initialBalance;
         }
 
         public override void Withdrawal(decimal amount)
         {
-            if (BalanceAmount + OverdraftAmount >= amount)
+            if (BalanceAmount >= amount)
             {
                 BalanceAmount -= amount;
+            }
+            else if (BalanceAmount + (OverdraftLimit - OverdraftUsed) >= amount)
+            {
+                decimal overdraftNeeded = amount - BalanceAmount;
+                BalanceAmount = 0;
+                OverdraftUsed += overdraftNeeded;
             }
             else
             {
@@ -22,5 +30,4 @@ namespace Entities
             }
         }
     }
-
 }

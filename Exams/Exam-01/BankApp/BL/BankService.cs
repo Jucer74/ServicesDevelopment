@@ -23,7 +23,7 @@ namespace BL
             var existingAccount = await GetBalanceAsync(account.AccountNumber);
             if (existingAccount != null)
             {
-                throw new InvalidOperationException("La cuenta ya existe.");
+                throw new InvalidOperationException($"Account : {account.AccountNumber} already exists.");
             }
 
             var json = JsonSerializer.Serialize(account);
@@ -36,12 +36,14 @@ namespace BL
 
         public async Task<BankAccount?> GetBalanceAsync(string accountNumber)
         {
-            var response = await _httpClient.GetAsync(_baseUrl);
+            var response = await _httpClient.GetAsync($"{_baseUrl}/{accountNumber}");
+            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                return null;
+            }
             response.EnsureSuccessStatusCode();
             var content = await response.Content.ReadAsStringAsync();
-            var accounts = JsonSerializer.Deserialize<List<BankAccount>>(content);
-
-            return accounts?.FirstOrDefault(a => a.AccountNumber == accountNumber);
+            return JsonSerializer.Deserialize<BankAccount>(content);
         }
 
         public async Task<BankAccount> DepositAsync(string accountNumber, decimal amount)
@@ -51,11 +53,14 @@ namespace BL
             {
                 throw new InvalidOperationException("La cuenta no existe.");
             }
+
             account.Deposit(amount);
+
             var json = JsonSerializer.Serialize(account);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await _httpClient.PutAsync($"{_baseUrl}/{accountNumber}", content);
+            var response = await _httpClient.PutAsync($"{_baseUrl}/{account.id}", content);
             response.EnsureSuccessStatusCode();
+
             return account;
         }
 
@@ -66,11 +71,14 @@ namespace BL
             {
                 throw new InvalidOperationException("La cuenta no existe.");
             }
+
             account.Withdrawal(amount);
+
             var json = JsonSerializer.Serialize(account);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await _httpClient.PutAsync($"{_baseUrl}/{accountNumber}", content);
+            var response = await _httpClient.PutAsync($"{_baseUrl}/{account.id}", content);
             response.EnsureSuccessStatusCode();
+
             return account;
         }
     }
