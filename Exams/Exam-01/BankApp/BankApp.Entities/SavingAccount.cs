@@ -1,24 +1,15 @@
-﻿using System;
-using System.Linq;
 
 namespace BankApp.Entities
 {
-    public enum AccountType
-    {
-        Saving = 1,
-        Checking = 2
-    }
-
-    public class SavingAccount
+    public class SavingAccount : IBankAccount
     {
         public string AccountNumber { get; private set; }
         public string AccountOwner { get; private set; }
         public decimal BalanceAmount { get; private set; }
-        public AccountType AccountType { get; private set; }
+        public AccountType AccountType => AccountType.Saving;
 
-        public SavingAccount(string accountNumber, string accountOwner, decimal initialBalance, AccountType accountType)
+        public SavingAccount(string accountNumber, string accountOwner, decimal initialBalance)
         {
-            // Validaciones:
             if (accountNumber.Length != 10 || !accountNumber.All(char.IsDigit))
                 throw new ArgumentException("Account number must have 10 digits.");
 
@@ -31,7 +22,6 @@ namespace BankApp.Entities
             AccountNumber = accountNumber;
             AccountOwner = accountOwner;
             BalanceAmount = initialBalance;
-            AccountType = accountType;
         }
 
         public void Deposit(decimal amount)
@@ -45,10 +35,8 @@ namespace BankApp.Entities
         {
             if (amount <= 0)
                 throw new ArgumentException("Withdrawal amount must be greater than zero.");
-
             if (BalanceAmount < amount)
                 throw new InvalidOperationException("Insufficient funds.");
-
             BalanceAmount -= amount;
         }
     }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Net.Http;
-using System.Threading.Tasks;
-using BankApp.Entities;
+﻿using BankApp.Entities;
 using BankApp.BL;
 
 namespace BankApp.UI
@@ -13,7 +10,7 @@ namespace BankApp.UI
         static async Task Main(string[] args)
         {
             var httpClient = new HttpClient();
-            var repository = new BankAccountJsonRepository(httpClient);
+            var repository = new BankAccountRepository(httpClient);
             _bankService = new BankService(repository);
 
             while (true)
@@ -47,8 +44,7 @@ namespace BankApp.UI
                         return;
                     default:
                         Console.WriteLine("Invalid option. Press any key to continue...");
-                        Console.ReadKey();
-                        break;
+                        continue;
                 }
             }
         }
