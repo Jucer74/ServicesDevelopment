@@ -1,0 +1,36 @@
+{
+  "accounts": [
+    {
+      "id": 0,
+      "AccountNumber": "1234567895",
+      "AccountOwner": "Sebastian",
+      "BalanceAmount": 1000000,
+      "AccountType": 1,
+      "OverdraftAmount": 0
+    },
+    {
+      "id": 0,
+      "AccountNumber": "1234567891",
+      "AccountOwner": "Camilo",
+      "BalanceAmount": 2000000,
+      "AccountType": 2,
+      "OverdraftAmount": 0
+    },
+    {
+      "id": 0,
+      "AccountNumber": "1234567898",
+      "AccountOwner": "Sandra",
+      "BalanceAmount": 300000,
+      "AccountType": 2,
+      "OverdraftAmount": 0
+    },
+    {
+      "id": 0,
+      "AccountNumber": "1234567897",
+      "AccountOwner": "Lina",
+      "BalanceAmount": 500000,
+      "AccountType": 1,
+      "OverdraftAmount": 0
+    }
+  ]
+}
