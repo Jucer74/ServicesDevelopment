@@ -13,9 +13,9 @@ namespace BankApp.Entitites
     {
         AccountNumber = accountNumber;
         AccountOwner = accountOwner;
-        BalanceAmount = balanceAmount + overdraftAmount;
+        BalanceAmount = balanceAmount;
         AccountType = accountType;
-        OverdraftAmount = 0;
+        OverdraftAmount = overdraftAmount;
 
     }
 }

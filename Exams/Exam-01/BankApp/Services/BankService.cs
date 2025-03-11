@@ -10,34 +10,56 @@ namespace BankApp.Services
     public class BankService
     {
         
-        private readonly string _baseUrl = "http://localhost:3000/accounts";
+        private readonly string _baseUrl = Config.GetApiUrl() ;
         private readonly HttpClient _httpClient;
 
         public BankService(HttpClient httpClient)
         {
             _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
         }
+    
         public async Task<BankAccount> CreateAccountAsync(BankAccount newAccount)
         {
-            newAccount.id = newAccount.AccountNumber;
-            var existingAccount = await GetAccountAsync(newAccount.AccountNumber);
-            if (existingAccount != null)
-                throw new ArgumentException($"Account : {newAccount.AccountNumber} already exists.");
+            try
+            {
+                
+                newAccount.id = newAccount.AccountNumber;
 
-            var json = JsonSerializer.Serialize(newAccount);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            
+                var existingAccount = await GetAccountAsync(newAccount.AccountNumber);
+                if (existingAccount != null)
+                    throw new ArgumentException($"Account: {newAccount.AccountNumber} already exists.");
 
-            var response = await _httpClient.PostAsync(_baseUrl, content);
-            response.EnsureSuccessStatusCode();
+            
+                var json = JsonSerializer.Serialize(newAccount);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var responseData = await response.Content.ReadAsStringAsync();
-        
-            var account = JsonSerializer.Deserialize<BankAccount>(responseData);
-            if (account == null)
-                throw new Exception("Error deserializing account.");
+            
+                var response = await _httpClient.PostAsync(_baseUrl, content);
+                
+            
+                response.EnsureSuccessStatusCode();
 
-            return account;
+            
+                var responseData = await response.Content.ReadAsStringAsync();
+
+                
+                var account = JsonSerializer.Deserialize<BankAccount>(responseData);
+                
+            
+                if (account == null)
+                    throw new Exception("Error deserializing account.");
+
+                return account;
+            }
+            catch (Exception ex)
+            {
+            
+                Console.WriteLine($"Unexpected error: {ex.Message}");
+                throw;
+            }
         }
+
 
 
 
@@ -54,7 +76,6 @@ namespace BankApp.Services
                     return null;
 
                 var responseData = await response.Content.ReadAsStringAsync();
-                
                
 
                 var accounts = JsonSerializer.Deserialize<List<BankAccount>>(responseData);
@@ -69,71 +90,110 @@ namespace BankApp.Services
         }
 
 
-        public async Task DepositAsync(string accountNumber, decimal amount)
-        {
-            var account = await GetAccountAsync(accountNumber);
+       public async Task DepositAsync(string accountNumber, decimal amount)
+        {   try
+                {
+                var account = await GetAccountAsync(accountNumber);
 
-            if (account == null)
-                throw new InvalidOperationException("Account not found.");
+                if (account == null)
+                    throw new InvalidOperationException("Account not found.");
 
-            Console.WriteLine($"[DEPOSIT] Initial Balance: {account.BalanceAmount}, Overdraft: {account.OverdraftAmount}");
+                
+            
 
-            // El depósito solo afecta el balance
-            account.BalanceAmount += amount;
+                
+                if (account.OverdraftAmount > 0)
+                {
+                    
 
-            Console.WriteLine($"[DEPOSIT] New Balance: {account.BalanceAmount}, Overdraft: {account.OverdraftAmount}");
+                    if (amount <= account.OverdraftAmount)
+                    {
+                        account.OverdraftAmount -= amount; 
+                    
+                        amount = 0;
+                    }
+                    else
+                    {
+                    
+                        amount -= account.OverdraftAmount;
+                        account.OverdraftAmount = 0;
+                    
+                    }
+                }
 
-            var json = JsonSerializer.Serialize(account);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            
+                account.BalanceAmount += amount;
 
-            var response = await _httpClient.PutAsync($"{_baseUrl}/{account.AccountNumber}", content);
+            
 
-            Console.WriteLine($"[DEPOSIT] Response: {response.StatusCode}");
+                var json = JsonSerializer.Serialize(account);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = await _httpClient.PutAsync($"{_baseUrl}/{account.AccountNumber}", content);
+            }
+            catch (Exception ex)
+            {
+                
+                Console.WriteLine($"Unexpected error: {ex.Message}");
+                throw;
+            }
+         
         }
+
 
         public async Task WithdrawalAsync(string accountNumber, decimal amountValue)
         {
-            var account = await GetAccountAsync(accountNumber);
-
-            if (account == null)
-                throw new InvalidOperationException("Account not found.");
-
-            
-            decimal availableBalance = Math.Max(account.BalanceAmount - 1000000, 0);
-            Console.WriteLine($"[WITHDRAWAL] Initial Balance: {account.BalanceAmount}, Overdraft: {account.OverdraftAmount}, Available Balance: {availableBalance}");
-            if (account.BalanceAmount < amountValue)
-                throw new InvalidOperationException("Insufficient funds.");
-
-            if (availableBalance >= amountValue)
-            {
+             try
+            {       
+                var account = await GetAccountAsync(accountNumber);
                 
-                account.BalanceAmount -= amountValue;
-            }
-            else
-            {   
-               
-                decimal remaining = amountValue - availableBalance;
-                account.BalanceAmount =account.BalanceAmount - availableBalance - remaining;
-                account.OverdraftAmount += remaining;
+                if (account == null)
+                    throw new InvalidOperationException("Account not found.");
+
+                    
+                decimal totalBalance = account.BalanceAmount;
+                if (totalBalance < amountValue)
+                    throw new InvalidOperationException("Insufficient funds.");
+                if(account.AccountType == 2)
+                    {
+                decimal availableBalance = totalBalance-1000000; 
+                if (availableBalance < 0)
+                    availableBalance = 0;
+            
+                if (availableBalance >= amountValue)
+                {
+                    
+                    account.BalanceAmount -= amountValue;
                 }
-           
+                else
+                {
+                    
+                    decimal remaining = amountValue - availableBalance;
+                    account.BalanceAmount =totalBalance - amountValue ; 
+                    account.OverdraftAmount += remaining; 
+                }
+                }
+                else
+                {
 
-           
-            Console.WriteLine($"[WITHDRAWAL] New Balance: {account.BalanceAmount}, Overdraft: {account.OverdraftAmount}");
-            var json = JsonSerializer.Serialize(account);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+                    account.BalanceAmount -= amountValue;
+                }
+                
 
-            var response = await _httpClient.PutAsync($"{_baseUrl}/{account.AccountNumber}", content);
-         }
+                var json = JsonSerializer.Serialize(account);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = await _httpClient.PutAsync($"{_baseUrl}/{account.AccountNumber}", content);
+            }   
+             catch (Exception ex)
+            {
+               
+                Console.WriteLine($"Unexpected error: {ex.Message}");
+                throw;
+            }
+        }
     
     }
-
-
-
-
-
-
-
 
 }
     

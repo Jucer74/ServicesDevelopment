@@ -74,7 +74,7 @@ namespace BankApp
 
         private static void Exit()
         {
-            Console.WriteLine("Hasta la próxima.");
+            Console.WriteLine("Good Bye.");
         }
     
 
@@ -208,7 +208,7 @@ namespace BankApp
             }
 
 
-            BankAccount newAccount = new BankAccount(accountNumber, accountOwner, balanceAmount, accountType, overdraftAmount);
+            BankAccount newAccount = new BankAccount(accountNumber, accountOwner, balanceAmount + overdraftAmount, accountType, 0);
 
             try
             {
