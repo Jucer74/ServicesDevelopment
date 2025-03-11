@@ -102,7 +102,7 @@ class Program
                 Console.WriteLine($"Account Number: {account.AccountNumber + account.OverdraftAmount}");
                 Console.WriteLine($"Account Owner : {account.AccountOwner}");
                 Console.WriteLine($"Balance Amount: {account.BalanceAmount:C}");
-                Console.WriteLine($"Overdraft Amount: {account.OverdraftAmount - 1000000}");
+                Console.WriteLine($"Overdraft Amount: {1000000 - account.OverdraftAmount}");
                 
                 Console.WriteLine("\nPress any key to continue...");
                 Console.ReadKey();
