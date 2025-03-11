@@ -6,7 +6,7 @@ using System.Globalization;
 using System.Text;
 using System.Text.Json;
 
-class Program
+class Program 
 {
     static BankService bankService = new BankService();
 
@@ -15,14 +15,14 @@ class Program
         while (true)
         {
             Console.WriteLine("\n Menú Bancario");
-            Console.WriteLine("1️⃣ Crear Cuenta");
-            Console.WriteLine("2️⃣ Consultar Saldo");
-            Console.WriteLine("3️⃣ Depositar");
-            Console.WriteLine("4️⃣ Retirar");
-            Console.WriteLine("0️⃣ Salir");
+            Console.WriteLine("1️. Crear cuenta");
+            Console.WriteLine("2️. Consultar saldo");
+            Console.WriteLine("3️. Depositar");
+            Console.WriteLine("4️. Retirar");
+            Console.WriteLine("0️. Salir");
             Console.Write("Seleccione una opción: ");
 
-            string option = Console.ReadLine();
+            string option = Console.ReadLine()?.Trim();
             Console.WriteLine();
 
             switch (option)
@@ -40,10 +40,10 @@ class Program
                     await Withdraw();
                     break;
                 case "0":
-                    Console.WriteLine(" Saliendo...");
+                    Console.WriteLine("Saliendo...");
                     return;
                 default:
-                    Console.WriteLine(" Opción inválida.");
+                    Console.WriteLine("Opción inválida.");
                     break;
             }
         }
@@ -52,34 +52,36 @@ class Program
     static async Task CreateAccount()
     {
         Console.Write("Ingrese número de cuenta (10 dígitos): ");
-        string accountNumber = Console.ReadLine();
+        string accountNumber = Console.ReadLine()?.Trim();
 
-        if (accountNumber.Length != 10 || !long.TryParse(accountNumber, out _))
+        if (accountNumber == null || accountNumber.Length != 10 || !long.TryParse(accountNumber, out _))
         {
-            Console.WriteLine("❌ Número de cuenta inválido.");
+            Console.WriteLine("Número de cuenta inválido. Debe tener 10 dígitos.");
             return;
         }
 
         Console.Write("Ingrese el nombre del titular (máx. 50 caracteres): ");
-        string accountOwner = Console.ReadLine();
+        string accountOwner = Console.ReadLine()?.Trim();
 
-        if (accountOwner.Length > 50 || string.IsNullOrWhiteSpace(accountOwner))
+        if (string.IsNullOrWhiteSpace(accountOwner) || accountOwner.Length > 50)
         {
-            Console.WriteLine(" Nombre inválido.");
+            Console.WriteLine("Nombre inválido.");
             return;
         }
 
         Console.Write("Ingrese el tipo de cuenta (1 = Ahorros, 2 = Corriente): ");
-        if (!Enum.TryParse(Console.ReadLine(), out AccountType accountType))
+        if (!int.TryParse(Console.ReadLine(), out int accountTypeInput) ||
+            !Enum.IsDefined(typeof(AccountType), accountTypeInput))
         {
-            Console.WriteLine("❌ Tipo de cuenta inválido.");
+            Console.WriteLine("Tipo de cuenta inválido.");
             return;
         }
+        AccountType accountType = (AccountType)accountTypeInput;
 
         Console.Write("Ingrese el saldo inicial: ");
         if (!decimal.TryParse(Console.ReadLine(), out decimal initialBalance) || initialBalance < 0)
         {
-            Console.WriteLine(" Saldo inicial inválido.");
+            Console.WriteLine("Saldo inicial inválido.");
             return;
         }
 
@@ -93,24 +95,30 @@ class Program
     static async Task GetBalance()
     {
         Console.Write("Ingrese número de cuenta: ");
-        string accountNumber = Console.ReadLine();
+        string accountNumber = Console.ReadLine()?.Trim();
+
+        if (string.IsNullOrWhiteSpace(accountNumber))
+        {
+            Console.WriteLine("Número de cuenta inválido.");
+            return;
+        }
 
         IBankAccount account = await bankService.GetBalance(accountNumber);
         if (account != null)
         {
-            Console.WriteLine($" Saldo actual de {account.AccountOwner}: {account.BalanceAmount:C}");
+            Console.WriteLine($"Saldo actual de {account.AccountOwner}: {account.BalanceAmount:C}");
         }
     }
 
     static async Task Deposit()
     {
         Console.Write("Ingrese número de cuenta: ");
-        string accountNumber = Console.ReadLine();
+        string accountNumber = Console.ReadLine()?.Trim();
 
         Console.Write("Ingrese monto a depositar: ");
         if (!decimal.TryParse(Console.ReadLine(), out decimal amount) || amount <= 0)
         {
-            Console.WriteLine("❌ Monto inválido.");
+            Console.WriteLine("Monto inválido.");
             return;
         }
 
@@ -120,12 +128,12 @@ class Program
     static async Task Withdraw()
     {
         Console.Write("Ingrese número de cuenta: ");
-        string accountNumber = Console.ReadLine();
+        string accountNumber = Console.ReadLine()?.Trim();
 
         Console.Write("Ingrese monto a retirar: ");
         if (!decimal.TryParse(Console.ReadLine(), out decimal amount) || amount <= 0)
         {
-            Console.WriteLine("❌ Monto inválido.");
+            Console.WriteLine("Monto inválido.");
             return;
         }
 
@@ -164,35 +172,38 @@ public class SavingAccount : IBankAccount
     }
 
     public void Deposit(decimal amount) => BalanceAmount += amount;
+
     public void Withdrawal(decimal amount)
     {
-        if (BalanceAmount >= amount) BalanceAmount -= amount;
-        else Console.WriteLine(" Fondos insuficientes.");
+        if (BalanceAmount >= amount)
+            BalanceAmount -= amount;
+        else
+            Console.WriteLine("Fondos insuficientes.");
     }
 }
 
 public class CheckingAccount : IBankAccount
 {
-    private const decimal MIN_OVERDRAFT_AMOUNT = 1000000;
     public string AccountNumber { get; }
     public string AccountOwner { get; }
     public decimal BalanceAmount { get; set; }
     public AccountType AccountType => AccountType.Checking;
-    public decimal OverdraftAmount { get; }
 
     public CheckingAccount(string accountNumber, string accountOwner, decimal initialBalance)
     {
         AccountNumber = accountNumber;
         AccountOwner = accountOwner;
-        BalanceAmount = initialBalance + MIN_OVERDRAFT_AMOUNT;
-        OverdraftAmount = MIN_OVERDRAFT_AMOUNT;
+        BalanceAmount = initialBalance;
     }
 
     public void Deposit(decimal amount) => BalanceAmount += amount;
+
     public void Withdrawal(decimal amount)
     {
-        if (BalanceAmount - amount >= -OverdraftAmount) BalanceAmount -= amount;
-        else Console.WriteLine(" Fondos insuficientes para sobregiro.");
+        if (BalanceAmount >= amount)
+            BalanceAmount -= amount;
+        else
+            Console.WriteLine("Fondos insuficientes para sobregiro.");
     }
 }
 
@@ -203,42 +214,51 @@ public class BankService
 
     public async Task CreateAccount(IBankAccount account)
     {
-        string json = JsonSerializer.Serialize(account);
+        var accountData = new
+        {
+            account.AccountNumber,
+            account.AccountOwner,
+            account.BalanceAmount,
+            accountType = account.AccountType.ToString()
+        };
+
+        string json = JsonSerializer.Serialize(accountData);
         HttpContent content = new StringContent(json, Encoding.UTF8, "application/json");
-        HttpResponseMessage response = await client.PostAsync($"{apiUrl}accounts", content);
-        Console.WriteLine(response.IsSuccessStatusCode ? " Cuenta creada exitosamente." : "❌ Error al crear cuenta.");
+        HttpResponseMessage response = await client.PostAsync(apiUrl, content);
+        Console.WriteLine(response.IsSuccessStatusCode ? "Cuenta creada exitosamente." : "Error al crear cuenta.");
     }
 
     public async Task<IBankAccount> GetBalance(string accountNumber)
     {
-        HttpResponseMessage response = await client.GetAsync($"{apiUrl}accounts/{accountNumber}");
+        HttpResponseMessage response = await client.GetAsync($"{apiUrl}{accountNumber}");
         if (!response.IsSuccessStatusCode)
         {
-            Console.WriteLine(" Cuenta no encontrada.");
+            Console.WriteLine("Cuenta no encontrada.");
             return null;
         }
 
         string json = await response.Content.ReadAsStringAsync();
-        return JsonSerializer.Deserialize<CheckingAccount>(json);
+        if (string.IsNullOrWhiteSpace(json))
+        {
+            Console.WriteLine("Error al obtener los datos.");
+            return null;
+        }
+
+        return JsonSerializer.Deserialize<SavingAccount>(json);
     }
 
-    public async Task DepositAccount(string accountNumber, decimal amount)
+    public async Task DepositAccount(string accountNumber, decimal amount) =>
+        await SendTransaction(accountNumber, "deposit", amount);
+
+    public async Task WithdrawalAccount(string accountNumber, decimal amount) =>
+        await SendTransaction(accountNumber, "withdraw", amount);
+
+    private async Task SendTransaction(string accountNumber, string type, decimal amount)
     {
         var payload = new { amount };
         string json = JsonSerializer.Serialize(payload);
         HttpContent content = new StringContent(json, Encoding.UTF8, "application/json");
-
-        HttpResponseMessage response = await client.PutAsync($"{apiUrl}accounts/{accountNumber}/deposit", content);
-        Console.WriteLine(response.IsSuccessStatusCode ? " Depósito exitoso." : "❌ Error al depositar.");
-    }
-
-    public async Task WithdrawalAccount(string accountNumber, decimal amount)
-    {
-        var payload = new { amount };
-        string json = JsonSerializer.Serialize(payload);
-        HttpContent content = new StringContent(json, Encoding.UTF8, "application/json");
-
-        HttpResponseMessage response = await client.PutAsync($"{apiUrl}accounts/{accountNumber}/withdraw", content);
-        Console.WriteLine(response.IsSuccessStatusCode ? " Retiro exitoso." : " Fondos insuficientes o cuenta no encontrada.");
+        HttpResponseMessage response = await client.PutAsync($"{apiUrl}{accountNumber}/{type}", content);
+        Console.WriteLine(response.IsSuccessStatusCode ? "Operación exitosa." : "Error en la operación.");
     }
 }
