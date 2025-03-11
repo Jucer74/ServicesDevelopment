@@ -26,7 +26,7 @@ namespace BankApp.UI
 
                 try
                 {
-                    if (option == "1") // Crear cuenta
+                    if (option == "1") 
                     {
                         string? accountNumber;
                         while (true)
@@ -104,7 +104,7 @@ namespace BankApp.UI
                         await accountService.AddAccountAsync(account);
                         Console.WriteLine("Account created successfully!");
                     }
-                    else if (option == "2") // Depositar
+                    else if (option == "2") 
                     {
                         Console.Write("Account Number: ");
                         string? accountNumber = Console.ReadLine();
@@ -126,7 +126,7 @@ namespace BankApp.UI
                         await accountService.DepositAsync(accountNumber, amount);
                         Console.WriteLine("Deposit successful!");
                     }
-                    else if (option == "3") // Retirar
+                    else if (option == "3") 
                     {
                         Console.Write("Account Number: ");
                         string? accountNumber = Console.ReadLine();
@@ -148,7 +148,7 @@ namespace BankApp.UI
                         await accountService.WithdrawAsync(accountNumber, amount);
                         Console.WriteLine("Withdrawal successful!");
                     }
-                    else if (option == "4") // Consultar saldo
+                    else if (option == "4") 
                     {
                         Console.Write("Account Number: ");
                         string? accountNumber = Console.ReadLine();
@@ -170,7 +170,7 @@ namespace BankApp.UI
                             Console.WriteLine("Account not found.");
                         }
                     }
-                    else if (option == "0") // Salir
+                    else if (option == "0") 
                     {
                         break;
                     }

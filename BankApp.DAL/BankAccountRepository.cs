@@ -13,7 +13,7 @@ namespace BankApp.DAL
             WriteIndented = true
         };
 
-        public BankAccountRepository() { } // ✅ Constructor vacío corregido
+        public BankAccountRepository() { } 
 
         public async Task<List<BankAccount>> GetAllAccountsAsync()
         {
@@ -33,7 +33,7 @@ namespace BankApp.DAL
                 !string.IsNullOrEmpty(a.AccountNumber) && a.AccountNumber.Trim() == accountNumber.Trim());
         }
 
-        public async Task AddAccountAsync(BankAccount newAccount) // ✅ Método corregido
+        public async Task AddAccountAsync(BankAccount newAccount) 
         {
             var accounts = await GetAllAccountsAsync();
 

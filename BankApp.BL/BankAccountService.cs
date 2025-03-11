@@ -36,29 +36,26 @@ namespace BankApp.BL
             if (response.IsSuccessStatusCode)
             {
                 var responseData = await response.Content.ReadAsStringAsync();
-                Console.WriteLine($"Response from server: {responseData}"); // Depuración
+                Console.WriteLine($"Response from server: {responseData}"); 
 
                 var accounts = JsonSerializer.Deserialize<List<BankAccount>>(responseData);
 
-                // Buscar la cuenta por AccountNumber
                 return accounts?.FirstOrDefault(a => a.AccountNumber == accountNumber);
             }
-            Console.WriteLine($"Failed to retrieve accounts. Status code: {response.StatusCode}"); // Depuración
+            Console.WriteLine($"Failed to retrieve accounts. Status code: {response.StatusCode}"); 
             return null;
         }
 
         public async Task UpdateAccountAsync(BankAccount account)
         {
-            // Obtener la cuenta existente por su AccountNumber
             var existingAccount = await GetAccountAsync(account.AccountNumber);
             if (existingAccount == null)
             {
                 throw new InvalidOperationException("Account not found.");
             }
 
-            // Actualizar la cuenta usando su id
             var url = $"{ApiUrl}/{existingAccount.Id}";
-            Console.WriteLine($"Updating account at URL: {url}"); // Depuración
+            Console.WriteLine($"Updating account at URL: {url}");
 
             var content = new StringContent(JsonSerializer.Serialize(account), System.Text.Encoding.UTF8, "application/json");
             var response = await _httpClient.PutAsync(url, content);
@@ -82,7 +79,6 @@ namespace BankApp.BL
     await UpdateAccountAsync(account);
     Console.WriteLine("Depósito realizado exitosamente.");
 
-    // Verifica el saldo después de actualizarlo
     var updatedAccount = await GetAccountAsync(accountNumber);
     Console.WriteLine($"Saldo final en la API: {updatedAccount?.Balance}");
 }
