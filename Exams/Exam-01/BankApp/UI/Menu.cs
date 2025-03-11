@@ -22,7 +22,7 @@ namespace BankApp.UI
                 Console.WriteLine("4- Withdrawal Account");
                 Console.WriteLine("0- Exit");
                 Console.Write("Select an option: ");
-                
+
                 string option = Console.ReadLine();
                 switch (option)
                 {
@@ -60,7 +60,7 @@ namespace BankApp.UI
                 Console.ReadKey();
                 return;
             }
-            
+
             // 2. Validar el número de cuenta (exactamente 10 dígitos)
             string accountNumber;
             while (true)
@@ -78,7 +78,7 @@ namespace BankApp.UI
                     break;
                 }
             }
-            
+
             // 3. Validar el nombre del propietario (no vacío y máximo 50 caracteres)
             string accountOwner;
             while (true)
@@ -94,7 +94,7 @@ namespace BankApp.UI
                     break;
                 }
             }
-            
+
             // 4. Validar el monto inicial (numérico y mayor que cero)
             decimal initialBalance;
             while (true)
@@ -110,14 +110,14 @@ namespace BankApp.UI
                     break;
                 }
             }
-            
+
             // 5. Crear la cuenta usando la entidad correspondiente
             IBankAccount account;
             if (type == 1)
                 account = new SavingAccount(accountNumber, accountOwner, initialBalance);
             else
                 account = new CheckingAccount(accountNumber, accountOwner, initialBalance);
-            
+
             // 6. Intentar agregar la cuenta vía json‑server
             bool created = await bankService.CreateAccountAsync(account);
             if (created)
@@ -141,11 +141,23 @@ namespace BankApp.UI
         {
             Console.Write("Account Number: ");
             string accountNumber = Console.ReadLine();
+
+            // Validamos si la cuenta existe antes de solicitar el monto
+            var account = await bankService.GetAccountAsync(accountNumber);
+            if (account == null)
+            {
+                Console.WriteLine($"Account {accountNumber} doesn't exist.");
+                Console.WriteLine("Press any key to continue...");
+                Console.ReadKey();
+                return;
+            }
+
             Console.Write("Deposit Amount: ");
             string depositInput = Console.ReadLine();
             if (!decimal.TryParse(depositInput, out decimal amount) || amount <= 0)
             {
                 Console.WriteLine("Invalid deposit amount.");
+                Console.WriteLine("Press any key to continue...");
                 Console.ReadKey();
                 return;
             }
@@ -159,11 +171,23 @@ namespace BankApp.UI
         {
             Console.Write("Account Number: ");
             string accountNumber = Console.ReadLine();
+
+            // Validamos si la cuenta existe antes de solicitar el monto
+            var account = await bankService.GetAccountAsync(accountNumber);
+            if (account == null)
+            {
+                Console.WriteLine($"Account {accountNumber} doesn't exist.");
+                Console.WriteLine("Press any key to continue...");
+                Console.ReadKey();
+                return;
+            }
+
             Console.Write("Withdrawal Amount: ");
             string withdrawalInput = Console.ReadLine();
             if (!decimal.TryParse(withdrawalInput, out decimal amount) || amount <= 0)
             {
                 Console.WriteLine("Invalid withdrawal amount.");
+                Console.WriteLine("Press any key to continue...");
                 Console.ReadKey();
                 return;
             }
