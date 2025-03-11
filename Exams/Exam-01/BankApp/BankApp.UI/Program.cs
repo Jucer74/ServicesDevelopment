@@ -67,13 +67,21 @@ namespace BankApp.UI
         }
 
         private static async Task GetBalance()
-        {
-            Console.Write("Enter Account Number: ");
-            string accountNumber = Console.ReadLine();
+{
+    Console.Write("Enter Account Number: ");
+    string accountNumber = Console.ReadLine();
 
-            decimal balance = await _bankService.GetBalanceAsync(accountNumber);
-            Console.WriteLine($"Balance: {balance}");
-        }
+    try
+    {
+        decimal balance = await _bankService.GetBalanceAsync(accountNumber);
+        Console.WriteLine($"Balance: {balance}");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex.Message);
+    }
+}
+
 
         private static async Task Deposit()
         {
