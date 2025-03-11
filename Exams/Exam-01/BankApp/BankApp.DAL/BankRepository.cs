@@ -1,41 +1,49 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using BankApp.Entities;
-using System.Collections.Generic;
-using System.Linq;
 
-namespace BankApp.DAL;
-
-public class BankRepository
+namespace BankApp.DAL
 {
-    private readonly HttpClient _client = new();
-    private const string ApiUrl = "http://localhost:3000/BankAccounts";
-
-    public async Task<List<IBankAccount>> GetAccountsAsync()
+    public class BankRepository
     {
-        var response = await _client.GetStringAsync(ApiUrl);
-        return JsonSerializer.Deserialize<List<IBankAccount>>(response, new JsonSerializerOptions { PropertyNameCaseInsensitive = true }) ?? new List<IBankAccount>();
-    }
+        private readonly HttpClient _httpClient;
+        private const string ApiUrl = "http://localhost:3000/accounts";
 
-    public async Task<string> AddAccountAsync(IBankAccount account)
-    {
-        var content = new StringContent(JsonSerializer.Serialize(account), Encoding.UTF8, "application/json");
-        var response = await _client.PostAsync(ApiUrl, content);
-        return await response.Content.ReadAsStringAsync();
-    }
+        public BankRepository()
+        {
+            _httpClient = new HttpClient();
+        }
 
-    public async Task<string> UpdateAccountAsync(string accountNumber, IBankAccount account)
-    {
-        var content = new StringContent(JsonSerializer.Serialize(account), Encoding.UTF8, "application/json");
-        var response = await _client.PutAsync($"{ApiUrl}/{accountNumber}", content);
-        return await response.Content.ReadAsStringAsync();
-    }
+        public async Task<List<IBankAccount>> GetAllAccountsAsync()
+        {
+            var response = await _httpClient.GetStringAsync(ApiUrl);
+            var accounts = JsonSerializer.Deserialize<List<CheckingAccount>>(response);
+            return accounts.Cast<IBankAccount>().ToList();
+        }
 
-    public async Task<string> DeleteAccountAsync(string accountNumber)
-    {
-        var response = await _client.DeleteAsync($"{ApiUrl}/{accountNumber}");
-        return await response.Content.ReadAsStringAsync();
+        public async Task<IBankAccount> GetAccountByNumberAsync(string accountNumber)
+        {
+            var accounts = await GetAllAccountsAsync();
+            return accounts.FirstOrDefault(acc => acc.AccountNumber == accountNumber);
+        }
+
+        public async Task CreateAccountAsync(IBankAccount account)
+        {
+            var json = JsonSerializer.Serialize(account);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            await _httpClient.PostAsync(ApiUrl, content);
+        }
+
+        public async Task UpdateAccountAsync(IBankAccount account)
+        {
+            var json = JsonSerializer.Serialize(account);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            await _httpClient.PutAsync($"{ApiUrl}/{account.AccountNumber}", content);
+        }
     }
 }

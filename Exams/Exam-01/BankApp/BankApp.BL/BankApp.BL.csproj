@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\BankApp.Entities\BankApp.Entities.csproj" />
     <ProjectReference Include="..\BankApp.DAL\BankApp.DAL.csproj" />
+    <ProjectReference Include="..\BankApp.Entities\BankApp.Entities.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

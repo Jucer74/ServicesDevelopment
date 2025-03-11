@@ -1,45 +1,96 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
+using System.Text.Json;
+
+using BankApp.DAL;
 using BankApp.Entities;
 
-namespace BankApp.Services;
-
-public class BankService
+namespace BankApp.BL
 {
-    private readonly List<IBankAccount> _accounts = new();
-
-    public void CreateAccount(IBankAccount account)
+    public class BankService
     {
-        if (_accounts.Any(a => a.AccountNumber == account.AccountNumber))
-            throw new InvalidOperationException("Account already exists.");
-        
-        _accounts.Add(account);
+        private readonly BankRepository _repository;
+        private readonly HttpClient _httpClient = new HttpClient();
+private const string ApiUrl = "http://localhost:3000/accounts";
+
+
+
+        public BankService()
+        {
+            _repository = new BankRepository();
+        }
+
+        public async Task CreateAccountAsync(IBankAccount account)
+        {
+            var existingAccount = await _repository.GetAccountByNumberAsync(account.AccountNumber);
+            if (existingAccount != null)
+                throw new InvalidOperationException("Account already exists.");
+            
+            await _repository.CreateAccountAsync(account);
+        }
+
+        public async Task<decimal> GetBalanceAsync(string accountNumber)
+{
+    Console.WriteLine($"Searching account: {accountNumber}");
+
+    var response = await _httpClient.GetStringAsync(ApiUrl);
+    Console.WriteLine($"API Response: {response}");
+
+    if (string.IsNullOrEmpty(response))
+    {
+        Console.WriteLine("Error: No data received from API.");
+        throw new InvalidOperationException("No accounts found.");
     }
 
-    public IBankAccount GetAccount(string accountNumber)
+    // Deserializar la respuesta en una lista genérica
+    var rawAccounts = JsonSerializer.Deserialize<List<JsonElement>>(response);
+    var allAccounts = new List<IBankAccount>();
+
+    foreach (var element in rawAccounts)
     {
-        var account = _accounts.FirstOrDefault(a => a.AccountNumber == accountNumber);
-        if (account == null)
-            throw new InvalidOperationException("Account not found.");
-        return account;
+        var accountType = element.GetProperty("accountType").GetString();
+
+        if (accountType == "Saving")
+        {
+            var savingAcc = JsonSerializer.Deserialize<SavingAccount>(element.GetRawText()); // 🔹 Renombrado
+            allAccounts.Add(savingAcc);
+        }
+        else if (accountType == "Checking")
+        {
+            var checkingAcc = JsonSerializer.Deserialize<CheckingAccount>(element.GetRawText()); // 🔹 Renombrado
+            allAccounts.Add(checkingAcc);
+        }
     }
 
-    public decimal GetBalance(string accountNumber)
+    var foundAccount = allAccounts.FirstOrDefault(a => a.AccountNumber.Trim() == accountNumber.Trim());
+
+    if (foundAccount == null)
     {
-        var account = GetAccount(accountNumber);
-        return account.BalanceAmount;
+        Console.WriteLine("Error: Account not found.");
+        throw new InvalidOperationException("Account not found.");
     }
 
-    public void Deposit(string accountNumber, decimal amount)
-    {
-        var account = GetAccount(accountNumber);
-        account.Deposit(amount);
-    }
+    return foundAccount.BalanceAmount;
+}
 
-    public void Withdraw(string accountNumber, decimal amount)
-    {
-        var account = GetAccount(accountNumber);
-        account.Withdrawal(amount);
+        public async Task DepositAsync(string accountNumber, decimal amount)
+        {
+            var account = await _repository.GetAccountByNumberAsync(accountNumber);
+            if (account == null)
+                throw new InvalidOperationException("Account not found.");
+
+            account.Deposit(amount);
+            await _repository.UpdateAccountAsync(account);
+        }
+
+        public async Task WithdrawalAsync(string accountNumber, decimal amount)
+        {
+            var account = await _repository.GetAccountByNumberAsync(accountNumber);
+            if (account == null)
+                throw new InvalidOperationException("Account not found.");
+
+            account.Withdrawal(amount);
+            await _repository.UpdateAccountAsync(account);
+        }
     }
 }

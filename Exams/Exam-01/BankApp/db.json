@@ -1,0 +1,17 @@
+{
+  "accounts": [
+    {
+      "accountNumber": "1234567890",
+      "accountOwner": "Camilo Rios",
+      "balanceAmount": 100000,
+      "accountType": "Saving"
+    },
+    {
+      "accountNumber": "2222222222",
+      "accountOwner": "Pilar Lopez",
+      "balanceAmount": 900000,
+      "accountType": "Checking",
+      "overdraftAmount": 100000
+    }
+  ]
+}

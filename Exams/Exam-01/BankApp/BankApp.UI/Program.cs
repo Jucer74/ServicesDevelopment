@@ -1,143 +1,102 @@
 ﻿using System;
 using System.Threading.Tasks;
+using BankApp.BL;
 using BankApp.Entities;
-using BankApp.Services;
 
-namespace BankApp.UI;
-
-class Program
+namespace BankApp.UI
 {
-    static async Task Main()
+    class Program
     {
-        var bankService = new BankService();
-        bool exit = false;
+        private static readonly BankService _bankService = new BankService();
 
-        while (!exit)
+        static async Task Main(string[] args)
         {
-            Console.WriteLine("\n--- Bank Application ---");
-            Console.WriteLine("1- Create Account");
-            Console.WriteLine("2- Get Balance Account");
-            Console.WriteLine("3- Deposit Account");
-            Console.WriteLine("4- Withdraw Account");
-            Console.WriteLine("0- Exit");
-            Console.Write("Select an option: ");
-
-            string choice = Console.ReadLine();
-            switch (choice)
+            while (true)
             {
-                case "1":
-                    CreateAccount(bankService);
-                    break;
-                case "2":
-                    GetBalance(bankService);
-                    break;
-                case "3":
-                    Deposit(bankService);
-                    break;
-                case "4":
-                    Withdraw(bankService);
-                    break;
-                case "0":
-                    exit = true;
-                    break;
-                default:
-                    Console.WriteLine("Invalid option. Please try again.");
-                    break;
+                Console.WriteLine("1- Create Account");
+                Console.WriteLine("2- Get Balance");
+                Console.WriteLine("3- Deposit");
+                Console.WriteLine("4- Withdrawal");
+                Console.WriteLine("0- Exit");
+                Console.Write("Choose an option: ");
+                
+                string option = Console.ReadLine();
+                switch (option)
+                {
+                    case "1":
+                        await CreateAccount();
+                        break;
+                    case "2":
+                        await GetBalance();
+                        break;
+                    case "3":
+                        await Deposit();
+                        break;
+                    case "4":
+                        await Withdrawal();
+                        break;
+                    case "0":
+                        return;
+                    default:
+                        Console.WriteLine("Invalid option, try again.");
+                        break;
+                }
             }
         }
-    }
 
-    static void CreateAccount(BankService bankService)
-    {
-        Console.Write("Enter Account Number (10 digits): ");
-        string accountNumber = Console.ReadLine();
-        if (accountNumber.Length != 10 || !long.TryParse(accountNumber, out _))
+        private static async Task CreateAccount()
         {
-            Console.WriteLine("Invalid account number. It must be exactly 10 digits.");
-            return;
+            Console.Write("Enter Account Number (10 digits): ");
+            string accountNumber = Console.ReadLine();
+
+            Console.Write("Enter Account Owner Name: ");
+            string accountOwner = Console.ReadLine();
+
+            Console.Write("Enter Initial Balance: ");
+            decimal balanceAmount = decimal.Parse(Console.ReadLine());
+
+            Console.Write("Select Account Type (1: Saving, 2: Checking): ");
+            int type = int.Parse(Console.ReadLine());
+
+            IBankAccount account = type == 1
+                ? new SavingAccount { AccountNumber = accountNumber, AccountOwner = accountOwner, BalanceAmount = balanceAmount }
+                : new CheckingAccount { AccountNumber = accountNumber, AccountOwner = accountOwner, BalanceAmount = balanceAmount };
+
+            await _bankService.CreateAccountAsync(account);
+            Console.WriteLine("Account created successfully!");
         }
 
-        Console.Write("Enter Account Owner Name: ");
-        string owner = Console.ReadLine();
-        if (string.IsNullOrWhiteSpace(owner) || owner.Length > 50)
+        private static async Task GetBalance()
         {
-            Console.WriteLine("Invalid name. It must be under 50 characters.");
-            return;
+            Console.Write("Enter Account Number: ");
+            string accountNumber = Console.ReadLine();
+
+            decimal balance = await _bankService.GetBalanceAsync(accountNumber);
+            Console.WriteLine($"Balance: {balance}");
         }
 
-        Console.Write("Enter Initial Balance: ");
-        if (!decimal.TryParse(Console.ReadLine(), out decimal balance) || balance < 0)
+        private static async Task Deposit()
         {
-            Console.WriteLine("Invalid balance amount.");
-            return;
+            Console.Write("Enter Account Number: ");
+            string accountNumber = Console.ReadLine();
+
+            Console.Write("Enter Amount: ");
+            decimal amount = decimal.Parse(Console.ReadLine());
+
+            await _bankService.DepositAsync(accountNumber, amount);
+            Console.WriteLine("Deposit successful.");
         }
 
-        Console.Write("Select Account Type (1 - Saving, 2 - Checking): ");
-        string typeInput = Console.ReadLine();
-        BankAccount account = typeInput == "1"
-            ? new SavingAccount(accountNumber, owner, balance)
-            : new CheckingAccount(accountNumber, owner, balance);
+        private static async Task Withdrawal()
+        {
+            Console.Write("Enter Account Number: ");
+            string accountNumber = Console.ReadLine();
 
-        bankService.CreateAccount(account);
-        Console.WriteLine("Account created successfully!");
-    }
+            Console.Write("Enter Amount: ");
+            decimal amount = decimal.Parse(Console.ReadLine());
 
-    static void GetBalance(BankService bankService)
-    {
-        Console.Write("Enter Account Number: ");
-        string accountNumber = Console.ReadLine();
-        try
-        {
-            decimal balance = bankService.GetBalance(accountNumber);
-            Console.WriteLine($"Account Balance: {balance:C}");
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex.Message);
-        }
-    }
-
-    static void Deposit(BankService bankService)
-    {
-        Console.Write("Enter Account Number: ");
-        string accountNumber = Console.ReadLine();
-        Console.Write("Enter Deposit Amount: ");
-        if (!decimal.TryParse(Console.ReadLine(), out decimal amount) || amount <= 0)
-        {
-            Console.WriteLine("Invalid deposit amount.");
-            return;
-        }
-
-        try
-        {
-            bankService.Deposit(accountNumber, amount);
-            Console.WriteLine("Deposit successful!");
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex.Message);
-        }
-    }
-
-    static void Withdraw(BankService bankService)
-    {
-        Console.Write("Enter Account Number: ");
-        string accountNumber = Console.ReadLine();
-        Console.Write("Enter Withdrawal Amount: ");
-        if (!decimal.TryParse(Console.ReadLine(), out decimal amount) || amount <= 0)
-        {
-            Console.WriteLine("Invalid withdrawal amount.");
-            return;
-        }
-
-        try
-        {
-            bankService.Withdraw(accountNumber, amount);
-            Console.WriteLine("Withdrawal successful!");
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex.Message);
+            await _bankService.WithdrawalAsync(accountNumber, amount);
+            Console.WriteLine("Withdrawal successful.");
         }
     }
 }

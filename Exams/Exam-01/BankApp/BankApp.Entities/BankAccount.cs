@@ -1,82 +1,57 @@
-﻿namespace BankApp.Entities;
-
-public enum AccountType
+﻿namespace BankApp.Entities
 {
-    Saving,
-    Checking
-}
-
-public interface IBankAccount
-{
-    string AccountNumber { get; }
-    string AccountOwner { get; }
-    decimal BalanceAmount { get; }
-    AccountType AccountType { get; }
-
-    void Deposit(decimal amount);
-    void Withdrawal(decimal amount);
-}
-
-public class SavingAccount : IBankAccount
-{
-    public string AccountNumber { get; private set; }
-    public string AccountOwner { get; private set; }
-    public decimal BalanceAmount { get; private set; }
-    public AccountType AccountType { get; private set; }
-
-    public SavingAccount(string accountNumber, string accountOwner, decimal balanceAmount)
+    public enum AccountType
     {
-        AccountNumber = accountNumber;
-        AccountOwner = accountOwner;
-        BalanceAmount = balanceAmount;
-        AccountType = AccountType.Saving;
+        Saving,
+        Checking
     }
 
-    public void Deposit(decimal amount)
+    public interface IBankAccount
     {
-        if (amount <= 0)
-            throw new ArgumentException("Deposit amount must be greater than zero.");
-        BalanceAmount += amount;
+        string AccountNumber { get; set; }
+        string AccountOwner { get; set; }
+        decimal BalanceAmount { get; set; }
+        AccountType AccountType { get; set; }
+        void Deposit(decimal amount);
+        void Withdrawal(decimal amount);
     }
 
-    public void Withdrawal(decimal amount)
+    public class SavingAccount : IBankAccount
     {
-        if (amount > BalanceAmount)
-            throw new InvalidOperationException("Insufficient funds.");
-        BalanceAmount -= amount;
-    }
-}
+        public string AccountNumber { get; set; }
+        public string AccountOwner { get; set; }
+        public decimal BalanceAmount { get; set; }
+        public AccountType AccountType { get; set; } = AccountType.Saving;
 
-public class CheckingAccount : IBankAccount
-{
-    private const decimal MIN_OVERDRAFT_AMOUNT = 1000000m;
-    
-    public string AccountNumber { get; private set; }
-    public string AccountOwner { get; private set; }
-    public decimal BalanceAmount { get; private set; }
-    public AccountType AccountType { get; private set; }
-    public decimal OverdraftAmount { get; private set; }
+        public void Deposit(decimal amount) => BalanceAmount += amount;
 
-    public CheckingAccount(string accountNumber, string accountOwner, decimal balanceAmount)
-    {
-        AccountNumber = accountNumber;
-        AccountOwner = accountOwner;
-        BalanceAmount = balanceAmount + MIN_OVERDRAFT_AMOUNT;
-        AccountType = AccountType.Checking;
-        OverdraftAmount = MIN_OVERDRAFT_AMOUNT;
+        public void Withdrawal(decimal amount)
+        {
+            if (BalanceAmount >= amount)
+                BalanceAmount -= amount;
+            else
+                throw new InvalidOperationException("Insufficient funds.");
+        }
     }
 
-    public void Deposit(decimal amount)
+    public class CheckingAccount : IBankAccount
     {
-        if (amount <= 0)
-            throw new ArgumentException("Deposit amount must be greater than zero.");
-        BalanceAmount += amount;
-    }
+        private const decimal MIN_OVERDRAFT_AMOUNT = 100000;
 
-    public void Withdrawal(decimal amount)
-    {
-        if (BalanceAmount - amount < -OverdraftAmount)
-            throw new InvalidOperationException("Withdrawal exceeds overdraft limit.");
-        BalanceAmount -= amount;
+        public string AccountNumber { get; set; }
+        public string AccountOwner { get; set; }
+        public decimal BalanceAmount { get; set; }
+        public AccountType AccountType { get; set; } = AccountType.Checking;
+        public decimal OverdraftAmount { get; set; } = MIN_OVERDRAFT_AMOUNT;
+
+        public void Deposit(decimal amount) => BalanceAmount += amount;
+
+        public void Withdrawal(decimal amount)
+        {
+            if (BalanceAmount + OverdraftAmount >= amount)
+                BalanceAmount -= amount;
+            else
+                throw new InvalidOperationException("Overdraft limit exceeded.");
+        }
     }
 }
