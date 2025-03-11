@@ -11,6 +11,7 @@ namespace BankApp.Entities
 
     public interface IBankAccount
     {
+        string id { get; set; }
         string AccountNumber { get; set; }
         string AccountOwner { get; set; }
         decimal BalanceAmount { get; set; }
@@ -21,6 +22,7 @@ namespace BankApp.Entities
 
     public class SavingAccount : IBankAccount
     {
+        public string id { get; set; }
         public string AccountNumber { get; set; }
         public string AccountOwner { get; set; }
         public decimal BalanceAmount { get; set; }
@@ -41,6 +43,7 @@ namespace BankApp.Entities
     {
         private const decimal MIN_OVERDRAFT_AMOUNT = 1000000;
 
+        public string id { get; set; }
         public string AccountNumber { get; set; }
         public string AccountOwner { get; set; }
         public decimal BalanceAmount { get; set; }
@@ -96,7 +99,8 @@ namespace BankApp.Entities
             }
 
             return new CheckingAccount
-            {
+            {   
+                id = accountNumber,
                 AccountNumber = accountNumber,
                 AccountOwner = accountOwner,
                 BalanceAmount = balanceAmount,
@@ -107,6 +111,7 @@ namespace BankApp.Entities
         {
             return new SavingAccount
             {
+                id = accountNumber,
                 AccountNumber = accountNumber,
                 AccountOwner = accountOwner,
                 BalanceAmount = balanceAmount

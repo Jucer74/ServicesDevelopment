@@ -33,9 +33,7 @@ namespace BankApp.DAL
         }
 
         public async Task CreateAccountAsync(IBankAccount account)
-{
-    var randomId = Guid.NewGuid().ToString("N")[..4];
-    
+{   
     var json = JsonSerializer.Serialize(new
     {
         account.AccountNumber,
@@ -43,7 +41,7 @@ namespace BankApp.DAL
         account.BalanceAmount,
         account.AccountType,
         OverdraftAmount = account is CheckingAccount checkingAcc ? checkingAcc.OverdraftAmount : (decimal?)null,
-        id = randomId
+        id = account.AccountNumber
     });
 
     var content = new StringContent(json, Encoding.UTF8, "application/json");
@@ -55,15 +53,30 @@ namespace BankApp.DAL
     }
 }
 
-        public async Task UpdateAccountAsync(IBankAccount account)
+       public async Task UpdateAccountAsync(IBankAccount account)
 {
-    var json = JsonSerializer.Serialize(account);
-    var content = new StringContent(json, Encoding.UTF8, "application/json");
-    var response = await _httpClient.PutAsync($"{ApiUrl}/{account.AccountNumber}", content);
+    var existingAccount = await GetAccountByNumberAsync(account.AccountNumber);
+    if (existingAccount == null)
+    {
+        throw new InvalidOperationException($"Account with number {account.AccountNumber} does not exist.");
+    }
 
+    var json = JsonSerializer.Serialize(new
+    {
+        account.AccountNumber,
+        account.AccountOwner,
+        account.BalanceAmount,
+        account.AccountType,
+        OverdraftAmount = account is CheckingAccount checkingAcc ? checkingAcc.OverdraftAmount : (decimal?)null,
+        Id = existingAccount.id 
+    });
+
+    var content = new StringContent(json, Encoding.UTF8, "application/json");
+    var response = await _httpClient.PutAsync($"{ApiUrl}/{existingAccount.id}", content);
     if (!response.IsSuccessStatusCode)
     {
-        throw new InvalidOperationException("Failed to update account.");
+        var responseBody = await response.Content.ReadAsStringAsync();
+        throw new InvalidOperationException($"Failed to update account. Response: {responseBody}");
     }
 }
 
