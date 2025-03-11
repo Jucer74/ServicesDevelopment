@@ -20,7 +20,13 @@ namespace BankApp.UI
                 Console.WriteLine("0- Exit");
                 Console.Write("Choose an option: ");
                 
-                string option = Console.ReadLine();
+                string? option = Console.ReadLine();
+                if (option == null)
+                {
+                    Console.WriteLine("Invalid input, try again.");
+                    continue;
+                }
+
                 switch (option)
                 {
                     case "1":
@@ -62,7 +68,12 @@ namespace BankApp.UI
         private static async Task GetBalance()
         {
             Console.Write("Enter Account Number: ");
-            string accountNumber = Console.ReadLine();
+            string? accountNumber = Console.ReadLine();
+            if (string.IsNullOrWhiteSpace(accountNumber))
+            {
+                Console.WriteLine("Invalid account number.");
+                return;
+            }
 
             try
             {
@@ -94,12 +105,12 @@ namespace BankApp.UI
         // Helper method to get a valid account number
         private static string GetValidAccountNumber()
         {
-            string accountNumber;
+            string? accountNumber;
             while (true)
             {
                 Console.Write("Enter Account Number (10 digits): ");
                 accountNumber = Console.ReadLine();
-                if (accountNumber.Length == 10 && long.TryParse(accountNumber, out _))
+                if (!string.IsNullOrWhiteSpace(accountNumber) && accountNumber.Length == 10 && long.TryParse(accountNumber, out _))
                 {
                     break;
                 }
@@ -114,7 +125,7 @@ namespace BankApp.UI
         // Helper method to get a valid account owner name
         private static string GetValidAccountOwner()
         {
-            string accountOwner;
+            string? accountOwner;
             while (true)
             {
                 Console.Write("Enter Account Owner Name: ");
@@ -138,8 +149,8 @@ namespace BankApp.UI
             while (true)
             {
                 Console.Write(prompt);
-                string input = Console.ReadLine();
-                if (decimal.TryParse(input, out value) && value >= 0)
+                string? input = Console.ReadLine();
+                if (!string.IsNullOrWhiteSpace(input) && decimal.TryParse(input, out value) && value >= 0)
                 {
                     break;
                 }
@@ -158,8 +169,8 @@ namespace BankApp.UI
             while (true)
             {
                 Console.Write("Select Account Type (1: Saving, 2: Checking): ");
-                string input = Console.ReadLine();
-                if (int.TryParse(input, out type) && (type == 1 || type == 2))
+                string? input = Console.ReadLine();
+                if (!string.IsNullOrWhiteSpace(input) && int.TryParse(input, out type) && (type == 1 || type == 2))
                 {
                     break;
                 }
