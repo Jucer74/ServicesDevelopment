@@ -4,16 +4,32 @@
       "AccountNumber": "1234567890",
       "AccountOwner": "Camilo Rios",
       "BalanceAmount": 100000,
-      "AccountType": "Saving",
+      "AccountType": 0,
       "id": "f692"
     },
     {
       "AccountNumber": "2222222222",
       "AccountOwner": "Pilar Lopez",
       "BalanceAmount": 900000,
-      "AccountType": "Checking",
+      "AccountType": 1,
       "OverdraftAmount": 100000,
       "id": "1dc0"
+    },
+    {
+      "id": "437f",
+      "AccountNumber": "1111111111",
+      "AccountOwner": "sdaee",
+      "BalanceAmount": 123,
+      "AccountType": 1,
+      "OverdraftAmount": 1000000
+    },
+    {
+      "id": "e34f",
+      "AccountNumber": "1212121212",
+      "AccountOwner": "adea",
+      "BalanceAmount": 21312,
+      "AccountType": 0,
+      "OverdraftAmount": null
     }
   ]
 }

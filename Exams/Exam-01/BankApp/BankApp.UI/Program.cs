@@ -46,18 +46,10 @@ namespace BankApp.UI
 
         private static async Task CreateAccount()
         {
-            Console.Write("Enter Account Number (10 digits): ");
-            string accountNumber = Console.ReadLine();
-
-            Console.Write("Enter Account Owner Name: ");
-            string accountOwner = Console.ReadLine();
-
-            Console.Write("Enter Initial Balance: ");
-            decimal balanceAmount = decimal.Parse(Console.ReadLine());
-
-            Console.Write("Select Account Type (1: Saving, 2: Checking): ");
-            int type = int.Parse(Console.ReadLine());
-
+            string accountNumber = GetValidAccountNumber();
+            string accountOwner = GetValidAccountOwner();
+            decimal balanceAmount = GetValidDecimalInput("Enter Initial Balance: ");
+            int type = GetValidAccountType();
 
             IBankAccount account = type == 1
                 ? new SavingAccount { AccountNumber = accountNumber, AccountOwner = accountOwner, BalanceAmount = balanceAmount }
@@ -68,44 +60,115 @@ namespace BankApp.UI
         }
 
         private static async Task GetBalance()
-{
-    Console.Write("Enter Account Number: ");
-    string accountNumber = Console.ReadLine();
-
-    try
-    {
-        decimal balance = await _bankService.GetBalanceAsync(accountNumber);
-        Console.WriteLine($"Balance: {balance}");
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine(ex.Message);
-    }
-}
-
-
-        private static async Task Deposit()
         {
             Console.Write("Enter Account Number: ");
             string accountNumber = Console.ReadLine();
 
-            Console.Write("Enter Amount: ");
-            decimal amount = decimal.Parse(Console.ReadLine());
+            try
+            {
+                decimal balance = await _bankService.GetBalanceAsync(accountNumber);
+                Console.WriteLine($"Balance: {balance}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+            }
+        }
 
+        private static async Task Deposit()
+        {
+            string accountNumber = GetValidAccountNumber();
+            decimal amount = GetValidDecimalInput("Enter Amount: ");
             await _bankService.DepositAsync(accountNumber, amount);
             Console.WriteLine("Deposit successful.");
         }
 
         private static async Task Withdrawal()
         {
-            Console.Write("Enter Account Number: ");
-            string accountNumber = Console.ReadLine();
-
-            Console.Write("Enter Amount: ");
-            decimal amount = decimal.Parse(Console.ReadLine());
-
+            string accountNumber = GetValidAccountNumber();
+            decimal amount = GetValidDecimalInput("Enter Amount: ");
             await _bankService.WithdrawalAsync(accountNumber, amount);
             Console.WriteLine("Withdrawal successful.");
+        }
+
+        // Helper method to get a valid account number
+        private static string GetValidAccountNumber()
+        {
+            string accountNumber;
+            while (true)
+            {
+                Console.Write("Enter Account Number (10 digits): ");
+                accountNumber = Console.ReadLine();
+                if (accountNumber.Length == 10 && long.TryParse(accountNumber, out _))
+                {
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid account number. Please enter a valid 10-digit number.");
+                }
+            }
+            return accountNumber;
+        }
+
+        // Helper method to get a valid account owner name
+        private static string GetValidAccountOwner()
+        {
+            string accountOwner;
+            while (true)
+            {
+                Console.Write("Enter Account Owner Name: ");
+                accountOwner = Console.ReadLine();
+                if (!string.IsNullOrWhiteSpace(accountOwner))
+                {
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Account owner name cannot be empty. Please enter a valid name.");
+                }
+            }
+            return accountOwner;
+        }
+
+        // Helper method to get a valid decimal input
+        private static decimal GetValidDecimalInput(string prompt)
+        {
+            decimal value;
+            while (true)
+            {
+                Console.Write(prompt);
+                string input = Console.ReadLine();
+                if (decimal.TryParse(input, out value) && value >= 0)
+                {
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid amount. Please enter a positive number.");
+                }
+            }
+            return value;
+        }
+
+        // Helper method to get a valid account type (1 for Saving, 2 for Checking)
+        private static int GetValidAccountType()
+        {
+            int type;
+            while (true)
+            {
+                Console.Write("Select Account Type (1: Saving, 2: Checking): ");
+                string input = Console.ReadLine();
+                if (int.TryParse(input, out type) && (type == 1 || type == 2))
+                {
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid account type. Please enter 1 for Saving or 2 for Checking.");
+                }
+            }
+            return type;
         }
     }
 }

@@ -58,7 +58,7 @@ namespace BankApp.Entities
         }
     }
 
-  public static class BankAccountFactory
+ public static class BankAccountFactory
 {
     public static IBankAccount FromJson(JsonElement element)
     {
@@ -82,19 +82,13 @@ namespace BankApp.Entities
             throw new InvalidOperationException("Missing 'accountType' property in JSON.");
         }
 
-        var accountType = accountTypeElement.GetString();
-        if(accountType==1)
-        {
-            accountType="Checking";
-        }else
-        {
-            accountType="Saving";
-        }
+        // Get the AccountType as an integer (since it's represented as a number in JSON)
+        var accountType = accountTypeElement.GetInt32(); // Corrected to GetInt32
         var accountNumber = accountNumberElement.GetString();
         var accountOwner = accountOwnerElement.GetString();
         var balanceAmount = balanceAmountElement.GetDecimal();
 
-        if (accountType == "Checking")
+        if (accountType == 1) // Checking account
         {
             if (!element.TryGetProperty("OverdraftAmount", out var overdraftAmountElement))
             {
@@ -109,7 +103,7 @@ namespace BankApp.Entities
                 OverdraftAmount = overdraftAmountElement.GetDecimal()
             };
         }
-        else if (accountType == "Saving")
+        else if (accountType == 0) // Saving account
         {
             return new SavingAccount
             {
@@ -124,6 +118,4 @@ namespace BankApp.Entities
         }
     }
 }
-
-
 }
