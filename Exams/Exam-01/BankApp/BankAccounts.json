@@ -1,0 +1,68 @@
+{
+  "bankAccounts": [
+    {
+      "account_type": 1,
+      "account_number": 1111111111,
+      "account_owner": "Julio Robles",
+      "balance_amount": 100000,
+      "overdraft_amount": 0,
+      "id": 1
+    },
+    {
+      "id": 2,
+      "account_number": 1234567890,
+      "account_owner": "lina fer",
+      "balance_amount": 3000000,
+      "account_type": 1,
+      "overdraft_amount": 0
+    },
+    {
+      "id": 3,
+      "account_number": 1122334455,
+      "account_owner": "C2",
+      "balance_amount": 500,
+      "account_type": 1,
+      "overdraft_amount": 0
+    },
+    {
+      "id": 4,
+      "account_number": 1199887766,
+      "account_owner": "Maria",
+      "balance_amount": 900000,
+      "account_type": 2,
+      "overdraft_amount": 0
+    },
+    {
+      "id": 5,
+      "account_number": 1199887755,
+      "account_owner": "Abby Garcia",
+      "balance_amount": 400,
+      "account_type": 1,
+      "overdraft_amount": 0
+    },
+    {
+      "id": 6,
+      "account_number": 1199887744,
+      "account_owner": "Luna",
+      "balance_amount": 1200,
+      "account_type": 1,
+      "overdraft_amount": 0
+    },
+    {
+      "id": 7,
+      "account_number": 1199887733,
+      "account_owner": "Perla",
+      "balance_amount": 100,
+      "account_type": 1,
+      "overdraft_amount": 0
+    },
+    {
+      "id": 8,
+      "account_number": "3333333333",
+      "account_owner": "Christian Hoyos",
+      "balance_amount": 350000,
+      "account_type": 1,
+      "overdraft_amount": 0
+    }
+  ]
+}
