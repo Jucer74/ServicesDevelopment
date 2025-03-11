@@ -15,9 +15,17 @@ namespace BankApp.UI
                 Console.WriteLine("1- Create Account\n2- Get Balance\n3- Deposit\n4- Withdraw\n0- Exit");
                 Console.Write("Choose an option: ");
                 string option = Console.ReadLine();
-                
+
+                if (!int.TryParse(option, out int optionNumber) || optionNumber < 0 || optionNumber > 4)
+                {
+                    Console.WriteLine("\nInvalid option. Please choose a valid option (0-4).");
+                    Console.WriteLine("Press any key to continue...");
+                    Console.ReadKey();
+                    continue;
+                }
+
                 if (option == "0") break;
-                
+
                 Console.Write("Account Number (10 digits): ");
                 string accountNumber;
                 while (true)
@@ -28,7 +36,7 @@ namespace BankApp.UI
                     Console.WriteLine(" Invalid Account Number. It must be exactly 10 digits.");
                     Console.Write("Enter a valid Account Number: ");
                 }
-                
+
                 switch (option)
                 {
                     case "1":

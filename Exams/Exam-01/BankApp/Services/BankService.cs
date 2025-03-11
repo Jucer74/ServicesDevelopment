@@ -12,7 +12,7 @@ namespace BankApp.Services
     public class BankService
     {
         private readonly List<BankAccount> accounts = new();
-        private readonly HttpClient _httpClient = new HttpClient { BaseAddress = new Uri("http://localhost:3000/") };
+        private readonly HttpClient _httpClient = new HttpClient { BaseAddress = new Uri("http://127.0.0.1:3000/") };
 
         public BankService()
         {
@@ -59,17 +59,50 @@ namespace BankApp.Services
         {
             try
             {
-                var json = JsonSerializer.Serialize(account);
-                var content = new StringContent(json, Encoding.UTF8, "application/json");
-                var response = await _httpClient.PostAsync("accounts", content);
+                int newId = await GetNextAccountIdAsync();
 
-                if (!response.IsSuccessStatusCode)
-                    Console.WriteLine(" Warning: Failed to save account to API.");
+                var newAccount = new
+                {
+                    id = newId,  // ID secuencial
+                    AccountNumber = account.AccountNumber,
+                    AccountOwner = account.AccountOwner,
+                    BalanceAmount = account.BalanceAmount,
+                    AccountType = account.AccountType
+                };
+
+                var json = JsonSerializer.Serialize(newAccount);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var postResponse = await _httpClient.PostAsync("accounts", content);
+
+                if (!postResponse.IsSuccessStatusCode)
+                    Console.WriteLine($"Warning: Failed to save account to API. Server Response: {await postResponse.Content.ReadAsStringAsync()}");
             }
             catch (HttpRequestException ex)
             {
-                Console.WriteLine(" Error: Unable to connect to the API. Make sure json-server is running.");
+                Console.WriteLine("Error: Unable to connect to the API. Make sure json-server is running.");
                 Console.WriteLine($"Details: {ex.Message}");
+            }
+        }
+
+        private async Task<int> GetNextAccountIdAsync()
+        {
+            try
+            {
+                var response = await _httpClient.GetStringAsync("accounts");
+                var existingAccounts = JsonSerializer.Deserialize<List<JsonElement>>(response) ?? new List<JsonElement>();
+
+                return existingAccounts.Count > 0
+                    ? existingAccounts.Max(a =>
+                        a.TryGetProperty("id", out var idProp) && idProp.ValueKind == JsonValueKind.Number
+                            ? idProp.GetInt32()
+                            : idProp.ValueKind == JsonValueKind.String && int.TryParse(idProp.GetString(), out int parsedId)
+                                ? parsedId
+                                : 0) + 1
+                    : 1;
+            }
+            catch
+            {
+                return 1; // Si falla, comienza con ID = 1
             }
         }
 
@@ -77,17 +110,49 @@ namespace BankApp.Services
         {
             try
             {
-                var json = JsonSerializer.Serialize(accounts);
-                var content = new StringContent(json, Encoding.UTF8, "application/json");
-                var response = await _httpClient.PutAsync("accounts", content);
-                
-                if (!response.IsSuccessStatusCode)
-                    Console.WriteLine(" Warning: Failed to update accounts in API.");
+                foreach (var account in accounts)
+                {
+                    var json = JsonSerializer.Serialize(account);
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    int id = await GetAccountIdAsync(account.AccountNumber);
+                    if (id == 0)
+                    {
+                        Console.WriteLine($"Warning: Invalid ID for account {account.AccountNumber}.");
+                        continue;
+                    }
+
+                    var response = await _httpClient.PutAsync($"accounts/{id}", content);
+
+                    if (!response.IsSuccessStatusCode)
+                        Console.WriteLine($"Warning: Failed to update account {account.AccountNumber} in API. Server Response: {await response.Content.ReadAsStringAsync()}");
+                }
             }
             catch (HttpRequestException ex)
             {
-                Console.WriteLine(" Error: Unable to connect to the API. Make sure json-server is running.");
+                Console.WriteLine("Error: Unable to connect to the API. Make sure json-server is running.");
                 Console.WriteLine($"Details: {ex.Message}");
+            }
+        }
+
+        private async Task<int> GetAccountIdAsync(string accountNumber)
+        {
+            try
+            {
+                var getResponse = await _httpClient.GetStringAsync($"accounts?AccountNumber={accountNumber}");
+                var existingAccounts = JsonSerializer.Deserialize<List<JsonElement>>(getResponse) ?? new List<JsonElement>();
+
+                if (existingAccounts.Count == 0) return 0;
+
+                var idElement = existingAccounts[0].GetProperty("id");
+
+                return idElement.ValueKind == JsonValueKind.Number
+                    ? idElement.GetInt32()
+                    : int.TryParse(idElement.GetString(), out int parsedId) ? parsedId : 0;
+            }
+            catch
+            {
+                return 0;
             }
         }
 
@@ -96,13 +161,26 @@ namespace BankApp.Services
             try
             {
                 var response = await _httpClient.GetStringAsync("accounts");
-                var loadedAccounts = JsonSerializer.Deserialize<List<BankAccount>>(response);
+                var loadedAccounts = JsonSerializer.Deserialize<List<JsonElement>>(response);
+
                 if (loadedAccounts != null)
-                    accounts.AddRange(loadedAccounts);
+                {
+                    foreach (var accountJson in loadedAccounts)
+                    {
+                        var accountType = accountJson.GetProperty("AccountType").GetInt32();
+                        BankAccount account = accountType switch
+                        {
+                            1 => JsonSerializer.Deserialize<SavingAccount>(accountJson.GetRawText()),
+                            2 => JsonSerializer.Deserialize<CheckingAccount>(accountJson.GetRawText()),
+                            _ => throw new Exception("Unknown account type")
+                        };
+                        accounts.Add(account);
+                    }
+                }
             }
             catch (HttpRequestException ex)
             {
-                Console.WriteLine(" Warning: Could not load accounts from API.");
+                Console.WriteLine("Warning: Could not load accounts from API.");
                 Console.WriteLine($"Details: {ex.Message}");
             }
         }

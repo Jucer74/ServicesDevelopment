@@ -1,4 +1,18 @@
 {
-    "accounts": []
+  "accounts": [
+    {
+      "AccountNumber": "0987654321",
+      "AccountOwner": "juan",
+      "BalanceAmount": 10000,
+      "AccountType": 1,
+      "id": "1"
+    },
+    {
+      "AccountNumber": "2354678214",
+      "AccountOwner": "alejandro",
+      "BalanceAmount": 3000100,
+      "AccountType": 2,
+      "id": "2"
+    }
+  ]
 }
-  
