@@ -19,11 +19,10 @@ namespace BankApp.Services
             _httpClient = new HttpClient();
         }
 
-        public async Task<BankAccount> CreateAccount(BankAccount account)
+        public async Task<BankAccount?> CreateAccount(BankAccount account)
         {
             if (await ExistsAccount(account.AccountNumber))
             {
-                Console.WriteLine("La cuenta ya existe.");
                 return null;
             }
 
@@ -32,28 +31,22 @@ namespace BankApp.Services
 
             if (!response.IsSuccessStatusCode)
             {
-                Console.WriteLine("Error al crear la cuenta.");
                 return null;
             }
-
-            Console.WriteLine("Cuenta creada exitosamente.");
             return account;
         }
 
-        public async Task<BankAccount> GetBalance(string accountNumber)
+        public async Task<BankAccount?> GetBalance(string accountNumber)
         {
             var account = await GetAccountByNumber(accountNumber);
             if (account == null)
             {
-                Console.WriteLine("Error: La cuenta no existe.");
                 return null;
             }
-
-            Console.WriteLine($"Saldo actual de la cuenta {accountNumber}: {account.BalanceAmount}");
             return account;
         }
 
-        public async Task<BankAccount> DepositAccount(string accountNumber, decimal amount)
+        public async Task<BankAccount> DepositAmount(string accountNumber, decimal amount)
         {
             var account = await GetAccountByNumber(accountNumber);
             if (account == null)
@@ -64,11 +57,10 @@ namespace BankApp.Services
 
             account.Deposit(amount);
             await UpdateAccount(account);
-            Console.WriteLine($"Depósito exitoso. Nuevo saldo: {account.BalanceAmount}");
             return account;
         }
 
-        public async Task<BankAccount> WithdrawalAccount(string accountNumber, decimal amount)
+        public async Task<BankAccount?> WithdrawalAmount(string accountNumber, decimal amount)
         {
             var account = await GetAccountByNumber(accountNumber);
             if (account == null)
@@ -77,21 +69,22 @@ namespace BankApp.Services
                 return null;
             }
 
-            if (account.AccountType == AccountType.Checking && account.BalanceAmount + account.OverdraftAmount < amount)
-            {
-                Console.WriteLine("Error: Fondos insuficientes incluso con sobregiro.");
-                return null;
-            }
-            else if (account.BalanceAmount < amount)
+            if (account.AccountType == AccountType.Checking && account.BalanceAmount < amount)
             {
                 Console.WriteLine("Error: Fondos insuficientes.");
                 return null;
             }
 
             account.Withdrawal(amount);
-            await UpdateAccount(account);
-            Console.WriteLine($"Retiro exitoso. Nuevo saldo: {account.BalanceAmount}");
-            return account;
+            bool code = await UpdateAccount(account);
+            if (code)
+            {
+                return account;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public async Task<bool> ExistsAccount(string accountNumber)
@@ -100,7 +93,7 @@ namespace BankApp.Services
             return account != null;
         }
 
-        private async Task<BankAccount> GetAccountByNumber(string accountNumber)
+        private async Task<BankAccount?> GetAccountByNumber(string accountNumber)
         {
             var response = await _httpClient.GetAsync($"{_apiUrl}?AccountNumber={accountNumber}");
             if (!response.IsSuccessStatusCode)
@@ -115,10 +108,37 @@ namespace BankApp.Services
 
         private async Task<bool> UpdateAccount(BankAccount account)
         {
+            // 1️⃣ Obtén el ID real desde el JSON
+            var getResponse = await _httpClient.GetAsync($"{_apiUrl}?AccountNumber={account.AccountNumber}");
+            if (!getResponse.IsSuccessStatusCode)
+            {
+                Console.WriteLine("Cuenta no encontrada.");
+                return false;
+            }
+
+            var jsonResponse = await getResponse.Content.ReadAsStringAsync();
+
+            using var doc = JsonDocument.Parse(jsonResponse);
+            var root = doc.RootElement;
+
+            if (!root.EnumerateArray().Any()) // Si no hay cuentas
+            {
+                Console.WriteLine("Cuenta no encontrada.");
+                return false;
+            }
+
+            var firstAccount = root.EnumerateArray().First();
+            string? accountId = firstAccount.GetProperty("id").GetString(); // Extrae el ID del JSON
+
+            // 2️⃣ Serializa el objeto actualizado (sin `id`)
             var jsonContent = new StringContent(JsonSerializer.Serialize(account), Encoding.UTF8, "application/json");
-            var response = await _httpClient.PutAsync($"{_apiUrl}/{account.AccountNumber}", jsonContent);
+
+            // 3️⃣ Actualiza usando `id` en la URL
+            var response = await _httpClient.PatchAsync($"{_apiUrl}/{accountId}", jsonContent);
 
             return response.IsSuccessStatusCode;
         }
+
+
     }
 }

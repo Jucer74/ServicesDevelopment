@@ -9,7 +9,7 @@ namespace BankApp.Entities.Models
 
     public class BankAccount
     {
-        private const decimal MIN_OVERDRAFT_AMOUNT = 1000000; // 1 millón de pesos
+        private const decimal MIN_OVERDRAFT_AMOUNT = 1000000;
 
         private string accountNumber;
         private string accountOwner;
@@ -37,7 +37,7 @@ namespace BankApp.Entities.Models
         public decimal BalanceAmount
         {
             get => balanceAmount;
-            private set
+             set
             {
                 balanceAmount = value;
             }
@@ -48,7 +48,7 @@ namespace BankApp.Entities.Models
         public decimal OverdraftAmount
         {
             get => overdraftAmount;
-            private set
+             set
             {
                 overdraftAmount = value;
             }
@@ -62,7 +62,7 @@ namespace BankApp.Entities.Models
 
             if (accountType == AccountType.Checking)
             {
-                OverdraftAmount = MIN_OVERDRAFT_AMOUNT;
+                OverdraftAmount = 0;
                 BalanceAmount = initialBalance + MIN_OVERDRAFT_AMOUNT;
             }
             else
@@ -72,14 +72,29 @@ namespace BankApp.Entities.Models
             }
         }
 
+        public BankAccount(){
+
+        }
+
         public void Deposit(decimal amount)
         {
             BalanceAmount += amount;
+            CalculateOverdraft();
         }
 
         public void Withdrawal(decimal amount)
         {
             BalanceAmount -= amount;
+            CalculateOverdraft();
+        }
+
+        public void CalculateOverdraft(){
+            decimal overdraft = MIN_OVERDRAFT_AMOUNT - BalanceAmount;
+            if (overdraft > 0){
+                OverdraftAmount = overdraft;
+            } else {
+                OverdraftAmount = 0;
+            }
         }
     }
 }

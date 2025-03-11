@@ -1,0 +1,20 @@
+{
+  "accounts": [
+    {
+      "id": "ecb9",
+      "AccountNumber": "0716071607",
+      "AccountOwner": "Juan",
+      "BalanceAmount": 90,
+      "AccountType": 0,
+      "OverdraftAmount": 0
+    },
+    {
+      "id": "d19c",
+      "AccountNumber": "2020202020",
+      "AccountOwner": "Mar",
+      "BalanceAmount": 1000000,
+      "AccountType": 1,
+      "OverdraftAmount": 0
+    }
+  ]
+}
