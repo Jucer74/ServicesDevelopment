@@ -1,47 +1,45 @@
 using System;
 using System.Collections.Generic;
-using BankApp.Entities;
+using System.Net.Http;
 using System.Text.Json;
-using System.IO;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-
+using BankApp.Entities;
 
 namespace BankApp.Services
 {
     public class BankService
     {
-        private readonly List<IBankAccount> _accounts = new List<IBankAccount>();
+        private readonly HttpClient _httpClient = new HttpClient();
+        private const string ApiUrl = "http://localhost:3000/accounts"; // URL del json-server
 
-        public void AddAccount(IBankAccount account)
+        // Obtener todas las cuentas desde el json-server
+        public async Task<List<IBankAccount>> GetAccountsAsync()
         {
-            if (_accounts.Exists(a => a.AccountNumber == account.AccountNumber))
-            {
-                Console.WriteLine($"Account {account.AccountNumber} already exists.");
-                return;
-            }
-
-            _accounts.Add(account);
-            Console.WriteLine($"Account {account.AccountNumber} created successfully.");
+            var response = await _httpClient.GetAsync(ApiUrl);
+            response.EnsureSuccessStatusCode();
+            var json = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<List<IBankAccount>>(json);
         }
 
-        public IBankAccount GetAccount(string accountNumber)
+        // Agregar una nueva cuenta al json-server
+        public async Task AddAccountAsync(IBankAccount account)
         {
-            return _accounts.Find(acc => acc.AccountNumber == accountNumber);
+            var json = JsonSerializer.Serialize(account);
+            var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync(ApiUrl, content);
+            response.EnsureSuccessStatusCode();
         }
 
-        public void ShowAllBalances()
+        // Actualizar una cuenta en el json-server
+        public async Task UpdateAccountAsync(IBankAccount account)
         {
-            if (_accounts.Count == 0)
-            {
-                Console.WriteLine("No accounts registered.");
-                return;
-            }
-
-            foreach (var account in _accounts)
-            {
-                account.ShowBalance();
-            }
+            var json = JsonSerializer.Serialize(account);
+            var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+            var response = await _httpClient.PutAsync($"{ApiUrl}/{account.AccountNumber}", content);
+            response.EnsureSuccessStatusCode();
         }
     }
+
+    
 }
+

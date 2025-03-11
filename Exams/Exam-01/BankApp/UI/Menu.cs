@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using BankApp.Entities;
 using BankApp.Services;
 
@@ -13,11 +14,11 @@ namespace BankApp.UI
             _bankService = bankService;
         }
 
-        public void ShowMenu()
+        public async Task ShowMenuAsync()
         {
             while (true)
             {
-               Console.WriteLine("\n--- BANK MENU ---");
+                Console.WriteLine("\n--- BANK MENU ---");
                 Console.WriteLine("1 - Create Account");
                 Console.WriteLine("2 - Check Balance");
                 Console.WriteLine("3 - Deposit");
@@ -28,16 +29,16 @@ namespace BankApp.UI
                 switch (Console.ReadLine())
                 {
                     case "1":
-                        CreateAccount();
+                        await CreateAccountAsync();
                         break;
                     case "2":
-                        CheckBalance();
+                        await CheckBalanceAsync();
                         break;
                     case "3":
-                        DepositMoney();
+                        await DepositMoneyAsync();
                         break;
                     case "4":
-                        WithdrawMoney();
+                        await WithdrawMoneyAsync();
                         break;
                     case "0":
                         Console.WriteLine("Thank you for using the bank. See you soon!");
@@ -49,7 +50,7 @@ namespace BankApp.UI
             }
         }
 
-        private void CreateAccount()
+        private async Task CreateAccountAsync()
         {
             Console.Write("Account number (10 digits): ");
             string accountNumber = Console.ReadLine();
@@ -67,25 +68,58 @@ namespace BankApp.UI
                 ? new CheckingAccount(accountNumber, owner, initialBalance)
                 : new SavingAccount(accountNumber, owner, initialBalance);
 
-            _bankService.AddAccount(newAccount);
+            await _bankService.AddAccountAsync(newAccount);
         }
 
-        private void CheckBalance()
+        private async Task CheckBalanceAsync()
         {
             Console.Write("Account number: ");
-            _bankService.GetAccount(Console.ReadLine())?.ShowBalance();
+            string accountNumber = Console.ReadLine();
+            var accounts = await _bankService.GetAccountsAsync();
+            var account = accounts.Find(a => a.AccountNumber == accountNumber);
+            account?.ShowBalance();
         }
 
-        private void DepositMoney()
+        private async Task DepositMoneyAsync()
         {
             Console.Write("Account number: ");
-            _bankService.GetAccount(Console.ReadLine())?.Deposit(100);
+            string accountNumber = Console.ReadLine();
+            Console.Write("Amount to deposit: ");
+            if (decimal.TryParse(Console.ReadLine(), out decimal amount))
+            {
+                var accounts = await _bankService.GetAccountsAsync();
+                var account = accounts.Find(a => a.AccountNumber == accountNumber);
+                if (account != null)
+                {
+                    account.Deposit(amount);
+                    await _bankService.UpdateAccountAsync(account);
+                }
+            }
+            else
+            {
+                Console.WriteLine("Invalid amount.");
+            }
         }
 
-        private void WithdrawMoney()
+        private async Task WithdrawMoneyAsync()
         {
             Console.Write("Account number: ");
-            _bankService.GetAccount(Console.ReadLine())?.Withdraw(100);
+            string accountNumber = Console.ReadLine();
+            Console.Write("Amount to withdraw: ");
+            if (decimal.TryParse(Console.ReadLine(), out decimal amount))
+            {
+                var accounts = await _bankService.GetAccountsAsync();
+                var account = accounts.Find(a => a.AccountNumber == accountNumber);
+                if (account != null)
+                {
+                    account.Withdraw(amount);
+                    await _bankService.UpdateAccountAsync(account);
+                }
+            }
+            else
+            {
+                Console.WriteLine("Invalid amount.");
+            }
         }
     }
 }
