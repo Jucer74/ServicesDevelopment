@@ -16,6 +16,9 @@ public static class ConfigManager
 
     public static string GetApiUrl()
     {
-        return configuration["ApiUrl"];
+
+        return configuration["ApiUrl"] ?? string.Empty;
+
+
     }
 }

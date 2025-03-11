@@ -259,11 +259,6 @@ namespace BankApp.bankService
             throw new Exception("La cuenta no existe");
 
         }
-
-        public void Transfer(decimal amount, string accountNumber)
-        {
-            // Transfer logic
-        }
     }
 
 }
