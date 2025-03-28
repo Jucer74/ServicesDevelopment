@@ -1,4 +1,3 @@
-
 using BankApp.entities;
 using System.Text.Json;
 using System.Text;
@@ -6,11 +5,9 @@ using System.Net;
 
 namespace BankApp.bankService
 {
-    
     public class BankService
     {
-
-        public async static Task<BankAccount> GetAccount(string accountNumber)
+        public static async Task<BankAccount> GetAccount(string accountNumber)
         {
             using HttpClient client = new HttpClient();
 
@@ -24,16 +21,14 @@ namespace BankApp.bankService
 
                 var account = JsonSerializer.Deserialize<BankAccount>(responseBody);
 
-                if (account != null) {
-
+                if (account != null)
+                {
                     return account;
-
                 }
 
                 throw new Exception("La cuenta no existe");
-
             }
-            
+
             if (response.StatusCode == HttpStatusCode.NotFound)
             {
                 throw new HttpRequestException($"La cuenta no existe: {response.StatusCode}");
@@ -44,7 +39,7 @@ namespace BankApp.bankService
             }
         }
 
-        public async static Task<bool> ExistsAccount(string accountNumber)
+        public static async Task<bool> ExistsAccount(string accountNumber)
         {
             using HttpClient client = new HttpClient();
 
@@ -58,13 +53,14 @@ namespace BankApp.bankService
 
                 var accountList = JsonSerializer.Deserialize<BankAccount>(responseBody);
 
-                if (accountList != null) {
+                // Implente Retorno directo
+                //if (accountList != null)
+                //{
+                //    return true;
+                //}
+                //return false;
 
-                    return true;
-
-                }
-
-                return false;
+                return (accountList != null);
 
             }
             if (response.StatusCode == HttpStatusCode.NotFound)
@@ -79,14 +75,13 @@ namespace BankApp.bankService
 
         public static async Task<BankAccount> CreateAccount(BankAccount bankAccount)
         {
-
             bool accountExists = await ExistsAccount(bankAccount.AccountNumber);
 
             if (accountExists)
             {
                 throw new Exception("La cuenta ya existe");
             }
-                        
+
             using HttpClient client = new HttpClient();
 
             string ApiUrl = ConfigManager.GetApiUrl() + $"/accounts";
@@ -125,7 +120,6 @@ namespace BankApp.bankService
 
         public static async Task<BankAccount> DepositAmount(string accountNumber, decimal amountValue)
         {
-            
             bool accountExists = await ExistsAccount(accountNumber);
 
             if (accountExists)
@@ -141,20 +135,22 @@ namespace BankApp.bankService
                         if (overdraftDebt >= amountValue)
                         {
                             account.OverdraftAmount += amountValue;
-                        }else
+                        }
+                        else
                         {
                             decimal amountValueForBalance = amountValue - overdraftDebt;
 
                             account.OverdraftAmount += overdraftDebt;
 
                             account.BalanceAmount += amountValueForBalance;
-
                         }
-                    }else {
+                    }
+                    else
+                    {
                         account.BalanceAmount += amountValue;
                     }
-
-                }else
+                }
+                else
                 {
                     account.BalanceAmount += amountValue;
                 }
@@ -177,19 +173,17 @@ namespace BankApp.bankService
                 {
                     throw new HttpRequestException($"Error en la solicitud: {response.StatusCode}");
                 }
-
             }
 
             throw new Exception("La cuenta no existe");
         }
 
-        public async static Task<BankAccount> Withdraw(string accountNumber, decimal amount)
+        public static async Task<BankAccount> Withdraw(string accountNumber, decimal amount)
         {
             bool accountExists = await ExistsAccount(accountNumber);
 
             if (accountExists)
             {
-                
                 BankAccount account = await GetAccount(accountNumber);
 
                 if (account.AccountType == 1)
@@ -197,15 +191,14 @@ namespace BankApp.bankService
                     if (account.BalanceAmount >= amount)
                     {
                         account.BalanceAmount -= amount;
-
-                    }else
+                    }
+                    else
                     {
                         throw new Exception("La cuenta no tiene saldo suficiente");
                     }
                 }
                 else if (account.AccountType == 2)
                 {
-
                     decimal totalAccountBalance = account.BalanceAmount + account.OverdraftAmount;
 
                     bool isTotalAccountBalanceEnough = totalAccountBalance >= amount;
@@ -217,7 +210,6 @@ namespace BankApp.bankService
                         if (isAccountBalanceEnough)
                         {
                             account.BalanceAmount -= amount;
-
                         }
                         else
                         {
@@ -226,7 +218,6 @@ namespace BankApp.bankService
                             account.BalanceAmount = 0;
 
                             account.OverdraftAmount -= residualDebt;
-
                         }
                     }
                     else
@@ -253,12 +244,9 @@ namespace BankApp.bankService
                 {
                     throw new HttpRequestException($"Error en la solicitud: {response.StatusCode}");
                 }
-
             }
 
             throw new Exception("La cuenta no existe");
-
         }
     }
-
 }
