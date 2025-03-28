@@ -15,6 +15,30 @@
       "balanceAmount": 900000,
       "accountType": "Checking",
       "overdraftAmount": 100000
+    },
+    {
+      "id": "9876543210",
+      "accountNumber": "9876543210",
+      "accountOwner": "Alex Castro",
+      "balanceAmount": 1000000,
+      "accountType": "Saving",
+      "overdraftAmount": null
+    },
+    {
+      "id": "1212121212",
+      "accountNumber": "1212121212",
+      "accountOwner": "ASlex Castro",
+      "balanceAmount": 300000,
+      "accountType": "Saving",
+      "overdraftAmount": null
+    },
+    {
+      "id": "2323232323",
+      "accountNumber": "2323232323",
+      "accountOwner": "Paola Vargas",
+      "balanceAmount": 800000,
+      "accountType": "Checking",
+      "overdraftAmount": 200000
     }
   ]
 }
