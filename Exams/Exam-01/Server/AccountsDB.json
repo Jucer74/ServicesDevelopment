@@ -103,6 +103,38 @@
       "BalanceAmount": 0,
       "AccountType": "Saving",
       "OverdraftAmount": 0
+    },
+    {
+      "id": "9876543210",
+      "AccountNumber": "9876543210",
+      "AccountOwner": "Jucer",
+      "BalanceAmount": 200000,
+      "AccountType": "Saving",
+      "OverdraftAmount": 0
+    },
+    {
+      "id": "9638527410",
+      "AccountNumber": "9638527410",
+      "AccountOwner": "Julio",
+      "BalanceAmount": 0,
+      "AccountType": "Saving",
+      "OverdraftAmount": 0
+    },
+    {
+      "id": "7410852963",
+      "AccountNumber": "7410852963",
+      "AccountOwner": "Juan Carlos Giron",
+      "BalanceAmount": 100000,
+      "AccountType": "Saving",
+      "OverdraftAmount": 0
+    },
+    {
+      "id": "1237894560",
+      "AccountNumber": "1237894560",
+      "AccountOwner": "Marilyn Monroe",
+      "BalanceAmount": 500000,
+      "AccountType": "Checking",
+      "OverdraftAmount": 0
     }
   ]
 }
