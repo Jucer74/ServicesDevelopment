@@ -31,6 +31,38 @@
       "BalanceAmount": 500000,
       "AccountType": 1,
       "OverdraftAmount": 0
+    },
+    {
+      "id": 0,
+      "AccountNumber": "9876543210",
+      "AccountOwner": "Jucer",
+      "BalanceAmount": 1000000,
+      "AccountType": 1,
+      "OverdraftAmount": 0
+    },
+    {
+      "id": 0,
+      "AccountNumber": "1212121212",
+      "AccountOwner": "1",
+      "BalanceAmount": 1,
+      "AccountType": 1,
+      "OverdraftAmount": 0
+    },
+    {
+      "id": 0,
+      "AccountNumber": "7410852963",
+      "AccountOwner": " ",
+      "BalanceAmount": 100000,
+      "AccountType": 2,
+      "OverdraftAmount": 0
+    },
+    {
+      "id": 0,
+      "AccountNumber": "1212121212",
+      "AccountOwner": "Scotia",
+      "BalanceAmount": 500000,
+      "AccountType": 2,
+      "OverdraftAmount": 0
     }
   ]
 }
