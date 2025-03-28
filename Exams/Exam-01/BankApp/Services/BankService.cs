@@ -12,7 +12,7 @@ namespace BankApp.Services
     public class BankService
     {
         private readonly List<BankAccount> accounts = new();
-        private readonly HttpClient _httpClient = new HttpClient { BaseAddress = new Uri("http://127.0.0.1:3000/") };
+        private readonly HttpClient _httpClient = new HttpClient { BaseAddress = new Uri("http://localhost:3000/") };
 
         public BankService()
         {

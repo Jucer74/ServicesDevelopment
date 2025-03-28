@@ -10,9 +10,23 @@
     {
       "AccountNumber": "2354678214",
       "AccountOwner": "alejandro",
-      "BalanceAmount": 3000100,
+      "BalanceAmount": 4000100,
       "AccountType": 2,
       "id": "2"
+    },
+    {
+      "id": 3,
+      "AccountNumber": "9876543210",
+      "AccountOwner": "Jucer",
+      "BalanceAmount": 1000000,
+      "AccountType": 1
+    },
+    {
+      "id": 4,
+      "AccountNumber": "1212121212",
+      "AccountOwner": "Jucer",
+      "BalanceAmount": 2000000,
+      "AccountType": 2
     }
   ]
 }
