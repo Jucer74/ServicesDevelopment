@@ -2,9 +2,11 @@
 using BankApp.Interfaces;
 using BankApp.Entities;
 using System.Collections.Generic;
+using System.Linq;
+using System;
 
 
-namespace Services
+namespace BankApp.Services
 {
 
     public class BankService
