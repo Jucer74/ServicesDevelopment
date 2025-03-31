@@ -63,6 +63,38 @@
       "balance_amount": 350000,
       "account_type": 1,
       "overdraft_amount": 0
+    },
+    {
+      "id": 9,
+      "account_number": "1212121212",
+      "account_owner": "Jucer",
+      "balance_amount": 1000000,
+      "account_type": 1,
+      "overdraft_amount": 0
+    },
+    {
+      "id": 10,
+      "account_number": "1313131313",
+      "account_owner": "Felipe",
+      "balance_amount": 1500000,
+      "account_type": 2,
+      "overdraft_amount": 0
+    },
+    {
+      "id": 11,
+      "account_number": "1414141414",
+      "account_owner": "Pilar",
+      "balance_amount": 300000,
+      "account_type": 1,
+      "overdraft_amount": 0
+    },
+    {
+      "id": 12,
+      "account_number": "",
+      "account_owner": "",
+      "balance_amount": 0,
+      "account_type": 0,
+      "overdraft_amount": 0
     }
   ]
 }
