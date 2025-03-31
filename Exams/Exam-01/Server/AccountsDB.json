@@ -39,6 +39,30 @@
       "BalanceAmount": 900000,
       "AccountType": 1,
       "OverdraftAmount": 1000000
+    },
+    {
+      "id": "1212121212",
+      "AccountNumber": "1212121212",
+      "AccountOwner": "Jucer",
+      "BalanceAmount": 1500000,
+      "AccountType": 0,
+      "OverdraftAmount": 0
+    },
+    {
+      "id": "1313131313",
+      "AccountNumber": "1313131313",
+      "AccountOwner": "Scotia",
+      "BalanceAmount": 0,
+      "AccountType": 1,
+      "OverdraftAmount": 700000
+    },
+    {
+      "id": "7891234560",
+      "AccountNumber": "7891234560",
+      "AccountOwner": "Julio Robles",
+      "BalanceAmount": 100000,
+      "AccountType": 0,
+      "OverdraftAmount": 0
     }
   ]
 }
