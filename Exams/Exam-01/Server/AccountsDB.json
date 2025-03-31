@@ -1,46 +1,111 @@
 {
   "accounts": [
     {
-      "accountNumber": "1234567890",
-      "accountOwner": "Juan Pérez",
-      "balanceAmount": 50000,
-      "accountType": "Saving",
-      "id": "7cec"
+      "id": "ecb9",
+      "AccountNumber": "0716071607",
+      "AccountOwner": "Juan",
+      "BalanceAmount": 90,
+      "AccountType": 0,
+      "OverdraftAmount": 0
     },
     {
-      "accountNumber": "0987654321",
-      "accountOwner": "María Gómez",
-      "balanceAmount": 1000000,
-      "accountType": "Checking",
-      "overdraftAmount": 1000000,
-      "id": "b206"
+      "id": "d19c",
+      "AccountNumber": "2020202020",
+      "AccountOwner": "Mar",
+      "BalanceAmount": 1000000,
+      "AccountType": 1,
+      "OverdraftAmount": 0
     },
     {
-      "id": "d25b",
-      "accountNumber": "1111111111",
-      "accountOwner": "juan pizo",
-      "balanceAmount": 10000,
-      "accountType": 1
+      "id": "8ba0",
+      "AccountNumber": "1111111111",
+      "AccountOwner": "Lola",
+      "BalanceAmount": 1,
+      "AccountType": 0,
+      "OverdraftAmount": 999999
     },
     {
-      "id": "6762",
-      "accountNumber": "1222222222",
-      "accountOwner": "lina m",
-      "balanceAmount": 0,
-      "accountType": 1
+      "id": "926e",
+      "AccountNumber": "1010101010",
+      "AccountOwner": "Juan",
+      "BalanceAmount": 0,
+      "AccountType": 1,
+      "OverdraftAmount": 1000000
     },
     {
-      "id": "87cd",
-      "accountNumber": "1255555555",
-      "accountOwner": "sebastian s",
-      "balanceAmount": 2000000,
-      "accountType": 2
+      "id": "c21a",
+      "AccountNumber": "0987654321",
+      "AccountOwner": "Juan",
+      "BalanceAmount": 0,
+      "AccountType": 0,
+      "OverdraftAmount": 1000000
     },
     {
-      "id": "798a",
-      "AccountNumber": "1666666666",
-      "AccountOwner": "julian",
-      "BalanceAmount": 1100000,
+      "id": "5656",
+      "AccountNumber": "3332221110",
+      "AccountOwner": "Mar",
+      "BalanceAmount": 50,
+      "AccountType": 0,
+      "OverdraftAmount": 0
+    },
+    {
+      "id": "b58c",
+      "AccountNumber": "1231231230",
+      "AccountOwner": "Juan",
+      "BalanceAmount": 1600,
+      "AccountType": 0,
+      "OverdraftAmount": 0
+    },
+    {
+      "id": "d77f",
+      "AccountNumber": "1245789630",
+      "AccountOwner": "ghj",
+      "BalanceAmount": 100,
+      "AccountType": 0,
+      "OverdraftAmount": 0
+    },
+    {
+      "id": "4dbd",
+      "AccountNumber": "9876543210",
+      "AccountOwner": "Julio Robles",
+      "BalanceAmount": 700000,
+      "AccountType": 0,
+      "OverdraftAmount": 0
+    },
+    {
+      "id": "dcaf",
+      "AccountNumber": "7410852963",
+      "AccountOwner": "Pilar Lopez",
+      "BalanceAmount": 700000,
+      "AccountType": 1,
+      "OverdraftAmount": 300000
+    },
+    {
+      "id": "f41e",
+      "AccountNumber": "9876543210",
+      "AccountOwner": "Julio Robles",
+      "BalanceAmount": 1000000,
+      "AccountType": 1
+    },
+    {
+      "id": "52ac",
+      "AccountNumber": "7410852963",
+      "AccountOwner": "Jucer",
+      "BalanceAmount": 1000000,
+      "AccountType": 1
+    },
+    {
+      "id": "47e6",
+      "AccountNumber": "1234567890",
+      "AccountOwner": "123",
+      "BalanceAmount": 1001000,
+      "AccountType": 2
+    },
+    {
+      "id": "3eac",
+      "AccountNumber": "9638527410",
+      "AccountOwner": "Scotia",
+      "BalanceAmount": 1500000,
       "AccountType": 2
     }
   ]
