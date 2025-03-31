@@ -1,0 +1,13 @@
+{
+  "accounts": [
+    {
+      "id": "b933",
+      "Id": null,
+      "AccountNumber": "1234567890",
+      "AccountOwner": "alejo",
+      "BalanceAmount": 200000,
+      "AccountType": 1,
+      "OverdraftAmount": 0
+    }
+  ]
+}
