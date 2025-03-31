@@ -1,22 +1,16 @@
 {
   "accounts": [
     {
-      "id": "1",
-      "accountNumber": "1234567890",
-      "owner": "Juan Pérez",
-      "balance": 1000
+      "id": "c021",
+      "AccountNumber": "1212121212",
+      "Owner": "Julio Robles",
+      "Balance": 1000000
     },
     {
-      "id": "eac0",
-      "AccountNumber": "2121122121",
-      "Owner": "asdasd",
-      "Balance": 1111
-    },
-    {
-      "id": "3c10",
-      "AccountNumber": "1234567890",
-      "Owner": "asas",
-      "Balance": 2112
+      "id": "4f30",
+      "AccountNumber": "1313131313",
+      "Owner": "Scotia",
+      "Balance": 1500000
     }
   ]
 }
