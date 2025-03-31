@@ -1,3 +1,148 @@
 {
-    "accounts": []
-  }
+  "accounts": [
+    {
+      "id": "5a32",
+      "type": "Saving",
+      "accountNumber": "9876543210",
+      "accountOwner": "Julio Robles",
+      "balanceAmount": 1000000,
+      "overdraftAmount": 0
+    },
+    {
+      "id": "962f",
+      "type": "Saving",
+      "accountNumber": "9876543210",
+      "accountOwner": "Julio Robles",
+      "balanceAmount": 1500000,
+      "overdraftAmount": 0
+    },
+    {
+      "id": "b34d",
+      "type": "Saving",
+      "accountNumber": "9876543210",
+      "accountOwner": "Julio Robles",
+      "balanceAmount": 1200000,
+      "overdraftAmount": 0
+    },
+    {
+      "id": "cc3b",
+      "type": "Checking",
+      "accountNumber": "7410852963",
+      "accountOwner": "Pilar Lopez",
+      "balanceAmount": 1500000,
+      "overdraftAmount": 0
+    },
+    {
+      "id": "be3d",
+      "type": "Saving",
+      "accountNumber": "9876543210",
+      "accountOwner": "Julio Robles",
+      "balanceAmount": 1000000,
+      "overdraftAmount": 0
+    },
+    {
+      "id": "9ea4",
+      "type": "Saving",
+      "accountNumber": "9876543210",
+      "accountOwner": "Julio Robles",
+      "balanceAmount": 1500000,
+      "overdraftAmount": 0
+    },
+    {
+      "id": "9cbd",
+      "type": "Saving",
+      "accountNumber": "9876543210",
+      "accountOwner": "Julio Robles",
+      "balanceAmount": 1200000,
+      "overdraftAmount": 0
+    },
+    {
+      "id": "5099",
+      "type": "Saving",
+      "accountNumber": "9876543210",
+      "accountOwner": "Julio Robles",
+      "balanceAmount": 1000000,
+      "overdraftAmount": 0
+    },
+    {
+      "id": "1baf",
+      "type": "Saving",
+      "accountNumber": "9876543210",
+      "accountOwner": "Julio Robles",
+      "balanceAmount": 1500000,
+      "overdraftAmount": 0
+    },
+    {
+      "id": "484a",
+      "type": "Saving",
+      "accountNumber": "9876543210",
+      "accountOwner": "Julio Robles",
+      "balanceAmount": 1200000,
+      "overdraftAmount": 0
+    },
+    {
+      "id": "a8e9",
+      "type": "Saving",
+      "accountNumber": "9876543210",
+      "accountOwner": "Julio Robles",
+      "balanceAmount": 1000000,
+      "overdraftAmount": 0
+    },
+    {
+      "id": "7e77",
+      "type": "Saving",
+      "accountNumber": "9876543210",
+      "accountOwner": "Julio Robles",
+      "balanceAmount": 1500000,
+      "overdraftAmount": 0
+    },
+    {
+      "id": "f2a3",
+      "type": "Saving",
+      "accountNumber": "9876543210",
+      "accountOwner": "Julio Robles",
+      "balanceAmount": 1200000,
+      "overdraftAmount": 0
+    },
+    {
+      "id": "3735",
+      "type": "Checking",
+      "accountNumber": "7410852963",
+      "accountOwner": "Pilar Lopez",
+      "balanceAmount": 700000,
+      "overdraftAmount": 300000
+    },
+    {
+      "id": "169d",
+      "type": "Checking",
+      "accountNumber": "7410852963",
+      "accountOwner": "Pilar Lopez",
+      "balanceAmount": 1500000,
+      "overdraftAmount": 0
+    },
+    {
+      "id": "3711",
+      "type": "Checking",
+      "accountNumber": "7410852963",
+      "accountOwner": "Pilar Lopez",
+      "balanceAmount": 700000,
+      "overdraftAmount": 300000
+    },
+    {
+      "id": "e4fa",
+      "type": "Saving",
+      "accountNumber": "9876543210",
+      "accountOwner": "Julio Robles",
+      "balanceAmount": 1100000,
+      "overdraftAmount": 0
+    },
+    {
+      "id": "b371",
+      "type": "Saving",
+      "accountNumber": "1234567890",
+      "accountOwner": "Jucer",
+      "balanceAmount": 100000,
+      "overdraftAmount": 0
+    }
+  ]
+}
