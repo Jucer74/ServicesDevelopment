@@ -1,0 +1,12 @@
+C:\Users\TMK CORP\BankApp\BankApp.Entities\bin\Debug\net8.0\BankApp.Entities.deps.json
+C:\Users\TMK CORP\BankApp\BankApp.Entities\bin\Debug\net8.0\BankApp.Entities.dll
+C:\Users\TMK CORP\BankApp\BankApp.Entities\bin\Debug\net8.0\BankApp.Entities.pdb
+C:\Users\TMK CORP\BankApp\BankApp.Entities\obj\Debug\net8.0\BankApp.Entities.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\TMK CORP\BankApp\BankApp.Entities\obj\Debug\net8.0\BankApp.Entities.AssemblyInfoInputs.cache
+C:\Users\TMK CORP\BankApp\BankApp.Entities\obj\Debug\net8.0\BankApp.Entities.AssemblyInfo.cs
+C:\Users\TMK CORP\BankApp\BankApp.Entities\obj\Debug\net8.0\BankApp.Entities.csproj.CoreCompileInputs.cache
+C:\Users\TMK CORP\BankApp\BankApp.Entities\obj\Debug\net8.0\BankApp.Entities.sourcelink.json
+C:\Users\TMK CORP\BankApp\BankApp.Entities\obj\Debug\net8.0\BankApp.Entities.dll
+C:\Users\TMK CORP\BankApp\BankApp.Entities\obj\Debug\net8.0\refint\BankApp.Entities.dll
+C:\Users\TMK CORP\BankApp\BankApp.Entities\obj\Debug\net8.0\BankApp.Entities.pdb
+C:\Users\TMK CORP\BankApp\BankApp.Entities\obj\Debug\net8.0\ref\BankApp.Entities.dll

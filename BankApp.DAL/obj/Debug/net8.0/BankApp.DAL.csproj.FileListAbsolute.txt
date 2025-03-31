@@ -1,0 +1,16 @@
+C:\Users\TMK CORP\BankApp\BankApp.DAL\bin\Debug\net8.0\BankApp.DAL.deps.json
+C:\Users\TMK CORP\BankApp\BankApp.DAL\bin\Debug\net8.0\BankApp.DAL.dll
+C:\Users\TMK CORP\BankApp\BankApp.DAL\bin\Debug\net8.0\BankApp.DAL.pdb
+C:\Users\TMK CORP\BankApp\BankApp.DAL\bin\Debug\net8.0\BankApp.Entities.dll
+C:\Users\TMK CORP\BankApp\BankApp.DAL\bin\Debug\net8.0\BankApp.Entities.pdb
+C:\Users\TMK CORP\BankApp\BankApp.DAL\obj\Debug\net8.0\BankApp.DAL.csproj.AssemblyReference.cache
+C:\Users\TMK CORP\BankApp\BankApp.DAL\obj\Debug\net8.0\BankApp.DAL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\TMK CORP\BankApp\BankApp.DAL\obj\Debug\net8.0\BankApp.DAL.AssemblyInfoInputs.cache
+C:\Users\TMK CORP\BankApp\BankApp.DAL\obj\Debug\net8.0\BankApp.DAL.AssemblyInfo.cs
+C:\Users\TMK CORP\BankApp\BankApp.DAL\obj\Debug\net8.0\BankApp.DAL.csproj.CoreCompileInputs.cache
+C:\Users\TMK CORP\BankApp\BankApp.DAL\obj\Debug\net8.0\BankApp.DAL.sourcelink.json
+C:\Users\TMK CORP\BankApp\BankApp.DAL\obj\Debug\net8.0\BankApp..9DBCEEBA.Up2Date
+C:\Users\TMK CORP\BankApp\BankApp.DAL\obj\Debug\net8.0\BankApp.DAL.dll
+C:\Users\TMK CORP\BankApp\BankApp.DAL\obj\Debug\net8.0\refint\BankApp.DAL.dll
+C:\Users\TMK CORP\BankApp\BankApp.DAL\obj\Debug\net8.0\BankApp.DAL.pdb
+C:\Users\TMK CORP\BankApp\BankApp.DAL\obj\Debug\net8.0\ref\BankApp.DAL.dll
