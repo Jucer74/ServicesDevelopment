@@ -1,35 +1,28 @@
 {
   "accounts": [
     {
-      "AccountNumber": "1234567890",
-      "AccountOwner": "Camilo Rios",
-      "BalanceAmount": 100000,
+      "AccountNumber": "1212121212",
+      "AccountOwner": "Julio Robles",
+      "BalanceAmount": 700000,
       "AccountType": 0,
-      "id": "1234567890"
+      "OverdraftAmount": null,
+      "id": "1212121212"
     },
     {
-      "AccountNumber": "2222222222",
-      "AccountOwner": "Pilar Lopez",
-      "BalanceAmount": 900000,
-      "AccountType": 1,
-      "OverdraftAmount": 100000,
-      "id": "2222222222"
-    },
-    {
-      "id": "1111111111",
-      "AccountNumber": "1111111111",
-      "AccountOwner": "sdaee",
-      "BalanceAmount": 123,
+      "id": "1313131313",
+      "AccountNumber": "1313131313",
+      "AccountOwner": "Scotia",
+      "BalanceAmount": 500000,
       "AccountType": 1,
       "OverdraftAmount": 1000000
     },
     {
-      "AccountNumber": "1212121212",
-      "AccountOwner": "adea",
-      "BalanceAmount": 21191,
-      "AccountType": 0,
-      "OverdraftAmount": null,
-      "id": "1212121212"
+      "id": "1597534560",
+      "AccountNumber": "1597534560",
+      "AccountOwner": "Jucer",
+      "BalanceAmount": 0,
+      "AccountType": 1,
+      "OverdraftAmount": 1000000
     }
   ]
 }
