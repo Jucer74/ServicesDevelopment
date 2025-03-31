@@ -8,6 +8,7 @@ using BankApp.Entities;
 
 namespace BankApp.BL
 {
+// se crea la intraccion con la API
     public class BankAccountRepository
     {
         private readonly HttpClient _httpClient;
