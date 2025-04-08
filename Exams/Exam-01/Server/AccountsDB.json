@@ -1,0 +1,16 @@
+{
+  "accounts": [
+    {
+      "id": "c021",
+      "AccountNumber": "1212121212",
+      "Owner": "Julio Robles",
+      "Balance": 1000000
+    },
+    {
+      "id": "4f30",
+      "AccountNumber": "1313131313",
+      "Owner": "Scotia",
+      "Balance": 1500000
+    }
+  ]
+}
