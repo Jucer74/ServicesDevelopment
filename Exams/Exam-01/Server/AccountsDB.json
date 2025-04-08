@@ -1,0 +1,44 @@
+{
+  "accounts": [
+    {
+      "id": "5436564543",
+      "AccountNumber": "5436564543",
+      "AccountOwner": "martin",
+      "BalanceAmount": 0,
+      "AccountType": 2,
+      "OverdraftAmount": 900000
+    },
+    {
+      "id": "1111111111",
+      "AccountNumber": "1111111111",
+      "AccountOwner": "felipe",
+      "BalanceAmount": 200000,
+      "AccountType": 1,
+      "OverdraftAmount": 0
+    },
+    {
+      "id": "9876543210",
+      "AccountNumber": "9876543210",
+      "AccountOwner": "Alex Castro",
+      "BalanceAmount": 1000000,
+      "AccountType": 1,
+      "OverdraftAmount": 0
+    },
+    {
+      "id": "9517538520",
+      "AccountNumber": "9517538520",
+      "AccountOwner": "Alex Castro",
+      "BalanceAmount": 0,
+      "AccountType": 2,
+      "OverdraftAmount": 1000000
+    },
+    {
+      "id": "8524567890",
+      "AccountNumber": "8524567890",
+      "AccountOwner": "Alex Castro",
+      "BalanceAmount": 500000,
+      "AccountType": 2,
+      "OverdraftAmount": 1000000
+    }
+  ]
+}
