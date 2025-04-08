@@ -11,9 +11,7 @@ namespace BankApp.BL
     {
         private readonly BankRepository _repository;
         private readonly HttpClient _httpClient = new HttpClient();
-private const string ApiUrl = "http://localhost:3000/accounts";
-
-
+        private const string ApiUrl = "http://localhost:3000/accounts";
 
         public BankService()
         {
@@ -25,20 +23,19 @@ private const string ApiUrl = "http://localhost:3000/accounts";
             var existingAccount = await _repository.GetAccountByNumberAsync(account.AccountNumber);
             if (existingAccount != null)
                 throw new InvalidOperationException("Account already exists.");
-            
+
             await _repository.CreateAccountAsync(account);
         }
 
-     public async Task<decimal> GetBalanceAsync(string accountNumber)
-{
-    var account = await _repository.GetAccountByNumberAsync(accountNumber);
+        public async Task<decimal> GetBalanceAsync(string accountNumber)
+        {
+            var account = await _repository.GetAccountByNumberAsync(accountNumber);
 
-    if (account == null)
-        throw new InvalidOperationException("Account not found.");
+            if (account == null)
+                throw new InvalidOperationException("Account not found.");
 
-    return account.BalanceAmount;
-}
-
+            return account.BalanceAmount;
+        }
 
         public async Task DepositAsync(string accountNumber, decimal amount)
         {
@@ -56,7 +53,7 @@ private const string ApiUrl = "http://localhost:3000/accounts";
             if (account == null)
                 throw new InvalidOperationException("Account not found.");
 
-            if(account.Withdrawal(amount))
+            if (account.Withdrawal(amount))
             {
                 await _repository.UpdateAccountAsync(account);
             }
@@ -65,6 +62,5 @@ private const string ApiUrl = "http://localhost:3000/accounts";
                 throw new InvalidOperationException("Insufficient funds.");
             }
         }
-        
     }
 }
