@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace UserManagement.Domain.Common
 {
-    public interface IRepository
+    public interface IRepository<T> where T : EntitiyBase
     {
+        T GetValue(int id);
     }
 }
