@@ -65,6 +65,7 @@
       "OverdraftAmount": 0
     },
     {
+<<<<<<< Updated upstream:Exams/Exam-01/Server/AccountsDB.json
       "id": "4dbd",
       "AccountNumber": "9876543210",
       "AccountOwner": "Julio Robles",
@@ -79,6 +80,14 @@
       "BalanceAmount": 700000,
       "AccountType": 1,
       "OverdraftAmount": 300000
+=======
+      "id": "c378",
+      "AccountNumber": "0917091709",
+      "AccountOwner": "Mar",
+      "BalanceAmount": 1001000,
+      "AccountType": 1,
+      "OverdraftAmount": 0
+>>>>>>> Stashed changes:Exams/Exam-01/BankApp/Services/db.json
     }
   ]
 }
