@@ -1,0 +1,6 @@
+@josoterad.api_HostAddress = http://localhost:5166
+
+GET {{josoterad.api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
