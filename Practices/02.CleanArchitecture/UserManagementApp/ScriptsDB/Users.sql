@@ -1,7 +1,7 @@
-CREATE TABLE `users` (
+CREATE TABLE `Users` (
   `Id` int NOT NULL AUTO_INCREMENT,
   `Email` varchar(255) NOT NULL,
-  `Name` varchar(50) NOT NULL,
+  `Fullname` varchar(50) NOT NULL,
   `Password` varchar(50) NOT NULL,
   `Username` varchar(50) NOT NULL,
   PRIMARY KEY (`Id`)
