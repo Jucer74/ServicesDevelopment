@@ -1,15 +1,15 @@
 using System.Linq.Expressions;
 using UserManagement.Application.Interfaces;
+using UserManagement.Domain.Common;
 using UserManagement.Domain.Entities;
-using UserManagement.Domain.Interfaces.Repositories;
 
 namespace UserManagement.Application.Services;
 
 public class UserService:IUserService
 {
-    private readonly IUserRepository _userRepository;
+    private readonly IRepository<User> _userRepository;
 
-    public UserService(IUserRepository userRepository)
+    public UserService(IRepository<User> userRepository)
     {
         _userRepository = userRepository;
     }
@@ -34,14 +34,22 @@ public class UserService:IUserService
         return _userRepository.FindAsync(predicate);
     }
 
-    public Task UpdateAsync(User entity)
+    public Task UpdateAsync(int id, User entity)
     {
         return _userRepository.UpdateAsync(entity);
     }
 
-    public Task RemoveAsync(int id)
+    public async Task RemoveAsync(int id)
     {
-        return _userRepository.RemoveAsync(id);
+        var user = await GetByIdAsync(id);
+        if (user != null)
+        {
+            await _userRepository.RemoveAsync(user);
+        }
+        else
+        {
+            throw new Exception("User not found");
+        }
     }
 
 }
