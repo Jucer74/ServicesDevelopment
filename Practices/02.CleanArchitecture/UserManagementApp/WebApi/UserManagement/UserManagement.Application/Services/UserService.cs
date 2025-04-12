@@ -14,9 +14,9 @@ public class UserService:IUserService
         _userRepository = userRepository;
     }
 
-    public Task AddAsync(User entity)
+    public async Task<User> AddAsync(User entity)
     {
-        return _userRepository.AddAsync(entity);
+        return await _userRepository.AddAsync(entity);
     }
 
     public Task<IEnumerable<User>> GetAllAsync()
@@ -34,9 +34,9 @@ public class UserService:IUserService
         return _userRepository.FindAsync(predicate);
     }
 
-    public Task UpdateAsync(int id, User entity)
+    public async Task<User> UpdateAsync(int id, User entity)
     {
-        return _userRepository.UpdateAsync(entity);
+        return await _userRepository.UpdateAsync(entity);
     }
 
     public async Task RemoveAsync(int id)
