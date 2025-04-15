@@ -3,7 +3,7 @@ using UserManagement.Domain.Common;
 
 namespace UserManagement.Domain.Interfaces.Repositores
 {
-    internal interface IUserRepository : IRepository<User>
+    public interface IUserRepository : IRepository<User>
     {
     }
 }
