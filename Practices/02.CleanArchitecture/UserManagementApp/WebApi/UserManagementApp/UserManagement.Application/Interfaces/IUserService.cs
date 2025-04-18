@@ -1,5 +1,6 @@
 ﻿using System.Linq.Expressions;
 using People.Domain.Entities;
+
 namespace UserManagement.Application.Interfaces;
 public interface IUserService 
 {

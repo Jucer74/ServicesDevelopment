@@ -1,4 +1,4 @@
-﻿using People.Domain.Entities;
+﻿using User.Domain.Entities;
 using UserManagement.Application.Interfaces;
 using UserManagement.Domain.Interfaces.Repositores;
 using System.Linq.Expressions;
