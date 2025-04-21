@@ -1,4 +1,4 @@
-namespace UserManagement.Api
+namespace Users.Api
 {
     public class WeatherForecast
     {
