@@ -1,0 +1,140 @@
+{
+  "accounts": [
+    {
+      "accountNumber": "1111111111",
+      "accountOwner": "Julio Robles",
+      "balanceAmount": 100000,
+      "accountType": "Saving",
+      "overdraftAmount": 0,
+      "id": "55c9"
+    },
+    {
+      "accountNumber": "2222222222",
+      "accountOwner": "Pilar Lopez",
+      "balanceAmount": 500000,
+      "accountType": "Checking",
+      "overdraftAmount": 1000000,
+      "id": "0cea"
+    },
+    {
+      "accountNumber": "3333333333",
+      "accountOwner": "Carlos Gomez",
+      "balanceAmount": 200000,
+      "accountType": "Saving",
+      "overdraftAmount": 0,
+      "id": "760f"
+    },
+    {
+      "id": "a10b",
+      "AccountNumber": "1222222222",
+      "AccountOwner": "Jesus",
+      "BalanceAmount": 200000,
+      "AccountType": "Checking",
+      "OverdraftAmount": 1000000
+    },
+    {
+      "id": "3652",
+      "AccountNumber": "1231111111",
+      "AccountOwner": "jesus",
+      "BalanceAmount": 20000,
+      "AccountType": "Saving",
+      "OverdraftAmount": 0
+    },
+    {
+      "id": "1d30",
+      "AccountNumber": "1234123412",
+      "AccountOwner": "Jesus",
+      "BalanceAmount": 20000,
+      "AccountType": "Saving",
+      "OverdraftAmount": 0
+    },
+    {
+      "id": "1231231234",
+      "AccountNumber": "1231231234",
+      "AccountOwner": "Jesus G",
+      "BalanceAmount": 100000,
+      "AccountType": "Saving",
+      "OverdraftAmount": 0
+    },
+    {
+      "id": "1234123456",
+      "AccountNumber": "1234123456",
+      "AccountOwner": "Jes",
+      "BalanceAmount": 0,
+      "AccountType": "Checking",
+      "OverdraftAmount": 1000000
+    },
+    {
+      "id": "1234509876",
+      "AccountNumber": "1234509876",
+      "AccountOwner": "Jesus G",
+      "BalanceAmount": 200000,
+      "AccountType": "Saving",
+      "OverdraftAmount": 0
+    },
+    {
+      "id": "1234432112",
+      "AccountNumber": "1234432112",
+      "AccountOwner": "JesusGelevs",
+      "BalanceAmount": 200000,
+      "AccountType": "Checking",
+      "OverdraftAmount": 0
+    },
+    {
+      "id": "1234512341",
+      "AccountNumber": "1234512341",
+      "AccountOwner": "Jesus",
+      "BalanceAmount": 20000,
+      "AccountType": "Checking",
+      "OverdraftAmount": 0
+    },
+    {
+      "id": "1234561234",
+      "AccountNumber": "1234561234",
+      "AccountOwner": "Jes",
+      "BalanceAmount": 20005,
+      "AccountType": "Checking",
+      "OverdraftAmount": 0
+    },
+    {
+      "id": "0987654321",
+      "AccountNumber": "0987654321",
+      "AccountOwner": "jes",
+      "BalanceAmount": 0,
+      "AccountType": "Saving",
+      "OverdraftAmount": 0
+    },
+    {
+      "id": "9876543210",
+      "AccountNumber": "9876543210",
+      "AccountOwner": "Jucer",
+      "BalanceAmount": 200000,
+      "AccountType": "Saving",
+      "OverdraftAmount": 0
+    },
+    {
+      "id": "9638527410",
+      "AccountNumber": "9638527410",
+      "AccountOwner": "Julio",
+      "BalanceAmount": 0,
+      "AccountType": "Saving",
+      "OverdraftAmount": 0
+    },
+    {
+      "id": "7410852963",
+      "AccountNumber": "7410852963",
+      "AccountOwner": "Juan Carlos Giron",
+      "BalanceAmount": 100000,
+      "AccountType": "Saving",
+      "OverdraftAmount": 0
+    },
+    {
+      "id": "1237894560",
+      "AccountNumber": "1237894560",
+      "AccountOwner": "Marilyn Monroe",
+      "BalanceAmount": 500000,
+      "AccountType": "Checking",
+      "OverdraftAmount": 0
+    }
+  ]
+}
