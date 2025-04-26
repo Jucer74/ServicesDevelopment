@@ -7,7 +7,7 @@ using Users.Infrastructure.Context;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add DbContext
-builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite("Name=PeopleDB"));
+builder.Services.AddDbContext<AppDbContext>(options => options.UseMySQL(builder.Configuration.GetConnectionString("UserDb")));
 
 // Add services to the container.
 builder.Services.AddControllers();
