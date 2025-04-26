@@ -1,8 +1,9 @@
 ﻿using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Users.Domain.Common;
-using Users.Domain.Exceptions;
+using Users.Application.Exceptions;
 using Users.Infrastructure.Context;
+using Users.Application.Interfaces.Repositories;
 
 namespace Users.Infrastructure.Common
 {

@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Users.Application.Dtos;
+using Users.Application.Exceptions;
 using Users.Application.Interfaces;
 using Users.Domain.Entities;
-using Users.Domain.Exceptions;
-using Users.Domain.Entities;
-using Users.Application.Dtos;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -28,7 +27,7 @@ namespace Users.Api.Controllers
         public async Task<IActionResult> GetAll()
         {
             var users = await _userService.GetAllAsync();
-            return Ok(_mapper.Map<List<User>, List<UserDto>>((List<User>)users) );
+            return Ok(_mapper.Map<List<User>, List<UserDto>>((List<User>)users));
         }
 
         // GET api/<UsersController>/5
@@ -37,8 +36,8 @@ namespace Users.Api.Controllers
         {
             try
             {
-            var user = await _userService.GetByIdAsync(id);
-            return Ok(_mapper.Map<User, UserDto>(user));
+                var user = await _userService.GetByIdAsync(id);
+                return Ok(_mapper.Map<User, UserDto>(user));
             }
             catch (NotFoundException ex)
             {
@@ -50,7 +49,7 @@ namespace Users.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] UserDto userDto)
         {
-            var user= await _userService.AddAsync(_mapper.Map<UserDto, User>(userDto));
+            var user = await _userService.AddAsync(_mapper.Map<UserDto, User>(userDto));
             return Ok(_mapper.Map<User, UserDto>(user));
         }
 

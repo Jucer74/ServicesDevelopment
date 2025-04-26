@@ -1,8 +1,8 @@
 ﻿using System.Linq.Expressions;
+using Users.Application.Exceptions;
 using Users.Application.Interfaces;
+using Users.Application.Interfaces.Repositories;
 using Users.Domain.Entities;
-using Users.Domain.Exceptions;
-using Users.Domain.Interfaces.Repositories;
 
 namespace Users.Application.Services
 {

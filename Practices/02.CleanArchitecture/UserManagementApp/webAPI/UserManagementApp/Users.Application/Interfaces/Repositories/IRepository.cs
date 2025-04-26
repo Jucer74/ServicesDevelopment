@@ -1,7 +1,7 @@
-﻿using System.Collections;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
+using Users.Domain.Common;
 
-namespace Users.Domain.Common
+namespace Users.Application.Interfaces.Repositories
 {
     public interface IRepository<T> where T : EntityBase
     {

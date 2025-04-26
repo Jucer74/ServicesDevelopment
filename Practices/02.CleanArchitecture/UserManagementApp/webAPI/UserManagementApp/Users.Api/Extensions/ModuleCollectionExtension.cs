@@ -1,12 +1,13 @@
 ﻿using AutoMapper;
 using FluentValidation;
-using Users.Application.Interfaces;
-using Users.Application.Services;
-using Users.Domain.Interfaces.Repositories;
-using Users.Infrastructure.Repositories;
 using Users.Application.Dtos;
-using Users.Application.Validations;
+using Users.Application.Interfaces;
+using Users.Application.Interfaces.Repositories;
 using Users.Application.Mapping;
+using Users.Application.Services;
+using Users.Application.Validations;
+using Users.Infrastructure.Repositories;
+using System.Linq.Expressions;
 
 namespace Users.Api.Extensions
 {
@@ -24,8 +25,7 @@ namespace Users.Api.Extensions
         {
             // Repositories
             services.AddScoped<IUserRepository, UserRepository>();
-
-
+            
             return services;
         }
         public static IServiceCollection AddMapping(this IServiceCollection services)
