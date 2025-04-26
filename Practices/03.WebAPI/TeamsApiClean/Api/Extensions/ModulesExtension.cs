@@ -6,7 +6,7 @@ using AutoMapper;
 using Application.Interfaces.Repositories;
 using FluentValidation;
 using Infrastructure.Repositories;
-using TeamsApi.Validations;
+using Application.Validations;
 
 namespace Api.Extensions;
 

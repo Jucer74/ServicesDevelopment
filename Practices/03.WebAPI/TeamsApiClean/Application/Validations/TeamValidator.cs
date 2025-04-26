@@ -2,7 +2,7 @@
 using FluentValidation;
 
 
-namespace TeamsApi.Validations;
+namespace Application.Validations;
 
 public class TeamValidator : AbstractValidator<TeamDto>
 {
