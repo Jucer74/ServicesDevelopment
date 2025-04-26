@@ -1,4 +1,4 @@
-namespace UserManagement.Domain.Exceptions;
+namespace UserManagement.Application.Exceptions;
 
 [Serializable]
 public class BadRequestException : Exception

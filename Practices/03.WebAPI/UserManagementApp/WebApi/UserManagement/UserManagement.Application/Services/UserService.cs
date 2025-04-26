@@ -1,6 +1,6 @@
 using System.Linq.Expressions;
 using UserManagement.Application.Interfaces;
-using UserManagement.Domain.Common;
+using UserManagement.Application.Common;
 using UserManagement.Domain.Entities;
 
 namespace UserManagement.Application.Services;

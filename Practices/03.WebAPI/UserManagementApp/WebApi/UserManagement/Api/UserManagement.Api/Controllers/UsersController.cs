@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using UserManagement.Application.Interfaces;
 using UserManagement.Domain.Entities;
-using UserManagement.Domain.Exceptions;
+using UserManagement.Application.Exceptions;
 
 namespace UserManagement.Api.Controllers;
 

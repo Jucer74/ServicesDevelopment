@@ -1,7 +1,7 @@
 using UserManagement.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using UserManagement.Api.Extensions;
-using UserManagement.Domain.Common;
+using UserManagement.Application.Common;
 using UserManagement.Infrastructure.Common;
 
 var builder = WebApplication.CreateBuilder(args);

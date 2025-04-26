@@ -1,5 +1,5 @@
 using UserManagement.Domain.Entities;
-using UserManagement.Domain.Interfaces.Repositories;
+using UserManagement.Application.Interfaces.Repositories;
 using UserManagement.Infrastructure.Common;
 using UserManagement.Infrastructure.Context;
 

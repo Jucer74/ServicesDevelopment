@@ -1,7 +1,8 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
+using UserManagement.Application.Common;
 using UserManagement.Domain.Common;
-using UserManagement.Domain.Exceptions;
+using UserManagement.Application.Exceptions;
 using UserManagement.Infrastructure.Context;
 
 namespace UserManagement.Infrastructure.Common;

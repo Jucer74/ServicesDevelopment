@@ -1,6 +1,7 @@
 using System.Linq.Expressions;
+using UserManagement.Domain.Common;
 
-namespace UserManagement.Domain.Common;
+namespace UserManagement.Application.Common;
 
 public interface IRepository <T> where T : EntityBase
 {
