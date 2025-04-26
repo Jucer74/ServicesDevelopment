@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation;
-using Users.Application.Dtos;
+using Users.Application.Dtos.Users;
 using Users.Application.Interfaces;
 using Users.Application.Interfaces.Repositories;
 using Users.Application.Mapping;
@@ -45,7 +45,7 @@ namespace Users.Api.Extensions
 
         public static IServiceCollection AddValidators(this IServiceCollection services)
         {
-            services.AddScoped<IValidator<UserDto>, UserValidator>();
+            services.AddScoped<IValidator<UserDtoInput>, UserValidator>();
 
             return services;
         }

@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
-using Users.Application.Dtos;
+using Users.Application.Dtos.Users;
 
 namespace Users.Application.Validations;
 
-public class UserValidator : AbstractValidator<UserDto>
+public class UserValidator : AbstractValidator<UserDtoInput>
 {
     public UserValidator()
     {
@@ -18,6 +18,13 @@ public class UserValidator : AbstractValidator<UserDto>
             .WithMessage("The FullName is required.")
             .MaximumLength(50)
             .WithMessage("The maximum length of FullName is 50 characters.");
+
+        RuleFor(m => m.Password).NotEmpty()
+            .WithMessage("The Password is required.")
+            .MinimumLength(6)
+            .WithMessage("The minimum length of Password is 6 characters.")
+            .MaximumLength(20)
+            .WithMessage("The maximum length of Password is 20 characters.");
 
         RuleFor(m => m.UserName)
             .MaximumLength(30)
