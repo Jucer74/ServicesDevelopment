@@ -6,7 +6,6 @@ namespace Domain.Models;
 
 public class TeamMember : EntityBase
 {
-
     [Required]
     public string FirstName { get; set; } = null!;
 

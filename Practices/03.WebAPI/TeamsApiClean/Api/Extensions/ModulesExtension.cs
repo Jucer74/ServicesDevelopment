@@ -1,9 +1,9 @@
 ﻿using Application.Dtos;
-using Application.Interfaces;
+using Application.Interfaces.Services;
 using Application.Mapping;
 using Application.Services;
 using AutoMapper;
-using Domain.Interfaces.Repositories;
+using Application.Interfaces.Repositories;
 using FluentValidation;
 using Infrastructure.Repositories;
 using TeamsApi.Validations;

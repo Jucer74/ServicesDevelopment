@@ -1,6 +1,6 @@
 ﻿using Application.Exceptions;
-using Application.Interfaces;
-using Domain.Interfaces.Repositories;
+using Application.Interfaces.Services;
+using Application.Interfaces.Repositories;
 using Domain.Models;
 
 namespace Application.Services

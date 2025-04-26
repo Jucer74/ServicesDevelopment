@@ -1,7 +1,7 @@
-﻿using Domain.Common;
+﻿using Application.Common;
 using Domain.Models;
 
-namespace Domain.Interfaces.Repositories
+namespace Application.Interfaces.Repositories
 {
     public interface ITeamRepository : IRepository<Team>
     {

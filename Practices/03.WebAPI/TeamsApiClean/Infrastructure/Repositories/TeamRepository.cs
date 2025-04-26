@@ -1,5 +1,5 @@
 ﻿using Domain.Models;
-using Domain.Interfaces.Repositories;
+using Application.Interfaces.Repositories;
 using Infrastructure.Common;
 using TeamsApi.Context;
 using Microsoft.EntityFrameworkCore;

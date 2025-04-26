@@ -1,5 +1,5 @@
 ﻿using Application.Dtos;
-using Application.Interfaces;
+using Application.Interfaces.Services;
 using AutoMapper;
 using Domain.Models;
 using Microsoft.AspNetCore.Mvc;

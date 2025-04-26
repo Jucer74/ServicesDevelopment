@@ -1,4 +1,4 @@
-﻿using Domain.Interfaces.Repositories;
+﻿using Application.Interfaces.Repositories;
 using Domain.Models;
 using Infrastructure.Common;
 using TeamsApi.Context;
