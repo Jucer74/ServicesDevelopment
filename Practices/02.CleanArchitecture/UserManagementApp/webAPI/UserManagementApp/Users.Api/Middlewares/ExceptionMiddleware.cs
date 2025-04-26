@@ -1,9 +1,4 @@
-﻿using Users.Application.Exceptions;
-using Microsoft.AspNetCore.Http;
-using System;
-using System.Threading.Tasks;
-
-namespace Users.Api.Middlewares
+﻿namespace Users.Api.Middlewares
 {
     /// <summary>
     /// Handler the exceptions

@@ -9,7 +9,7 @@ namespace Users.Application.Interfaces
         public Task<IEnumerable<User>> GetAllAsync();
         public Task<User> GetByIdAsync(int id);
         public Task<IEnumerable<User>> FindAsync(Expression<Func<User, bool>> predicate);
-        public Task<User> UpdateAsync(int Id, User entity);
+        public Task<User> UpdateAsync(int id, User entity);
         public Task RemoveAsync(int id);
     }
 }

@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Users.Application.Dtos.Users;
-using Users.Application.Exceptions;
 using Users.Application.Interfaces;
 using Users.Domain.Entities;
 
@@ -34,15 +33,10 @@ namespace Users.Api.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            try
-            {
-                var user = await _userService.GetByIdAsync(id);
-                return Ok(_mapper.Map<User, UserDtoOutput>(user));
-            }
-            catch (NotFoundException ex)
-            {
-                return NotFound(ex.Message);
-            }
+
+            var user = await _userService.GetByIdAsync(id);
+            return Ok(_mapper.Map<User, UserDtoOutput>(user));
+
         }
 
         // POST api/<UsersController>
@@ -57,34 +51,21 @@ namespace Users.Api.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] UserDtoInput userDto)
         {
-            try
-            {
-                var user = await _userService.UpdateAsync(id, _mapper.Map<UserDtoInput, User>(userDto));
-                return Ok(_mapper.Map<User, UserDtoOutput>(user));
-            }
-            catch (BadRequestException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            catch (NotFoundException ex)
-            {
-                return NotFound(ex.Message);
-            }
+
+            var user = await _userService.UpdateAsync(id, _mapper.Map<UserDtoInput, User>(userDto));
+            return Ok(_mapper.Map<User, UserDtoOutput>(user));
+
+
         }
 
         // DELETE api/<PeopleController>/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            try
-            {
-                await _userService.RemoveAsync(id);
-                return Ok();
-            }
-            catch (NotFoundException ex)
-            {
-                return NotFound(ex.Message);
-            }
+
+            await _userService.RemoveAsync(id);
+            return Ok();
+
         }
     }
 }
