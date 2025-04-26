@@ -1,11 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Users.Application.Interfaces;
 using Users.Domain.Entities;
 using Users.Domain.Exceptions;
-using System;
-using System.Threading.Tasks;
-using Users.Domain.Exceptions;
-using Users.Application.Services;
+using Users.Domain.Entities;
+using Users.Application.Dtos;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -16,26 +15,30 @@ namespace Users.Api.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
+        private readonly IMapper _mapper;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, IMapper mapper)
         {
             _userService = userService;
+            _mapper = mapper;
         }
 
-        // GET: api/<PeopleController>
+        // GET: api/<UsersController>
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _userService.GetAllAsync());
+            var users = await _userService.GetAllAsync();
+            return Ok(_mapper.Map<List<User>, List<UserDto>>((List<User>)users) );
         }
 
-        // GET api/<PeopleController>/5
+        // GET api/<UsersController>/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             try
             {
-                return Ok(await _userService.GetByIdAsync(id));
+            var user = await _userService.GetByIdAsync(id);
+            return Ok(_mapper.Map<User, UserDto>(user));
             }
             catch (NotFoundException ex)
             {
@@ -43,20 +46,22 @@ namespace Users.Api.Controllers
             }
         }
 
-        // POST api/<PeopleController>
+        // POST api/<UsersController>
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] User user)
+        public async Task<IActionResult> Post([FromBody] UserDto userDto)
         {
-            return Ok(await _userService.AddAsync(user));
+            var user= await _userService.AddAsync(_mapper.Map<UserDto, User>(userDto));
+            return Ok(_mapper.Map<User, UserDto>(user));
         }
 
-        // PUT api/<PeopleController>/5
+        // PUT api/<UsersController>/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] User user)
+        public async Task<IActionResult> Put(int id, [FromBody] UserDto userDto)
         {
             try
             {
-                return Ok(await _userService.UpdateAsync(id, user));
+                var user = await _userService.UpdateAsync(id, _mapper.Map<UserDto, User>(userDto));
+                return Ok(_mapper.Map<User, UserDto>(user));
             }
             catch (BadRequestException ex)
             {

@@ -1,8 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Users.Api.Extensions;
 using Users.Infrastructure.Context;
-using Users.Api.Extensions;
-using Users.Infrastructure.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +17,8 @@ builder.Services.AddSwaggerGen();
 // Add Modules
 builder.Services.AddCoreModules();
 builder.Services.AddInfrastructureModules();
+builder.Services.AddMapping();
+builder.Services.AddValidators();
 
 builder.Services.AddCors();
 
@@ -37,7 +37,8 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-app.UseCors(options => {
+app.UseCors(options =>
+{
     options.WithOrigins("http://localhost:3000");
     options.AllowAnyMethod();
     options.AllowAnyHeader();

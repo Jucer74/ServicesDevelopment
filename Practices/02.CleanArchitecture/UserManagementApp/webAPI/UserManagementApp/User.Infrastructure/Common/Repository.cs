@@ -1,12 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Users.Domain.Common;
-using Users.Domain.Exceptions;
-using Users.Infrastructure.Context;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
+﻿using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 using Users.Domain.Common;
 using Users.Domain.Exceptions;
 using Users.Infrastructure.Context;

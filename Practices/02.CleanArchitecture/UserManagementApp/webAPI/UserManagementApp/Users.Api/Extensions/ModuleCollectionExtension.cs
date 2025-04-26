@@ -1,7 +1,12 @@
-﻿using Users.Application.Interfaces;
+﻿using AutoMapper;
+using FluentValidation;
+using Users.Application.Interfaces;
 using Users.Application.Services;
 using Users.Domain.Interfaces.Repositories;
 using Users.Infrastructure.Repositories;
+using Users.Application.Dtos;
+using Users.Application.Validations;
+using Users.Application.Mapping;
 
 namespace Users.Api.Extensions
 {
@@ -20,6 +25,27 @@ namespace Users.Api.Extensions
             // Repositories
             services.AddScoped<IUserRepository, UserRepository>();
 
+
+            return services;
+        }
+        public static IServiceCollection AddMapping(this IServiceCollection services)
+        {
+
+            // Auto Mapper Configurations
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingUserProfile());
+            });
+
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
+            return services;
+        }
+
+        public static IServiceCollection AddValidators(this IServiceCollection services)
+        {
+            services.AddScoped<IValidator<UserDto>, UserValidator>();
 
             return services;
         }
