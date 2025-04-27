@@ -8,6 +8,7 @@ using Users.Application.Services;
 using Users.Application.Validations;
 using Users.Infrastructure.Repositories;
 using System.Linq.Expressions;
+using FluentValidation.AspNetCore;
 
 namespace Users.Api.Extensions
 {
@@ -45,7 +46,8 @@ namespace Users.Api.Extensions
 
         public static IServiceCollection AddValidators(this IServiceCollection services)
         {
-            services.AddScoped<IValidator<UserDtoInput>, UserValidator>();
+            services.AddFluentValidationAutoValidation();
+            services.AddValidatorsFromAssemblyContaining<UserValidator>();
 
             return services;
         }

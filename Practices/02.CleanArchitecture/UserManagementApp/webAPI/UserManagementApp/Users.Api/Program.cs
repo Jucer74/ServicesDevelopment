@@ -34,7 +34,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseExceptionMiddleware();
 
-
 app.UseHttpsRedirection();
 
 app.UseRouting();
