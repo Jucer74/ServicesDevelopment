@@ -1,7 +1,7 @@
-﻿using UserManagement.Domain.Common;
+﻿using UserManagement.Application.Common;
 using UserManagement.Domain.Entities;
 
-namespace UserManagement.Domain.Interfeces.Repositories
+namespace UserManagement.Application.Interfaces.Repositories
 {
     public interface IUserRepository : IRepository<User>
     {

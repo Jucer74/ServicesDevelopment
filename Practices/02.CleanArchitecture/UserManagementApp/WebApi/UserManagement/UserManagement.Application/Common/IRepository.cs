@@ -4,8 +4,9 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using UserManagement.Domain.Common;
 
-namespace UserManagement.Domain.Common
+namespace UserManagement.Application.Common
 {
     public interface IRepository<T> where T : EntityBase
     {
