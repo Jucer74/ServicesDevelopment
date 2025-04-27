@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Users.Api.Extensions;
+using Users.Api.Middlewares;
 using Users.Infrastructure.Context;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,6 +31,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseExceptionMiddleware();
+
 
 app.UseHttpsRedirection();
 

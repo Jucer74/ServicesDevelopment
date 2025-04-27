@@ -34,9 +34,9 @@ namespace Users.Application.Services
         {
             var user = await _userRepository.GetByIdAsync(id);
 
-            if (user is null)
+            if (user == null)
             {
-                throw new NotFoundException($"Person with Id={id} Not Found");
+                throw new NotFoundException($"User with Id={id} Not Found");
             }
 
             return user;
@@ -57,18 +57,15 @@ namespace Users.Application.Services
         public async Task<User> UpdateAsync(int id, User entity)
         {
             if (id != entity.Id)
-            {
-                throw new BadRequestException($"The Id={id} not corresponding with Entity.Id={entity.Id}");
-            }
+                throw new BadRequestException($"The Id={id} does not match Entity.Id={entity.Id}");
 
             var user = await _userRepository.GetByIdAsync(id);
 
-            if (user is null)
-            {
-                throw new NotFoundException($"Person with Id={id} Not Found");
-            }
+            if (user == null)
+                throw new NotFoundException($"User with Id={id} not found");
 
-            return (await _userRepository.UpdateAsync(entity));
+            return await _userRepository.UpdateAsync(entity);
         }
+
     }
 }

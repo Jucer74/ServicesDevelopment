@@ -19,7 +19,8 @@ public class UserValidator : AbstractValidator<UserDtoInput>
             .MaximumLength(50)
             .WithMessage("The maximum length of FullName is 50 characters.");
 
-        RuleFor(m => m.Password).NotEmpty()
+        RuleFor(m => m.Password)
+            .NotEmpty()
             .WithMessage("The Password is required.")
             .MinimumLength(6)
             .WithMessage("The minimum length of Password is 6 characters.")
@@ -27,6 +28,8 @@ public class UserValidator : AbstractValidator<UserDtoInput>
             .WithMessage("The maximum length of Password is 20 characters.");
 
         RuleFor(m => m.UserName)
+            .NotEmpty()
+            .WithMessage("The Username is required.")
             .MaximumLength(30)
             .WithMessage("The maximum length of UserName is 30 characters.");
     }
