@@ -1,6 +1,7 @@
 using System.Linq.Expressions;
 using UserManagement.Application.Interfaces;
 using UserManagement.Application.Common;
+using UserManagement.Application.Exceptions;
 using UserManagement.Domain.Entities;
 
 namespace UserManagement.Application.Services;
@@ -24,9 +25,18 @@ public class UserService:IUserService
         return _userRepository.GetAllAsync();
     }
 
-    public Task<User> GetByIdAsync(int id)
+    public async Task<User> GetByIdAsync(int id)
     {
-        return _userRepository.GetByIdAsync(id);
+        
+        var user = await _userRepository.GetByIdAsync(id);
+
+        if (user == null)
+        {
+            throw new NotFoundException($"User with Id={id} not found.");
+        }
+
+        return user;
+        //return _userRepository.GetByIdAsync(id);
     }
 
     public Task<IEnumerable<User>> FindAsync(Expression<Func<User, bool>> predicate)

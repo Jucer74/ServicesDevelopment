@@ -1,6 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.Serialization;
+
 namespace UserManagement.Application.Exceptions;
 
-public class NotFoundException : Exception
+[ExcludeFromCodeCoverage]
+[Serializable]
+public class NotFoundException : BusinessException
 {
     public NotFoundException()
     {
@@ -11,6 +16,12 @@ public class NotFoundException : Exception
     }
 
     public NotFoundException(string message, Exception innerException) : base(message, innerException)
+    {
+    }
+    
+    // Without this constructor, deserialization will fail
+    protected NotFoundException(SerializationInfo info, StreamingContext context)
+        : base(info, context)
     {
     }
 }

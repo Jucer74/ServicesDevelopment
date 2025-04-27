@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using UserManagement.Application.Interfaces;
 using UserManagement.Domain.Entities;
 using UserManagement.Application.Exceptions;
@@ -27,14 +28,15 @@ public class UsersController : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)
     {
-        try
+        /*try
         {
             return Ok(await _userService.GetByIdAsync(id));
         }
         catch (NotFoundException ex)
         {
             return NotFound(ex.Message);
-        }
+        }*/
+        return Ok(await _userService.GetByIdAsync(id));
     }
     
     // POST api/<UsersController>
@@ -48,7 +50,7 @@ public class UsersController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, [FromBody] User user)
     {
-        try
+        /*try
         {
             return Ok(await _userService.UpdateAsync(id, user));
         }
@@ -59,14 +61,16 @@ public class UsersController : ControllerBase
         catch (NotFoundException ex)
         {
             return NotFound(ex.Message);
-        }
+        }*/
+        
+        return Ok(await _userService.UpdateAsync(id, user));
     }
     
     // DELETE api/<UsersController>/5
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
-        try
+        /*try
         {
             await _userService.RemoveAsync(id);
             return Ok();
@@ -74,6 +78,9 @@ public class UsersController : ControllerBase
         catch (NotFoundException ex)
         {
             return NotFound(ex.Message);
-        }
+        }*/
+        
+        await _userService.RemoveAsync(id);
+        return Ok();
     }
 }
