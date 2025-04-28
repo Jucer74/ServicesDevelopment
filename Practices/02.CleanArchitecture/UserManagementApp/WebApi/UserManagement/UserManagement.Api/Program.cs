@@ -1,7 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using UserManagement.Domain.Interfeces.Repositories;
-using UserManagement.Infractructure.Context;
+using UserManagement.Application.Interfaces.Repositories;
+using UserManagement.Infractructure.Persistence.Context;
 using UserManagement.Infractructure.Repositories;
+using WebApi.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,12 +14,14 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     )
 );
 
-builder.Services.AddScoped<IUserRepository,UserRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 
 var app = builder.Build();
 
@@ -28,6 +31,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// Add the Exception Middleware Handler
+app.UseExceptionMiddleware();
 
 app.UseHttpsRedirection();
 
