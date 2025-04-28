@@ -7,14 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\UserManagement.Api\UserManagement.Api.csproj" />
-    <ProjectReference Include="..\UserManagement.Domain\UserManagement.Domain.csproj" />
-    <ProjectReference Include="..\UserManagement.Infractructure\UserManagement.Infractructure.csproj" />
+    <PackageReference Include="AutoMapper" Version="14.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DTOs\" />
-    <Folder Include="Exceptions\" />
+    <ProjectReference Include="..\UserManagement.Domain\UserManagement.Domain.csproj" />
   </ItemGroup>
 
 </Project>
