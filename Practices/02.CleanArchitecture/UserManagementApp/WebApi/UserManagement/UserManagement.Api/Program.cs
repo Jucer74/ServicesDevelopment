@@ -1,7 +1,7 @@
-using System;
 using Microsoft.EntityFrameworkCore;
-using UserManagement.Domain.Interfaces.Repositories;
-using UserManagement.Infrastructure.Context;
+using UserManagement.Api.Middleware;
+using UserManagement.Application.Interfaces.Repositories;
+using UserManagement.Infrastructure.Persistence.Context;
 using UserManagement.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,6 +29,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseExceptionMiddleware();
 
 app.UseHttpsRedirection();
 

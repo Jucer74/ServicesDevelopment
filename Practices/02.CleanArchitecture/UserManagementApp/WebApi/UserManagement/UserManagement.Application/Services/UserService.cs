@@ -1,9 +1,8 @@
-﻿using System;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
+using UserManagement.Application.Exceptions;
 using UserManagement.Application.Interfaces;
+using UserManagement.Application.Interfaces.Repositories;
 using UserManagement.Domain.Entities;
-using UserManagement.Domain.Exceptions;
-using UserManagement.Domain.Interfaces.Repositories;
 
 namespace UserManagement.Application.Services
 {
@@ -54,7 +53,6 @@ namespace UserManagement.Application.Services
 
             await _userRepository.RemoveAsync(user);
         }
-       
 
         public async Task<User> UpdateAsync(int id, User entity)
         {

@@ -1,7 +1,7 @@
-﻿using UserManagement.Domain.Entities;
-using UserManagement.Domain.Interfaces.Repositories;
-using UserManagement.Infrastructure.Common;
-using UserManagement.Infrastructure.Context;
+﻿using UserManagement.Application.Interfaces.Repositories;
+using UserManagement.Domain.Entities;
+using UserManagement.Infrastructure.Persistence;
+using UserManagement.Infrastructure.Persistence.Context;
 
 namespace UserManagement.Infrastructure.Repositories
 {

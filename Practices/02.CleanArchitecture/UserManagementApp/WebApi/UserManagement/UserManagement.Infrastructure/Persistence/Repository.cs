@@ -1,9 +1,10 @@
 ﻿using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
+using UserManagement.Application.Interfaces;
 using UserManagement.Domain.Common;
-using UserManagement.Infrastructure.Context;
+using UserManagement.Infrastructure.Persistence.Context;
 
-namespace UserManagement.Infrastructure.Common
+namespace UserManagement.Infrastructure.Persistence
 {
     public class Repository<T> : IRepository<T> where T : EntityBase
     {
