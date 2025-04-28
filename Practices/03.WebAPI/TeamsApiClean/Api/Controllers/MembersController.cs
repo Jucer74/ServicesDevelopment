@@ -46,8 +46,6 @@ namespace Api.Controllers
 
             Console.WriteLine($"teammember: {teamMemberDto.FirstName} {teamMemberDto.Id}");
 
-
-
             var teamMember = await _teamMemberService.CreateTeamMember(_mapper.Map<TeamMemberDto, TeamMember>(teamMemberDto));
             return Ok(_mapper.Map<TeamMember, TeamMemberDto>(teamMember));
         }

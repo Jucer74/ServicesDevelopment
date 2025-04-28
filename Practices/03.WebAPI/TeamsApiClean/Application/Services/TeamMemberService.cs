@@ -25,6 +25,8 @@ public class TeamMemberService : ITeamMemberService
         {
             throw new NotFoundException($"Team Member with Id={id} Not Found");
         }
+
+        await _teamMemberRepository.RemoveAsync(teamMember);
     }
 
     public async Task<List<TeamMember>> GetAllTeamMembers()
