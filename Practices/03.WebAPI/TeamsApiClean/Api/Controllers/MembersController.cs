@@ -42,6 +42,12 @@ namespace Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] TeamMemberDto teamMemberDto)
         {
+
+
+            Console.WriteLine($"teammember: {teamMemberDto.FirstName} {teamMemberDto.Id}");
+
+
+
             var teamMember = await _teamMemberService.CreateTeamMember(_mapper.Map<TeamMemberDto, TeamMember>(teamMemberDto));
             return Ok(_mapper.Map<TeamMember, TeamMemberDto>(teamMember));
         }

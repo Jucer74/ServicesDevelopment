@@ -10,7 +10,7 @@ public interface ITeamMemberService
 
     Task<List<TeamMember>> GetAllTeamMembers();
 
-    Task<TeamMember?> GetTeamMemberById(int id);
+    Task<TeamMember> GetTeamMemberById(int id);
 
     Task<TeamMember> UpdateTeamMember(int id, TeamMember teamMember);
 

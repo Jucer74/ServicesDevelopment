@@ -23,7 +23,7 @@ public class TeamMemberService : ITeamMemberService
         
         if (teamMember == null)
         {
-            throw new NotFoundException($"Team Member with Id: {id} Not Found");
+            throw new NotFoundException($"Team Member with Id={id} Not Found");
         }
     }
 
@@ -32,13 +32,13 @@ public class TeamMemberService : ITeamMemberService
         return (await _teamMemberRepository.GetAllAsync()).ToList();
     }
 
-    public Task<TeamMember?> GetTeamMemberById(int id)
+    public async Task<TeamMember> GetTeamMemberById(int id)
     {
-        var teamMember = _teamMemberRepository.GetByIdAsync(id); 
+        var teamMember = await _teamMemberRepository.GetByIdAsync(id);
 
         if (teamMember == null)
         {
-            throw new NotFoundException($"Team Member with Id: {id} Not Found");
+            throw new NotFoundException($"Team Member with Id={id} Not Found");
         }
 
         return teamMember;
@@ -48,13 +48,13 @@ public class TeamMemberService : ITeamMemberService
     {
         if (id != entity.Id)
         {
-            throw new BadRequestException($"The Id={id} not corresponding with Entity.Id={entity.Id}");
+            throw new BadRequestException($"Id [{id}] is different to TeamMember.Id [{entity.Id}]");
         }
 
         var teamMember = await _teamMemberRepository.GetByIdAsync(id);
         if (teamMember is null)
         {
-            throw new NotFoundException($"User with Id={id} Not Found");
+            throw new NotFoundException($"Team Member with Id={id} Not Found");
         }
         return await _teamMemberRepository.UpdateAsync(entity);
     }
