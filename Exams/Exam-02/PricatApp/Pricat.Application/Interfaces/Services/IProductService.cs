@@ -8,6 +8,7 @@ public interface IProductService
     Task<List<Product>> GetAllProducts();
 
     Task<Product> GetProductById(int id);
+    Task<List<Product>> GetProductsByCategoryId(int categoryId);
 
     Task<Product> UpdateProduct(int id, Product product);
     Task DeleteProduct(int id);

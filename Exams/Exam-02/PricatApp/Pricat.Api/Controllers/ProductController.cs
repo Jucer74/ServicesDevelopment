@@ -3,13 +3,14 @@ using Pricat.Application.Interfaces.Services;
 using AutoMapper;
 using Pricat.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
+using Google.Protobuf.WellKnownTypes;
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace Api.Controllers
+namespace Pricat.Api.Controllers
 {
-    [Route("api/v1.0/[controller]")]
+    [Route("api/v1.0")]
     [ApiController]
     public class ProductsController : ControllerBase
     {
@@ -23,7 +24,7 @@ namespace Api.Controllers
         }
 
         // GET: api/<MembersController>
-        [HttpGet]
+        [HttpGet("Products")]
         public async Task<IActionResult> GetAllProducts()
         {
             var products = await _productService.GetAllProducts();
@@ -31,7 +32,7 @@ namespace Api.Controllers
         }
 
         // GET api/<MembersController>/5
-        [HttpGet("{id}")]
+        [HttpGet("Products/{id}")]
         public async Task<IActionResult> GetProductById(int id)
         {
             var product = await _productService.GetProductById(id);
@@ -39,18 +40,15 @@ namespace Api.Controllers
         }
 
         // POST api/<MembersController>
-        [HttpPost]
+        [HttpPost("Products")]
         public async Task<IActionResult> Post([FromBody] ProductDto productDto)
         {
-
-            Console.WriteLine($"Product: {productDto.Description} ");
-
             var product = await _productService.CreateProduct(_mapper.Map<ProductDto, Product>(productDto));
             return Ok(_mapper.Map<Product, ProductDto>(product));
         }
 
         // PUT api/<MembersController>/5
-        [HttpPut("{id}")]
+        [HttpPut("Products/{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] ProductDto productDto)
         {
             var product = await _productService.UpdateProduct(id, _mapper.Map<ProductDto, Product>(productDto));
@@ -58,11 +56,20 @@ namespace Api.Controllers
         }
 
         // DELETE api/<MembersController>/5
-        [HttpDelete("{id}")]
+        [HttpDelete("Products/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             await _productService.DeleteProduct(id);
             return Ok();
         }
+
+        // GET api/v1.0/Category/{categoryId}/Products
+        [HttpGet("Products/Category/{categoryId}")]
+        public async Task<IActionResult> GetProductsByCategoryId(int categoryId)
+        {
+            var products = await _productService.GetProductsByCategoryId(categoryId);
+            return Ok(_mapper.Map<List<Product>, List<ProductDto>>(products));
+        }
+
     }
 }

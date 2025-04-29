@@ -60,13 +60,5 @@ namespace Pricat.Api.Controllers
             await _categoryService.DeleteCategory(id);
             return Ok();
         }
-
-        // GET api/<CategoriesController>/5/Products
-        [HttpGet("{id}/Products")]
-        public async Task<IActionResult> GetProductsByCategoryId(int id)
-        {
-            var products = await _categoryService.GetProductsByCategoryId(id);
-            return Ok(_mapper.Map<List<Product>, List<ProductDto>>(products));
-        }
     }
 }

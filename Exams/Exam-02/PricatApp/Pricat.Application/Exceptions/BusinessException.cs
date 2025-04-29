@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using System.Runtime.Serialization;
 
 namespace Pricat.Application.Exceptions
 {
@@ -20,9 +19,6 @@ namespace Pricat.Application.Exceptions
         {
         }
 
-    
-        protected BusinessException(SerializationInfo info, StreamingContext context) : base(info, context)
-        {
-        }
+
     }
 }

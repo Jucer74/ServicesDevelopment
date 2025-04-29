@@ -20,10 +20,5 @@ namespace Pricat.Application.Exceptions
         {
         }
 
-        // Without this constructor, deserialization will fail
-        protected BadRequestException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-        }
     }
 }

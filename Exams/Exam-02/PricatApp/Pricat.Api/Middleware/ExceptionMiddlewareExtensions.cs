@@ -16,10 +16,25 @@ namespace Pricat.Api.Middleware
                     .Select(v => v.ErrorMessage)
                     .ToList();
 
+            
+            var deserializationKeywords = new[] { "invalid start", "unexpected character", "invalid character" };
+            
+            var hasDeserializationError = errors.Any(error =>
+                deserializationKeywords.Any(keyword =>
+                    error.Contains(keyword, StringComparison.OrdinalIgnoreCase))
+            );
+
+            var filteredErrors = hasDeserializationError
+                ? errors.Where(error =>
+                    !error.Contains("field is required", StringComparison.OrdinalIgnoreCase))
+                    .ToList()
+                : errors;
+
+
             return new ErrorDetails
             {
                 ErrorType = ReasonPhrases.GetReasonPhrase((int)HttpStatusCode.BadRequest),
-                Errors = errors
+                Errors = filteredErrors
             };
         }
 
@@ -34,6 +49,7 @@ namespace Pricat.Api.Middleware
             var innerException = exception;
             do
             {
+
                 innerException = innerException.InnerException;
                 if (innerException != null)
                 {

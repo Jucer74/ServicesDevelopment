@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation;
-using Pricat.Application.Dtos;
+using FluentValidation.AspNetCore;
 using Pricat.Application.Interfaces.Repositories;
 using Pricat.Application.Interfaces.Services;
 using Pricat.Application.Mapping;
@@ -46,9 +46,9 @@ public static class ModulesExtension
 
     public static IServiceCollection AddValidators(this IServiceCollection services)
     {
-        services.AddScoped<IValidator<CategoryDto>, CategoryValidator>();
-        services.AddScoped<IValidator<ProductDto>, ProductValidator>();
-
+        services.AddFluentValidationAutoValidation();
+        services.AddValidatorsFromAssemblyContaining<CategoryValidator>();
+        services.AddValidatorsFromAssemblyContaining<ProductValidator>();
         return services;
     }
 }

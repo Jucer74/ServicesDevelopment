@@ -8,9 +8,9 @@ public class CategoryValidator : AbstractValidator<CategoryDto>
 {
     public CategoryValidator()
     {
-
-        RuleFor(m => m.Description)
+   
+        RuleFor(m => m.Description).NotEmpty().WithMessage("Description is Required")
             .MaximumLength(50)
-            .WithMessage("The maximum length of Description is 50 characters.");
+            .WithMessage("Description's Max Length is 50 Characters");
     }
 }

@@ -44,10 +44,10 @@ namespace Pricat.Infrastructure.Common
             var id = entity.Id;
             var original = await _appDbContext.Set<T>().FindAsync(id);
 
-            // this is weird
+       
             if (original is null)
             {
-                throw new NotFoundException($"User with Id={id} Not Found");
+                throw new NotFoundException($"Element [{id}] Not Found");
             }
 
             _appDbContext.Set<T>().Remove(entity);
@@ -61,7 +61,7 @@ namespace Pricat.Infrastructure.Common
 
             if (original is null)
             {
-                throw new NotFoundException($"User with Id={id} Not Found");
+                throw new NotFoundException($"Element [{id}] Not Found");
             }
 
             _appDbContext.Entry(original).CurrentValues.SetValues(entity);

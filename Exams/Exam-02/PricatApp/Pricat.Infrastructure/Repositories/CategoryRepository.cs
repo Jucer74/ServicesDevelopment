@@ -13,9 +13,5 @@ namespace Pricat.Infrastructure.Repositories
 
         }
 
-        public async Task<Category?> GetCategoryByIdIncludeProduct(int id)
-        {
-            return await _appDbContext.Categories.Include(m => m.Products).Where(t => t.Id == id).FirstOrDefaultAsync();
-        }
     }
 }

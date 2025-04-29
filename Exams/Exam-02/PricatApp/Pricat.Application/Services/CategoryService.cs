@@ -8,10 +8,12 @@ namespace Pricat.Application.Services
     public class CategoryService : ICategoryService
     {
         private readonly ICategoryRepository _categoryRepository;
+        private readonly IProductService _productService; 
 
-        public CategoryService(ICategoryRepository categoryRepository)
+        public CategoryService(ICategoryRepository categoryRepository, IProductService productService)
         {
             _categoryRepository = categoryRepository;
+            _productService = productService;
         }
 
         public async Task<Category> CreateCategory(Category category)
@@ -27,6 +29,14 @@ namespace Pricat.Application.Services
             if (original is null)
             {
                 throw new NotFoundException($"Category [{id}] Not Found");
+            }
+
+            var allProducts = await _productService.GetAllProducts();
+            var productsToDelete = allProducts.Where(p => p.CategoryId == id).ToList();
+
+            foreach (var product in productsToDelete)
+            {
+                await _productService.DeleteProduct(product.Id);
             }
 
             await _categoryRepository.RemoveAsync(original);
@@ -47,11 +57,6 @@ namespace Pricat.Application.Services
             return category!;
         }
 
-        public async Task<List<Product>> GetProductsByCategoryId(int id)
-        {
-            var products = await _categoryRepository.GetCategoryByIdIncludeProduct(id);
-            return products!.Products;
-        }
 
         public async Task<Category> UpdateCategory(int id, Category category)
         {

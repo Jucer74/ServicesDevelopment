@@ -6,44 +6,59 @@ namespace Pricat.Application.Services;
 
 public class ProductService : IProductService
 {
-    private readonly IProductRepository _teamMemberRepository;
+    private readonly IProductRepository _productRepository;
+    private readonly ICategoryRepository _categoryRepository;
 
-    public ProductService(IProductRepository teamMemberRepository)
+    public ProductService(IProductRepository productRepository)
     {
-        _teamMemberRepository = teamMemberRepository;
+        _productRepository = productRepository;
     }
-    public async Task<Product> CreateProduct(Product teamMember)
+    public async Task<Product> CreateProduct(Product product)
     {
-        return await _teamMemberRepository.AddAsync(teamMember);
+        return await _productRepository.AddAsync(product);
     }
 
     public async Task DeleteProduct(int id)
     {
-        var teamMember = await _teamMemberRepository.GetByIdAsync(id);
+        var product = await _productRepository.GetByIdAsync(id);
 
-        if (teamMember == null)
+        if (product == null)
         {
-            throw new NotFoundException($"Team Member with Id={id} Not Found");
+            throw new NotFoundException($"Product [{id}] Not Found");
         }
 
-        await _teamMemberRepository.RemoveAsync(teamMember);
+        await _productRepository.RemoveAsync(product);
     }
 
     public async Task<List<Product>> GetAllProducts()
     {
-        return (await _teamMemberRepository.GetAllAsync()).ToList();
+        return (await _productRepository.GetAllAsync()).ToList();
+    }
+
+    public async Task<List<Product>> GetProductsByCategoryId(int categoryId)
+    {
+        var categoryExists = await _categoryRepository.GetByIdAsync(categoryId);
+
+        if (categoryExists is null)
+        {
+            throw new NotFoundException($"Category [{categoryId}] Not Found");
+        }
+
+        var products = await _productRepository.FindAsync(p => p.CategoryId == categoryId);
+        return products.ToList();
+
     }
 
     public async Task<Product> GetProductById(int id)
     {
-        var teamMember = await _teamMemberRepository.GetByIdAsync(id);
+        var product = await _productRepository.GetByIdAsync(id);
 
-        if (teamMember == null)
+        if (product == null)
         {
-            throw new NotFoundException($"Team Member with Id={id} Not Found");
+            throw new NotFoundException($"Product [{id}] Not Found");
         }
 
-        return teamMember;
+        return product;
     }
 
     public async Task<Product> UpdateProduct(int id, Product entity)
@@ -53,11 +68,11 @@ public class ProductService : IProductService
             throw new BadRequestException($"Id [{id}] is different to Product.Id [{entity.Id}]");
         }
 
-        var teamMember = await _teamMemberRepository.GetByIdAsync(id);
-        if (teamMember is null)
+        var product = await _productRepository.GetByIdAsync(id);
+        if (product is null)
         {
-            throw new NotFoundException($"Team Member with Id={id} Not Found");
+            throw new NotFoundException($"Product [{id}] Not Found");
         }
-        return await _teamMemberRepository.UpdateAsync(entity);
+        return await _productRepository.UpdateAsync(entity);
     }
 }

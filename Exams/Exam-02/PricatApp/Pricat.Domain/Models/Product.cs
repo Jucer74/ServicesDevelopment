@@ -19,5 +19,5 @@ public class Product : EntityBase
     [Required]
     public required decimal Price { get; set; }
 
-    public Category Category { get; set; } = null!;
+    public Category? Category { get; set; }
 }

@@ -11,6 +11,5 @@ public interface ICategoryService
 
     Task<Category> UpdateCategory(int id, Category category);
 
-    Task<List<Product>> GetProductsByCategoryId(int id);
     Task DeleteCategory(int id);
 }
