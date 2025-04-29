@@ -7,10 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+<<<<<<< HEAD
     <PackageReference Include="AutoMapper" Version="14.0.0" />
   </ItemGroup>
 
   <ItemGroup>
+=======
+>>>>>>> 9237d79b97201f1bd3534a97b9be8de15fcf8759
     <ProjectReference Include="..\UserManagement.Domain\UserManagement.Domain.csproj" />
   </ItemGroup>
 

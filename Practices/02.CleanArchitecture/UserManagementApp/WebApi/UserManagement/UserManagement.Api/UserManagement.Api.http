@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 @UserManagement.Api_HostAddress = http://localhost:5196
+=======
+@UserManagement.Api_HostAddress = http://localhost:5000
+>>>>>>> 9237d79b97201f1bd3534a97b9be8de15fcf8759
 
 GET {{UserManagement.Api_HostAddress}}/weatherforecast/
 Accept: application/json
