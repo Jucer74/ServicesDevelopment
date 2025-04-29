@@ -1,10 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Runtime.Serialization;
-
-namespace Pricat.Application.Exceptions
+﻿namespace Pricat.Application.Exceptions
 {
-    [ExcludeFromCodeCoverage]
-    [Serializable]
     public class BusinessException : Exception
     {
         public BusinessException()
@@ -21,9 +16,5 @@ namespace Pricat.Application.Exceptions
         }
 
         // Without this constructor, deserialization will fail
-        protected BusinessException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-        }
     }
 }

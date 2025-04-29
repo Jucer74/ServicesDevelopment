@@ -1,10 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Runtime.Serialization;
-
-namespace Pricat.Application.Exceptions
+﻿namespace Pricat.Application.Exceptions
 {
-    [ExcludeFromCodeCoverage]
-    [Serializable]
     public class NotFoundException : BusinessException
     {
         public NotFoundException()
@@ -17,12 +12,6 @@ namespace Pricat.Application.Exceptions
 
         public NotFoundException(string message, Exception innerException)
             : base(message, innerException)
-        {
-        }
-
-        // Without this constructor, deserialization will fail
-        protected NotFoundException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
         {
         }
     }

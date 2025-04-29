@@ -1,10 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Runtime.Serialization;
-
-namespace Pricat.Application.Exceptions
+﻿namespace Pricat.Application.Exceptions
 {
-    [ExcludeFromCodeCoverage]
-    [Serializable]
     public class InternalServerErrorException : BusinessException
     {
         public InternalServerErrorException()
@@ -17,12 +12,6 @@ namespace Pricat.Application.Exceptions
 
         public InternalServerErrorException(string message, Exception innerException)
             : base(message, innerException)
-        {
-        }
-
-        // Without this constructor, deserialization will fail
-        protected InternalServerErrorException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
         {
         }
     }
