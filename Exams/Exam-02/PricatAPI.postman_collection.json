@@ -1,0 +1,1827 @@
+{
+	"info": {
+		"_postman_id": "6754f862-e2f6-407e-bcd6-859c9640a875",
+		"name": "PricatAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7220587"
+	},
+	"item": [
+		{
+			"name": "Categories",
+			"item": [
+				{
+					"name": "GetAllCategories_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Count Records == 5\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.length).to.eql(5);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BasePricatUrl}}/Categories",
+							"host": [
+								"{{BasePricatUrl}}"
+							],
+							"path": [
+								"Categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCategoryById_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.id).to.eql(1);\r",
+									"    pm.expect(jsonData.description).to.eql(\"Alimentos\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BasePricatUrl}}/Categories/1",
+							"host": [
+								"{{BasePricatUrl}}"
+							],
+							"path": [
+								"Categories",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCategoryById_BadRequest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.errors.length).to.eql(1);\r",
+									"    pm.expect(jsonData.errors[0]).to.eql(\"The value 'A' is not valid.\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BasePricatUrl}}/Categories/A",
+							"host": [
+								"{{BasePricatUrl}}"
+							],
+							"path": [
+								"Categories",
+								"A"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCategoryById_NotFound",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404-NotFound\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.ErrorType).to.eql(\"Not Found\");\r",
+									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+									"    pm.expect(jsonData.Errors[0]).to.eql(\"Category [100] Not Found\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BasePricatUrl}}/Categories/100",
+							"host": [
+								"{{BasePricatUrl}}"
+							],
+							"path": [
+								"Categories",
+								"100"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostCategory_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.id).to.eql(6);\r",
+									"    pm.expect(jsonData.description).to.eql(\"Ferreteria\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Id\": 0,\r\n  \"Description\": \"Ferreteria\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BasePricatUrl}}/Categories",
+							"host": [
+								"{{BasePricatUrl}}"
+							],
+							"path": [
+								"Categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostCategory_BadRequest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.errors.length).to.eql(1);\r",
+									"    pm.expect(jsonData.errors[0]).to.eql(\"'F' is an invalid start of a value. Path: $.Description | LineNumber: 2 | BytePositionInLine: 17.\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Identificador\": 0,\r\n  \"Description\": Ferreteria\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BasePricatUrl}}/Categories",
+							"host": [
+								"{{BasePricatUrl}}"
+							],
+							"path": [
+								"Categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostCategory_BadRequest_RequiredFields",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.errors.length).to.eql(1);\r",
+									"    pm.expect(jsonData.errors[0]).to.eql(\"Description is Required\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Id\": 0,\r\n  \"Description\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BasePricatUrl}}/Categories",
+							"host": [
+								"{{BasePricatUrl}}"
+							],
+							"path": [
+								"Categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostCategory_BadRequest_FieldsMaxLength",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.errors.length).to.eql(1);\r",
+									"    pm.expect(jsonData.errors[0]).to.eql(\"Description's Max Length is 50 Characters\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Id\": 0,\r\n  \"Description\": \"123456789012345678901234567890123456789012345678901\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BasePricatUrl}}/Categories",
+							"host": [
+								"{{BasePricatUrl}}"
+							],
+							"path": [
+								"Categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PutCategory_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Id\": 6,\r\n  \"Description\": \"Ferreteria en General\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BasePricatUrl}}/Categories/6",
+							"host": [
+								"{{BasePricatUrl}}"
+							],
+							"path": [
+								"Categories",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PutCategory_BadRequest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.errors.length).to.eql(1);\r",
+									"    pm.expect(jsonData.errors[0]).to.eql(\"The value 'A' is not valid.\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Id\": 6,\r\n  \"Description\": \"Ferreteria\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BasePricatUrl}}/Categories/A",
+							"host": [
+								"{{BasePricatUrl}}"
+							],
+							"path": [
+								"Categories",
+								"A"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PutCategory_BadRequest_DiffIds",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.ErrorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+									"    pm.expect(jsonData.Errors[0]).to.eql(\"Id [1] is different to Category.Id [6]\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Id\": 6,\r\n  \"Description\": \"Ferreteria\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BasePricatUrl}}/Categories/1",
+							"host": [
+								"{{BasePricatUrl}}"
+							],
+							"path": [
+								"Categories",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PutCategory_BadRequest_DescriptionRequired",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.errors.length).to.eql(1);\r",
+									"    pm.expect(jsonData.errors[0]).to.eql(\"Description is Required\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Id\": 0,\r\n  \"Description\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BasePricatUrl}}/Categories/6",
+							"host": [
+								"{{BasePricatUrl}}"
+							],
+							"path": [
+								"Categories",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PutCategory_BadRequest_DescriptionMaxLength",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.errors.length).to.eql(1);\r",
+									"    pm.expect(jsonData.errors[0]).to.eql(\"Description's Max Length is 50 Characters\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Id\": 0,\r\n  \"Description\": \"123456789012345678901234567890123456789012345678901\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BasePricatUrl}}/Categories/6",
+							"host": [
+								"{{BasePricatUrl}}"
+							],
+							"path": [
+								"Categories",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PutCategory_NorFound",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404-NotFound\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.ErrorType).to.eql(\"Not Found\");\r",
+									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+									"    pm.expect(jsonData.Errors[0]).to.eql(\"Category [100] Not Found\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Id\": 100,\r\n  \"Description\": \"Ferreteria\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BasePricatUrl}}/Categories/100",
+							"host": [
+								"{{BasePricatUrl}}"
+							],
+							"path": [
+								"Categories",
+								"100"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteCategory_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BasePricatUrl}}/Categories/6",
+							"host": [
+								"{{BasePricatUrl}}"
+							],
+							"path": [
+								"Categories",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteCategory_BadRequest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.errors.length).to.eql(1);\r",
+									"    pm.expect(jsonData.errors[0]).to.eql(\"The value 'A' is not valid.\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BasePricatUrl}}/Categories/A",
+							"host": [
+								"{{BasePricatUrl}}"
+							],
+							"path": [
+								"Categories",
+								"A"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteCategory_NotFound",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404-NotFound\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.ErrorType).to.eql(\"Not Found\");\r",
+									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+									"    pm.expect(jsonData.Errors[0]).to.eql(\"Category [100] Not Found\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BasePricatUrl}}/Categories/100",
+							"host": [
+								"{{BasePricatUrl}}"
+							],
+							"path": [
+								"Categories",
+								"100"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteCategory_WithProduct_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BasePricatUrl}}/Categories/5",
+							"host": [
+								"{{BasePricatUrl}}"
+							],
+							"path": [
+								"Categories",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "GetallProducts_Succes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Count Records == 8\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.length).to.eql(8);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BasePricatUrl}}/Products",
+							"host": [
+								"{{BasePricatUrl}}"
+							],
+							"path": [
+								"Products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetallProductById_Succes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.id).to.eql(1);\r",
+									"    pm.expect(jsonData.categoryId).to.eql(1); \r",
+									"    pm.expect(jsonData.eanCode).to.eql(\"7707548516286\");    \r",
+									"    pm.expect(jsonData.description).to.eql(\"Arroz\");\r",
+									"    pm.expect(jsonData.unit).to.eql(\"Lb\");\r",
+									"    pm.expect(jsonData.price).to.eql(500.00);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BasePricatUrl}}/Products/1",
+							"host": [
+								"{{BasePricatUrl}}"
+							],
+							"path": [
+								"Products",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetallProductById_BadRequest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.errors.length).to.eql(1);\r",
+									"    pm.expect(jsonData.errors[0]).to.eql(\"The value 'A' is not valid.\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BasePricatUrl}}/Products/A",
+							"host": [
+								"{{BasePricatUrl}}"
+							],
+							"path": [
+								"Products",
+								"A"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetallProductById_NotFound",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404-NotFound\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.ErrorType).to.eql(\"Not Found\");\r",
+									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+									"    pm.expect(jsonData.Errors[0]).to.eql(\"Product [100] Not Found\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BasePricatUrl}}/Products/100",
+							"host": [
+								"{{BasePricatUrl}}"
+							],
+							"path": [
+								"Products",
+								"100"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostProduct_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.id).to.eql(11);\r",
+									"    pm.expect(jsonData.categoryId).to.eql(1); \r",
+									"    pm.expect(jsonData.description).to.eql(\"Yuca\");\r",
+									"    pm.expect(jsonData.unit).to.eql(\"Lb\");\r",
+									"    pm.expect(jsonData.price).to.eql(300.00);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Id\": 0,\r\n  \"CategoryId\": 1,\r\n  \"EanCode\": \"7707548697640\",\r\n  \"Description\": \"Yuca\",\r\n  \"Unit\": \"Lb\",\r\n  \"Price\": 300.00\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BasePricatUrl}}/Products",
+							"host": [
+								"{{BasePricatUrl}}"
+							],
+							"path": [
+								"Products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostProduct_BadRequest_RequiredFields",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.errors.length).to.eql(3);\r",
+									"    pm.expect(jsonData.errors[0]).to.eql(\"Unit is Required\");\r",
+									"    pm.expect(jsonData.errors[1]).to.eql(\"EanCode is Required\");\r",
+									"    pm.expect(jsonData.errors[2]).to.eql(\"Description is Required\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Id\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BasePricatUrl}}/Products",
+							"host": [
+								"{{BasePricatUrl}}"
+							],
+							"path": [
+								"Products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostProduct_BadRequest_FieldsMaxLength",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.errors.length).to.eql(3);\r",
+									"    pm.expect(jsonData.errors[0]).to.eql(\"Unit's Max Length is 20 Characters\");\r",
+									"    pm.expect(jsonData.errors[1]).to.eql(\"EanCode's Max Length is 13 digits\");\r",
+									"    pm.expect(jsonData.errors[2]).to.eql(\"Description's Max Length is 50 Characters\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Id\": 0,\r\n  \"CategoryId\": 1,\r\n  \"EanCode\": \"12345678901234\",\r\n  \"Description\": \"123456789012345678901234567890123456789012345678901\",\r\n  \"Unit\": \"123456789012345678901\",\r\n  \"Price\": 300.00\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BasePricatUrl}}/Products",
+							"host": [
+								"{{BasePricatUrl}}"
+							],
+							"path": [
+								"Products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostProduct_BadRequest_EanCodeIsNotValid",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.ErrorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+									"    pm.expect(jsonData.Errors[0]).to.eql(\"EAN Code [1234567890123] is Not Valid\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Id\": 0,\r\n  \"CategoryId\": 1,\r\n  \"EanCode\": \"1234567890123\",\r\n  \"Description\": \"Yuca\",\r\n  \"Unit\": \"Lb\",\r\n  \"Price\": 300.00\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BasePricatUrl}}/Products",
+							"host": [
+								"{{BasePricatUrl}}"
+							],
+							"path": [
+								"Products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostProduct_NotFound_CategoryIdNotExists",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404-NotFound\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.ErrorType).to.eql(\"Not Found\");\r",
+									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+									"    pm.expect(jsonData.Errors[0]).to.eql(\"Category [100] Not Found\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Id\": 0,\r\n  \"CategoryId\": 100,\r\n  \"EanCode\": \"7701325700332\",\r\n  \"Description\": \"Tomate\",\r\n  \"Unit\": \"Lb\",\r\n  \"Price\": 1300.00\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BasePricatUrl}}/Products",
+							"host": [
+								"{{BasePricatUrl}}"
+							],
+							"path": [
+								"Products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PutProduct_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Id\": 11,\r\n  \"CategoryId\": 1,\r\n  \"EanCode\": \"7707548697640\",\r\n  \"Description\": \"Platano\",\r\n  \"Unit\": \"Lb\",\r\n  \"Price\": 300.00\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BasePricatUrl}}/Products/11",
+							"host": [
+								"{{BasePricatUrl}}"
+							],
+							"path": [
+								"Products",
+								"11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PutProduct_BadRequest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.errors.length).to.eql(1);\r",
+									"    pm.expect(jsonData.errors[0]).to.eql(\"The value 'A' is not valid.\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Id\": 11,\r\n  \"CategoryId\": 1,\r\n  \"EanCode\": \"7707548697640\",\r\n  \"Description\": \"Platano\",\r\n  \"Unit\": \"Lb\",\r\n  \"Price\": 300.00\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BasePricatUrl}}/Products/A",
+							"host": [
+								"{{BasePricatUrl}}"
+							],
+							"path": [
+								"Products",
+								"A"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PutProduct_BadRequest_RequiredFields",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.errors.length).to.eql(3);\r",
+									"    pm.expect(jsonData.errors[0]).to.eql(\"Unit is Required\");\r",
+									"    pm.expect(jsonData.errors[1]).to.eql(\"EanCode is Required\");\r",
+									"    pm.expect(jsonData.errors[2]).to.eql(\"Description is Required\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Id\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BasePricatUrl}}/Products/11",
+							"host": [
+								"{{BasePricatUrl}}"
+							],
+							"path": [
+								"Products",
+								"11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PutProduct_BadRequest_FieldsMaxLength",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.errors.length).to.eql(3);\r",
+									"    pm.expect(jsonData.errors[0]).to.eql(\"Unit's Max Length is 20 Characters\");\r",
+									"    pm.expect(jsonData.errors[1]).to.eql(\"EanCode's Max Length is 13 digits\");\r",
+									"    pm.expect(jsonData.errors[2]).to.eql(\"Description's Max Length is 50 Characters\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Id\": 0,\r\n  \"CategoryId\": 1,\r\n  \"EanCode\": \"12345678901234\",\r\n  \"Description\": \"123456789012345678901234567890123456789012345678901\",\r\n  \"Unit\": \"123456789012345678901\",\r\n  \"Price\": 300.00\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BasePricatUrl}}/Products/11",
+							"host": [
+								"{{BasePricatUrl}}"
+							],
+							"path": [
+								"Products",
+								"11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PutProduct_BadRequest_DiffIds",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.ErrorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+									"    pm.expect(jsonData.Errors[0]).to.eql(\"Id [11] is different to Product.Id [12]\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Id\": 12,\r\n  \"CategoryId\": 1,\r\n  \"EanCode\": \"7707548697640\",\r\n  \"Description\": \"Platano\",\r\n  \"Unit\": \"Lb\",\r\n  \"Price\": 300.00\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BasePricatUrl}}/Products/11",
+							"host": [
+								"{{BasePricatUrl}}"
+							],
+							"path": [
+								"Products",
+								"11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PutProduct_BadRequest_EanCodeIsNotValid",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.ErrorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+									"    pm.expect(jsonData.Errors[0]).to.eql(\"EAN Code [1234567890123] is Not Valid\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Id\": 11,\r\n  \"CategoryId\": 1,\r\n  \"EanCode\": \"1234567890123\",\r\n  \"Description\": \"Platano\",\r\n  \"Unit\": \"Lb\",\r\n  \"Price\": 300.00\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BasePricatUrl}}/Products/11",
+							"host": [
+								"{{BasePricatUrl}}"
+							],
+							"path": [
+								"Products",
+								"11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PutProduct_NotFound_CategoryNotExists",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404-NotFound\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.ErrorType).to.eql(\"Not Found\");\r",
+									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+									"    pm.expect(jsonData.Errors[0]).to.eql(\"Category [100] Not Found\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Id\": 11,\r\n  \"CategoryId\": 100,\r\n  \"EanCode\": \"7707548697640\",\r\n  \"Description\": \"Platano\",\r\n  \"Unit\": \"Lb\",\r\n  \"Price\": 300.00\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BasePricatUrl}}/Products/11",
+							"host": [
+								"{{BasePricatUrl}}"
+							],
+							"path": [
+								"Products",
+								"11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PutProduct_NotFound",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404-NotFound\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.ErrorType).to.eql(\"Not Found\");\r",
+									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+									"    pm.expect(jsonData.Errors[0]).to.eql(\"Product [100] Not Found\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Id\": 100,\r\n  \"CategoryId\": 1,\r\n  \"EanCode\": \"7707548697640\",\r\n  \"Description\": \"Platano\",\r\n  \"Unit\": \"Lb\",\r\n  \"Price\": 300.00\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BasePricatUrl}}/Products/100",
+							"host": [
+								"{{BasePricatUrl}}"
+							],
+							"path": [
+								"Products",
+								"100"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteProduct_Success",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BasePricatUrl}}/Products/11",
+							"host": [
+								"{{BasePricatUrl}}"
+							],
+							"path": [
+								"Products",
+								"11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteProduct_BadRequest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.errors.length).to.eql(1);\r",
+									"    pm.expect(jsonData.errors[0]).to.eql(\"The value 'A' is not valid.\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BasePricatUrl}}/Products/A",
+							"host": [
+								"{{BasePricatUrl}}"
+							],
+							"path": [
+								"Products",
+								"A"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteProduct_NotFound",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404-NotFound\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.ErrorType).to.eql(\"Not Found\");\r",
+									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+									"    pm.expect(jsonData.Errors[0]).to.eql(\"Product [100] Not Found\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BasePricatUrl}}/Products/100",
+							"host": [
+								"{{BasePricatUrl}}"
+							],
+							"path": [
+								"Products",
+								"100"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetallProductsByCategoryId_Succes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200-Ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Count Records == 2\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.length).to.eql(2);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData[0].id).to.eql(1);\r",
+									"    pm.expect(jsonData[0].categoryId).to.eql(1); \r",
+									"    pm.expect(jsonData[0].eanCode).to.eql(\"7707548516286\");      \r",
+									"    pm.expect(jsonData[0].description).to.eql(\"Arroz\");\r",
+									"    pm.expect(jsonData[0].unit).to.eql(\"Lb\");\r",
+									"    pm.expect(jsonData[0].price).to.eql(500.00);\r",
+									"\r",
+									"    pm.expect(jsonData[1].id).to.eql(2);\r",
+									"    pm.expect(jsonData[1].categoryId).to.eql(1); \r",
+									"    pm.expect(jsonData[1].eanCode).to.eql(\"7707548941507\");      \r",
+									"    pm.expect(jsonData[1].description).to.eql(\"Papa\");\r",
+									"    pm.expect(jsonData[1].unit).to.eql(\"Lb\");\r",
+									"    pm.expect(jsonData[1].price).to.eql(1500.00);\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BasePricatUrl}}/Products/Category/1",
+							"host": [
+								"{{BasePricatUrl}}"
+							],
+							"path": [
+								"Products",
+								"Category",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetallProductsByCategoryId_BadRequest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400-BadRequest\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errorType).to.eql(\"Bad Request\");\r",
+									"    pm.expect(jsonData.errors.length).to.eql(1);\r",
+									"    pm.expect(jsonData.errors[0]).to.eql(\"The value 'A' is not valid.\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BasePricatUrl}}/Products/Category/A",
+							"host": [
+								"{{BasePricatUrl}}"
+							],
+							"path": [
+								"Products",
+								"Category",
+								"A"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetallProductsByCategoryId_NotFound_CategoryNotExists",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404-NotFound\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Valid Data\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.ErrorType).to.eql(\"Not Found\");\r",
+									"    pm.expect(jsonData.Errors.length).to.eql(1);\r",
+									"    pm.expect(jsonData.Errors[0]).to.eql(\"Category [100] Not Found\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BasePricatUrl}}/Products/Category/100",
+							"host": [
+								"{{BasePricatUrl}}"
+							],
+							"path": [
+								"Products",
+								"Category",
+								"100"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BasePricatUrl",
+			"value": "https://localhost:5001/api/v1.0",
+			"type": "string"
+		}
+	]
+}
