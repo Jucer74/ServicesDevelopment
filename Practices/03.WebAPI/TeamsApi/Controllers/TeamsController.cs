@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using TeamsApi.Dtos;
-using TeamsApi.Models;
-using TeamsApi.Services;
+using Application.Dtos;
+using Application.Interfaces.Services;
+using Domain.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 

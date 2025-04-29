@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
-namespace TeamsApi.Exceptions
+namespace Application.Exceptions
 {
     [ExcludeFromCodeCoverage]
     [Serializable]

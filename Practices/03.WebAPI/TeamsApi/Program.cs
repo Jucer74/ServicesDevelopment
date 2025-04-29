@@ -1,14 +1,18 @@
 using FluentValidation.AspNetCore;
+using Infrastructure.Context;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using TeamsApi.Context;
 using TeamsApi.Extensions;
 using TeamsApi.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddDbContext<AppDbContext>(options => options.UseMySQL(builder.Configuration.GetConnectionString("CnnStr")!));
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseMySql(
+        builder.Configuration.GetConnectionString("CnnStr"),
+        ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("CnnStr"))
+    ));
 
 builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
 {
@@ -19,15 +23,17 @@ builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
     };
 });
 
-//Add Mvc options
+
 builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// add shit
 builder.Services.AddServices();
 builder.Services.AddMapping();
+builder.Services.AddInfrastructureModules();
 builder.Services.AddValidators();
 
 var app = builder.Build();

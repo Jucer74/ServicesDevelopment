@@ -1,4 +1,4 @@
-﻿namespace TeamsApi.Dtos;
+﻿namespace Application.Dtos;
 
 public class TeamDto
 {

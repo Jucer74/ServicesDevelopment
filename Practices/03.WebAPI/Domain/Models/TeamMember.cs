@@ -1,14 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Domain.Common;
 
-namespace TeamsApi.Models;
+namespace Domain.Models;
 
-public class TeamMember
+public class TeamMember : EntityBase
 {
-    [Key]
-    public int Id { get; set; }
-
-    [Required]
     public string FirstName { get; set; } = null!;
 
     [Required]

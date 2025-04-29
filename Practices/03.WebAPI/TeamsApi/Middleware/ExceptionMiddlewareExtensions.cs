@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Net;
-using TeamsApi.Exceptions;
+using Application.Exceptions;
 
 namespace TeamsApi.Middleware
 {

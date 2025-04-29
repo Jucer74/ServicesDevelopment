@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
 using FluentValidation;
-using TeamsApi.Dtos;
-using TeamsApi.Mapping;
-using TeamsApi.Services;
-using TeamsApi.Validations;
+using Application.Dtos;
+using Application.Mapping;
+using Application.Services;
+using Application.Validations;
+using Application.Interfaces.Services;
+using Application.Interfaces.Repositories;
+using Infrastructure.Repositories;
 
 namespace TeamsApi.Extensions;
 
@@ -39,6 +42,13 @@ public static class ModulesExtension
 
         return services;
     }
+    public static IServiceCollection AddInfrastructureModules(this IServiceCollection services)
+    {
+        //repositories
+        services.AddScoped<ITeamRepository, TeamRepository>();
+        services.AddScoped<ITeamMemberRepository, TeamMemberRepository>();
 
+        return services;
+    }
 
 }

@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using TeamsApi.Dtos;
-using TeamsApi.Models;
+using Application.Dtos;
+using Domain.Models;
 
-namespace TeamsApi.Mapping;
+namespace Application.Mapping;
 
 public class MappingProfile: Profile
 {

@@ -1,6 +1,6 @@
-﻿using TeamsApi.Models;
+﻿using Domain.Models;
 
-namespace TeamsApi.Services;
+namespace Application.Interfaces.Services;
 
 public interface ITeamService
 {
