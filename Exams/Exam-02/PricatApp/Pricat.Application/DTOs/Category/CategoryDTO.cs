@@ -5,11 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Pricat.Domain.Common
+namespace Pricat.Application.DTOs.Category
 {
-    public abstract class EntityBase
+    public class CategoryDTO
     {
-        [Key]
+     
         public int Id { get; set; }
+
+        [Required]
+        public required string Description { get; set; }
     }
 }
