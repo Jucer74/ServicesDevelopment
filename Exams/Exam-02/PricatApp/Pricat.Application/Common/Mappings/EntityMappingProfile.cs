@@ -1,12 +1,6 @@
-﻿using System;
-using AutoMapper;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AutoMapper;
 using Pricat.Application.DTOs;
 using Pricat.Domain.Entities;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Pricat.Application.Common.Mappings
 {

@@ -1,22 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Pricat.Domain.Exceptions
+﻿namespace Pricat.Domain.Exceptions
 {
     public class DomainException : Exception
     {
         public string ErrorCode { get; }
 
-        public DomainException() : this("DOMAIN_ERROR", "Ocurrió un error en el dominio") { }
+        public DomainException() : this("DOMAIN_ERROR", "Ocurrió un error en el dominio")
+        {
+        }
 
-        public DomainException(string message) : this("DOMAIN_ERROR", message) { }
+        public DomainException(string message) : this("DOMAIN_ERROR", message)
+        {
+        }
 
         public DomainException(string errorCode, string message) : base(message)
         {
-            ErrorCode = errorCode; 
+            ErrorCode = errorCode;
         }
 
         public DomainException(string message, Exception inner)

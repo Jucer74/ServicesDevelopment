@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace Pricat.Utilities.Models
 {
@@ -27,7 +24,8 @@ namespace Pricat.Utilities.Models
         [JsonPropertyName("links")]
         public Dictionary<string, string> Links { get; set; } = new();
 
-        public PagedResponse() { }
+        public PagedResponse()
+        { }
 
         public PagedResponse(
             IEnumerable<T> items,

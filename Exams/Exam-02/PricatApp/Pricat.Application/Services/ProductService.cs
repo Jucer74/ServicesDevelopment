@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AutoMapper;
 using Pricat.Application.DTOs;
 using Pricat.Application.Exceptions;
 using Pricat.Application.Interfaces;
 using Pricat.Domain.Entities;
-using Pricat.Domain.Interfaces;
-using Pricat.Application.Services;
 using Pricat.Domain.Exceptions;
-using AutoMapper;
+using Pricat.Domain.Interfaces;
 
 namespace Pricat.Application.Services
 {

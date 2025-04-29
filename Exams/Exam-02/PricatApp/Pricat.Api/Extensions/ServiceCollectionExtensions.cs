@@ -1,6 +1,6 @@
-﻿using Microsoft.OpenApi.Models;
+﻿using System.Reflection;
+using Microsoft.OpenApi.Models;
 using Pricat.Utilities.Extensions;
-using System.Reflection;
 
 namespace Pricat.Api.Extensions
 {

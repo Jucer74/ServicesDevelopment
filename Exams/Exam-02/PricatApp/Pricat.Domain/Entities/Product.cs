@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Pricat.Domain.Exceptions;
+﻿using Pricat.Domain.Exceptions;
 
 namespace Pricat.Domain.Entities
 {
@@ -16,7 +11,8 @@ namespace Pricat.Domain.Entities
         public decimal Price { get; set; }
         public int CategoryId { get; set; }
         public Category Category { get; set; } = null!;
-     public void SetEanCode(string eanCode)
+
+        public void SetEanCode(string eanCode)
         {
             if (!IsValidEan13(eanCode))
             {
@@ -44,6 +40,5 @@ namespace Pricat.Domain.Entities
         {
             return eanCode.Length == 13 && eanCode.All(char.IsDigit);
         }
-
     }
 }

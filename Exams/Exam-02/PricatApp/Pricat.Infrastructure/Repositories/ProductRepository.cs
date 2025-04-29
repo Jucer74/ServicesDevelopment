@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
 using Pricat.Domain.Entities;
 using Pricat.Domain.Interfaces;
-using Pricat.Infrastructure.Data;
 using Pricat.Infrastructure.Common;
-using Microsoft.EntityFrameworkCore;
+using Pricat.Infrastructure.Data;
 
 namespace Pricat.Infrastructure.Repositories
 {

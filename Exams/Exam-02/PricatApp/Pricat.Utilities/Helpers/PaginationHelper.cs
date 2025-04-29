@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
@@ -87,7 +86,7 @@ namespace Pricat.Utilities.Helpers
             TotalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
         }
 
-        public PagedResponse() { }
+        public PagedResponse()
+        { }
     }
-
 }

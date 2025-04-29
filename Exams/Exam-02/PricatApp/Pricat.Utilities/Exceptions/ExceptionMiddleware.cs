@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
-using Pricat.Domain.Exceptions;
-using Pricat.Application.Exceptions;
 using Microsoft.AspNetCore.Http;
+using Pricat.Application.Exceptions;
+using Pricat.Domain.Exceptions;
 
 namespace Pricat.Utilities.Exceptions
 {
