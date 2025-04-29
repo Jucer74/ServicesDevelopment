@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "Pricat.Api": {
+        "commandName": "Project",
+        "launchBrowser": true,
+        "environmentVariables": {
+            "ASPNETCORE_ENVIRONMENT": "Development",
+            "ConnectionStrings:DefaultConnection": "server=localhost;uid=pricatuser;pwd=Pr1c4tUs3r;database=pricatdb"
+        },
+        "applicationUrl": "https://localhost:50449;http://localhost:50450"
+    }
+
+  }
+}
