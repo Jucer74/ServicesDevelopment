@@ -7,11 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Common\**" />
     <Compile Remove="Repsitories\**" />
-    <EmbeddedResource Remove="Common\**" />
     <EmbeddedResource Remove="Repsitories\**" />
-    <None Remove="Common\**" />
     <None Remove="Repsitories\**" />
   </ItemGroup>
 
@@ -20,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Pricat.Application\Pricat.Application.csproj" />
     <ProjectReference Include="..\Pricat.Domain\Pricat.Domain.csproj" />
   </ItemGroup>
 

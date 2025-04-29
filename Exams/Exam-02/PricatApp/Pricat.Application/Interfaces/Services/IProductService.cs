@@ -5,14 +5,14 @@ namespace Pricat.Application.Interfaces.Services
 {
     public interface IProductService
     {
-        Task<Category> CreateProduct(Product product);
+        Task<Product> CreateProduct(Product product);
 
         Task DeleteProduct(int id);
 
-        Task<List<Category>> GetAllProducts();
+        Task<List<Product>> GetAllProducts();
 
-        Task<Category> GetProductById(int id);
+        Task<Product> GetProductById(int id);
 
-        Task<Category> UpdateProduct(int id, Product product);
+        Task<Product> UpdateProduct(int id, Product product);
     }
 }

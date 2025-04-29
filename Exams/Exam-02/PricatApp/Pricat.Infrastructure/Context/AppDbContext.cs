@@ -1,19 +1,24 @@
-﻿
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Pricat.Domain.Models;
 
-namespace TeamsApi.Context;
-
-public class AppDbContext : DbContext
+namespace Pricat.Infrastructure.Context
 {
-    public AppDbContext()
+    public class AppDbContext : DbContext
     {
-    }
+        public AppDbContext()
+        {
 
-    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
-    {
-    }
+        }
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+        {
 
-    public DbSet<Product> Products { get; set; }
-    public DbSet<Category> Categories { get; set; }
+        }
+
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Category> Categories { get; set; }
+    }
 }
+
+
+
+

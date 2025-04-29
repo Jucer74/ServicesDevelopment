@@ -9,23 +9,28 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Controllers\**" />
-    <Compile Remove="Extensions\**" />
     <Compile Remove="MiddleWare\**" />
-    <Content Remove="Controllers\**" />
-    <Content Remove="Extensions\**" />
     <Content Remove="MiddleWare\**" />
-    <EmbeddedResource Remove="Controllers\**" />
-    <EmbeddedResource Remove="Extensions\**" />
     <EmbeddedResource Remove="MiddleWare\**" />
-    <None Remove="Controllers\**" />
-    <None Remove="Extensions\**" />
     <None Remove="MiddleWare\**" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.11">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.15.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
+    <PackageReference Include="MySql.EntityFrameworkCore" Version="9.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Pricat.Application\Pricat.Application.csproj" />
+    <ProjectReference Include="..\Pricat.Domain\Pricat.Domain.csproj" />
+    <ProjectReference Include="..\Pricat.Infrastructure\Pricat.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
