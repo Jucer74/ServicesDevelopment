@@ -23,6 +23,44 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pricat.Domain", "Pricat.Dom
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pricat.Infrastructure", "Pricat.Infrastructure\Pricat.Infrastructure.csproj", "{0E733016-8DB2-4C91-8141-FACE0E0E03AB}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Entities", "Entities", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+	ProjectSection(SolutionItems) = preProject
+		Category.cs = Category.cs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repositories", "Repositories", "{0186F0C5-251F-458F-937E-4B96F4FC18F7}"
+	ProjectSection(SolutionItems) = preProject
+		ICategoryRepository.cs = ICategoryRepository.cs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DTOs", "DTOs", "{A504B802-6095-4552-92EB-C90E50C1F13C}"
+	ProjectSection(SolutionItems) = preProject
+		CategoryDto.cs = CategoryDto.cs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UseCases", "UseCases", "{80881526-93BA-442A-BDEE-1D46D41940A3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Categories", "Categories", "{2CB9A344-51BF-4F40-80DC-55CF3D55D63F}"
+	ProjectSection(SolutionItems) = preProject
+		CategoryHandlers.cs = CategoryHandlers.cs
+		CommandsAndQueries.cs = CommandsAndQueries.cs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{B286954F-656C-4240-905F-20E7B9E05F6E}"
+	ProjectSection(SolutionItems) = preProject
+		AppDbContext.cs = AppDbContext.cs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repositories", "Repositories", "{1D41F212-B6FA-45B1-A2C1-73BC4F666D46}"
+	ProjectSection(SolutionItems) = preProject
+		CategoryRepository.cs = CategoryRepository.cs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Controllers", "Controllers", "{EB5D73C6-C7F7-4B7C-8A8C-4FCA2C4E0B83}"
+	ProjectSection(SolutionItems) = preProject
+		CategoriesController.cs = CategoriesController.cs
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +97,14 @@ Global
 		{FF4F6541-AD85-43CA-AF79-5D178AB03482} = {E921D9C7-1A11-417C-B50D-DDBF00DEB65C}
 		{8C566123-BFC1-43F1-9CAC-F435EB4F5833} = {63BC9D82-D68B-4FF0-B8AD-98B94BCB6F08}
 		{0E733016-8DB2-4C91-8141-FACE0E0E03AB} = {CD7D3B9E-75C9-4E8E-A718-643D1B3C9CBB}
+		{02EA681E-C7D8-13C7-8484-4AC65E1B71E8} = {63BC9D82-D68B-4FF0-B8AD-98B94BCB6F08}
+		{0186F0C5-251F-458F-937E-4B96F4FC18F7} = {63BC9D82-D68B-4FF0-B8AD-98B94BCB6F08}
+		{A504B802-6095-4552-92EB-C90E50C1F13C} = {E921D9C7-1A11-417C-B50D-DDBF00DEB65C}
+		{80881526-93BA-442A-BDEE-1D46D41940A3} = {E921D9C7-1A11-417C-B50D-DDBF00DEB65C}
+		{2CB9A344-51BF-4F40-80DC-55CF3D55D63F} = {80881526-93BA-442A-BDEE-1D46D41940A3}
+		{B286954F-656C-4240-905F-20E7B9E05F6E} = {CD7D3B9E-75C9-4E8E-A718-643D1B3C9CBB}
+		{1D41F212-B6FA-45B1-A2C1-73BC4F666D46} = {CD7D3B9E-75C9-4E8E-A718-643D1B3C9CBB}
+		{EB5D73C6-C7F7-4B7C-8A8C-4FCA2C4E0B83} = {4BE9E439-4BB8-482F-BBD0-34C43712587C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8BE472E2-94A3-43C9-89F4-AEFC67423888}

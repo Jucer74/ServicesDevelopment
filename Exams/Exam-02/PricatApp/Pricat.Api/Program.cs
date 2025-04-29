@@ -1,25 +1,41 @@
+using Microsoft.EntityFrameworkCore;
+using Pricat.Infrastructure.Data;
+using Pricat.Domain.Repositories;
+using Pricat.Infrastructure.Repositories;
+using Pricat.Application.Interfaces;
+using Pricat.Application.Services;
+using Pricat.Api.Middleware;    // <<<<<< Asegúrate de que coincida
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Cadena de conexión
+var conn = builder.Configuration.GetConnectionString("CnnStr");
+
+// DbContext
+builder.Services.AddDbContext<AppDbContext>(opt =>
+    opt.UseMySql(conn, new MySqlServerVersion(new Version(8, 0, 28)))
+);
+
+// DI
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Middleware
+app.UseMiddleware<ExceptionMiddleware>();
+
 if (app.Environment.IsDevelopment())
 {
-   app.UseSwagger();
-   app.UseSwaggerUI();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();
