@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Pricat.Application.Dtos;
 using Pricat.Application.Interfaces.Services;
-using Pricat.Application.Services;
 using Pricat.Domain.Models;
 
 namespace Pricat.Api.Controllers

@@ -1,5 +1,4 @@
-﻿using System.Linq.Expressions;
-using Pricat.Domain.Models;
+﻿using Pricat.Domain.Models;
 
 namespace Pricat.Application.Interfaces.Services
 {

@@ -1,6 +1,4 @@
-﻿
-
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Pricat.Domain.Models;
 
 namespace Pricat.Infrastructure.Context

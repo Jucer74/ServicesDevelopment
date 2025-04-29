@@ -14,7 +14,5 @@
             : base(message, innerException)
         {
         }
-
-        // Without this constructor, deserialization will fail
     }
 }
