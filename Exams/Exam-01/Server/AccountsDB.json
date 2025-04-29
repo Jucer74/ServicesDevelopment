@@ -1,0 +1,40 @@
+{
+  "accounts": [
+    {
+      "id": "edf4",
+      "Id": null,
+      "AccountNumber": "1212121212",
+      "AccountOwner": "Julio Robles",
+      "BalanceAmount": 1000000,
+      "AccountType": 1,
+      "OverdraftAmount": 0
+    },
+    {
+      "id": "a507",
+      "Id": null,
+      "AccountNumber": "1234567890",
+      "AccountOwner": "Julio Robles",
+      "BalanceAmount": 1000000,
+      "AccountType": 0,
+      "OverdraftAmount": 1000000
+    },
+    {
+      "id": "b563",
+      "Id": null,
+      "AccountNumber": "1313131313",
+      "AccountOwner": "Pilar Lopez",
+      "BalanceAmount": 500000,
+      "AccountType": 0,
+      "OverdraftAmount": 1000000
+    },
+    {
+      "id": "8a78",
+      "Id": null,
+      "AccountNumber": "1515151515",
+      "AccountOwner": "",
+      "BalanceAmount": 0,
+      "AccountType": 0,
+      "OverdraftAmount": 1000000
+    }
+  ]
+}
