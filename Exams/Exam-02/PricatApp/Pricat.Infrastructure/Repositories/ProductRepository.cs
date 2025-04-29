@@ -1,0 +1,25 @@
+using Microsoft.EntityFrameworkCore;
+using Pricat.Application.Interfaces.Repositories;
+using Pricat.Domain.Models;
+using Pricat.Infrastructure.Common;
+using Pricat.Infrastructure.Context;
+
+
+namespace Pricat.Infrastructure.Repositories
+{
+    public class ProductRepository : Repository<Product>, IProductRepository
+    {
+        public ProductRepository(AppDbContext appDbContext) : base(appDbContext)
+        {
+
+        }
+        public async Task<Product?> GetProductsByCategoryId(int id)
+        {
+            return await _appDbContext.Product
+                .Include(p => p.Category)  
+                .Where(t => t.Id == id)
+                .FirstOrDefaultAsync();
+        }
+
+    }
+}
