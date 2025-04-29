@@ -37,8 +37,9 @@ namespace Pricat.Infrastructure.Common
 
         public async Task<T> GetByIdAsync(int id)
         {
-            return await _appDbContext.Set<T>().FindAsync(id);
+            return (await _appDbContext.Set<T>().FindAsync(id))!;
         }
+
 
         public async Task RemoveAsync(T entity)
         {
