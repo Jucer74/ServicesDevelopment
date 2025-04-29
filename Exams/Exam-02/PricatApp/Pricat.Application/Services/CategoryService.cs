@@ -1,4 +1,5 @@
-﻿using Pricat.Application.Exceptions;
+﻿using System.Threading.Tasks;
+using Pricat.Application.Exceptions;
 using Pricat.Application.Interfaces.Repositories;
 using Pricat.Application.Interfaces.Services;
 using Pricat.Domain.Models;
@@ -8,14 +9,23 @@ namespace Pricat.Application.Services
     public class CategoryService : ICategoryService
     {
         private readonly ICategoryRepository _categoryRepository;
+        private readonly IProductRepository _productRepository;
 
-        public CategoryService(ICategoryRepository categoryRepository)
+        public CategoryService(ICategoryRepository categoryRepository, IProductRepository productRepository)
         {
             _categoryRepository = categoryRepository;
+            _productRepository = productRepository;
         }
 
         public async Task<Category> CreateCategory(Category category)
         {
+            var original = await _categoryRepository.GetByIdAsync(category.Id);
+
+            if (original != null)
+            {
+                throw new BadRequestException($"Category with Id={category.Id} Alredy Exists");
+            }
+
             await _categoryRepository.AddAsync(category);
 
             return category;
@@ -27,7 +37,14 @@ namespace Pricat.Application.Services
 
             if (original is null)
             {
-                throw new NotFoundException($"Category with Id={id} Not Found");
+                throw new NotFoundException($"Category [{100}] Not Found");
+            }
+
+            var products = await _productRepository.FindAsync(p => p.CategoryId == original.Id);
+
+            foreach (var producto in products)
+            {
+                await _productRepository.RemoveAsync(producto);
             }
 
             await _categoryRepository.RemoveAsync(original);
@@ -43,7 +60,7 @@ namespace Pricat.Application.Services
             var teamMember = await _categoryRepository.GetByIdAsync(id);
             if (teamMember is null)
             {
-                throw new NotFoundException($"Category with Id={id} Not Found");
+                throw new NotFoundException($"Category [{100}] Not Found");
             }
 
             return teamMember!;
@@ -53,14 +70,14 @@ namespace Pricat.Application.Services
         {
             if (id != category.Id)
             {
-                throw new BadRequestException($"Id [{id}] is different to TeamMember.Id [{category.Id}]");
+                throw new BadRequestException($"Id [{id}] is different to Category.Id [{category.Id}]");
             }
 
             var original = await _categoryRepository.GetByIdAsync(id);
 
             if (original is null)
             {
-                throw new NotFoundException($"Team Member with Id={id} Not Found");
+                throw new NotFoundException($"Category [{100}] Not Found");
             }
 
             await _categoryRepository.UpdateAsync(category);

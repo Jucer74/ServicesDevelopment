@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Pricat.Application.Dtos;
 using Pricat.Application.Interfaces.Services;
+using Pricat.Application.Services;
 using Pricat.Domain.Models;
 
 namespace Pricat.Api.Controllers
@@ -44,7 +45,7 @@ namespace Pricat.Api.Controllers
         public async Task<IActionResult> Put(int id, [FromBody] CategoryDto categoryDto)
         {
             var category = await _categoryService.UpdateCategory(id, _mapper.Map<CategoryDto, Category>(categoryDto));
-            return Ok(_mapper.Map<Category, CategoryDto>(category));
+            return Ok();
         }
 
         [HttpDelete("{id}")]

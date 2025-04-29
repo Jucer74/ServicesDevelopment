@@ -6,7 +6,7 @@ using Pricat.Domain.Models;
 
 namespace Pricat.Api.Controllers
 {
-    [Route("api/v1.0/[controller]")]
+    [Route("api/v1.0")]
     [ApiController]
     public class ProductsController : ControllerBase
     {
@@ -19,39 +19,46 @@ namespace Pricat.Api.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
+        [HttpGet("Products")]
         public async Task<IActionResult> GetAllProducts()
         {
             var products = await _productService.GetAllProducts();
             return Ok(_mapper.Map<List<Product>, List<ProductDto>>(products));
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("Products/{id}")]
         public async Task<IActionResult> GetProductById(int id)
         {
             var product = await _productService.GetProductById(id);
             return Ok(_mapper.Map<Product, ProductDto>(product));
         }
 
-        [HttpPost]
+        [HttpPost("Products")]
         public async Task<IActionResult> Post([FromBody] ProductDto productDto)
         {
             var product = await _productService.CreateProduct(_mapper.Map<ProductDto, Product>(productDto));
             return Ok(_mapper.Map<Product, ProductDto>(product));
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("Products/{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] ProductDto productDto)
         {
             var product = await _productService.UpdateProduct(id, _mapper.Map<ProductDto, Product>(productDto));
-            return Ok(_mapper.Map<Product, ProductDto>(product));
+            return Ok();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("Products/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             await _productService.DeleteProductr(id);
             return Ok();
+        }
+
+        [HttpGet("Products/Category/{categoryId}")]
+        public async Task<IActionResult> GetProductsByCategory(int categoryId)
+        {
+            var products = await _productService.GetProductsByCategory(categoryId);
+            return Ok(_mapper.Map<List<Product>, List<ProductDto>>(products));
         }
     }
 }

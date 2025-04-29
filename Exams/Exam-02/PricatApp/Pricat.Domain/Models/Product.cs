@@ -26,7 +26,7 @@ namespace Pricat.Domain.Models
 
         [Required]
         public required double Price { get; set; }
-
+        
         public Category? Category { get; set; }
     }
 }

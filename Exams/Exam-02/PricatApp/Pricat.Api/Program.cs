@@ -1,5 +1,8 @@
+using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Pricat.Api.Extensions;
+using Pricat.Api.Middelware;
 using Pricat.Infrastructure.Context;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,11 +17,23 @@ builder.Services.AddSwaggerGen();
 // ApDbContext
 builder.Services.AddDbContext<AppDbContext>(options => options.UseMySQL(builder.Configuration.GetConnectionString("CnnStr")!));
 
+builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
+{
+    options.InvalidModelStateResponseFactory = context =>
+    {
+        var errorDetails = context.ConstructErrorMessages();
+        return new BadRequestObjectResult(errorDetails);
+    };
+});
+
 // Services
+
+builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
 
 builder.Services.AddRepositories();
 builder.Services.AddServices();
 builder.Services.AddMapping();
+builder.Services.AddValidators();
 
 
 
@@ -30,6 +45,8 @@ if (app.Environment.IsDevelopment())
    app.UseSwagger();
    app.UseSwaggerUI();
 }
+
+app.UseExceptionMiddleware();
 
 app.UseHttpsRedirection();
 

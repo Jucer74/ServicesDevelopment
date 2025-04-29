@@ -1,4 +1,5 @@
-﻿using Pricat.Domain.Models;
+﻿using System.Linq.Expressions;
+using Pricat.Domain.Models;
 
 namespace Pricat.Application.Interfaces.Services
 {
@@ -13,5 +14,6 @@ namespace Pricat.Application.Interfaces.Services
         Task<Product> GetProductById(int id);
 
         Task<Product> UpdateProduct(int id, Product product);
+        Task<List<Product>> GetProductsByCategory(int categoryId);
     }
 }
