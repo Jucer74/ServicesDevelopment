@@ -1,14 +1,14 @@
-﻿using Pricat.Application.Interfaces.Services;
+﻿using Pricat.Application.Exceptions;
 using Pricat.Application.Interfaces.Repositories;
+using Pricat.Application.Interfaces.Services;
 using Pricat.Domain.Models;
-using Pricat.Application.Exceptions;
 
 namespace Pricat.Application.Services
 {
     public class CategoryService : ICategoryService
     {
         private readonly ICategoryRepository _categoryRepository;
-        private readonly IProductService _productService; 
+        private readonly IProductService _productService;
 
         public CategoryService(ICategoryRepository categoryRepository, IProductService productService)
         {

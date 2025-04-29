@@ -1,14 +1,14 @@
-﻿using Pricat.Application.Exceptions;
+﻿using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
-using System.Net;
+using Pricat.Application.Exceptions;
 
 namespace Pricat.Api.Middleware
 {
 
     public static class ExceptionMiddlewareExtensions
     {
-       
+
         public static ErrorDetails ConstructErrorMessages(this ActionContext context)
         {
             var errors = context.ModelState.Values.Where(v => v.Errors.Count >= 1)
@@ -16,9 +16,9 @@ namespace Pricat.Api.Middleware
                     .Select(v => v.ErrorMessage)
                     .ToList();
 
-            
+
             var deserializationKeywords = new[] { "invalid start", "unexpected character", "invalid character" };
-            
+
             var hasDeserializationError = errors.Any(error =>
                 deserializationKeywords.Any(keyword =>
                     error.Contains(keyword, StringComparison.OrdinalIgnoreCase))
@@ -38,7 +38,7 @@ namespace Pricat.Api.Middleware
             };
         }
 
-      
+
         public static Task HandleExceptionAsync(this HttpContext context, Exception exception)
         {
             var httpStatusCode = GetStatusResponse(exception);
@@ -67,13 +67,13 @@ namespace Pricat.Api.Middleware
             return context.Response.WriteAsync(errorDetails.ToString());
         }
 
-       
+
         public static IApplicationBuilder UseExceptionMiddleware(this IApplicationBuilder builder)
         {
             return builder.UseMiddleware<ExceptionMiddleware>();
         }
 
-       
+
         private static HttpStatusCode GetStatusResponse(Exception exception)
         {
             var nameOfException = exception?.GetType()?.BaseType?.Name ?? string.Empty;

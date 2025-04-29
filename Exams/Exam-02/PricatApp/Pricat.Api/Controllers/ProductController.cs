@@ -1,9 +1,8 @@
-﻿using Pricat.Application.Dtos;
-using Pricat.Application.Interfaces.Services;
-using AutoMapper;
-using Pricat.Domain.Models;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Google.Protobuf.WellKnownTypes;
+using Pricat.Application.Dtos;
+using Pricat.Application.Interfaces.Services;
+using Pricat.Domain.Models;
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860

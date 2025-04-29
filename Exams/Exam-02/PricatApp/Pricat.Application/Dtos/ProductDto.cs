@@ -1,6 +1,4 @@
-﻿using System.Collections.Specialized;
-
-namespace Pricat.Application.Dtos;
+﻿namespace Pricat.Application.Dtos;
 
 public class ProductDto
 {

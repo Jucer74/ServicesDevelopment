@@ -34,7 +34,7 @@ namespace Pricat.Infrastructure.Common
             return await _appDbContext.Set<T>().ToListAsync<T>();
         }
 
-        public async Task<T> GetByIdAsync(int id)
+        public async Task<T?> GetByIdAsync(int id)
         {
             return await _appDbContext.Set<T>().FindAsync(id);
         }
@@ -44,7 +44,7 @@ namespace Pricat.Infrastructure.Common
             var id = entity.Id;
             var original = await _appDbContext.Set<T>().FindAsync(id);
 
-       
+
             if (original is null)
             {
                 throw new NotFoundException($"Element [{id}] Not Found");

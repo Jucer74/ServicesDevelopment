@@ -26,7 +26,7 @@ public class ProductValidator : AbstractValidator<ProductDto>
             .MaximumLength(50)
             .WithMessage("Description's Max Length is 50 Characters");
 
-        
+
 
     }
 }

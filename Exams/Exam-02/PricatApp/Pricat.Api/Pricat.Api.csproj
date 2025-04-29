@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Pricat.Infrastructure\Pricat.Infrastructure.csproj" />
+    <ProjectReference Include="..\Pricat.Utilities\Pricat.Utilities.csproj" />
   </ItemGroup>
 
 </Project>

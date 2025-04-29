@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Pricat.Domain\Pricat.Domain.csproj" />
+    <ProjectReference Include="..\Pricat.Utilities\Pricat.Utilities.csproj" />
   </ItemGroup>
 
 </Project>
