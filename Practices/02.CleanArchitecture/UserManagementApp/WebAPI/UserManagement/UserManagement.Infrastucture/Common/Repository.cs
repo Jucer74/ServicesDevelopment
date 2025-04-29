@@ -1,14 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using UserManagement.Dom.Common;
-using UserManagement.Dom.Exceptions;
 using UserManagement.Infrastucture.Context;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
-using UserManagement.Dom.Common;
-using UserManagement.Dom.Exceptions;
+using UserManagement.App.Exceptions;
+
+
 
 namespace UserManagement.Infrastucture.Common
 {
@@ -44,17 +40,19 @@ namespace UserManagement.Infrastucture.Common
             return await _appDbContext.Set<T>().FindAsync(id);
         }
 
-        public async Task RemoveAsync(int id)
+        public async Task RemoveAsync(T entity)
         {
-            var entity = await _appDbContext.Set<T>().FindAsync(id);
+            var id = entity.Id;
+            var original = await _appDbContext.Set<T>().FindAsync(id);
 
-            if (entity is null)
-                throw new NotFoundException($"Entity with Id={id} not found.");
+            // this is weird
+            if (original is null)
+            {
+                throw new NotFoundException($"User with Id={id} Not Found");
+            }
 
             _appDbContext.Set<T>().Remove(entity);
             await _appDbContext.SaveChangesAsync();
-
-            
         }
 
 

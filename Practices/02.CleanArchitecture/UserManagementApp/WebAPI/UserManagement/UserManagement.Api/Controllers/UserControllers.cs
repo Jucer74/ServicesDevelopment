@@ -1,83 +1,62 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using UserManagement.App.Dtos;
 using UserManagement.App.Interfaces;
 using UserManagement.Dom.Entities;
-using UserManagement.Dom.Exceptions;
-
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace UserManagement.Api.Controllers
 {
-   [Route("api/v1/[controller]")]
-   [ApiController]
-   public class UserController : ControllerBase
-   {
-      private readonly IUserServices _userServices;
+    [Route("api/v1/[controller]")]
+    [ApiController]
+    public class UserController : ControllerBase
+    {
+        private readonly IUserServices _userServices;
+        private readonly IMapper _mapper;
 
-      public UserController(IUserServices userServices)
-      {
-         _userServices = userServices;
-      }
+        public UserController(IUserServices userServices, IMapper mapper)
+        {
+            _userServices = userServices;
+            _mapper = mapper;
+        }
 
-    
-      [HttpGet]
-      public async Task<IActionResult> GetAll()
-      {
-         return Ok(await _userServices.GetAllAsync());
-      }
+        // GET: api/v1/User
+        [HttpGet]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            var users = await _userServices.GetAllAsync(); // Devuelve IEnumerable<User>
+            return Ok(_mapper.Map<List<UserDto>>(users.ToList())); 
+        }
 
-      // GET api/<PeopleController>/5
-      [HttpGet("{id}")]
-      public async Task<IActionResult> GetById(int id)
-      {
-         try
-         {
-            return Ok(await _userServices.GetByIdAsync(id));
-         }
-         catch (NotFoundException ex)
-         {
-            return NotFound(ex.Message);
-         }
-      }
+        // GET: api/v1/User/5
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetUserById(int id)
+        {
+            var user = await _userServices.GetByIdAsync(id);
+            return Ok(_mapper.Map<User, UserDto>(user));
+        }
 
-      // POST api/<PeopleController>
-      [HttpPost]
-      public async Task<IActionResult> Post([FromBody] User user)
-      {
-         return Ok(await _userServices.AddAsync(user));
-      }
+        // POST: api/v1/User
+        [HttpPost]
+        public async Task<IActionResult> CreateUser([FromBody] UserDto dto)
+        {
+            var user = await _userServices.AddAsync(_mapper.Map<UserDto, User>(dto));
+            return Ok(_mapper.Map<User, UserDto>(user));
+        }
 
-      // PUT api/<PeopleController>/5
-      [HttpPut("{id}")]
-      public async Task<IActionResult> Put(int id, [FromBody] User user)
-      {
-         try
-         {
-            return Ok(await _userServices.UpdateAsync(id, user));
-         }
-         catch (BadRequestException ex)
-         {
-            return BadRequest(ex.Message);
-         }
-         catch (NotFoundException ex)
-         {
-            return NotFound(ex.Message);
-         }
-      }
+        // PUT: api/v1/User/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateUser(int id, [FromBody] UserDto dto)
+        {
+            var updatedUser = await _userServices.UpdateAsync(id, _mapper.Map<UserDto, User>(dto));
+            return Ok(_mapper.Map<User, UserDto>(updatedUser));
+        }
 
-      // DELETE api/<PeopleController>/5
-      [HttpDelete("{id}")]
-      public async Task<IActionResult> Delete(int id)
-      {
-         try
-         {
+        // DELETE: api/v1/User/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteUser(int id)
+        {
             await _userServices.RemoveAsync(id);
             return Ok();
-         }
-         catch (NotFoundException ex)
-         {
-            return NotFound(ex.Message);
-         }
-      }
-   }
+        }
+    }
 }

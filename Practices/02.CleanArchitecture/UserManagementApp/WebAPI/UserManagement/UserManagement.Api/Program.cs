@@ -1,5 +1,8 @@
+using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using UserManagement.Api.Extensions;
+using UserManagement.Api.Middleware;
 using UserManagement.App.Interfaces;
 using UserManagement.App.Services;
 using UserManagement.Infrastucture.Context;
@@ -15,8 +18,15 @@ builder.Services.AddDbContext<AppDbContext>(options =>
         ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))
     )
 );
+builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
+{
+    options.InvalidModelStateResponseFactory = context =>
+    {
+        var errorDetails = context.ConstructErrorMessages();
+        return new BadRequestObjectResult(errorDetails);
+    };
+});
 
-// Asegúrate de que se registre IUserServices en el contenedor de dependencias en Program.cs
 builder.Services.AddScoped<IUserServices, UserServices>();
 
 // Add services to the container.
@@ -29,6 +39,12 @@ builder.Services.AddSwaggerGen();
 // Add Modules
 builder.Services.AddCoreModules();
 builder.Services.AddInfrastructureModules();
+builder.Services.AddMappingModules();
+
+builder.Services.AddControllers();
+
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddFluentValidationClientsideAdapters();
 
 builder.Services.AddCors(options =>
 {
@@ -51,7 +67,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 app.UseDeveloperExceptionPage();  
-
+app.UseExceptionMiddleware();
 app.UseHttpsRedirection();
 app.UseCors("AllowAll");
 app.UseRouting();

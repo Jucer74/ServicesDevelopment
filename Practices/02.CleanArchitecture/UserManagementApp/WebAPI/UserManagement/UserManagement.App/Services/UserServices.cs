@@ -1,7 +1,8 @@
 using System.Linq.Expressions;
+using UserManagement.App.Exceptions;
 using UserManagement.App.Interfaces;
 using UserManagement.Dom.Entities;
-using UserManagement.Dom.Exceptions;
+
 using UserManagement.Dom.Interfaces.Repositories;
 
 
@@ -51,7 +52,7 @@ public class UserServices: IUserServices
             throw new NotFoundException($"User with Id={id} Not Found");
         }
 
-        await _userRepository.RemoveAsync(id);
+        await _userRepository.RemoveAsync(user);
      
     }
 
