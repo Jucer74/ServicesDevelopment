@@ -1,4 +1,4 @@
-﻿namespace UserManagement.infrastructure
+﻿namespace UserManagement.Infrastructure
 {
     public class Class1
     {
