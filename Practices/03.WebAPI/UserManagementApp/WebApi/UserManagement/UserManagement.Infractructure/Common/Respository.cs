@@ -1,7 +1,8 @@
 ﻿using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
+using UserManagement.Application.Common;
 using UserManagement.Domain.Common;
-using UserManagement.Infractructure.Context;
+using UserManagement.Infractructure.Persistence.Context;
 
 namespace UserManagement.Infractructure.Common
 {

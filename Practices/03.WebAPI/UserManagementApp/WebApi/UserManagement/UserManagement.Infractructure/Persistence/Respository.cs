@@ -1,5 +1,6 @@
 ﻿using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
+using UserManagement.Application.Common;
 using UserManagement.Application.Interfaces;
 using UserManagement.Domain.Common;
 using UserManagement.Infractructure.Persistence.Context;
