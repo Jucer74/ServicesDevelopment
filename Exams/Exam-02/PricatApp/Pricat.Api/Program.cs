@@ -1,3 +1,4 @@
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Pricat.Api.Extensions;
@@ -19,7 +20,7 @@ builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
 });
 
 //Add Mvc options
-//builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
+builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
 
 builder.Services.AddControllers();
 
@@ -31,6 +32,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddServices();
 builder.Services.AddMapping();
 builder.Services.AddInfrastructureModules();
+builder.Services.AddValidators();
 
 
 var app = builder.Build();

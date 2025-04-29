@@ -8,10 +8,12 @@ namespace Pricat.Application.Services
     public class CategoryService : ICategoryService
     {
         private readonly ICategoryRepository _categoryRepository;
+        private readonly IProductRepository _productRepository;
 
-        public CategoryService(ICategoryRepository categoryRepository)
+        public CategoryService(ICategoryRepository categoryRepository, IProductRepository productRepository)
         {
             _categoryRepository = categoryRepository;
+            _productRepository = productRepository;
         }
         public async Task<Category> CreateCategory(Category category)
         {
@@ -20,11 +22,20 @@ namespace Pricat.Application.Services
 
         public async Task DeleteCategory(int id)
         {
+
             var category = await _categoryRepository.GetByIdAsync(id);
 
             if (category == null)
             {
-                throw new NotFoundException($"Category with Id={id} Not Found");
+                throw new NotFoundException($"Category [{id}] Not Found");
+            }
+
+            var products = await _productRepository.GetAllAsync();
+            var productsToDelete = products.Where(p => p.CategoryId == id).ToList();
+
+            foreach (var product in productsToDelete)
+            {
+                await _productRepository.RemoveAsync(product);
             }
 
             await _categoryRepository.RemoveAsync(category);
@@ -41,7 +52,7 @@ namespace Pricat.Application.Services
 
             if (category == null)
             {
-                throw new NotFoundException($"Category with Id={id} Not Found");
+                throw new NotFoundException($"Category [{id}] Not Found");
             }
 
             return category;
@@ -51,13 +62,13 @@ namespace Pricat.Application.Services
         {
             if (id != entity.Id)
             {
-                throw new BadRequestException($"Id [{id}] is different to Product.Id [{entity.Id}]");
+                throw new BadRequestException($"Id [{id}] is different to Category.Id [{entity.Id}]");
             }
 
             var category = await _categoryRepository.GetByIdAsync(id);
             if (category is null)
             {
-                throw new NotFoundException($"Category with Id={id} Not Found");
+                throw new NotFoundException($"Category [{id}] Not Found");
             }
             return await _categoryRepository.UpdateAsync(entity);
         }

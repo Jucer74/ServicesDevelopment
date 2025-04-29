@@ -22,10 +22,20 @@ namespace Pricat.Api.Middlewares
                     .Select(v => v.ErrorMessage)
                     .ToList();
 
+            var hasDeserializationError = errors.Any(e =>
+                e.Contains("invalid start", StringComparison.OrdinalIgnoreCase) ||
+                e.Contains("unexpected character", StringComparison.OrdinalIgnoreCase) ||
+                e.Contains("invalid character", StringComparison.OrdinalIgnoreCase)
+            );
+
+            var filteredErrors = hasDeserializationError
+                ? errors.Where(e => !e.Contains("field is required", StringComparison.OrdinalIgnoreCase)).ToList()
+                : errors;
+
             return new ErrorDetails
             {
                 ErrorType = ReasonPhrases.GetReasonPhrase((int)HttpStatusCode.BadRequest),
-                Errors = errors
+                Errors = filteredErrors
             };
         }
 

@@ -1,6 +1,4 @@
-﻿
-
-namespace Pricat.Application.Dtos
+﻿namespace Pricat.Application.Dtos
 {
     public class CategoryDto
     {

@@ -6,7 +6,7 @@ using Pricat.Domain.Models;
 
 namespace Pricat.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1.0/[controller]")]
     [ApiController]
     public class CategoriesController : ControllerBase
     {
