@@ -9,12 +9,12 @@ Responda las preguntas del siguiente Enlace:
 Utilizando los conocimientos adquiridos en clase, y basandose en el modelo de Clean Architecture, desarrolle una API que soporte las operaciones de Catalogo de Precios (Pricat) para los productos de una empresa
 
 # Contexto
-Utilice la solucion **PricatApp** como base e implemente la API que soporte las siguientes operaciones.
+Utilice la solucion PricatApp como base e implemente la API que soporte las siguientes operaciones.
 
 ## Categories
-1. **GET /api/v1.0/Categories** : Obtener la lista de todas las categorias de producto
-  - **Request**: Empty
-  - **Response**: Example
+1. GET /api/v1.0/Categories : Obtener la lista de todas las categorias de producto
+  - Request: Empty
+  - Response: Example
   ```json
   [
     {
@@ -39,65 +39,65 @@ Utilice la solucion **PricatApp** como base e implemente la API que soporte las 
     }
   ]
   ```
-  - **Codes**:
+  - Codes:
     - 200 : OK: Success Response
     - 500: Internal Server Error: In case an unexpeted problem
 
 
-2. **GET /api/v1.0/Categories/{id}** : Obtener la categoria por idententificador
-  - **Request**: Empty
-  - **Response**: Example
+2. GET /api/v1.0/Categories/{id} : Obtener la categoria por idententificador
+  - Request: Empty
+  - Response: Example
   ```json
   {
     "Id": 1,
     "Description": "Alimentos"
   }
   ```
-  - **Codes**:
+  - Codes:
     - 200 : OK: Success Response
     - 400: Bad Request: In case the request has errors or invalid format
     - 404: Not Found: In case the Id not found
     - 500: Internal Server Error: In case an unexpeted problem
 
-3. **POST /api/v1.0/Categories** : Adicionar una nueva categoria
-  - **Request**: Example
+3. POST /api/v1.0/Categories : Adicionar una nueva categoria
+  - Request: Example
   ```json
   {
     "Id": 0,
     "Description": "Ferreteria"
   }
   ```
-  - **Response**: Example
+  - Response: Example
   ```json
   {
     "Id": 6,
     "Description": "Ferreteria"
   }
   ```
-  - **Codes**:
+  - Codes:
     - 200 : OK: Success Response
     - 400: Bad Request: In case the request has errors or invalid format
     - 500: Internal Server Error: In case an unexpeted problem
 
-4. **PUT /api/v1.0/Categories/{id}** : Actualizar una categoria
-  - **Request**: Example
+4. PUT /api/v1.0/Categories/{id} : Actualizar una categoria
+  - Request: Example
   ```json
   {
     "Id": 6,
     "Description": "Herramientas y Ferreteria"
   }
   ```
-  - **Response**: Empty
-  - **Codes**:
+  - Response: Empty
+  - Codes:
     - 200 : OK: Success Response
     - 400: Bad Request: In case the request has errors or invalid format
     - 404: Not Found: In case the Id not found
     - 500: Internal Server Error: In case an unexpeted problem
 
-5. **DELETE /api/v1.0/Categories/{id}**: Eliminar una categoria, incluidos todos los productos que dependan de ella
-  - **Request**: Empty
-  - **Response**: Empty
-  - **Codes**:
+5. DELETE /api/v1.0/Categories/{id}: Eliminar una categoria, incluidos todos los productos que dependan de ella
+  - Request: Empty
+  - Response: Empty
+  - Codes:
     - 200 : OK: Success Response
     - 400: Bad Request: In case the request has errors or invalid format
     - 404: Not Found: In case the Id not found
@@ -105,9 +105,9 @@ Utilice la solucion **PricatApp** como base e implemente la API que soporte las 
 
 ---
 ## Productos
-1. **GET /api/v1.0/Products** : Obtener la lista de todos productos
-  - **Request**: Empty
-  - **Response**: Example
+1. GET /api/v1.0/Products : Obtener la lista de todos productos
+  - Request: Empty
+  - Response: Example
   ```json
   [
     {
@@ -192,15 +192,15 @@ Utilice la solucion **PricatApp** como base e implemente la API que soporte las 
     }
   ]
   ```
-  - **Codes**:
+  - Codes:
     - 200 : OK: Success Response
     - 400: Bad Request: In case the request has errors or invalid format
     - 404: Not Found: In case the Id not found
     - 500: Internal Server Error: In case an unexpeted problem
 
-2. **GET /api/v1.0/Products/{id}** : Obtener el producto por identificador de producto
-  - **Request**: Empty
-  - **Response**: Example
+2. GET /api/v1.0/Products/{id} : Obtener el producto por identificador de producto
+  - Request: Empty
+  - Response: Example
   ```json
   {
     "Id": 1,
@@ -211,15 +211,15 @@ Utilice la solucion **PricatApp** como base e implemente la API que soporte las 
     "Price": 500.00
   }
   ```
-  - **Codes**:
+  - Codes:
     - 200 : OK: Success Response
     - 400: Bad Request: In case the request has errors or invalid format
     - 404: Not Found: In case the Id not found
     - 500: Internal Server Error: In case an unexpeted problem
 
-3. **GET /api/v1.0/Category/{categoryId}/Products** : Obtener la lista de productos por identificador de categoria
-  - **Request**: Empty
-  - **Response**: Example
+3. GET /api/v1.0/Category/{categoryId}/Products : Obtener la lista de productos por identificador de categoria
+  - Request: Empty
+  - Response: Example
   ```json
   [
     {
@@ -240,15 +240,15 @@ Utilice la solucion **PricatApp** como base e implemente la API que soporte las 
     }
   ]
   ```
-  - **Codes**:
+  - Codes:
     - 200 : OK: Success Response
     - 400: Bad Request: In case the request has errors or invalid format
     - 404: Not Found: In case the Id not found
     - 500: Internal Server Error: In case an unexpeted problem
 
 
-4. **POST /api/v1.0/Products** : Adicionar un nuevo producto
-  - **Request**: Example
+4. POST /api/v1.0/Products : Adicionar un nuevo producto
+  - Request: Example
   ```json
   {
     "Id": 0,
@@ -259,7 +259,7 @@ Utilice la solucion **PricatApp** como base e implemente la API que soporte las 
     "Price": 300.00
   }
   ```
-  - **Response**: Example
+  - Response: Example
   ```json
   {
     "Id": 11,
@@ -270,14 +270,14 @@ Utilice la solucion **PricatApp** como base e implemente la API que soporte las 
     "Price": 300.00
   }
   ```
-  - **Codes**:
+  - Codes:
     - 200 : OK: Success Response
     - 400: Bad Request: In case the request has errors or invalid format
     - 404: Not Found: In case the Id not found
     - 500: Internal Server Error: In case an unexpeted problem
 
-5. **PUT /api/v1.0/Products/{id}** : Actualizar un producto
-  - **Request**: Example
+5. PUT /api/v1.0/Products/{id} : Actualizar un producto
+  - Request: Example
   ```json
   {
     "Id": 11,
@@ -288,17 +288,17 @@ Utilice la solucion **PricatApp** como base e implemente la API que soporte las 
     "Price": 500.00
   }
   ```
-  - **Response**: Empty
-  - **Codes**:
+  - Response: Empty
+  - Codes:
     - 200 : OK: Success Response
     - 400: Bad Request: In case the request has errors or invalid format
     - 404: Not Found: In case the Id not found
     - 500: Internal Server Error: In case an unexpeted problem
 
-6. **DELETE /api/v1.0/Categories** : Eliminar un producto
-  - **Request**: Empty
-  - **Response**: Empty
-  - **Codes**:
+6. DELETE /api/v1.0/Categories : Eliminar un producto
+  - Request: Empty
+  - Response: Empty
+  - Codes:
     - 200 : OK: Success Response
     - 400: Bad Request: In case the request has errors or invalid format
     - 404: Not Found: In case the Id not found
@@ -307,7 +307,7 @@ Utilice la solucion **PricatApp** como base e implemente la API que soporte las 
 # Base de datos
 Utilice MySQL como motor de base de datos, y ejecute los scripts necesarios para crear la estructura de base de datos y tablas necesarias para almacenar la informacion de Categorias y Productos.
 
-**Scripts:**<br>
+Scripts:<br>
 - 01_Create_Database.sql<br>
 - 02_Tab_Categories.sql<br>
 - 03_Tab_Products.sql<br>
@@ -316,7 +316,7 @@ Utilice MySQL como motor de base de datos, y ejecute los scripts necesarios para
 - 06_INS_Products.sql<br>
 
 ## Conexion
-Adicione la nueva cadena de conexion al archivo **AppSettings**
+Adicione la nueva cadena de conexion al archivo AppSettings
 
 ```json
 "ConnectionStrings": {
@@ -327,8 +327,8 @@ Adicione la nueva cadena de conexion al archivo **AppSettings**
 # Reglas
 - Se debe validar que los Ids Existan antes de Efectuar la actualizacion o el borrado, en caso de no existir, debe retornar una excepcion de tipo 404-Not Found (Aplica para Categorias y Productos)
 - Se debe Validar el EAN Code utilizando la verificacion de [digito de chequeo](https://en.wikipedia.org/wiki/International_Article_Number) para EAN 13 y en caso de no ser valido debe retornar una Exception de tipo 400-Bad Request. Puede implementar el algoritmo
-- Valide los campos requeridos y sus longitudes en las entidades, para ello puede utilizar **Annotations** (Required, StringLength).
-- Implemente el pattern, [Exception Middleware Handler](https://github.com/Jucer74/ExceptionHandler), para facilitar el control de errores y manejo de Excepciones de Negocio, pudiendo retornar estructuras de tipo **ErrorDetails** para estandarizar las respuestas de los errores.
+- Valide los campos requeridos y sus longitudes en las entidades, para ello puede utilizar Annotations (Required, StringLength).
+- Implemente el pattern, [Exception Middleware Handler](https://github.com/Jucer74/ExceptionHandler), para facilitar el control de errores y manejo de Excepciones de Negocio, pudiendo retornar estructuras de tipo ErrorDetails para estandarizar las respuestas de los errores.
 
 # Revision
 1. Validar que todos EndPoints funcionan correctamente. 
