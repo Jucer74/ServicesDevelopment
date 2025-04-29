@@ -1,25 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq.Expressions;
 using UserManagement.Domain.Entities;
 
-namespace UserManagement.Application.Interfaces
+namespace UserManagement.Application.Interfaces;
+
+public interface IUserService
 {
-    public interface IUserService
-    {
-        public Task<User> AddAsync(User entity);
+    public Task AddAsync(User entity);
 
-        public Task<IEnumerable<User>> GetAllAsync();
+    public Task<IEnumerable<User>> GetAllAsync();
 
-        public Task<User> GetByIdAsync(int id);
+    public Task<User> GetByIdAsync(int id);
 
-        public Task<IEnumerable<User>> FindAsync(Expression<Func<User, bool>> predicate);
+    public Task<IEnumerable<User>> FindAsync(Expression<Func<User, bool>> predicate);
 
-        public Task<User> UpdateAsync(int id, User entity);
+    public Task UpdateAsync(int id, User entity);
 
-        public Task RemoveAsync(int id);
-    }
+    public Task RemoveAsync(int id);
 }
