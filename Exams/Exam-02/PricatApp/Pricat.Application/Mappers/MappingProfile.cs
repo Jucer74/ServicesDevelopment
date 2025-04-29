@@ -14,9 +14,9 @@ namespace Pricat.Application.Mappers
             CreateMap<CategoryCreateDto, Category>();
 
             // Mapeo de Product
-            CreateMap<Product, ProductDto>();
+            CreateMap<Product, ProductDto>().ReverseMap(); // <- Agrega ReverseMap
             CreateMap<ProductCreateDto, Product>();
-            
+
         }
     }
 }

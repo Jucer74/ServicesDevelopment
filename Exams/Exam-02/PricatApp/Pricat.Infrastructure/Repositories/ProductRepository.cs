@@ -31,14 +31,32 @@ namespace Pricat.Infrastructure.Persistence.Repositories
 
         public async Task AddAsync(Product product)
         {
-            await _context.Products.AddAsync(product);
+            await _context.Products.AddAsync(product); // ← AQUÍ está el cambio
             await _context.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(Product product)
         {
-            _context.Products.Update(product);
-            await _context.SaveChangesAsync();
+            // Busca el producto existente en la base de datos
+            var existingProduct = await _context.Products.FirstOrDefaultAsync(p => p.Id == product.Id);
+
+            if (existingProduct != null)
+            {
+                // Actualiza las propiedades del producto existente
+                existingProduct.CategoryId = product.CategoryId;
+                existingProduct.EanCode = product.EanCode;
+                existingProduct.Description = product.Description;
+                existingProduct.Unit = product.Unit;
+                existingProduct.Price = product.Price;
+
+                // Guarda los cambios en la base de datos
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                // Si no se encuentra el producto, podrías manejar el error o retornar algún valor
+                throw new KeyNotFoundException("El producto con el ID proporcionado no se encontró.");
+            }
         }
 
         public async Task DeleteAsync(int id)
@@ -58,9 +76,5 @@ namespace Pricat.Infrastructure.Persistence.Repositories
                 .ToListAsync();
         }
 
-        Task<Product> IProductRepository.AddAsync(Product product)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

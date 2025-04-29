@@ -11,7 +11,7 @@ namespace Pricat.Domain.Entities
     {
         Task<IEnumerable<Product>> GetAllAsync();
         Task<Product?> GetByIdAsync(int id);
-        Task<Product> AddAsync(Product product);
+        Task AddAsync(Product product); // 👈 CAMBIA esto (quita el retorno de Product)
         Task UpdateAsync(Product product);
         Task DeleteAsync(int id);
         Task<IEnumerable<Product>> GetByCategoryIdAsync(int categoryId);

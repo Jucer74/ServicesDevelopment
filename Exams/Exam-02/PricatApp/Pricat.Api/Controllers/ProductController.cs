@@ -5,11 +5,11 @@ using Pricat.Application.Exceptions;
 using Pricat.Application.DTOs;
 using System.Linq;
 using System.Threading.Tasks;
-using Pricat.Domain.Common;
+using System.Collections.Generic;
 
 namespace Pricat.Api.Controllers
 {
-    [Route("api/v1.0/[controller]")]
+    [Route("api/v1.0/Products")]
     [ApiController]
     public class ProductController : ControllerBase
     {
@@ -22,7 +22,6 @@ namespace Pricat.Api.Controllers
             _mapper = mapper;
         }
 
-        // GET api/products
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -30,25 +29,17 @@ namespace Pricat.Api.Controllers
             {
                 var products = await _productService.GetAllProductsAsync();
                 if (products == null || !products.Any())
-                {
-                    throw new NotFoundException("No products found.");
-                }
+                    return NotFound("No products found.");
 
-                // Mapeamos las entidades a DTOs
                 var productDtos = _mapper.Map<IEnumerable<ProductDto>>(products);
                 return Ok(productDtos);
             }
-            catch (NotFoundException ex)
+            catch
             {
-                throw new NotFoundException(ex.Message, ex);
-            }
-            catch (Exception ex)
-            {
-                throw new InternalServerErrorException("An unexpected error occurred.", ex);
+                return StatusCode(500, "An unexpected error occurred.");
             }
         }
 
-        // GET api/products/{id}
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -56,95 +47,81 @@ namespace Pricat.Api.Controllers
             {
                 var product = await _productService.GetProductByIdAsync(id);
                 if (product == null)
-                {
-                    throw new NotFoundException($"Product with ID {id} not found.");
-                }
+                    return NotFound();
 
-                // Mapeamos la entidad a DTO
                 var productDto = _mapper.Map<ProductDto>(product);
                 return Ok(productDto);
             }
-            catch (NotFoundException ex)
+            catch
             {
-                throw new NotFoundException(ex.Message, ex);
-            }
-            catch (Exception ex)
-            {
-                throw new InternalServerErrorException("An unexpected error occurred.", ex);
+                return StatusCode(500, "An unexpected error occurred.");
             }
         }
 
-        /// POST api/products
+        [HttpGet("Category/{categoryId}")]
+        public async Task<IActionResult> GetProductsByCategory(int categoryId)
+        {
+            try
+            {
+                var products = await _productService.GetProductsByCategoryIdAsync(categoryId);
+                if (products == null || !products.Any())
+                    return NotFound("No se encontraron productos para esta categoría.");
+
+                var productDtos = _mapper.Map<IEnumerable<ProductDto>>(products);
+                return Ok(productDtos);
+            }
+            catch
+            {
+                return StatusCode(500, "Error al obtener productos por categoría.");
+            }
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] ProductCreateDto productCreateDto)
         {
             try
             {
-                if (productCreateDto == null)
-                {
-                    throw new BadRequestException("Product data is invalid.");
-                }
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
 
-                // Mapeamos el DTO a entidad
-                var product = _mapper.Map<Product>(productCreateDto);
-                await _productService.AddProductAsync(product);
-
-                // Mapeamos la entidad a DTO para la respuesta
-                var productDto = _mapper.Map<ProductDto>(product);
+                var productDto = await _productService.AddProductAsync(productCreateDto);
                 return CreatedAtAction(nameof(GetById), new { id = productDto.Id }, productDto);
             }
             catch (BadRequestException ex)
             {
-                throw new BadRequestException(ex.Message, ex);
+                return BadRequest(ex.Message);
             }
-            catch (Exception ex)
+            catch
             {
-                throw new InternalServerErrorException("An unexpected error occurred.", ex);
+                return StatusCode(500, "An unexpected error occurred.");
             }
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] ProductCreateDto productCreateDto)
+        public async Task<IActionResult> Update(int id, [FromBody] ProductDto productDto)
         {
             try
             {
-                if (id != productCreateDto.Id)
-                {
-                    throw new BadRequestException("Product ID mismatch.");
-                }
+                if (productDto == null || productDto.Id != id)
+                    return BadRequest("El ID no coincide.");
 
-                // Verificamos si el producto existe en la base de datos
                 var existingProduct = await _productService.GetProductByIdAsync(id);
                 if (existingProduct == null)
-                {
-                    throw new NotFoundException($"Product with ID {id} not found.");
-                }
+                    return NotFound();
 
-                // Mapeamos el DTO a la entidad para la actualización
-                var product = _mapper.Map<Product>(productCreateDto);
-
-                // Llamamos al servicio para actualizar el producto
-                await _productService.UpdateProductAsync(product);
-
-                // Retornamos NoContent ya que la actualización fue exitosa
+                await _productService.UpdateProductAsync(productDto);
                 return NoContent();
             }
             catch (BadRequestException ex)
             {
-                throw new BadRequestException(ex.Message, ex);
+                return BadRequest(ex.Message);
             }
-            catch (NotFoundException ex)
+            catch
             {
-                throw new NotFoundException(ex.Message, ex);
-            }
-            catch (Exception ex)
-            {
-                throw new InternalServerErrorException("An unexpected error occurred.", ex);
+                return StatusCode(500, "An unexpected error occurred.");
             }
         }
 
-
-        // DELETE api/products/{id}
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -152,20 +129,14 @@ namespace Pricat.Api.Controllers
             {
                 var product = await _productService.GetProductByIdAsync(id);
                 if (product == null)
-                {
-                    throw new NotFoundException($"Product with ID {id} not found.");
-                }
+                    return NotFound();
 
                 await _productService.DeleteProductAsync(id);
                 return NoContent();
             }
-            catch (NotFoundException ex)
+            catch
             {
-                throw new NotFoundException(ex.Message, ex);
-            }
-            catch (Exception ex)
-            {
-                throw new InternalServerErrorException("An unexpected error occurred.", ex);
+                return StatusCode(500, "An unexpected error occurred.");
             }
         }
     }

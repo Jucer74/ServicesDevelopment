@@ -3,49 +3,57 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
+using Pricat.Application.DTOs;
 using Pricat.Application.Interfaces;
 using Pricat.Domain.Common;
 using Pricat.Domain.Entities;
 
-namespace Pricat.Application.Services
+public class ProductService : IProductService
 {
-    public class ProductService : IProductService
+    private readonly IProductRepository _productRepository;
+    private readonly IMapper _mapper;
+
+    public ProductService(IProductRepository productRepository, IMapper mapper)
     {
-        private readonly IProductRepository _productRepository;
+        _productRepository = productRepository;
+        _mapper = mapper;
+    }
 
-        public ProductService(IProductRepository productRepository)
-        {
-            _productRepository = productRepository;
-        }
+    public async Task<IEnumerable<ProductDto>> GetAllProductsAsync()
+    {
+        var products = await _productRepository.GetAllAsync();
+        return _mapper.Map<IEnumerable<ProductDto>>(products);
+    }
 
-        public async Task<IEnumerable<Product>> GetAllProductsAsync()
-        {
-            return await _productRepository.GetAllAsync();
-        }
+    public async Task<ProductDto> GetProductByIdAsync(int id)
+    {
+        var product = await _productRepository.GetByIdAsync(id);
+        return _mapper.Map<ProductDto>(product);
+    }
 
-        public async Task<Product> GetProductByIdAsync(int id)
-        {
-            return await _productRepository.GetByIdAsync(id);
-        }
+    public async Task<IEnumerable<ProductDto>> GetProductsByCategoryIdAsync(int categoryId)
+    {
+        var products = await _productRepository.GetByCategoryIdAsync(categoryId);
+        return _mapper.Map<IEnumerable<ProductDto>>(products);
+    }
 
-        public async Task<IEnumerable<Product>> GetProductsByCategoryIdAsync(int categoryId)
-        {
-            return await _productRepository.GetByCategoryIdAsync(categoryId);
-        }
+    public async Task<ProductDto> AddProductAsync(ProductCreateDto dto)
+    {
+        var product = _mapper.Map<Product>(dto);
+        await _productRepository.AddAsync(product);
+        return _mapper.Map<ProductDto>(product);
+    }
 
-        public async Task AddProductAsync(Product product)
-        {
-            await _productRepository.AddAsync(product);
-        }
+    public async Task UpdateProductAsync(ProductDto dto)
+    {
+        var product = _mapper.Map<Product>(dto);
+        await _productRepository.UpdateAsync(product);
 
-        public async Task UpdateProductAsync(Product product)
-        {
-            await _productRepository.UpdateAsync(product);
-        }
+    }
 
-        public async Task DeleteProductAsync(int id)
-        {
-            await _productRepository.DeleteAsync(id);
-        }
+    public async Task DeleteProductAsync(int id)
+    {
+        await _productRepository.DeleteAsync(id);
     }
 }
