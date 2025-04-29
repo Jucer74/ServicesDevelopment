@@ -24,7 +24,7 @@ public class CategoriesController : ControllerBase
     
     // GET: api/v1.0/Categories/5
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetById(int id)
+    public async Task<IActionResult> GetById(string id)
     {
         return Ok(await _categoryService.GetByIdAsync(id));
     }

@@ -28,15 +28,15 @@ public class CategoryService : ICategoryService
         return await _categoryRepository.GetAllAsync();
     }
 
-    public async Task<Category> GetByIdAsync(int id)
+    public async Task<Category> GetByIdAsync(string id)
     {
         // Validar si el ID es inválido
         if (!int.TryParse(id.ToString(), out var numericId) || numericId <= 0)
         {
-            throw new BadRequestException($"The value '{numericId}' is not valid.");
+            throw new BadRequestException($"The value '{id}' is not valid.");
         }
         
-        var category = await _categoryRepository.GetByIdAsync(id);
+        var category = await _categoryRepository.GetByIdAsync(numericId);
 
         if (category == null)
         {
