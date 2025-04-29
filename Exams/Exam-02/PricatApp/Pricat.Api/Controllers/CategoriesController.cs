@@ -13,9 +13,9 @@ namespace Pricat.Api.Controllers
         private readonly ICategoryService _categoryService;
         private readonly IMapper _mapper;
 
-        public CategoriesController(ICategoryService teamMemberService, IMapper mapper)
+        public CategoriesController(ICategoryService categoryService, IMapper mapper)
         {
-            _categoryService = teamMemberService;
+            _categoryService = categoryService;
             _mapper = mapper;
         }
 

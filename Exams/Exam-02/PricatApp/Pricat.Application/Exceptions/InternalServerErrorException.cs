@@ -19,10 +19,5 @@ namespace Pricat.Application.Exceptions
         public InternalServerErrorException(string message, Exception innerException) : base(message, innerException)
         {
         }
-
-        // Without this constructor, deserialization will fail
-        protected InternalServerErrorException(SerializationInfo info, StreamingContext context) : base(info, context)
-        {
-        }
     }
 }

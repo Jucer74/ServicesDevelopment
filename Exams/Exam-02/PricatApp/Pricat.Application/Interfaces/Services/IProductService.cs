@@ -14,5 +14,7 @@ namespace Pricat.Application.Interfaces.Services
         Task<Product> GetProductById(int id);
 
         Task<Product> UpdateProduct(int id, Product product);
+
+        Task<List<Product>> GetProductsByCategory(int categoryId);
     }
 }

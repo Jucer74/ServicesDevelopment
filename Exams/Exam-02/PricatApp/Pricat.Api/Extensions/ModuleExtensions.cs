@@ -46,7 +46,7 @@ namespace Pricat.Api.Extensions
         public static IServiceCollection AddValidators(this IServiceCollection services)
         {
             services.AddScoped<IValidator<CategoryDto>, CategoryValidator>();
-            //services.AddScoped<IValidator<TeamMemberDto>, TeamMemberValidator>();
+            services.AddScoped<IValidator<ProductDto>, ProductValidator>();
 
             return services;
         }
