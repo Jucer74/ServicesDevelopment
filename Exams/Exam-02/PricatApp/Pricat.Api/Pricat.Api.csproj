@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<RootNamespace>Pricat.Api</RootNamespace>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UserSecretsId>8a140141-290f-4b93-8d9f-70a973c15e9a</UserSecretsId>
+		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Pricat.Infrastructure\Pricat.Infrastructure.csproj" />
+		<ProjectReference Include="..\Pricat.Application\Pricat.Application.csproj" />
+		<ProjectReference Include="..\Pricat.Domain\Pricat.Domain.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.21" />
+		<PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.2" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+	</ItemGroup>
+
+</Project>
