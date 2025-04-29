@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using System.Runtime.Serialization;
 
 namespace Pricat.Application.Exceptions
 {
-    [Serializable]
-    public class BadRequestException : Exception
+    public class BadRequestException : BusinessException
     {
         public BadRequestException()
         {
@@ -19,6 +15,12 @@ namespace Pricat.Application.Exceptions
 
         public BadRequestException(string message, Exception innerException)
             : base(message, innerException)
+        {
+        }
+
+        // Without this constructor, deserialization will fail
+        protected BadRequestException(SerializationInfo info, StreamingContext context)
+            : base(info, context)
         {
         }
     }

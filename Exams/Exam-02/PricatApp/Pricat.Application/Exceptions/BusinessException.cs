@@ -5,24 +5,23 @@ namespace Pricat.Application.Exceptions
 {
     [ExcludeFromCodeCoverage]
     [Serializable]
-    public class NotFoundException : BusinessException
+    public class BusinessException : Exception
     {
-        public NotFoundException()
+        public BusinessException()
         {
         }
 
-        public NotFoundException(string message) : base(message)
+        public BusinessException(string message) : base(message)
         {
         }
 
-        public NotFoundException(string message, Exception innerException)
+        public BusinessException(string message, Exception innerException)
             : base(message, innerException)
         {
         }
 
         // Without this constructor, deserialization will fail
-        protected NotFoundException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
+        protected BusinessException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
     }
