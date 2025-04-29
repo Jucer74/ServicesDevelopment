@@ -5,11 +5,14 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using UserManagement.Domain.Common;
-using UserManagement.Domain.Exceptions;
-using UserManagement.Infrastructure.Context;
+using Pricat.Application.Common.Interfaces;
+using Pricat.Domain.Entities.Base;
+using Pricat.Infrastructure.Persistence;
+using Pricat.Application.Exceptions;
 
-namespace UserManagement.Infrastructure.Common
+
+
+namespace Pricat.Application.Base
 {
     public class Repository<T> : IRepository<T> where T : EntityBase
     {
@@ -20,7 +23,7 @@ namespace UserManagement.Infrastructure.Common
             _appDbContext = appDbContext;
         }
 
-        public async Task AddAsync(T entity) // Fix: Changed return type to Task to match the interface
+        public async Task AddAsync(T entity) // Fix: Changed return type to match the interface
         {
             _appDbContext.Set<T>().Add(entity);
             await _appDbContext.SaveChangesAsync();
@@ -55,7 +58,7 @@ namespace UserManagement.Infrastructure.Common
             await _appDbContext.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(T entity) // Fix: Changed return type to Task to match the interface
+        public async Task UpdateAsync(T entity) // Fix: Changed return type to match the interface
         {
             var id = entity?.Id;
             var original = await _appDbContext.Set<T>().FindAsync(id);
@@ -70,4 +73,3 @@ namespace UserManagement.Infrastructure.Common
         }
     }
 }
-

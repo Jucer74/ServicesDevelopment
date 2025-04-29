@@ -5,14 +5,28 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
+	<ItemGroup>
+		<ProjectReference Include="..\Pricat.Domain\Pricat.Domain.csproj" />
+	</ItemGroup>
   <ItemGroup>
     <Compile Remove="Interfaces\**" />
-    <Compile Remove="Services\**" />
     <EmbeddedResource Remove="Interfaces\**" />
-    <EmbeddedResource Remove="Services\**" />
     <None Remove="Interfaces\**" />
-    <None Remove="Services\**" />
+  </ItemGroup>
+	
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="14.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.15">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="7.0.15" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.15">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="7.0.0" />
   </ItemGroup>
 
 </Project>
