@@ -1,5 +1,4 @@
 
-using System.Runtime.Serialization;
 
 namespace Pricat.Application.Exceptions
 {
