@@ -1,15 +1,31 @@
+using Microsoft.EntityFrameworkCore;
+using UserManagement.Infrastr.Context;
+using UserManagement.Api.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Add DbContext for MySQL
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseMySql(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        new MySqlServerVersion(new Version(8, 0, 37)) // Cambia esto seg�n tu versi�n
+    ));
 
+// Add services to the container
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+// Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Add custom modules
+builder.Services.AddUserManagementModule();
+builder.Services.AddInfrastructureRepositories();
+
+builder.Services.AddCors();
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// HTTP request pipeline config
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -18,7 +34,16 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseRouting();
+
 app.UseAuthorization();
+
+app.UseCors(options =>
+{
+    options.WithOrigins("http://localhost:3000");
+    options.AllowAnyMethod();
+    options.AllowAnyHeader();
+});
 
 app.MapControllers();
 

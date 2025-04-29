@@ -1,4 +1,5 @@
-﻿using UserManagement.Domain.Common;
+
+using UserManagement.Domain.Common;
 using UserManagement.Domain.Entities;
 
 namespace UserManagement.Domain.Interfaces.Repositories;
