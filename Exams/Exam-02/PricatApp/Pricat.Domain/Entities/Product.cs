@@ -1,30 +1,20 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Pricat.Domain.Entities; // si es la ruta correcta
+
 
 namespace Pricat.Domain.Entities
 {
     public class Product
     {
         public int Id { get; set; }
-
-        [Required]
         public int CategoryId { get; set; }
-
-        [Required]
-        [StringLength(13)]
-        public string EanCode { get; set; } = string.Empty;
-
-        [Required]
-        [StringLength(50)]
-        public string Description { get; set; } = string.Empty;
-
-        [Required]
-        [StringLength(20)]
-        public string Unit { get; set; } = string.Empty;
-
-        [Required]
+        public string EanCode { get; set; } = null!;
+        public string Description { get; set; } = null!;
+        public string Unit { get; set; } = null!;
         public decimal Price { get; set; }
 
-        // Propiedad de navegación (opcional, para la relación con Category)
+        // Propiedad de navegación
         public Category Category { get; set; } = null!;
     }
+
 }

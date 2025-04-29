@@ -9,18 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Controllers\**" />
     <Compile Remove="Extensions\**" />
-    <Compile Remove="MiddleWare\**" />
-    <Content Remove="Controllers\**" />
     <Content Remove="Extensions\**" />
-    <Content Remove="MiddleWare\**" />
-    <EmbeddedResource Remove="Controllers\**" />
     <EmbeddedResource Remove="Extensions\**" />
-    <EmbeddedResource Remove="MiddleWare\**" />
-    <None Remove="Controllers\**" />
     <None Remove="Extensions\**" />
-    <None Remove="MiddleWare\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -34,6 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Pricat.Application\Pricat.Application.csproj" />
     <ProjectReference Include="..\Pricat.Infrastructure\Pricat.Infrastructure.csproj" />
   </ItemGroup>
 

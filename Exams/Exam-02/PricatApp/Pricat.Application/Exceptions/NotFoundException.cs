@@ -1,0 +1,9 @@
+﻿using System;
+
+namespace Pricat.Application.Exceptions
+{
+    public class NotFoundException : Exception
+    {
+        public NotFoundException(string message) : base(message) { }
+    }
+}

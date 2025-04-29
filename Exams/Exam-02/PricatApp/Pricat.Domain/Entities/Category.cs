@@ -1,13 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+
 
 namespace Pricat.Domain.Entities
 {
     public class Category
     {
         public int Id { get; set; }
+        public string Description { get; set; } = null!;
 
-        [Required]
-        [StringLength(50)]
-        public string Description { get; set; } = string.Empty;
+        // Propiedad de navegación
+        public ICollection<Product> Products { get; set; } = new List<Product>();
     }
+
 }

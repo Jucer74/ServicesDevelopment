@@ -9,13 +9,10 @@
   <ItemGroup>
     <Compile Remove="Common\**" />
     <Compile Remove="Exceptions\**" />
-    <Compile Remove="Interfaces\**" />
     <EmbeddedResource Remove="Common\**" />
     <EmbeddedResource Remove="Exceptions\**" />
-    <EmbeddedResource Remove="Interfaces\**" />
     <None Remove="Common\**" />
     <None Remove="Exceptions\**" />
-    <None Remove="Interfaces\**" />
   </ItemGroup>
 
 </Project>
