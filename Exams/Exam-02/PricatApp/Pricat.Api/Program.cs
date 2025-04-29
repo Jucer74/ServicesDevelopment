@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Pricat.Api.Extensions;
 using Pricat.Infrastructure.Context;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +13,14 @@ builder.Services.AddSwaggerGen();
 
 // ApDbContext
 builder.Services.AddDbContext<AppDbContext>(options => options.UseMySQL(builder.Configuration.GetConnectionString("CnnStr")!));
+
+// Services
+
+builder.Services.AddRepositories();
+builder.Services.AddServices();
+builder.Services.AddMapping();
+
+
 
 var app = builder.Build();
 

@@ -3,6 +3,7 @@ using System.Linq.Expressions;
 using Pricat.Application.Interfaces.Repositories;
 using Pricat.Domain.Common;
 using Pricat.Infrastructure.Context;
+using Pricat.Application.Exceptions;
 
 namespace Pricat.Infrastructure.Common
 {
@@ -56,10 +57,10 @@ namespace Pricat.Infrastructure.Common
                 throw new NotFoundException($"Person with Id={id} Not Found");
             }
 
-            _appDbContext.Entry(original).CurrentValues.SetValues(entity);
+            _appDbContext.Entry(original).CurrentValues.SetValues(entity!);
             await _appDbContext.SaveChangesAsync();
 
-            return entity;
+            return entity!;
         }
     }
 }
