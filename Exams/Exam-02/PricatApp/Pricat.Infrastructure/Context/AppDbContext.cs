@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
 using Pricat.Domain.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pricat.Infrastructure.Context;
 

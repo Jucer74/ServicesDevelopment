@@ -9,23 +9,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Controllers\**" />
-    <Compile Remove="Extensions\**" />
-    <Compile Remove="MiddleWare\**" />
-    <Content Remove="Controllers\**" />
-    <Content Remove="Extensions\**" />
-    <Content Remove="MiddleWare\**" />
-    <EmbeddedResource Remove="Controllers\**" />
-    <EmbeddedResource Remove="Extensions\**" />
-    <EmbeddedResource Remove="MiddleWare\**" />
-    <None Remove="Controllers\**" />
-    <None Remove="Extensions\**" />
-    <None Remove="MiddleWare\**" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.15.1" />
+    <PackageReference Include="MySql.EntityFrameworkCore" Version="9.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.15.1" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    <ProjectReference Include="..\Pricat.Infrastructure\Pricat.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
