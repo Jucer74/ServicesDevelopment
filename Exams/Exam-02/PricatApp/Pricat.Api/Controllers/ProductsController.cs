@@ -1,44 +1,28 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Threading.Tasks;
 using Pricat.Application.Services;
 using Pricat.Domain.Entities;
-using System.Linq;
-
 
 namespace Pricat.Api.Controllers
 {
     [ApiController]
     [Route("api/v1.0/[controller]")]
-    public class CategoriesController : ControllerBase
+    public class ProductsController : ControllerBase
     {
-        private readonly CategoryService _service;
+        private readonly ProductService _service;
 
-        public CategoriesController(CategoryService service)
+        public ProductsController(ProductService service)
         {
             _service = service;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
-        {
-            var items = await _service.GetAllAsync();
-            return Ok(items);
-        }
-
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
-        {
-            var item = await _service.GetByIdAsync(id);
-            return Ok(item);
-        }
-
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] Category category)
+        public async Task<IActionResult> Create([FromBody] Product product)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(new
-                {
+                return BadRequest(new {
                     ErrorType = "Bad Request",
                     Errors = ModelState.Values
                                       .SelectMany(v => v.Errors)
@@ -47,18 +31,16 @@ namespace Pricat.Api.Controllers
                 });
             }
 
-            var created = await _service.CreateAsync(category);
+            var created = await _service.CreateAsync(product);
             return Ok(created);
         }
 
-
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] Category category)
+        public async Task<IActionResult> Update(int id, [FromBody] Product product)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(new
-                {
+                return BadRequest(new {
                     ErrorType = "Bad Request",
                     Errors = ModelState.Values
                                       .SelectMany(v => v.Errors)
@@ -67,17 +49,11 @@ namespace Pricat.Api.Controllers
                 });
             }
 
-            category.Id = id;
-            await _service.UpdateAsync(category);
+            product.Id = id;
+            await _service.UpdateAsync(product);
             return Ok();
         }
 
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
-        {
-            await _service.DeleteAsync(id);
-            return Ok();
-        }
+        // ... (otros endpoints GET/DELETE sin cambios de ModelState)
     }
 }

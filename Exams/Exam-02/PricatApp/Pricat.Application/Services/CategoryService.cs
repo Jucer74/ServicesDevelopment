@@ -31,10 +31,18 @@ namespace Pricat.Application.Services
 
         public async Task UpdateAsync(Category category)
         {
+            // 1. Validar ID positivo
+            if (category.Id <= 0)
+                throw new BadRequestException("Invalid ID");
+
+            // 2. Validar existencia
             if (!await _repository.ExistsAsync(c => c.Id == category.Id))
                 throw new NotFoundException($"Category [{category.Id}] Not Found");
+
+            // 3. Actualizar
             await _repository.UpdateAsync(category);
         }
+
 
         public async Task DeleteAsync(int id)
         {
