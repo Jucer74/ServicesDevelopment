@@ -9,7 +9,7 @@ namespace Pricat.Domain.Entities
 {
     public class Product: EntityBase
     {
-        public required int CategoryId { get; set; }
+        public int CategoryId { get; set; }
         public Category? Category { get; set; }
         public string? EanCode { get; set; }
         public string? Description { get; set; }

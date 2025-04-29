@@ -15,7 +15,7 @@ namespace Pricat.Api.Controllers
             _productService = productService;
         }
 
-        // GET: api/Products
+        // GET: api/v1.0/Products
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -23,72 +23,44 @@ namespace Pricat.Api.Controllers
             return Ok(result);
         }
 
-        // GET: api/Products/{id}
-        [HttpGet("{id:int}")]
+        // GET: api/v1.0/Products/{id}
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            try
-            {
-                var result = await _productService.GetProductById(id);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return NotFound(ex.Message);
-            }
-        }
-
-        // GET: api/Products/by-category/{categoryId}
-        [HttpGet("category/{categoryId:int}")]
-        public async Task<IActionResult> GetByCategoryId(int categoryId)
-        {
-            var result = await _productService.GetByCategoryId(categoryId);
-
-            if (result == null || !result.Any())
-                return NotFound($"No products found for category with ID {categoryId}.");
-
+            var result = await _productService.GetProductById(id);
             return Ok(result);
         }
 
-        // POST: api/Products
+        // GET: api/v1.0/Products/category/{categoryId}
+        [HttpGet("category/{categoryId}")]
+        public async Task<IActionResult> GetByCategoryId(int categoryId)
+        {
+            var result = await _productService.GetByCategoryId(categoryId);
+            return Ok(result);
+        }
+
+        // POST: api/v1.0/Products
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] ProductCreateDto productCreateDto)
         {
             var result = await _productService.CreateProduct(productCreateDto);
-
-            if (result == null)
-            {
-                return StatusCode(500, "Unexpected error creating the product.");
-            }
-
-            return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
+            return Ok(result);
         }
 
-        // PUT: api/Products/{id}
-        [HttpPut("{id:int}")]
+        // PUT: api/v1.0/Products/{id}
+        [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] ProductCreateDto productUpdateDto)
         {
-            try
-            {
-                var result = await _productService.UpdateProduct(id, productUpdateDto);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return NotFound(ex.Message);
-            }
+            var result = await _productService.UpdateProduct(id, productUpdateDto);
+            return Ok(result);
         }
 
-        // DELETE: api/Products/{id}
-        [HttpDelete("{id:int}")]
+        // DELETE: api/v1.0/Products/{id}
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var success = await _productService.DeleteProduct(id);
-
-            if (!success)
-                return NotFound($"Product with ID {id} not found.");
-
-            return NoContent();
+            await _productService.DeleteProduct(id);
+            return Ok();
         }
     }
 }

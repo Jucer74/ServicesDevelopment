@@ -1,4 +1,4 @@
-using Pricat.Infrastructure.Persistence; 
+using Pricat.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -8,20 +8,27 @@ using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container
-builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
-{
-    options.InvalidModelStateResponseFactory = context =>
+// Controllers + Custom ModelState Error Handling
+builder.Services.AddControllers()
+    .ConfigureApiBehaviorOptions(options =>
     {
-        var errorDetails = context.ConstructErrorMessages();
-        return new BadRequestObjectResult(errorDetails);
-    };
-});
-builder.Services.AddControllers();
-builder.Services.AddFluentValidationAutoValidation();
-builder.Services.AddFluentValidationClientsideAdapters();
-builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
+        options.InvalidModelStateResponseFactory = context =>
+        {
+            var errorDetails = context.ConstructErrorMessages();
+            var result = new BadRequestObjectResult(errorDetails);
+            result.ContentTypes.Add("application/json");
+            return result;
+        };
+    });
+
+// FluentValidation (simplificado)
+builder.Services.AddFluentValidationAutoValidation()
+                .AddFluentValidationClientsideAdapters();
 builder.Services.AddValidatorsFromAssemblyContaining<CategoryValidator>();
+
+builder.Services.AddValidatorsFromAssemblyContaining<ProductValidator>();
+
+// Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -35,7 +42,7 @@ builder.Services.AddScoped(typeof(Pricat.Application.Common.Interfaces.IReposito
 builder.Services.AddScoped<Pricat.Application.Services.Interfaces.IProductService, Pricat.Application.Services.Implementation.ProductService>();
 builder.Services.AddScoped<Pricat.Application.Services.Interfaces.ICategoryService, Pricat.Application.Services.Implementation.CategoryService>();
 
-// Add DbContext
+// DbContext
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseMySql(
         builder.Configuration.GetConnectionString("CnnStr"),
@@ -43,18 +50,20 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     )
 );
 
-
 var app = builder.Build();
 
-// Configurar middlewares
+
+// Middleware global
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-// Add the Exception Middleware Handler
-app.UseExceptionMiddleware();
+
+
+
 app.UseHttpsRedirection();
+app.UseExceptionMiddleware();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();

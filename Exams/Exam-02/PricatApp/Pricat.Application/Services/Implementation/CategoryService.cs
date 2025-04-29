@@ -57,6 +57,7 @@ namespace Pricat.Application.Services.Implementation
 
         public async Task<CategoryResultDto> GetCategoryById(int categoryId)
         {
+            
             if (categoryId <= 0)
             {
                 throw new BadRequestException("El ID de categoría debe ser mayor que cero.");
@@ -81,7 +82,7 @@ namespace Pricat.Application.Services.Implementation
             var existingCategory = await _categoryRepository.GetByIdAsync(categoryId);
             if (existingCategory == null)
             {
-                throw new NotFoundException($"La categoría con ID {categoryId} no existe.");
+                throw new NotFoundException($"Category [{categoryId}] Not Found");
             }
 
             _mapper.Map(categoryUpdateDto, existingCategory);
@@ -100,7 +101,7 @@ namespace Pricat.Application.Services.Implementation
             var existingCategory = await _categoryRepository.GetByIdAsync(categoryId);
             if (existingCategory == null)
             {
-                throw new NotFoundException($"La categoría con ID {categoryId} no fue encontrada para eliminar.");
+                throw new NotFoundException($"Category [{categoryId}] Not Found");
             }
 
             var productsToDelete = await _productRepository.FindAsync(p => p.CategoryId == categoryId);

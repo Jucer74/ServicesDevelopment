@@ -15,7 +15,7 @@ namespace Pricat.Api.Controllers
             _categoryService = categoryService;
         }
 
-        // GET: api/Categories
+        // GET: api/v1.0/Categories
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -23,60 +23,36 @@ namespace Pricat.Api.Controllers
             return Ok(result);
         }
 
-        // GET: api/Categories/{id}
-        [HttpGet("{id:int}")]
+        // GET: api/v1.0/Categories/{id}
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            try
-            {
-                var result = await _categoryService.GetCategoryById(id);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return NotFound(ex.Message);
-            }
+            var result = await _categoryService.GetCategoryById(id);
+            return Ok(result);
         }
 
-        // POST: api/Categories
+        // POST: api/v1.0/Categories
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CategoryCreateDto categoryCreateDto)
         {
             var result = await _categoryService.CreateCategory(categoryCreateDto);
-
-            if (result == null)
-            {
-                return StatusCode(500, "Unexpected error creating the category.");
-            }
-
-            return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
+            return Ok(result);
         }
 
-        // PUT: api/Categories/{id}
-        [HttpPut("{id:int}")]
+        // PUT: api/v1.0/Categories/{id}
+        [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] CategoryCreateDto categoryUpdateDto)
         {
-            try
-            {
-                var result = await _categoryService.UpdateCategory(id, categoryUpdateDto);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return NotFound(ex.Message);
-            }
+            var result = await _categoryService.UpdateCategory(id, categoryUpdateDto);
+            return Ok(result);
         }
 
-        // DELETE: api/Categories/{id}
-        [HttpDelete("{id:int}")]
+        // DELETE: api/v1.0/Categories/{id}
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var success = await _categoryService.DeleteCategory(id);
-
-            if (!success)
-                return NotFound($"Category with ID {id} not found.");
-
-            return NoContent();
+            await _categoryService.DeleteCategory(id);
+            return Ok();
         }
     }
 }

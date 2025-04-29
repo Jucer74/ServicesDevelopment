@@ -42,8 +42,7 @@ namespace Pricat.Api.Middlewares
         /// <summary>
         /// Handler the Exception and create a valid HttpResponse
         /// </summary>
-        /// <param name="context">Current Http Context</param>
-        /// <param name="exception">Exception Catched</param>
+        
         public static Task HandleExceptionAsync(this HttpContext context, Exception exception)
         {
             var httpStatusCode = GetStatusResponse(exception);
@@ -74,18 +73,12 @@ namespace Pricat.Api.Middlewares
         /// <summary>
         /// Allow to enable the Exception Middleware as service
         /// </summary>
-        /// <param name="builder">Builder object to configure the service</param>
+        
         /// <returns>The object to use in the Startup</returns>
         public static IApplicationBuilder UseExceptionMiddleware(this IApplicationBuilder builder)
         {
             return builder.UseMiddleware<ExceptionMiddleware>();
         }
-
-        /// <summary>
-        /// Get the satus Code Response byt the Exception Type
-        /// </summary>
-        /// <param name="exception">Exception to handler</param>
-        /// <returns>The HttpStatus Code</returns>
         private static HttpStatusCode GetStatusResponse(Exception exception)
         {
             var nameOfException = exception?.GetType()?.BaseType?.Name ?? string.Empty;
