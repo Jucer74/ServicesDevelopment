@@ -26,7 +26,7 @@ namespace Pricat.Application.Services
 
             if (original is null)
             {
-                throw new NotFoundException($"Category with Id={id} Not Found");
+                throw new NotFoundException($"Category [{id}] Not Found");
             }
 
             await _categoryRepository.RemoveAsync(original);
@@ -42,7 +42,7 @@ namespace Pricat.Application.Services
             var category = await _categoryRepository.GetByIdAsync(id);
             if (category is null)
             {
-                throw new NotFoundException($"Category with Id={id} Not Found");
+                throw new NotFoundException($"Category [{id}] Not Found");
             }
             return category!;
         }
@@ -64,7 +64,7 @@ namespace Pricat.Application.Services
 
             if (original is null)
             {
-                throw new NotFoundException($"Category with Id={id} Not Found");
+                throw new NotFoundException($"Category [{id}] Not Found");
             }
 
 
