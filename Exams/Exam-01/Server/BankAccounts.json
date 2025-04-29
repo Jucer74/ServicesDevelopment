@@ -1,0 +1,12 @@
+{
+    "Accounts": [
+        {
+            "id": 0,
+            "accountType": "1",
+            "accountNumber": "J1234567890",
+            "ownerName": "Julio Robles",
+            "balanceAmount": 1000000,
+            "overdraftAmount": 0
+        }
+    ]
+}
