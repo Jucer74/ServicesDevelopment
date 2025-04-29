@@ -13,5 +13,5 @@ public class ProductDto
 
     public string Unit { get; set; } = string.Empty;
 
-    public required decimal Price { get; set; }
+    public decimal Price { get; set; }
 }
