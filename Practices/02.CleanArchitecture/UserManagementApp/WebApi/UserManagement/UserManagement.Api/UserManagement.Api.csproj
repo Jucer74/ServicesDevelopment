@@ -27,4 +27,8 @@
       <Folder Include="Database\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="Properties\launchSettings 2.json" />
+    </ItemGroup>
+
 </Project>
