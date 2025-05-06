@@ -10,15 +10,21 @@
         <PackageReference Include="AutoMapper" Version="14.0.0" />
         <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.14" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.17" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.11" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.11" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
         <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="7.0.0" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+        <PackageReference Include="System.Data.SQLite" Version="1.0.119" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\UserManagement.App\UserManagement.App.csproj" />
       <ProjectReference Include="..\UserManagement.Infrastucture\UserManagement.Infrastucture.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Database\" />
     </ItemGroup>
 
 </Project>
