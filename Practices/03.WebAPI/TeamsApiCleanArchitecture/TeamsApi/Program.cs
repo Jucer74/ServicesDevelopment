@@ -31,6 +31,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // add shit
+builder.WebHost.UseUrls("http://*:80");
 builder.Services.AddServices();
 builder.Services.AddMapping();
 builder.Services.AddInfrastructureModules();

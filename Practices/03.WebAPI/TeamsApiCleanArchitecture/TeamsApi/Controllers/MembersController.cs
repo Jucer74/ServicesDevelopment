@@ -8,7 +8,7 @@ using Domain.Models;
 
 namespace TeamsApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1.0/[controller]")]
     [ApiController]
     public class MembersController : ControllerBase
     {
