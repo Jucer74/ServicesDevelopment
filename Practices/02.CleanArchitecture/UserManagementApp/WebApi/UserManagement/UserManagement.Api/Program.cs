@@ -3,12 +3,11 @@ using UserManagement.Infrastr.Context;
 using UserManagement.Api.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 
-// Add DbContext for MySQL
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseMySql(
-        builder.Configuration.GetConnectionString("DefaultConnection"),
-        new MySqlServerVersion(new Version(8, 0, 37)) // Cambia esto seg�n tu versi�n
+    options.UseSqlite(
+        builder.Configuration.GetConnectionString("DefaultConnection")
     ));
+
 
 // Add services to the container
 builder.Services.AddControllers();
