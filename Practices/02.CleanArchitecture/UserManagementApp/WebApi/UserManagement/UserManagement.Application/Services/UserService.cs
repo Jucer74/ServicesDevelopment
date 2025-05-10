@@ -52,7 +52,4 @@ namespace UserManagement.Application.Services
             }
         }
     }
-
-    {
-    }
 }
