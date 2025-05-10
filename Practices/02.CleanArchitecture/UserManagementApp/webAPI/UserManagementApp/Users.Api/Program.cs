@@ -20,6 +20,7 @@ builder.Services.AddCoreModules();
 builder.Services.AddInfrastructureModules();
 builder.Services.AddMapping();
 builder.Services.AddValidators();
+builder.WebHost.UseUrls("http://*:80");
 
 builder.Services.AddCors();
 
