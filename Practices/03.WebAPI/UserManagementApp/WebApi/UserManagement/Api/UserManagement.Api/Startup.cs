@@ -20,13 +20,17 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
-        // Configurar DbContext
-        services.AddDbContext<AppDbContext>(options =>
+        // Configurar DbContext with MySql
+        //CnnStr: "server=localhost;port=3306;database=usersdb;user=usersuser;password=Us3rsUs3r*01"
+        /*services.AddDbContext<AppDbContext>(options =>
             options.UseMySql(
                 Configuration.GetConnectionString("CnnStr")!,
                 ServerVersion.AutoDetect(Configuration.GetConnectionString("CnnStr")!)
             )
-        );
+        );*/
+        
+        // Configurar DbContext with SQL Lite
+        services.AddDbContext<AppDbContext>(options => options.UseSqlite(Configuration.GetConnectionString("CnnStr")));
         
         // Registrar servicios genéricos
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
