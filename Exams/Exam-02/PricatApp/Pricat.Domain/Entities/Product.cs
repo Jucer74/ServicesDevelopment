@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Pricat.Domain.Entities;
 
 public class Product

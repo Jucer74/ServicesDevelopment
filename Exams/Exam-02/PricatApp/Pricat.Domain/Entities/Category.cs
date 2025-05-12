@@ -1,4 +1,6 @@
-﻿namespace Pricat.Domain.Entities;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Pricat.Domain.Entities;
 
 public class Category
 {
