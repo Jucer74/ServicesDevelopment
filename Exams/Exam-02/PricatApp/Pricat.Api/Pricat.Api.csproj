@@ -1,33 +1,33 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>8a140141-290f-4b93-8d9f-70a973c15e9a</UserSecretsId>
-    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UserSecretsId>8a140141-290f-4b93-8d9f-70a973c15e9a</UserSecretsId>
+		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="MiddleWare\**" />
-    <Content Remove="MiddleWare\**" />
-    <EmbeddedResource Remove="MiddleWare\**" />
-    <None Remove="MiddleWare\**" />
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Remove="MiddleWare\**" />
+		<Content Remove="MiddleWare\**" />
+		<EmbeddedResource Remove="MiddleWare\**" />
+		<None Remove="MiddleWare\**" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.4">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.4" />
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.15.1" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="8.1.1" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.4">
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.4" />
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.15.1" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="8.1.1" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Pricat.Application\Pricat.Application.csproj" />
-    <ProjectReference Include="..\Pricat.Utilities\Pricat.Utilities.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Pricat.Application\Pricat.Application.csproj" />
+		<ProjectReference Include="..\Pricat.Utilities\Pricat.Utilities.csproj" />
+	</ItemGroup>
 
 </Project>

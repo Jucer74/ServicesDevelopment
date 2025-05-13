@@ -1,21 +1,34 @@
-﻿using Microsoft.OpenApi.Models;
-using Pricat.Api.Extensions;
+﻿using Microsoft.EntityFrameworkCore;
+using Pricat.Application.Interfaces;
+using Pricat.Application.Services;
+using Pricat.Infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Leer la cadena de conexión desde el archivo de configuración
+string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+if (string.IsNullOrEmpty(connectionString))
+{
+    throw new InvalidOperationException("La cadena de conexión no se ha configurado correctamente.");
+}
+
+// Configuración de DbContext para usar MySQL
+builder.Services.AddDbContext<PricatDbContext>(options =>
+    options.UseMySql(connectionString));
+
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Pricat API", Version = "v1" });
 
-    c.IgnoreObsoleteProperties();
-    c.IgnoreObsoleteActions();
-});
 var app = builder.Build();
 
-app.UseApiConfiguration(app.Environment);
+app.UseSwagger();
+app.UseSwaggerUI();
+app.UseHttpsRedirection();
+app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
