@@ -31,4 +31,11 @@
       <None Remove="Properties\launchSettings 2.json" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="Database\User.db" />
+      <Content Include="Database\User.db">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
 </Project>

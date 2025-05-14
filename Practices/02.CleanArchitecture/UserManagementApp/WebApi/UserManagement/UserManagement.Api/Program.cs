@@ -45,6 +45,8 @@ builder.Services.AddControllers();
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddFluentValidationClientsideAdapters();
 
+builder.WebHost.UseUrls("http://*:80");
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
