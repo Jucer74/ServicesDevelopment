@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 using MoneyBankService.Application.Dto;
-using MoneyBankService.Domain.Entities;
 
 namespace MoneyBankService.Application.Validators;
 

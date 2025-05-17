@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using MoneyBankService.Application.Dto;
+using MoneyBankService.Application.Interfaces;
+using MoneyBankService.Domain.Entities;
 
 namespace MoneyBankService.Api.Controllers
 {
@@ -8,36 +9,67 @@ namespace MoneyBankService.Api.Controllers
     [ApiController]
     public class AccountsController : ControllerBase
     {
-        // GET: api/<AccountsController>
+        private readonly IAccountService _accountService;
+
+        public AccountsController(IAccountService accountService)
+        {
+            _accountService = accountService;
+        }
+
+        // GET: api/accounts
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IActionResult> GetAll()
         {
-            return new string[] { "value1", "value2" };
+            var accounts = await _accountService.GetAllAccounts();
+            return Ok(accounts);
         }
 
-        // GET api/<AccountsController>/5
+        // GET: api/accounts/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            return "value";
+            var account = await _accountService.GetAccountById(id);
+            return Ok(account);
         }
 
-        // POST api/<AccountsController>
+        // POST: api/accounts
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> Create([FromBody] Account account)
         {
+            var created = await _accountService.CreateAccount(account);
+            return CreatedAtAction(nameof(Get), new { id = created.Id }, created);
         }
 
-        // PUT api/<AccountsController>/5
+        // PUT: api/accounts/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> Update(int id, [FromBody] Account account)
         {
+            var updated = await _accountService.UpdateAccount(id, account);
+            return Ok(updated);
         }
 
-        // DELETE api/<AccountsController>/5
+        // DELETE: api/accounts/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
+            await _accountService.DeleteAccount(id);
+            return NoContent();
+        }
+
+        // POST: api/accounts/5/deposit
+        [HttpPost("{id}/deposit")]
+        public async Task<IActionResult> Deposit(int id, [FromBody] TransactionDto request)
+        {
+            var updated = await _accountService.DepositAsync(id, request.ValueAmount);
+            return Ok(updated);
+        }
+
+        // POST: api/accounts/5/withdraw
+        [HttpPost("{id}/withdraw")]
+        public async Task<IActionResult> Withdraw(int id, [FromBody] TransactionDto request)
+        {
+            var updated = await _accountService.WithdrawAsync(id, request.ValueAmount);
+            return Ok(updated);
         }
     }
 }
