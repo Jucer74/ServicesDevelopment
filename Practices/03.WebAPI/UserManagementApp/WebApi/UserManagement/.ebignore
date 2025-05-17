@@ -1,0 +1,14 @@
+﻿*.dll
+*.exe
+*.pdb
+*.db
+*.mdf
+*.log
+*.zip
+*.user
+*.suo
+*.vs/
+bin/
+obj/
+.vscode/
+*.csproj.user

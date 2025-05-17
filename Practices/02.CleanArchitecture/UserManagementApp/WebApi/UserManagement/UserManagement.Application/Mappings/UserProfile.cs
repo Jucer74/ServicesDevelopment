@@ -1,12 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AutoMapper;
+using UserManagement.Domain.Entities;
+using UserManagement.Application.DTOs;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace UserManagement.Application.Mappings
+namespace UserManagement.Application.Mappings;
+
+public class UserProfile : Profile
 {
-    class UserProfile
+    public UserProfile()
     {
+        CreateMap<User, UserDto>();
+        CreateMap<CreateUserDto, User>();
+        CreateMap<UpdateUserDto, User>();
     }
 }

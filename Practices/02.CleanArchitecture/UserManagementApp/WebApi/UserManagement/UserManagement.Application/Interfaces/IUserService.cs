@@ -1,6 +1,7 @@
 ﻿using System.Linq.Expressions;
 using UserManagement.Domain.Entities;
 
+<<<<<<< HEAD
 namespace UserManagement.Application.Interfaces
 {
     public interface IUserService
@@ -17,4 +18,21 @@ namespace UserManagement.Application.Interfaces
 
          Task RemoveAsync(int id);
     }
+=======
+namespace UserManagement.Application.Interfaces;
+
+public interface IUserService
+{
+    public Task AddAsync(User entity);
+
+    public Task<IEnumerable<User>> GetAllAsync();
+
+    public Task<User> GetByIdAsync(int id);
+
+    public Task<IEnumerable<User>> FindAsync(Expression<Func<User, bool>> predicate);
+
+    public Task UpdateAsync(int id, User entity);
+
+    public Task RemoveAsync(int id);
+>>>>>>> 9237d79b97201f1bd3534a97b9be8de15fcf8759
 }

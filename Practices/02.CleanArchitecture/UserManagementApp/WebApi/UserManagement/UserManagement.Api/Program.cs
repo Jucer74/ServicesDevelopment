@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 using Microsoft.EntityFrameworkCore;
 using UserManagement.Api.Middleware;
 using UserManagement.Application.Interfaces.Repositories;
@@ -15,6 +16,11 @@ builder.Services.AddDbContext<UserDbContext>(options =>
 );
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+=======
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+>>>>>>> 9237d79b97201f1bd3534a97b9be8de15fcf8759
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -30,12 +36,19 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+<<<<<<< HEAD
 app.UseExceptionMiddleware();
 
+=======
+>>>>>>> 9237d79b97201f1bd3534a97b9be8de15fcf8759
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
 app.MapControllers();
 
+<<<<<<< HEAD
 app.Run();
+=======
+app.Run();
+>>>>>>> 9237d79b97201f1bd3534a97b9be8de15fcf8759
