@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using MoneyBankService.Application.Dto;
+using MoneyBankService.Application.Interfaces.Services;
+using MoneyBankService.Domain.Models;
 
 namespace MoneyBankService.Api.Controllers
 {
@@ -8,36 +10,90 @@ namespace MoneyBankService.Api.Controllers
     [ApiController]
     public class AccountsController : ControllerBase
     {
-        // GET: api/<AccountsController>
+        private readonly IAccountService _accountService;
+        private readonly IMapper _mapper;
+
+        public AccountsController(IAccountService accountService, IMapper mapper)
+        {
+            _accountService = accountService;
+            _mapper = mapper;
+        }
+
+        // GET: api/Accounts
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IActionResult> GetAllAccounts([FromQuery] string? accountNumber)
         {
-            return new string[] { "value1", "value2" };
+            if (!string.IsNullOrEmpty(accountNumber))
+            {
+                var account = await _accountService.GetAccountByAccountNumber(accountNumber);
+                if (account == null)
+                {
+                    return Ok(new List<AccountDto>()); 
+                }
+
+                var resultList = new List<Account> { account };
+                return Ok(_mapper.Map<List<Account>, List<AccountDto>>(resultList));
+            }
+            
+            var accounts = await _accountService.GetAllAccounts();
+            return Ok(_mapper.Map<List<Account>, List<AccountDto>>(accounts));
+            
         }
 
-        // GET api/<AccountsController>/5
+        // GET: api/Accounts/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<IActionResult> GetAccountById(int id)
         {
-            return "value";
+            var account = await _accountService.GetAccountById(id);
+            return Ok(_mapper.Map<Account, AccountDto>(account));
         }
 
-        // POST api/<AccountsController>
+        // POST: api/Accounts
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> CreateAccount([FromBody] AccountDto accountDto)
         {
+            var account = _mapper.Map<AccountDto, Account>(accountDto);
+            var created = await _accountService.CreateAccount(account);
+            return Ok(_mapper.Map<Account, AccountDto>(created));
         }
 
-        // PUT api/<AccountsController>/5
+        // PUT: api/Accounts/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> UpdateAccount(int id, [FromBody] AccountDto accountDto)
         {
+            var account = _mapper.Map<AccountDto, Account>(accountDto);
+            var updated = await _accountService.UpdateAccount(id, account);
+            return Ok(_mapper.Map<Account, AccountDto>(updated));
         }
 
-        // DELETE api/<AccountsController>/5
+        // DELETE: api/Accounts/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> DeleteAccount(int id)
         {
+            await _accountService.DeleteAccount(id);
+            return NoContent();
         }
+        
+      
+        // POST: api/Accounts/deposit
+        [HttpPut("{id}/deposit")]
+        public async Task<IActionResult> Deposit(int id, [FromBody] TransactionDto transactionDto)
+        {
+            
+            var transaction = _mapper.Map<TransactionDto, Transaction>(transactionDto);
+            await _accountService.Deposit(id, transaction);
+            return NoContent();
+        }
+        
+        // POST: api/Accounts/withdraw
+        [HttpPut("{id}/Withdrawal")]
+        public async Task<IActionResult> Withdraw(int id, [FromBody] TransactionDto transactionDto)
+        {
+            var transaction = _mapper.Map<TransactionDto, Transaction>(transactionDto);
+            await _accountService.Withdraw(id, transaction);
+            return NoContent();
+        }
+
+
     }
 }

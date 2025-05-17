@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
-using MoneyBankService.Domain.Exceptions;
+using MoneyBankService.Application.Exceptions;
 using System.Net;
 
 namespace MoneyBankService.Api.Middleware;

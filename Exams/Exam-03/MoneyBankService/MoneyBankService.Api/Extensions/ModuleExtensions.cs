@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using FluentValidation;
-using MoneyBankService.Api.Dto;
-using MoneyBankService.Api.Mappers;
-using MoneyBankService.Api.Validators;
-using MoneyBankService.Application.Interfaces;
+using MoneyBankService.Application.Dto;
+using MoneyBankService.Application.Validators;
+using MoneyBankService.Application.Mappers;
 using MoneyBankService.Application.Services;
-using MoneyBankService.Domain.Interfaces.Repositories;
+using MoneyBankService.Application.Interfaces.Repositories;
+using MoneyBankService.Application.Interfaces.Services;
 using MoneyBankService.Infrastructure.Repositories;
 
 namespace MoneyBankService.Api.Extensions;
@@ -30,6 +30,7 @@ public static class ModuleExtensions
 
     public static IServiceCollection AddMapping(this IServiceCollection services)
     {
+
         // Auto Mapper Configurations
         var mapperConfig = new MapperConfiguration(mc =>
         {

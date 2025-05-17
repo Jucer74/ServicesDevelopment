@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MoneyBankService.Domain.Entities;
+using MoneyBankService.Domain.Models;
 
 namespace MoneyBankService.Infrastructure.Context;
 
