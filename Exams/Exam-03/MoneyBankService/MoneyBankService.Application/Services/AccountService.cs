@@ -16,6 +16,16 @@ public class AccountService : IAccountService
 
     public async Task<Account> CreateAccount(Account account)
     {
+        // Verificar si ya existe una cuenta con el mismo número
+        var existingAccount = (await _accountRepository.GetAllAsync())
+            .FirstOrDefault(a => a.AccountNumber == account.AccountNumber);
+        
+        if (existingAccount != null)
+        {
+            throw new BadRequestException($"La cuenta con el número {account.AccountNumber} ya existe.");
+        }
+        
+        // Crear la cuenta si no existe
         await _accountRepository.AddAsync(account);
         return account;
     }
@@ -47,6 +57,15 @@ public class AccountService : IAccountService
         if (originalAccount is null)
         {
             throw new NotFoundException($"Account [{id}] Not Found");
+        }
+        
+        // Verificar que el número de cuenta exista
+        var existingAccount = (await _accountRepository.GetAllAsync())
+            .FirstOrDefault(a => a.AccountNumber == account.AccountNumber);
+
+        if (existingAccount is null)
+        {
+            throw new BadRequestException($"Account with AccountNumber [{account.AccountNumber}] No Exists");
         }
         
         await _accountRepository.UpdateAsync(account);

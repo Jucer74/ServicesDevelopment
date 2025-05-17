@@ -49,7 +49,7 @@ namespace MoneyBankService.Api.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] AccountDto accountDto)
         {
-            var account = await _accountService.CreateAccount(_mapper.Map<AccountDto, Account>(accountDto));
+            var account = await _accountService.UpdateAccount(id,_mapper.Map<AccountDto, Account>(accountDto));
             return Ok(_mapper.Map<Account, AccountDto>(account));
         }
 
@@ -58,7 +58,7 @@ namespace MoneyBankService.Api.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             await _accountService.DeleteAccount(id);
-            return Ok();
+            return NoContent();
         }
         
         // GET api/<AccountsController>?AccountNumber={accountNumber}
