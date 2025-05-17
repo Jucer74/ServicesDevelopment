@@ -25,4 +25,19 @@
       <Folder Include="Database\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="Database\UserManagementDB.db">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="publish\web.config" />
+      <_ContentIncludedByDefault Remove="publish\appsettings.Development.json" />
+      <_ContentIncludedByDefault Remove="publish\appsettings.json" />
+      <_ContentIncludedByDefault Remove="publish\UserManagement.Api.deps.json" />
+      <_ContentIncludedByDefault Remove="publish\UserManagement.Api.runtimeconfig.json" />
+      <_ContentIncludedByDefault Remove="publish\UserManagement.Api.staticwebassets.endpoints.json" />
+    </ItemGroup>
+
 </Project>

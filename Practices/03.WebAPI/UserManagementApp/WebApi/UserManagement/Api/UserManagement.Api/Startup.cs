@@ -54,7 +54,7 @@ public class Startup
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
-        if (env.IsDevelopment())
+        if (env.IsDevelopment() || Configuration.GetValue<bool>("ENABLE_SWAGGER"))
         {
             app.UseDeveloperExceptionPage();
             app.UseSwagger();
