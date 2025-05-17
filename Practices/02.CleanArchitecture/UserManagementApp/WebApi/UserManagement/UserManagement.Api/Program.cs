@@ -1,4 +1,8 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+using System;
+>>>>>>> 219361b297b922b7a9e1dd565c70121e55f718f4
 using Microsoft.EntityFrameworkCore;
 using UserManagement.Api.Middleware;
 using UserManagement.Application.Interfaces.Repositories;

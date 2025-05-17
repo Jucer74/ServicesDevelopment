@@ -1,3 +1,14 @@
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+﻿using System;
+using System.Linq.Expressions;
+using UserManagement.Application.Interfaces;
+using UserManagement.Domain.Entities;
+using UserManagement.Domain.Exceptions;
+using UserManagement.Domain.Interfaces.Repositories;
+=======
+>>>>>>> 219361b297b922b7a9e1dd565c70121e55f718f4
 ﻿using System.Linq.Expressions;
 <<<<<<< HEAD
 using UserManagement.Application.Exceptions;
@@ -8,6 +19,10 @@ using UserManagement.Application.Interfaces;
 using UserManagement.Domain.Common;
 >>>>>>> 9237d79b97201f1bd3534a97b9be8de15fcf8759
 using UserManagement.Domain.Entities;
+<<<<<<< HEAD
+=======
+>>>>>>> 9237d79b97201f1bd3534a97b9be8de15fcf8759
+>>>>>>> 219361b297b922b7a9e1dd565c70121e55f718f4
 
 namespace UserManagement.Application.Services
 {

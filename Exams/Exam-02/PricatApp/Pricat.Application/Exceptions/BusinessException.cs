@@ -1,0 +1,26 @@
+﻿using System.Runtime.Serialization;
+
+namespace Pricat.Application.Exceptions
+{
+    public class BusinessException : Exception
+    {
+        public BusinessException()
+        {
+        }
+
+        public BusinessException(string message) : base(message)
+        {
+        }
+
+        public BusinessException(string message, Exception innerException)
+            : base(message, innerException)
+        {
+        }
+
+        // Without this constructor, deserialization will fail
+        protected BusinessException(SerializationInfo info, StreamingContext context)
+            : base(info, context)
+        {
+        }
+    }
+}
