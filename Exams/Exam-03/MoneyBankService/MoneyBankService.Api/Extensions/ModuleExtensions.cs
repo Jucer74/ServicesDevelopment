@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 using FluentValidation;
-using MoneyBankService.Api.Dto;
-using MoneyBankService.Api.Mappers;
-using MoneyBankService.Api.Validators;
+using FluentValidation.AspNetCore;
+using MoneyBankService.Application.Dto;
+using MoneyBankService.Application.Mappers;
+using MoneyBankService.Application.Validators;
 using MoneyBankService.Application.Interfaces;
 using MoneyBankService.Application.Services;
-using MoneyBankService.Domain.Interfaces.Repositories;
+using MoneyBankService.Application.Interfaces.Repositories;
 using MoneyBankService.Infrastructure.Repositories;
 
 namespace MoneyBankService.Api.Extensions;
@@ -20,10 +21,11 @@ public static class ModuleExtensions
         return services;
     }
 
-    public static IServiceCollection AddRepositories(this IServiceCollection services)
+    public static IServiceCollection AddInfrastructureModules(this IServiceCollection services)
     {
+        //repositories
         services.AddScoped<IAccountRepository, AccountRepository>();
-
+        
         return services;
     }
 
@@ -44,7 +46,10 @@ public static class ModuleExtensions
 
     public static IServiceCollection AddValidators(this IServiceCollection services)
     {
-        services.AddScoped<IValidator<AccountDto>, AccountValidator>();
+        /*services.AddScoped<IValidator<AccountDto>, AccountValidator>();*/
+        services.AddFluentValidationAutoValidation();
+        services.AddValidatorsFromAssemblyContaining<AccountValidator>();
+        services.AddValidatorsFromAssemblyContaining<TransactionValidator>();
 
         return services;
     }

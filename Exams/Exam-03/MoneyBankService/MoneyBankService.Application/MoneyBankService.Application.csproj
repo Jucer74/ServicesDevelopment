@@ -10,4 +10,9 @@
     <ProjectReference Include="..\MoneyBankService.Domain\MoneyBankService.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="FluentValidation" Version="11.7.1" />
+  </ItemGroup>
+
 </Project>

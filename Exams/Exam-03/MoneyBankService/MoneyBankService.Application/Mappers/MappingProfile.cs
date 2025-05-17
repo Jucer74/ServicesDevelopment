@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using MoneyBankService.Api.Dto;
+using MoneyBankService.Application.Dto;
 using MoneyBankService.Domain.Entities;
 
-namespace MoneyBankService.Api.Mappers;
+namespace MoneyBankService.Application.Mappers;
 
 public class MappingProfile : Profile
 {
@@ -10,6 +10,8 @@ public class MappingProfile : Profile
     {
         CreateMap<AccountDto, Account>();
         CreateMap<Account, AccountDto>();
+        CreateMap<TransactionDto, Transaction>();
+        CreateMap<Transaction, TransactionDto>();
         // TODO: Implement de Mapping ForMembers
         //CreateMap<TransactionDto, Account>()
         //    .ForMember(acc => acc.Id, opt => opt.MapFrom(trx => trx.Id));

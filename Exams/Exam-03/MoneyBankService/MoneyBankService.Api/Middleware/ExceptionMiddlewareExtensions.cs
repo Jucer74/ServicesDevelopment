@@ -1,39 +1,45 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
-using MoneyBankService.Domain.Exceptions;
+using MoneyBankService.Application.Exceptions;
 using System.Net;
 
 namespace MoneyBankService.Api.Middleware;
 
-/// <summary>
-/// Extend the handler to capture the Exceptions
-/// </summary>
 public static class ExceptionMiddlewareExtensions
 {
-    /// <summary>
-    /// Get MVC BadRequest error Messages
-    /// </summary>
-    /// <param name="context">Current Action Context</param>
-    /// <returns>The Error Details</returns>
     public static ErrorDetails ConstructErrorMessages(this ActionContext context)
     {
         var errors = context.ModelState.Values.Where(v => v.Errors.Count >= 1)
-                .SelectMany(v => v.Errors)
-                .Select(v => v.ErrorMessage)
-                .ToList();
-
-        return new ErrorDetails
+                    .SelectMany(v => v.Errors)
+                    .Select(v => v.ErrorMessage)
+                    .ToList();
+        
+        var deserializationKeywords = new[] { "invalid start", "unexpected character", "invalid character" };
+        
+        var hasDeserializationError = errors.Any(error =>
+            deserializationKeywords.Any(keyword =>
+                error.Contains(keyword, StringComparison.OrdinalIgnoreCase))
+        );
+        
+        var filteredErrors = hasDeserializationError
+            ? errors.Where(error =>
+                    !error.Contains("field is required", StringComparison.OrdinalIgnoreCase))
+                .ToList()
+            : errors;
+        
+        /*return new ErrorDetails
         {
             ErrorType = ReasonPhrases.GetReasonPhrase((int)HttpStatusCode.BadRequest),
             Errors = errors
+        };*/
+        
+        return new ErrorDetails
+        {
+            ErrorType = ReasonPhrases.GetReasonPhrase((int)HttpStatusCode.BadRequest),
+            Errors = filteredErrors
         };
     }
-
-    /// <summary>
-    /// Handler the Exception and create a valid HttpResponse
-    /// </summary>
-    /// <param name="context">Current Http Context</param>
-    /// <param name="exception">Exception Catched</param>
+    
     public static Task HandleExceptionAsync(this HttpContext context, Exception exception)
     {
         var httpStatusCode = GetStatusResponse(exception);
@@ -60,22 +66,12 @@ public static class ExceptionMiddlewareExtensions
 
         return context.Response.WriteAsync(errorDetails.ToString());
     }
-
-    /// <summary>
-    /// Allow to enable the Exception Middleware as service
-    /// </summary>
-    /// <param name="builder">Builder object to configure the service</param>
-    /// <returns>The object to use in the Startup</returns>
+    
     public static IApplicationBuilder UseExceptionMiddleware(this IApplicationBuilder builder)
     {
         return builder.UseMiddleware<ExceptionMiddleware>();
     }
-
-    /// <summary>
-    /// Get the satus Code Response byt the Exception Type
-    /// </summary>
-    /// <param name="exception">Exception to handler</param>
-    /// <returns>The HttpStatus Code</returns>
+    
     private static HttpStatusCode GetStatusResponse(Exception exception)
     {
         var nameOfException = exception?.GetType()?.BaseType?.Name ?? string.Empty;

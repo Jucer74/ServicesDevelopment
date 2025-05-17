@@ -1,8 +1,5 @@
 ﻿namespace MoneyBankService.Api.Middleware;
 
-/// <summary>
-/// Handler the exceptions
-/// </summary>
 public class ExceptionMiddleware
 {
     private readonly RequestDelegate _next;
