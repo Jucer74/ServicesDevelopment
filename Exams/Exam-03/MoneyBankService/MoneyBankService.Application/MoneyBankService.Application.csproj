@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.7.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\MoneyBankService.Domain\MoneyBankService.Domain.csproj" />
   </ItemGroup>
 

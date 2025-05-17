@@ -1,6 +1,12 @@
-﻿using System.Linq.Expressions;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Text;
+using System.Threading.Tasks;
+using MoneyBankService.Domain.Common;
 
-namespace MoneyBankService.Domain.Common;
+namespace MoneyBankService.Application.Common;
 
 public interface IRepository<T> where T : EntityBase
 {
