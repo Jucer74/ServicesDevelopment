@@ -18,4 +18,10 @@
     <ProjectReference Include="..\UserManagement.Infractructure\UserManagement.Infractructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Database\usermanagement.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc; // Necesario para ApiBehaviorOptions
+using Microsoft.AspNetCore.Mvc; 
 using Pricat.Api.Middleware;
 using Pricat.Application.Interfaces;
 using Pricat.Application.Interfaces.Repositories;
@@ -31,7 +31,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(MapperCategory));
 
-// Configurar manejo personalizado de errores de validación del modelo
+
 builder.Services.Configure<ApiBehaviorOptions>(options =>
 {
     options.InvalidModelStateResponseFactory = context =>
