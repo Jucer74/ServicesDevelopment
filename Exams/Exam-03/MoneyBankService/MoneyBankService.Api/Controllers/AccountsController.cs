@@ -4,7 +4,7 @@ using MoneyBankService.Application.Dtos;
 using MoneyBankService.Application.Interfaces.Services;
 using MoneyBankService.Domain.Models;
 
-namespace MoneyBankService.Controllers
+namespace MoneyBankService.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -20,13 +20,20 @@ namespace MoneyBankService.Controllers
             _mapper = mapper;
         }
 
-        // GET: api/Accounts
+        // GET: /api/Accounts?accountNumber=123456
         [HttpGet]
-        public async Task<IActionResult> GetAllAccounts()
+        public async Task<IActionResult> GetAccounts([FromQuery] string? accountNumber)
         {
+            if (!string.IsNullOrWhiteSpace(accountNumber))
+            {
+                var account = await _accountService.GetAccountByNumberAccount(accountNumber);
+                return Ok(_mapper.Map<Account, AccountDto>(account));
+            }
+
             var accounts = await _accountService.GetAllAccounts();
             return Ok(_mapper.Map<List<Account>, List<AccountDto>>(accounts));
         }
+
 
         // GET: api/Accounts/5
         [HttpGet("{id}")]
@@ -60,20 +67,6 @@ namespace MoneyBankService.Controllers
         {
             await _accountService.DeleteAccount(id);
             return Ok();
-        }
-
-        // GET: api/Accounts?accountNumber=123456
-        [HttpGet]
-        public async Task<IActionResult> GetAccountByNumber([FromQuery] string accountNumber)
-        {
-            if (string.IsNullOrWhiteSpace(accountNumber))
-            {
-                return BadRequest("El número de cuenta es requerido");
-            }
-
-            var account = await _accountService.GetAccountByNumberAccount(accountNumber);
-
-            return Ok(_mapper.Map<Account, AccountDto>(account));
         }
 
 

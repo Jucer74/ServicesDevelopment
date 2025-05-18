@@ -27,6 +27,7 @@ builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsi
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddRepositories();
 builder.Services.AddServices();
 builder.Services.AddMapping();
 builder.Services.AddValidators();
