@@ -15,10 +15,11 @@ public class AccountService : IAccountService
     }
     public async Task<Account> CreateAccount(Account account)
     {
-        var accountExist = await _accountRepository.GetByIdAsync(account.Id);
-        if (accountExist !=null)
+        bool accountNumberExist = await _accountRepository.ExistsByPropertyAsync(a => a.AccountNumber == account.AccountNumber);
+
+        if (accountNumberExist)
         {
-            throw new BadRequestException("el numero de cuenta ya existe");
+            throw new BadRequestException("cuenta ya existente");
         }
 
         if (account.BalanceAmount<=0)
