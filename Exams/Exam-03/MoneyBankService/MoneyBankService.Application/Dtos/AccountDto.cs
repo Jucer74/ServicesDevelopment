@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace MoneyBankService.Application.Dtos;
+﻿namespace MoneyBankService.Application.Dtos;
 
 public class AccountDto
 {

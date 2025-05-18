@@ -1,8 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using MoneyBankService.Domain.Common;
 
 namespace MoneyBankService.Domain.Models
 {
+    [Table("accounts")]
     public class Account : EntityBase
     {
         [Required(ErrorMessage = "El campo Tipo de Cuenta es Requerido")]

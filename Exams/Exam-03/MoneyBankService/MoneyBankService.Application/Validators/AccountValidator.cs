@@ -20,14 +20,17 @@ public class AccountValidator : AbstractValidator<AccountDto>
             .Matches(@"^\d{10}$").WithMessage("El número de cuenta debe contener solo números");
 
         RuleFor(a => a.OwnerName)
-            .NotEmpty().WithMessage("El nombre del propietario es obligatorio");
+            .NotEmpty().WithMessage("El nombre del propietario es obligatorio")
+            .MaximumLength(100).WithMessage("El nombre del propietario  debe tener como máximo 100 caracteres");
 
-        RuleFor(a => a.BalanceAmount)
-            .GreaterThanOrEqualTo(0).WithMessage("El balance no puede ser negativo")
-            .ScalePrecision(2, 18).WithMessage("El balance debe tener como máximo 2 decimales");
+        RuleFor(m => m.BalanceAmount)
+                .NotEmpty()
+                .WithMessage("El campo Balance es Requerido")
+                .Must(v => decimal.Round(v, 2) == v)
+                .WithMessage("El campo Balance debe ser en formato Moneda (0.00)");
 
-        RuleFor(a => a.OverdraftAmount)
-            .GreaterThanOrEqualTo(0).WithMessage("El monto de sobregiro no puede ser negativo")
-            .ScalePrecision(2, 18).WithMessage("El monto de sobregiro debe tener como máximo 2 decimales");
+        RuleFor(m => m.OverdraftAmount)
+            .Must(v => decimal.Round(v, 2) == v)
+                .WithMessage("El campo Sobregiro debe ser en formato Moneda (0.00)");
     }
 }

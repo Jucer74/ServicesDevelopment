@@ -15,6 +15,21 @@ public class AccountService : IAccountService
     }
     public async Task<Account> CreateAccount(Account account)
     {
+        var accountExist = await _accountRepository.GetByIdAsync(account.Id);
+        if (accountExist !=null)
+        {
+            throw new BadRequestException("el numero de cuenta ya existe");
+        }
+
+        if (account.BalanceAmount<=0)
+        {
+            throw new BadRequestException("El balance deber ser mayor que cero");
+        }
+        
+        if (account.AccountType== 'C')
+        {
+            account.BalanceAmount += MAX_OVERDRAFT;
+        }
         await _accountRepository.AddAsync(account);
         return account;
     }
@@ -30,6 +45,10 @@ public class AccountService : IAccountService
             throw new NotFoundException($"Account [{id}] Not Found");
         }
         return account!;
+    }
+    public async Task<List<Account>> GetAccountByNumber(string accountNumber)
+    {
+        return await _accountRepository.GetByNumberAccountAsync(accountNumber);
     }
     public async Task<Account> UpdateAccount(int id, Account account)
     {
@@ -61,15 +80,8 @@ public class AccountService : IAccountService
 
         await _accountRepository.RemoveAsync(account);
     }
-    public async Task<Account?> GetAccountByNumberAccount(string accountNumber)
-    {
-        var account = await _accountRepository.FindAsync(x => x.AccountNumber == accountNumber);
-        if (account is null)
-        {
-            throw new NotFoundException($"Account [{accountNumber}] Not Found");
-        }
-        return account.FirstOrDefault();
-    }
+
+    
     public async Task<Account> Deposit(int id, Transaction transaction)
     {
         var account = await _accountRepository.GetByIdAsync(id);
@@ -118,4 +130,5 @@ public class AccountService : IAccountService
         await _accountRepository.UpdateAsync(account);
         return account;
     }
+
 }
