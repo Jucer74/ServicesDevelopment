@@ -26,8 +26,13 @@ namespace MoneyBankService.Api.Controllers
         {
             if (!string.IsNullOrWhiteSpace(accountNumber))
             {
+<<<<<<< HEAD
                 var account = await _accountService.GetAccountByNumber(accountNumber);
                 return Ok(_mapper.Map<List<Account>, List<AccountDto>>(account));
+=======
+                var account = await _accountService.GetAccountByNumberAccount(accountNumber);
+                return Ok(_mapper.Map<Account, AccountDto>(account));
+>>>>>>> 2c0be3a39832d7cd055fd8091c31e0322d842975
             }
 
             var accounts = await _accountService.GetAllAccounts();
