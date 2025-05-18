@@ -1,11 +1,11 @@
 ﻿using FluentValidation;
 using MoneyBankService.Application.Dtos;
 
-namespace MoneyBankService.Application.Validations;
+namespace MoneyBankService.Application.Validators;
 
-public class TransactionDtoValidator : AbstractValidator<TransactionDto>
+public class TransactionValidator : AbstractValidator<TransactionDto>
 {
-    public TransactionDtoValidator()
+    public TransactionValidator()
     {
         RuleFor(t => t.AccountNumber)
             .NotEmpty().WithMessage("El número de cuenta es obligatorio")

@@ -8,6 +8,7 @@ namespace MoneyBankService.Application.Services;
 public class AccountService : IAccountService
 {
     private readonly IAccountRepository _accountRepository;
+    private const int MAX_OVERDRAFT = 1_000_000;
     public AccountService(IAccountRepository accountRepository)
     {
         _accountRepository = accountRepository;
@@ -68,5 +69,53 @@ public class AccountService : IAccountService
             throw new NotFoundException($"Account [{accountNumber}] Not Found");
         }
         return account.FirstOrDefault();
+    }
+    public async Task<Account> Deposit(int id, Transaction transaction)
+    {
+        var account = await _accountRepository.GetByIdAsync(id);
+
+        if (account == null)
+            throw new NotFoundException("Cuenta no encontrada");
+
+        if (account.AccountNumber != transaction.AccountNumber)
+            throw new BadRequestException("El número de cuenta no coincide");
+
+        account.BalanceAmount += transaction.ValueAmount;
+
+        if (account.AccountType == 'C')
+        {
+            if (account.OverdraftAmount > 0 && account.BalanceAmount < MAX_OVERDRAFT)
+                account.OverdraftAmount = MAX_OVERDRAFT - account.BalanceAmount;
+            else
+                account.OverdraftAmount = 0;
+        }
+
+        await _accountRepository.UpdateAsync(account);
+        return account;
+    }
+
+
+    public async Task<Account> Withdrawal(int id, Transaction transaction)
+    {
+        var account = await _accountRepository.GetByIdAsync(id);
+
+        if (account == null)
+            throw new NotFoundException("Cuenta no encontrada");
+
+        if (account.AccountNumber != transaction.AccountNumber)
+            throw new BadRequestException("El número de cuenta no coincide");
+
+        if (account.BalanceAmount < transaction.ValueAmount)
+            throw new BadRequestException("Fondos insuficientes");
+
+        account.BalanceAmount -= transaction.ValueAmount;
+
+        if (account.AccountType == 'C' && account.OverdraftAmount > 0 && account.BalanceAmount < MAX_OVERDRAFT)
+        {
+            account.OverdraftAmount = MAX_OVERDRAFT - account.BalanceAmount;
+        }
+
+        await _accountRepository.UpdateAsync(account);
+        return account;
     }
 }

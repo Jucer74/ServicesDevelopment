@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 using MoneyBankService.Application.Dtos;
 
-namespace MoneyBankService.Application.Validations;
-public class AccountDtoValidator : AbstractValidator<AccountDto>
+namespace MoneyBankService.Application.Validators;
+public class AccountValidator : AbstractValidator<AccountDto>
 {
-    public AccountDtoValidator()
+    public AccountValidator()
     {
         RuleFor(a => a.AccountType)
             .Must(type => type == 'A' || type == 'C')
