@@ -33,6 +33,17 @@ builder.Services.AddServices();
 builder.Services.AddMapping();
 builder.Services.AddValidators();
 
+// Configurar CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReactApp", policy =>
+    {
+        policy.WithOrigins("http://localhost:5174") // Cambia esto al origen de tu aplicación React
+            .AllowAnyMethod() // Permitir todos los métodos HTTP (GET, POST, PUT, DELETE, etc.)
+            .AllowAnyHeader(); // Permitir todos los encabezados
+    });
+});
+
 
 var app = builder.Build();
 
@@ -51,5 +62,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseCors("AllowReactApp");
 
 app.Run();
