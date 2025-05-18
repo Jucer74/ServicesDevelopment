@@ -1,0 +1,25 @@
+name: Despliegue a EC2
+
+on:
+  push:
+    branches:
+      - seblopmon
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Conectar a EC2 por SSH y desplegar
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_KEY }}
+          script: |
+            cd ~/MoneyBankService || git clone https://github.com/Jucer74/ServicesDevelopment/tree/2025-01/seblopmon/Exams/Exam-03/MoneyBankService ~/MoneyBankService && cd ~/MoneyBankService
+            git pull origin main
+            docker build -t mi-app .
+            docker stop mi-app || true
+            docker rm mi-app || true
+            docker run -d --name mi-app --network mi-red -p 80:80 mi-app
