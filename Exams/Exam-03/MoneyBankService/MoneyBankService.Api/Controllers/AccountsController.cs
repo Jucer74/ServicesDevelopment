@@ -12,6 +12,7 @@ namespace MoneyBankService.Api.Controllers
     [ApiController]
     public class AccountsController : ControllerBase
     {
+        private const int MAX_OVERDRAFT = 1_000_000;
         private readonly IAccountService _accountService;
         private readonly IMapper _mapper;
 
@@ -61,7 +62,7 @@ namespace MoneyBankService.Api.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             await _accountService.DeleteAccount(id);
-            return Ok();
+            return NoContent();
         }
 
         // GET api/<AccountsController>?AccountNumber={accountNumber}
@@ -70,6 +71,24 @@ namespace MoneyBankService.Api.Controllers
         {
             var accounts = await _accountService.GetAccounts(accountNumber);
             return Ok(_mapper.Map<List<Account>, List<AccountDto>>(accounts));
+        }
+
+        // PUT: api/Accounts/5/Deposit
+        [HttpPut("{id}/Deposit")]
+        public async Task<IActionResult> Deposit(int id, [FromBody] Transaction transaction)
+        {
+
+            await _accountService.Deposit(id, transaction);
+            return NoContent();
+        }
+
+        // PUT: api/Accounts/5/Withdrawal
+        [HttpPut("{id}/Withdrawal")]
+        public async Task<IActionResult> Withdrawal(int id, [FromBody] Transaction transaction)
+        {
+
+            await _accountService.Withdrawal(id, transaction);
+            return NoContent();
         }
     }
 }

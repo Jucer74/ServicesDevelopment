@@ -15,4 +15,6 @@ public interface IRepository<T> where T : EntityBase
     public Task<T> UpdateAsync(T entity);
 
     public Task RemoveAsync(T entity);
+
+    public Task<bool> ExistsByPropertyAsync(Expression<Func<T, bool>> predicate);
 }

@@ -20,4 +20,6 @@ public interface IAccountService
 
     Task<List<Account>> GetAccounts(string? accountNumber = null);
 
+    Task Deposit(int id, Transaction transaction);
+    Task Withdrawal(int id, Transaction transaction);
 }
