@@ -28,7 +28,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Add Modules
-builder.Services.AddRepositories();
+builder.Services.AddInfrastructureModules();
 builder.Services.AddServices();
 builder.Services.AddMapping();
 builder.Services.AddValidators();
