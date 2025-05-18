@@ -26,13 +26,9 @@ namespace MoneyBankService.Api.Controllers
         {
             if (!string.IsNullOrWhiteSpace(accountNumber))
             {
-<<<<<<< HEAD
                 var account = await _accountService.GetAccountByNumber(accountNumber);
                 return Ok(_mapper.Map<List<Account>, List<AccountDto>>(account));
-=======
-                var account = await _accountService.GetAccountByNumberAccount(accountNumber);
-                return Ok(_mapper.Map<Account, AccountDto>(account));
->>>>>>> 2c0be3a39832d7cd055fd8091c31e0322d842975
+
             }
 
             var accounts = await _accountService.GetAllAccounts();
@@ -71,7 +67,7 @@ namespace MoneyBankService.Api.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             await _accountService.DeleteAccount(id);
-            return Ok();
+            return NoContent();
         }
 
 
@@ -79,22 +75,18 @@ namespace MoneyBankService.Api.Controllers
         [HttpPut("{id}/Deposit")]
         public async Task<IActionResult> Deposit(int id, [FromBody] Transaction transaction)
         {
-            if (id != transaction.Id)
-                return BadRequest("El ID de la ruta no coincide con el de la transacción");
 
-            var updatedAccount = await _accountService.Deposit(id, transaction);
-            return Ok(_mapper.Map<Account, AccountDto>(updatedAccount));
+            await _accountService.Deposit(id, transaction);
+            return NoContent();
         }
 
         // PUT: api/Accounts/5/Withdrawal
         [HttpPut("{id}/Withdrawal")]
         public async Task<IActionResult> Withdrawal(int id, [FromBody] Transaction transaction)
         {
-            if (id != transaction.Id)
-                return BadRequest("El ID de la ruta no coincide con el de la transacción");
 
-            var updatedAccount = await _accountService.Withdrawal(id, transaction);
-            return Ok(_mapper.Map<Account, AccountDto>(updatedAccount));
+            await _accountService.Withdrawal(id, transaction);
+            return NoContent();
         }
     }
 }

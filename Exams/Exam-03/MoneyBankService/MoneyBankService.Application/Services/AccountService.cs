@@ -22,12 +22,12 @@ public class AccountService : IAccountService
             throw new BadRequestException("cuenta ya existente");
         }
 
-        if (account.BalanceAmount<=0)
+        if (account.BalanceAmount <= 0)
         {
             throw new BadRequestException("El balance deber ser mayor que cero");
         }
-        
-        if (account.AccountType== 'C')
+
+        if (account.AccountType == 'C')
         {
             account.BalanceAmount += MAX_OVERDRAFT;
         }
@@ -58,6 +58,13 @@ public class AccountService : IAccountService
             throw new BadRequestException($"Id [{id}] is different to Account.Id [{account.Id}]");
         }
 
+        bool accountNumberExist = await _accountRepository.ExistsByPropertyAsync(a => a.AccountNumber == account.AccountNumber);
+
+        if (!accountNumberExist)
+        {
+            throw new BadRequestException();
+        }
+
         var original = await _accountRepository.GetByIdAsync(id);
 
         if (original is null)
@@ -74,62 +81,93 @@ public class AccountService : IAccountService
     {
         var account = await _accountRepository.GetByIdAsync(id);
 
-        if (account is null)
+        if (account == null)
         {
-            throw new NotFoundException($"Account [{id}] Not Found");
+            throw new NotFoundException($"Account with Id=[{id}] Not Found");
         }
 
         await _accountRepository.RemoveAsync(account);
     }
 
-    
-    public async Task<Account> Deposit(int id, Transaction transaction)
+    public async Task Deposit(int id, Transaction transaction)
     {
+        if (id != transaction.Id)
+        {
+            throw new BadRequestException("el id de la transacion no coincide");
+        }
+
         var account = await _accountRepository.GetByIdAsync(id);
 
         if (account == null)
-            throw new NotFoundException("Cuenta no encontrada");
+        {
+            throw new NotFoundException();
+        }
 
         if (account.AccountNumber != transaction.AccountNumber)
-            throw new BadRequestException("El número de cuenta no coincide");
+        {
+            throw new BadRequestException();
+        }
 
+        UpdateDeposit(account, transaction);
+
+        await _accountRepository.UpdateAsync(account);
+    }
+
+    public async Task Withdrawal(int id, Transaction transaction)
+    {
+
+        if (id != transaction.Id)
+        {
+            throw new BadRequestException("el id de la transacion no coincide");
+        }
+
+        bool accountNumberExist = await _accountRepository.ExistsByPropertyAsync(a => a.AccountNumber == transaction.AccountNumber);
+
+        if (!accountNumberExist)
+        {
+            throw new BadRequestException();
+        }
+
+        var account = await _accountRepository.GetByIdAsync(id);
+
+        if (account == null)
+        {
+            throw new NotFoundException();
+        }
+
+        if (account.BalanceAmount < transaction.ValueAmount)
+        {
+            throw new BadRequestException("Fondos Insuficientes");
+        }
+
+        UpdateWithdrawal(account, transaction);
+
+        await _accountRepository.UpdateAsync(account);
+    }
+
+    private void UpdateDeposit(Account account, Transaction transaction)
+    {
         account.BalanceAmount += transaction.ValueAmount;
 
         if (account.AccountType == 'C')
         {
             if (account.OverdraftAmount > 0 && account.BalanceAmount < MAX_OVERDRAFT)
+            {
                 account.OverdraftAmount = MAX_OVERDRAFT - account.BalanceAmount;
+            }
             else
+            {
                 account.OverdraftAmount = 0;
+            }
         }
-
-        await _accountRepository.UpdateAsync(account);
-        return account;
     }
-
-
-    public async Task<Account> Withdrawal(int id, Transaction transaction)
+    private void UpdateWithdrawal(Account account, Transaction transaction)
     {
-        var account = await _accountRepository.GetByIdAsync(id);
-
-        if (account == null)
-            throw new NotFoundException("Cuenta no encontrada");
-
-        if (account.AccountNumber != transaction.AccountNumber)
-            throw new BadRequestException("El número de cuenta no coincide");
-
-        if (account.BalanceAmount < transaction.ValueAmount)
-            throw new BadRequestException("Fondos insuficientes");
-
         account.BalanceAmount -= transaction.ValueAmount;
 
-        if (account.AccountType == 'C' && account.OverdraftAmount > 0 && account.BalanceAmount < MAX_OVERDRAFT)
+        if (account.AccountType == 'C' && account.BalanceAmount < MAX_OVERDRAFT)
         {
             account.OverdraftAmount = MAX_OVERDRAFT - account.BalanceAmount;
         }
-
-        await _accountRepository.UpdateAsync(account);
-        return account;
     }
-
 }

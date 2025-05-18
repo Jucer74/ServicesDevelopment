@@ -15,7 +15,7 @@ public interface IAccountService
 
     Task DeleteAccount(int id);
 
-    Task<Account> Deposit(int id, Transaction transaction);
-    Task<Account> Withdrawal(int id, Transaction transaction);
+    Task Deposit(int id, Transaction transaction);
+    Task Withdrawal(int id, Transaction transaction);
 
 }
