@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace MoneyBankService.Domain.Exceptions;
+namespace MoneyBankService.Application.Exceptions;
 
 /// <summary>
 /// Base Business Exception

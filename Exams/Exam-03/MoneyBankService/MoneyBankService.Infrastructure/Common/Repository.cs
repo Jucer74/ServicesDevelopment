@@ -1,14 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MoneyBankService.Domain.Common;
-using MoneyBankService.Domain.Exceptions;
+using MoneyBankService.Application.Exceptions;
 using MoneyBankService.Infrastructure.Context;
+using MoneyBankService.Application.Common;
 using System.Linq.Expressions;
 
 namespace MoneyBankService.Infrastructure.Common
 {
     public class Repository<T> : IRepository<T> where T : EntityBase
     {
-        private readonly AppDbContext _appDbContext;
+        protected readonly AppDbContext _appDbContext;
 
         public Repository(AppDbContext appDbContext)
         {

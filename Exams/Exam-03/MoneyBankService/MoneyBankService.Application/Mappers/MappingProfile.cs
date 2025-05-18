@@ -1,15 +1,15 @@
 ﻿using AutoMapper;
-using MoneyBankService.Api.Dto;
+using MoneyBankService.Application.Dto;
 using MoneyBankService.Domain.Entities;
 
-namespace MoneyBankService.Api.Mappers;
+namespace MoneyBankService.Application.Mappers;
 
 public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        CreateMap<AccountDto, Account>();
-        CreateMap<Account, AccountDto>();
+        CreateMap<Account, AccountDto>().ReverseMap();
+        CreateMap<Transaction, TransactionDto>().ReverseMap();
         // TODO: Implement de Mapping ForMembers
         //CreateMap<TransactionDto, Account>()
         //    .ForMember(acc => acc.Id, opt => opt.MapFrom(trx => trx.Id));
