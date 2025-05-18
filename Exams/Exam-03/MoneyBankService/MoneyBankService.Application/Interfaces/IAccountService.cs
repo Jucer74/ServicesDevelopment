@@ -13,5 +13,8 @@ public interface IAccountService
     Task DeleteAccount(int id);
     
     Task<List<Account>> GetAccounts(string? accountNumber = null);
+    
+    Task Deposit(int id, Transaction transaction);
+    Task Withdraw(int id, Transaction transaction);
 
 }
