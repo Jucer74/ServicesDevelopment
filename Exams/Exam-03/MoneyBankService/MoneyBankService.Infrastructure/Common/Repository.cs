@@ -1,8 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MoneyBankService.Domain.Common;
-using MoneyBankService.Domain.Exceptions;
+using MoneyBankService.Application.Exceptions;
 using MoneyBankService.Infrastructure.Context;
 using System.Linq.Expressions;
+using MoneyBankService.Application.Interfaces.Repositories;
 
 namespace MoneyBankService.Infrastructure.Common
 {

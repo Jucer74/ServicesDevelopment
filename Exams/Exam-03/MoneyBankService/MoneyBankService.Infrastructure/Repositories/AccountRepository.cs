@@ -1,5 +1,5 @@
-﻿using MoneyBankService.Domain.Entities;
-using MoneyBankService.Domain.Interfaces.Repositories;
+﻿using MoneyBankService.Domain.Models;
+using MoneyBankService.Application.Interfaces.Repositories;
 using MoneyBankService.Infrastructure.Common;
 using MoneyBankService.Infrastructure.Context;
 

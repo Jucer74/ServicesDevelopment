@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using MoneyBankService.Application.Dtos;
 using MoneyBankService.Domain.Models;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MoneyBankService.Application.Mapping;
 
