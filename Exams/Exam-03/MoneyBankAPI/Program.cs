@@ -1,21 +1,31 @@
 using Microsoft.EntityFrameworkCore;
-using MoneyBankAPI.Context;
+using MoneyBankService.Infrastructure.Context;
+using MoneyBankService.Api.Extensions;
+using MoneyBankService.Api.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Configuración del contexto con MySQL
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseMySQL(builder.Configuration.GetConnectionString("CnnStr")!));
 
-// Add DBContext
-builder.Services.AddDbContext<AppDbContext>(options => options.UseMySQL(builder.Configuration.GetConnectionString("CnnStr")!));
-// Add services to the container.
+// Servicios del dominio y aplicación
+builder.Services.AddServices();
+builder.Services.AddRepositories();
+builder.Services.AddMapping();
+builder.Services.AddValidators();
 
+// Controladores y Swagger
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Middleware global de excepciones
+app.UseExceptionMiddleware();
+
+// Swagger en desarrollo
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -23,9 +33,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();
