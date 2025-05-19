@@ -1,36 +1,42 @@
-﻿namespace MoneyBankService.Api.Middleware;
+﻿using Microsoft.AspNetCore.Http;
+using System;
+using System.Threading.Tasks;
 
-/// <summary>
-/// Handler the exceptions
-/// </summary>
-public class ExceptionMiddleware
+namespace MoneyBankService.Api.Middleware
 {
-    private readonly RequestDelegate _next;
-
-    public ExceptionMiddleware(RequestDelegate next)
+    /// <summary>
+    /// Handles exceptions globally
+    /// </summary>
+    public class ExceptionMiddleware
     {
-        _next = next ?? throw new ArgumentNullException(nameof(next));
-    }
+        private readonly RequestDelegate _next;
 
-    public async Task InvokeAsync(HttpContext httpContext)
-    {
-        if (httpContext == null)
+        public ExceptionMiddleware(RequestDelegate next)
         {
-            return;
+            _next = next;
         }
 
-        try
+        public async Task InvokeAsync(HttpContext httpContext)
         {
-            await _next(httpContext);
-        }
-        catch (Exception ex)
-        {
-            if (httpContext.Response.HasStarted)
+            if (httpContext == null)
             {
-                throw;
+                return;
             }
 
-            await httpContext.HandleExceptionAsync(ex);
+            try
+            {
+                await _next(httpContext);
+            }
+            catch (Exception ex)
+            {
+                if (httpContext.Response.HasStarted)
+                {
+                    throw;
+                }
+
+                // Se asume que tienes una extensión HandleExceptionAsync
+                object value = await httpContext.HandleExceptionAsync(ex);
+            }
         }
     }
 }

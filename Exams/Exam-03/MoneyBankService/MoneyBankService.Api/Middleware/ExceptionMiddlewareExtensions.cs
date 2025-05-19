@@ -1,36 +1,18 @@
-﻿namespace MoneyBankService.Api.Middleware;
-
-/// <summary>
-/// Handler the exceptions
-/// </summary>
-public class ExceptionMiddleware
+﻿public static class ExceptionMiddlewareExtensions
 {
-    private readonly RequestDelegate _next;
-
-    public ExceptionMiddleware(RequestDelegate next)
+    public static async Task<object> HandleExceptionAsync(this HttpContext context, Exception exception)
     {
-        _next = next ?? throw new ArgumentNullException(nameof(next));
-    }
+        context.Response.ContentType = "application/json";
+        context.Response.StatusCode = 500;
 
-    public async Task InvokeAsync(HttpContext httpContext)
-    {
-        if (httpContext == null)
+        // Aquí puedes personalizar tu respuesta
+        var result = new
         {
-            return;
-        }
+            error = exception.Message,
+            details = exception.StackTrace
+        };
 
-        try
-        {
-            await _next(httpContext);
-        }
-        catch (Exception ex)
-        {
-            if (httpContext.Response.HasStarted)
-            {
-                throw;
-            }
-
-            await httpContext.HandleExceptionAsync(ex);
-        }
+        await context.Response.WriteAsJsonAsync(result);
+        return result;
     }
 }

@@ -1,8 +1,11 @@
-﻿using FluentValidation.AspNetCore;
+﻿using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MoneyBankService.Api.Extensions;
 using MoneyBankService.Api.Middleware;
+using MoneyBankService.Api.Validators;
+using MoneyBankService.Application.Mappers;
 using MoneyBankService.Infrastructure.Context;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -40,6 +43,8 @@ builder.Services.AddCors(options =>
 });
 
 // Add Modules
+builder.Services.AddAutoMapper(typeof(MappingProfile));
+builder.Services.AddValidatorsFromAssemblyContaining<AccountValidator>();
 builder.Services.AddRepositories();
 builder.Services.AddServices();
 builder.Services.AddMapping();
@@ -55,7 +60,7 @@ if (app.Environment.IsDevelopment())
 }
 
 // Add the Exception Middleware Handler
-app.UseExceptionMiddleware();
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseHttpsRedirection();
 
