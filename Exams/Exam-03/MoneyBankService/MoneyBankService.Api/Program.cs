@@ -18,8 +18,24 @@ builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
 {
     options.InvalidModelStateResponseFactory = context =>
     {
-        var errorDetails = context.ConstructErrorMessages();
-        return new BadRequestObjectResult(errorDetails);
+        // Obtiene todos los errores del ModelState y los agrupa en una lista de cadenas.
+        var errorDetails = context.ModelState
+            .Where(modelState => modelState.Value.Errors.Any()) // Solo las entradas con errores
+            .SelectMany(modelState => modelState.Value.Errors.Select(error => error.ErrorMessage)) // Extrae solo los mensajes de error
+            .ToList(); // Convierte en una lista de cadenas
+
+        // Opcional: Si quieres un diccionario con el nombre del campo y sus errores:
+        /*
+        var errorDetailsDictionary = context.ModelState
+            .Where(modelState => modelState.Value.Errors.Any())
+            .ToDictionary(
+                modelState => modelState.Key, // El nombre del campo (ej. "Nombre", "Email")
+                modelState => modelState.Value.Errors.Select(error => error.ErrorMessage).ToArray() // Los mensajes de error para ese campo
+            );
+        return new BadRequestObjectResult(errorDetailsDictionary);
+        */
+
+        return new BadRequestObjectResult(errorDetails); // Devuelve los errores como una lista de cadenas
     };
 });
 
