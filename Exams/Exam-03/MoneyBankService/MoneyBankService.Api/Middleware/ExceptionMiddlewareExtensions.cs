@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
-using MoneyBankService.Domain.Exceptions;
+using MoneyBankService.Application.Exceptions;
 using System.Net;
 
 namespace MoneyBankService.Api.Middleware;
@@ -22,10 +22,20 @@ public static class ExceptionMiddlewareExtensions
                 .Select(v => v.ErrorMessage)
                 .ToList();
 
+        var hasDeserializationError = errors.Any(e =>
+              e.Contains("invalid start", StringComparison.OrdinalIgnoreCase) ||
+              e.Contains("unexpected character", StringComparison.OrdinalIgnoreCase) ||
+              e.Contains("invalid character", StringComparison.OrdinalIgnoreCase)
+          );
+
+        var filteredErrors = hasDeserializationError
+             ? errors.Where(e => !e.Contains("field is required", StringComparison.OrdinalIgnoreCase)).ToList()
+             : errors;
+
         return new ErrorDetails
         {
             ErrorType = ReasonPhrases.GetReasonPhrase((int)HttpStatusCode.BadRequest),
-            Errors = errors
+            Errors = filteredErrors
         };
     }
 

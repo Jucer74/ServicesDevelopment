@@ -1,6 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Application.Common;
+using Microsoft.EntityFrameworkCore;
+using MoneyBankService.Application.Exceptions;
 using MoneyBankService.Domain.Common;
-using MoneyBankService.Domain.Exceptions;
 using MoneyBankService.Infrastructure.Context;
 using System.Linq.Expressions;
 
@@ -8,7 +9,7 @@ namespace MoneyBankService.Infrastructure.Common
 {
     public class Repository<T> : IRepository<T> where T : EntityBase
     {
-        private readonly AppDbContext _appDbContext;
+        protected readonly AppDbContext _appDbContext;
 
         public Repository(AppDbContext appDbContext)
         {
@@ -21,7 +22,6 @@ namespace MoneyBankService.Infrastructure.Common
             await _appDbContext.SaveChangesAsync();
             return entity;
         }
-
         public async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate)
         {
             return await _appDbContext.Set<T>().Where(predicate).ToListAsync<T>();
@@ -32,9 +32,9 @@ namespace MoneyBankService.Infrastructure.Common
             return await _appDbContext.Set<T>().ToListAsync<T>();
         }
 
-        public async Task<T> GetByIdAsync(int id)
+        public async Task<T?> GetByIdAsync(int id)
         {
-            return (await _appDbContext.Set<T>().FindAsync(id))!;
+            return (await _appDbContext.Set<T>().FindAsync(id));
         }
 
         public async Task RemoveAsync(T entity)
@@ -44,7 +44,7 @@ namespace MoneyBankService.Infrastructure.Common
 
             if (original is null)
             {
-                throw new NotFoundException($"Item with Id={id} Not Found");
+                throw new NotFoundException($"Account with Id={id} Not Found");
             }
 
             _appDbContext.Set<T>().Remove(entity!);
@@ -58,13 +58,18 @@ namespace MoneyBankService.Infrastructure.Common
 
             if (original is null)
             {
-                throw new NotFoundException($"Item with Id={id} Not Found");
+                throw new NotFoundException($"Account with Id={id} Not Found");
             }
 
             _appDbContext.Entry(original).CurrentValues.SetValues(entity!);
             await _appDbContext.SaveChangesAsync();
 
             return entity!;
+        }
+
+        public async Task<bool> ExistsByPropertyAsync(Expression<Func<T, bool>> predicate)
+        {
+            return await _appDbContext.Set<T>().AnyAsync(predicate);
         }
     }
 }
