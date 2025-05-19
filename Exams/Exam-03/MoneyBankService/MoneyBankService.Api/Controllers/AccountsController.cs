@@ -1,43 +1,50 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using MoneyBankService.Api.Dto;
+using MoneyBankService.Application.Interfaces;
 
 namespace MoneyBankService.Api.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
-    public class AccountsController : ControllerBase
+    [Route("api/[controller]")]
+    public class AccountController : ControllerBase
     {
-        // GET: api/<AccountsController>
+        private readonly IAccountService _service;
+
+        public AccountController(IAccountService service)
+        {
+            _service = service;
+        }
+
         [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+        public async Task<IActionResult> GetAll() => Ok(await _service.GetAllAsync());
 
-        // GET api/<AccountsController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<IActionResult> GetById(Guid id)
         {
-            return "value";
+            var result = await _service.GetByIdAsync(id);
+            return result == null ? NotFound() : Ok(result);
         }
 
-        // POST api/<AccountsController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> Create([FromBody] AccountDto dto)
         {
+            var created = await _service.CreateAsync(dto);
+            return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
         }
 
-        // PUT api/<AccountsController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> Update(Guid id, [FromBody] AccountDto dto)
         {
+            if (id != dto.Id) return BadRequest();
+            var success = await _service.UpdateAsync(dto);
+            return success ? NoContent() : NotFound();
         }
 
-        // DELETE api/<AccountsController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(Guid id)
         {
+            var success = await _service.DeleteAsync(id);
+            return success ? NoContent() : NotFound();
         }
     }
 }

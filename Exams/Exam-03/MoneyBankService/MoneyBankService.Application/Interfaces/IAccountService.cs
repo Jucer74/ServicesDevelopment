@@ -4,8 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MoneyBankService.Application.Interfaces;
+using MoneyBankService.Api.Dto;
 
-public interface IAccountService
+namespace MoneyBankService.Application.Interfaces
 {
+    public interface IAccountService
+    {
+        Task<IEnumerable<AccountDto>> GetAllAsync();
+        Task<AccountDto?> GetByIdAsync(Guid id);
+        Task<AccountDto> CreateAsync(AccountDto dto);
+        Task<bool> UpdateAsync(AccountDto dto);
+        Task<bool> DeleteAsync(Guid id);
+    }
 }

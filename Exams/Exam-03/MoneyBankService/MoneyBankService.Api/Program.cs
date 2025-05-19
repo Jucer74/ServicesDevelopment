@@ -1,54 +1,44 @@
-using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MoneyBankService.Api.Extensions;
-using MoneyBankService.Api.Middleware;
+using MoneyBankService.Application.Interfaces;
+using MoneyBankService.Application.Services;
+using MoneyBankService.Domain.Interfaces;
 using MoneyBankService.Infrastructure.Context;
+using MoneyBankService.Infrastructure.Repositories;
+using AutoMapper;
+using MoneyBankService.Api.Mappers;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add the DB Context
-builder.Services.AddDbContext<AppDbContext>(options => options.UseMySQL(builder.Configuration.GetConnectionString("CnnStr")!));
+// Agregar DbContext
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Add services to the container.
-builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
+// Inyección de dependencias
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<IAccountService, AccountService>();
+
+// AutoMapper
+var mapperConfig = new MapperConfiguration(cfg =>
 {
-    options.InvalidModelStateResponseFactory = context =>
-    {
-        var errorDetails = context.ConstructErrorMessages();
-        return new BadRequestObjectResult(errorDetails);
-    };
+    cfg.AddProfile(new AutoMapperProfile());
 });
+IMapper mapper = mapperConfig.CreateMapper();
+builder.Services.AddSingleton(mapper);
 
-// Add Fluent Validation
-builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
-
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// Controladores y Swagger
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Add Modules
-builder.Services.AddRepositories();
-builder.Services.AddServices();
-builder.Services.AddMapping();
-builder.Services.AddValidators();
-
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-// Add the Exception Middleware Handler
-app.UseExceptionMiddleware();
-
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();
