@@ -1,8 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore;
-using MoneyBankService.Domain.Common;
-using MoneyBankService.Domain.Exceptions;
-using MoneyBankService.Infrastructure.Context;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using MoneyBankService.Application.Common.Interfaces;
+using MoneyBankService.Domain.Entities.Base;
+using MoneyBankService.Application.Exceptions;
+using MoneyBankService.Infrastructure.Context;
+
+
 
 namespace MoneyBankService.Infrastructure.Common
 {
@@ -15,11 +23,10 @@ namespace MoneyBankService.Infrastructure.Common
             _appDbContext = appDbContext;
         }
 
-        public async Task<T> AddAsync(T entity)
+        public async Task AddAsync(T entity) 
         {
             _appDbContext.Set<T>().Add(entity);
             await _appDbContext.SaveChangesAsync();
-            return entity;
         }
 
         public async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate)
@@ -44,14 +51,14 @@ namespace MoneyBankService.Infrastructure.Common
 
             if (original is null)
             {
-                throw new NotFoundException($"Item with Id={id} Not Found");
+                throw new NotFoundException($"Person with Id={id} Not Found");
             }
 
             _appDbContext.Set<T>().Remove(entity!);
             await _appDbContext.SaveChangesAsync();
         }
 
-        public async Task<T> UpdateAsync(T entity)
+        public async Task UpdateAsync(T entity) 
         {
             var id = entity?.Id;
             var original = await _appDbContext.Set<T>().FindAsync(id);
@@ -63,8 +70,6 @@ namespace MoneyBankService.Infrastructure.Common
 
             _appDbContext.Entry(original).CurrentValues.SetValues(entity!);
             await _appDbContext.SaveChangesAsync();
-
-            return entity!;
         }
     }
 }

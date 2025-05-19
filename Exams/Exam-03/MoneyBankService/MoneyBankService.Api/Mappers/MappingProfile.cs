@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
-using MoneyBankService.Api.Dto;
+using MoneyBankService.Application.DTO;
 using MoneyBankService.Domain.Entities;
+using MoneyBankService.Infrastructure.Repositories;
 
 namespace MoneyBankService.Api.Mappers;
 
@@ -8,12 +9,16 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        CreateMap<AccountDto, Account>();
-        CreateMap<Account, AccountDto>();
-        // TODO: Implement de Mapping ForMembers
-        //CreateMap<TransactionDto, Account>()
-        //    .ForMember(acc => acc.Id, opt => opt.MapFrom(trx => trx.Id));
-        //    .ForMember( ....... Oher Fields
+        
+        CreateMap<AccountCreateDto, Account>().ReverseMap();
+
+        
+        CreateMap<Account, AccountResultDto>().ReverseMap();
+        
+        CreateMap<TransactionCreateDto, Transaction>().ReverseMap();
+
+        
+        CreateMap<Transaction, TransactionResultDto>().ReverseMap();
 
     }
 }

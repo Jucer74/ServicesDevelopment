@@ -1,43 +1,97 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using MoneyBankService.Application.DTO;
+using MoneyBankService.Application.Exceptions;
+using MoneyBankService.Application.Services.Interfaces;
 
 namespace MoneyBankService.Api.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class AccountsController : ControllerBase
     {
-        // GET: api/<AccountsController>
+        private readonly IAccountService _accountService;
+
+        public AccountsController(IAccountService accountService)
+        {
+            _accountService = accountService;
+        }
+
+        
+
+        // GET: api/Accounts/{id}
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetAccountById(int id)
+        {
+            var account = await _accountService.GetByIdAsync(id);
+            return Ok(account);
+        }
+
+        
+        // GET: api/Accounts?accountNumber=1234567890
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IActionResult> Get([FromQuery] string? accountNumber)
         {
-            return new string[] { "value1", "value2" };
+            if (string.IsNullOrWhiteSpace(accountNumber))
+            {
+                var accounts = await _accountService.GetAllAsync();
+                return Ok(accounts);
+            }
+
+            var account = await _accountService.GetByAccountNumberAsync(accountNumber);
+            return Ok(account);
         }
 
-        // GET api/<AccountsController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
 
-        // POST api/<AccountsController>
+        // POST: api/Accounts
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> CreateAccount([FromBody] AccountCreateDto dto)
         {
+            var createdAccount = await _accountService.CreateAsync(dto);
+
+            return Ok(createdAccount); 
         }
 
-        // PUT api/<AccountsController>/5
+
+        // PUT: api/Accounts/{id}
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> UpdateAccount(int id, [FromBody] AccountCreateDto dto)
         {
+            // Validación opcional: si el DTO contiene ID
+            // Aquí puedes lanzar manualmente el BadRequest si no coinciden
+
+            var account = await _accountService.GetByIdAsync(id);
+            if (account == null)
+                throw new NotFoundException($"Cuenta con ID [{id}] no encontrada.");
+
+            await _accountService.UpdateAsync(id, dto);
+
+            var updated = await _accountService.GetByIdAsync(id);
+            return Ok(updated);
         }
 
-        // DELETE api/<AccountsController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+
+        // DELETE: api/Accounts/{id}
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> DeleteAccount(int id)
         {
+            await _accountService.DeleteAsync(id);
+            return NoContent();
+        }
+
+        // PUT: api/Accounts/{id}/deposit
+        [HttpPut("{id:int}/deposit")]
+        public async Task<IActionResult> Deposit(int id, [FromBody] TransactionCreateDto dto)
+        {
+            await _accountService.DepositAsync(id, dto);
+            return NoContent();
+        }
+
+        // PUT: api/Accounts/{id}/withdrawal
+        [HttpPut("{id:int}/withdrawal")]
+        public async Task<IActionResult> Withdraw(int id, [FromBody] TransactionCreateDto dto)
+        {
+            await _accountService.WithdrawAsync(id, dto);
+            return NoContent();
         }
     }
 }

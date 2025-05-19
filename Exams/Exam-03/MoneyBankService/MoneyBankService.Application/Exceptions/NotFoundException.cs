@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace MoneyBankService.Domain.Exceptions;
+namespace MoneyBankService.Application.Exceptions;
 
 [ExcludeFromCodeCoverage]
 public class NotFoundException : BusinessException

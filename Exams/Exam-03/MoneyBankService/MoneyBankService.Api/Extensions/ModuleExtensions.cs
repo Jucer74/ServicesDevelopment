@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using FluentValidation;
-using MoneyBankService.Api.Dto;
+
 using MoneyBankService.Api.Mappers;
-using MoneyBankService.Api.Validators;
-using MoneyBankService.Application.Interfaces;
+using MoneyBankService.Application.Common.Interfaces;
+using MoneyBankService.Application.DTO;
 using MoneyBankService.Application.Services;
-using MoneyBankService.Domain.Interfaces.Repositories;
+using MoneyBankService.Application.Services.Interfaces;
+using MoneyBankService.Application.Services.Implementation;
+using MoneyBankService.Application.Validations;
 using MoneyBankService.Infrastructure.Repositories;
 
 namespace MoneyBankService.Api.Extensions;
@@ -44,7 +46,9 @@ public static class ModuleExtensions
 
     public static IServiceCollection AddValidators(this IServiceCollection services)
     {
-        services.AddScoped<IValidator<AccountDto>, AccountValidator>();
+        services.AddScoped<IValidator<AccountCreateDto>, AccountValidator>();
+        services.AddScoped<IValidator<TransactionCreateDto>, TransactionValidator>();
+
 
         return services;
     }

@@ -1,8 +1,10 @@
+using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MoneyBankService.Api.Extensions;
-using MoneyBankService.Api.Middleware;
+using MoneyBankService.Api.Middlewares;
+using MoneyBankService.Application.Validations;
 using MoneyBankService.Infrastructure.Context;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,6 +24,8 @@ builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
 
 // Add Fluent Validation
 builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
+builder.Services.AddValidatorsFromAssemblyContaining<AccountValidator>();
+
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
