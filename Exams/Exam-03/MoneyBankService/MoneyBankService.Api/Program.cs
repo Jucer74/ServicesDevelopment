@@ -1,45 +1,68 @@
+﻿using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MoneyBankService.Application.Interfaces;
-using MoneyBankService.Application.Services;
-using MoneyBankService.Domain.Interfaces;
+using MoneyBankService.Api.Extensions;
+using MoneyBankService.Api.Middleware;
 using MoneyBankService.Infrastructure.Context;
-using MoneyBankService.Infrastructure.Repositories;
-using AutoMapper;
-using MoneyBankService.Api.Mappers;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Agregar DbContext
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+// Add the DB Context
+builder.Services.AddDbContext<AppDbContext>(options => options.UseMySQL(builder.Configuration.GetConnectionString("CnnStr")!));
 
-// Inyecci�n de dependencias
-builder.Services.AddScoped<IAccountRepository, AccountRepository>();
-builder.Services.AddScoped<IAccountService, AccountService>();
-builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
-
-// AutoMapper
-var mapperConfig = new MapperConfiguration(cfg =>
+// Add services to the container.
+builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
 {
-    cfg.AddProfile(new AutoMapperProfile());
+    options.InvalidModelStateResponseFactory = context =>
+    {
+        var errorDetails = context.ConstructErrorMessages();
+        return new BadRequestObjectResult(errorDetails);
+    };
 });
-IMapper mapper = mapperConfig.CreateMapper();
-builder.Services.AddSingleton(mapper);
 
-// Controladores y Swagger
-builder.Services.AddControllers();
+// Add Fluent Validation
+builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
+
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// **Configuración de CORS - MODIFICADO**
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", // Cambié el nombre de la política para que sea más específico
+        policy =>
+        {
+            policy.AllowAnyOrigin() // **Asegúrate de que este sea el puerto correcto de tu React**
+                   .AllowAnyHeader()
+                   .AllowAnyMethod();
+        });
+});
+
+// Add Modules
+builder.Services.AddRepositories();
+builder.Services.AddServices();
+builder.Services.AddMapping();
+builder.Services.AddValidators();
+
 var app = builder.Build();
 
+// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
+// Add the Exception Middleware Handler
+app.UseExceptionMiddleware();
+
 app.UseHttpsRedirection();
+
 app.UseAuthorization();
+
 app.MapControllers();
+
+app.UseCors("AllowAll");
+
 app.Run();

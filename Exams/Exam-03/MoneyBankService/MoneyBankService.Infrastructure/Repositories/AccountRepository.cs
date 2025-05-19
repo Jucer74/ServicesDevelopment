@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using MoneyBankService.Domain.Entities;
 using MoneyBankService.Domain.Interfaces;
 using MoneyBankService.Infrastructure.Context;
@@ -7,38 +9,55 @@ namespace MoneyBankService.Infrastructure.Repositories
 {
     public class AccountRepository : IAccountRepository
     {
-        private readonly AppDbContext _context;
+        private readonly AppDbContext _dbContext;
 
-        public AccountRepository(AppDbContext context)
+        public AccountRepository(AppDbContext dbContext)
         {
-            _context = context;
+            _dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<Account>> GetAllAsync() =>
-            await _context.Accounts.ToListAsync();
+        public async Task<IEnumerable<Account>> GetAllAsync()
+        {
+            return await _dbContext.Accounts.ToListAsync();
+        }
 
-        public async Task<Account?> GetByIdAsync(Guid id) =>
-            await _context.Accounts.FindAsync(id);
+        public async Task<Account?> GetByIdAsync(int id)
+        {
+            return await _dbContext.Accounts.FindAsync(id);
+        }
 
         public async Task<Account> CreateAsync(Account account)
         {
-            _context.Accounts.Add(account);
-            await _context.SaveChangesAsync();
+            _dbContext.Accounts.Add(account);
+            await _dbContext.SaveChangesAsync();
             return account;
         }
 
-        public async Task<bool> UpdateAsync(Account account)
+        public async Task<bool> UpdateAsync(int id, Account account)
         {
-            _context.Accounts.Update(account);
-            return await _context.SaveChangesAsync() > 0;
+            var existingAccount = await _dbContext.Accounts.FindAsync(id);
+            if (existingAccount == null)
+            {
+                return false;
+            }
+
+            existingAccount.Name = account.Name;
+            existingAccount.Balance = account.Balance;
+            await _dbContext.SaveChangesAsync();
+            return true;
         }
 
-        public async Task<bool> DeleteAsync(Guid id)
+        public async Task<bool> DeleteAsync(int id)
         {
-            var account = await _context.Accounts.FindAsync(id);
-            if (account == null) return false;
-            _context.Accounts.Remove(account);
-            return await _context.SaveChangesAsync() > 0;
+            var account = await _dbContext.Accounts.FindAsync(id);
+            if (account == null)
+            {
+                return false;
+            }
+
+            _dbContext.Accounts.Remove(account);
+            await _dbContext.SaveChangesAsync();
+            return true;
         }
     }
 }

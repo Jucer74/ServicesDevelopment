@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using AutoMapper;
 using MoneyBankService.Api.Dto;
 using MoneyBankService.Application.Interfaces;
 using MoneyBankService.Domain.Entities;
@@ -26,14 +28,14 @@ namespace MoneyBankService.Application.Services
         public async Task<AccountDto?> GetAccountByIdAsync(int id)
         {
             var account = await _accountRepository.GetByIdAsync(id);
-            return account == null ? null : _mapper.Map<AccountDto>(account);
+            return _mapper.Map<AccountDto>(account);
         }
 
         public async Task<AccountDto> CreateAccountAsync(AccountDto accountDto)
         {
             var account = _mapper.Map<Account>(accountDto);
-            var created = await _accountRepository.CreateAsync(account);
-            return _mapper.Map<AccountDto>(created);
+            var createdAccount = await _accountRepository.CreateAsync(account);
+            return _mapper.Map<AccountDto>(createdAccount);
         }
 
         public async Task<bool> UpdateAccountAsync(int id, AccountDto accountDto)
