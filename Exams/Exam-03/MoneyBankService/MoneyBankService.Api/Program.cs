@@ -16,6 +16,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 // Inyección de dependencias
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
 // AutoMapper
 var mapperConfig = new MapperConfiguration(cfg =>

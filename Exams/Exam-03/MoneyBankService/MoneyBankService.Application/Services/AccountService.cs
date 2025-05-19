@@ -8,45 +8,43 @@ namespace MoneyBankService.Application.Services
 {
     public class AccountService : IAccountService
     {
-        private readonly IAccountRepository _repository;
+        private readonly IAccountRepository _accountRepository;
         private readonly IMapper _mapper;
 
-        public AccountService(IAccountRepository repository, IMapper mapper)
+        public AccountService(IAccountRepository accountRepository, IMapper mapper)
         {
-            _repository = repository;
+            _accountRepository = accountRepository;
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<AccountDto>> GetAllAsync()
+        public async Task<IEnumerable<AccountDto>> GetAllAccountsAsync()
         {
-            var accounts = await _repository.GetAllAsync();
+            var accounts = await _accountRepository.GetAllAsync();
             return _mapper.Map<IEnumerable<AccountDto>>(accounts);
         }
 
-        public async Task<AccountDto?> GetByIdAsync(Guid id)
+        public async Task<AccountDto?> GetAccountByIdAsync(int id)
         {
-            var account = await _repository.GetByIdAsync(id);
+            var account = await _accountRepository.GetByIdAsync(id);
             return account == null ? null : _mapper.Map<AccountDto>(account);
         }
 
-        public async Task<AccountDto> CreateAsync(AccountDto dto)
+        public async Task<AccountDto> CreateAccountAsync(AccountDto accountDto)
         {
-            var entity = _mapper.Map<Account>(dto);
-            entity.Id = Guid.NewGuid();
-            entity.CreatedAt = DateTime.UtcNow;
-            var created = await _repository.CreateAsync(entity);
+            var account = _mapper.Map<Account>(accountDto);
+            var created = await _accountRepository.CreateAsync(account);
             return _mapper.Map<AccountDto>(created);
         }
 
-        public async Task<bool> UpdateAsync(AccountDto dto)
+        public async Task<bool> UpdateAccountAsync(int id, AccountDto accountDto)
         {
-            var entity = _mapper.Map<Account>(dto);
-            return await _repository.UpdateAsync(entity);
+            var account = _mapper.Map<Account>(accountDto);
+            return await _accountRepository.UpdateAsync(id, account);
         }
 
-        public async Task<bool> DeleteAsync(Guid id)
+        public async Task<bool> DeleteAccountAsync(int id)
         {
-            return await _repository.DeleteAsync(id);
+            return await _accountRepository.DeleteAsync(id);
         }
     }
 }
