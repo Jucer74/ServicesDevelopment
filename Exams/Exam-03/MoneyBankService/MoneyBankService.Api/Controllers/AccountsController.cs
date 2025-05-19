@@ -22,13 +22,6 @@ namespace MoneyBankService.Api.Controllers
             _mapper = mapper;
         }
 
-        // GET: api/<AccountsController>
-        /*[HttpGet]
-        public async Task<IActionResult> GetAllAccounts()
-        {
-            var accounts = await _accountService.GetAllAccounts();
-            return Ok(_mapper.Map<List<Account>, List<AccountDto>>(accounts));
-        }*/
 
         // GET api/<AccountsController>/5
         [HttpGet("{id}")]

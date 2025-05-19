@@ -23,9 +23,23 @@ builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
 // Add Fluent Validation
 builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
 
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+
+// **Configuración de CORS - MODIFICADO**
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", // Cambié el nombre de la política para que sea más específico
+        policy =>
+        {
+            policy.AllowAnyOrigin() // **Asegúrate de que este sea el puerto correcto de tu React**
+                  .AllowAnyHeader()
+                   .AllowAnyMethod();
+        });
+});
 
 // Add Modules
 builder.Services.AddInfrastructureModules();
@@ -50,5 +64,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseCors("AllowAll");
 
 app.Run();
