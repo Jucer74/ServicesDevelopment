@@ -27,6 +27,18 @@ builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsi
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// **Configuración de CORS - MODIFICADO**
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", // Cambié el nombre de la política para que sea más específico
+        policy =>
+        {
+            policy.AllowAnyOrigin() // **Asegúrate de que este sea el puerto correcto de tu React**
+                   .AllowAnyHeader()
+                   .AllowAnyMethod();
+        });
+});
+
 // Add Modules
 builder.Services.AddRepositories();
 builder.Services.AddServices();
@@ -50,5 +62,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseCors("AllowAll");
 
 app.Run();

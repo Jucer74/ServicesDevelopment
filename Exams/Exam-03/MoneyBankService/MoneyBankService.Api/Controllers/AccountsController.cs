@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using MoneyBankService.Application.Dto;
 using MoneyBankService.Application.Interfaces;
 using MoneyBankService.Domain.Entities;
+using Org.BouncyCastle.Asn1.Ocsp;
 
 namespace MoneyBankService.Api.Controllers
 {
@@ -10,45 +12,48 @@ namespace MoneyBankService.Api.Controllers
     public class AccountsController : ControllerBase
     {
         private readonly IAccountService _accountService;
+        private readonly IMapper _mapper;
 
-        public AccountsController(IAccountService accountService)
+        public AccountsController(IAccountService accountService, IMapper mapper)
         {
             _accountService = accountService;
+            _mapper = mapper;
         }
 
-        // GET: api/accounts
+        // GET: api/<AccountsController>
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAccounts([FromQuery]string accountNumber =null!)
         {
-            var accounts = await _accountService.GetAllAccounts();
-            return Ok(accounts);
+            var accounts = await _accountService.GetAccounts(accountNumber);
+            return Ok(_mapper.Map<List<Account>, List<AccountDto>>(accounts));
         }
 
-        // GET: api/accounts/5
+
+        // GET api/<AccountsController>/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> GetAccountById(int id)
         {
             var account = await _accountService.GetAccountById(id);
-            return Ok(account);
+            return Ok(_mapper.Map<Account, AccountDto>(account));
         }
 
-        // POST: api/accounts
+        // POST api/<AccountsController>
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] Account account)
+        public async Task<IActionResult> Post([FromBody] AccountDto accountDto)
         {
-            var created = await _accountService.CreateAccount(account);
-            return CreatedAtAction(nameof(Get), new { id = created.Id }, created);
+            var account = await _accountService.CreateAccount(_mapper.Map<AccountDto, Account>(accountDto));
+            return Ok(_mapper.Map<Account, AccountDto>(account));
         }
 
-        // PUT: api/accounts/5
+        // PUT api/<AccountsController>/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] Account account)
+        public async Task<IActionResult> Put(int id, [FromBody] AccountDto accountDto)
         {
-            var updated = await _accountService.UpdateAccount(id, account);
-            return Ok(updated);
+            var account = await _accountService.UpdateAccount(id, _mapper.Map<AccountDto, Account>(accountDto));
+            return Ok(_mapper.Map<Account, AccountDto>(account));
         }
 
-        // DELETE: api/accounts/5
+        // DELETE api/<AccountsController>/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -56,20 +61,21 @@ namespace MoneyBankService.Api.Controllers
             return NoContent();
         }
 
-        // POST: api/accounts/5/deposit
-        [HttpPost("{id}/deposit")]
-        public async Task<IActionResult> Deposit(int id, [FromBody] TransactionDto request)
+        // PUT: api/Accounts/5/Deposit
+        [HttpPut("{id}/Deposit")]
+        public async Task<IActionResult> Deposit(int id, [FromBody] Transaction transaction)
         {
-            var updated = await _accountService.DepositAsync(id, request.ValueAmount);
-            return Ok(updated);
+
+            await _accountService.Deposit(id, transaction);
+            return NoContent();
         }
 
-        // POST: api/accounts/5/withdraw
-        [HttpPost("{id}/withdraw")]
-        public async Task<IActionResult> Withdraw(int id, [FromBody] TransactionDto request)
+        [HttpPut("{id}/Withdrawal")]
+        public async Task<IActionResult> Withdrawal(int id, [FromBody] Transaction transaction)
         {
-            var updated = await _accountService.WithdrawAsync(id, request.ValueAmount);
-            return Ok(updated);
+
+            await _accountService.Withdraw(id, transaction);
+            return NoContent();
         }
     }
 }

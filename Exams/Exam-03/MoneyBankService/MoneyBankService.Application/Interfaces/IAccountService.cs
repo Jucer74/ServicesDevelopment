@@ -1,5 +1,4 @@
-﻿using MoneyBankService.Application.Dto;
-using MoneyBankService.Domain.Entities;
+﻿using MoneyBankService.Domain.Entities;
 
 namespace MoneyBankService.Application.Interfaces;
 
@@ -14,8 +13,8 @@ public interface IAccountService
     Task DeleteAccount(int id);
 
     Task<List<Account>> GetAccounts(string? accountNumber = null);
-    Task<Account> DepositAsync(int accountId, decimal amount);
-    Task<Account> WithdrawAsync(int accountId, decimal amount);
 
+    Task Deposit(int id, Transaction transaction);
+    Task Withdraw(int id, Transaction transaction);
 
 }

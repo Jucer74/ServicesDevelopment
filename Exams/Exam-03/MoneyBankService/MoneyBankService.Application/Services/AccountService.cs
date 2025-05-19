@@ -8,14 +8,37 @@ namespace MoneyBankService.Application.Services;
 public class AccountService : IAccountService
 {
     private readonly IAccountRepository _accountRepository;
+    private const int MAX_OVERDRAFT = 1_000_000;
 
     public AccountService(IAccountRepository accountRepository)
     {
         _accountRepository = accountRepository;
     }
 
+    public async Task<List<Account>> GetAccounts(string? accountNumber = null)
+    {
+        if (string.IsNullOrEmpty(accountNumber))
+        {
+            return (await _accountRepository.GetAllAsync()).ToList();
+        }
+
+        return (await _accountRepository.GetAllAsync())
+            .Where(account => account.AccountNumber == accountNumber)
+            .ToList();
+    }
+
     public async Task<Account> CreateAccount(Account account)
     {
+        if (await AccountExists(account.AccountNumber))
+        {
+            throw new BadRequestException($"La cuenta con el número { account.AccountNumber } ya existe.");
+        }
+
+        if (account.AccountType == 'C')
+        {
+            account.BalanceAmount += MAX_OVERDRAFT;
+        }
+
         await _accountRepository.AddAsync(account);
         return account;
     }
@@ -43,12 +66,15 @@ public class AccountService : IAccountService
         }
 
         var originalAccount = await _accountRepository.GetByIdAsync(id);
-
         if (originalAccount is null)
         {
             throw new NotFoundException($"Account [{id}] Not Found");
         }
 
+        if (!await AccountExists(account.AccountNumber))
+        {
+            throw new BadRequestException($"Account with AccountNumber [{account.AccountNumber}] No Exists");
+        }
         await _accountRepository.UpdateAsync(account);
         return account;
     }
@@ -58,32 +84,76 @@ public class AccountService : IAccountService
         var account = await _accountRepository.GetByIdAsync(id);
         if (account is null)
         {
-            throw new NotFoundException($"Account [{id}] Not Found");
+            throw new NotFoundException($"Account with Id=[{id}] Not Found");
         }
 
         await _accountRepository.RemoveAsync(account);
     }
 
-    public async Task<List<Account>> GetAccounts(string? accountNumber = null)
+    public async Task Deposit(int id, Transaction transaction)
     {
-        if (string.IsNullOrEmpty(accountNumber))
+        if (id != transaction.Id)
         {
-            // Si no se proporciona AccountNumber, devuelve todas las cuentas
-            return (await _accountRepository.GetAllAsync()).ToList();
+            throw new BadRequestException($"Id [{id}] is different to Transaction.Id [{transaction.Id}]");
         }
 
-        return (await _accountRepository.GetAllAsync()).Where(account => account.AccountNumber == accountNumber).ToList();
+        var account = await _accountRepository.GetByIdAsync(id);
+        if (account == null)
+        {
+            throw new NotFoundException();
+        }
+
+        if (account.AccountNumber != transaction.AccountNumber)
+        {
+            throw new BadRequestException();
+        }
+
+        UpdateDeposit(account, transaction);
+        await _accountRepository.UpdateAsync(account);
     }
-    private const decimal MAX_OVERDRAFT = 1000000m;
 
-    public async Task<Account> DepositAsync(int accountId, decimal amount)
+    public async Task Withdraw(int id, Transaction transaction)
     {
-        var account = await _accountRepository.GetByIdAsync(accountId)
-            ?? throw new NotFoundException($"Cuenta con ID {accountId} no encontrada");
+        if (id != transaction.Id)
+        {
+            throw new BadRequestException($"Id [{id}] is different to Transaction.Id [{transaction.Id}]");
+        }
 
-        account.BalanceAmount += amount;
+        var account = await _accountRepository.GetByIdAsync(id);
+        if (account == null)
+        {
+            throw new NotFoundException();
+        }
 
-        if (account.AccountType == 'C') // Cuenta Corriente
+        if (!await AccountExists(transaction.AccountNumber))
+        {
+            throw new BadRequestException($"La cuenta con el número {transaction.AccountNumber} no existe.");
+        }
+
+        if (account.BalanceAmount < transaction.ValueAmount)
+        {
+            throw new BadRequestException("Fondos Insuficientes");
+        }
+
+        UpdateWithdrawal(account, transaction);
+        await _accountRepository.UpdateAsync(account);
+    }
+
+    // Métodos privados
+
+    private async Task<bool> AccountExists(string accountNumber)
+    {
+        var existingAccount = (await _accountRepository.GetAllAsync())
+            .FirstOrDefault(a => a.AccountNumber == accountNumber);
+        return existingAccount != null;
+    }
+
+
+    private void UpdateDeposit(Account account, Transaction transaction)
+    {
+        account.BalanceAmount += transaction.ValueAmount;
+
+        if (account.AccountType == 'C')
         {
             if (account.OverdraftAmount > 0 && account.BalanceAmount < MAX_OVERDRAFT)
             {
@@ -94,49 +164,15 @@ public class AccountService : IAccountService
                 account.OverdraftAmount = 0;
             }
         }
-
-        await _accountRepository.UpdateAsync(account);
-        return account;
     }
 
-    public async Task<Account> WithdrawAsync(int accountId, decimal amount)
+    private void UpdateWithdrawal(Account account, Transaction transaction)
     {
-        var account = await _accountRepository.GetByIdAsync(accountId)
-            ?? throw new NotFoundException($"Cuenta con ID {accountId} no encontrada");
+        account.BalanceAmount -= transaction.ValueAmount;
 
-        if (account.AccountType == 'A') // Cuenta de Ahorros
+        if (account.AccountType == 'C' && account.BalanceAmount < MAX_OVERDRAFT)
         {
-            if (account.BalanceAmount >= amount)
-            {
-                account.BalanceAmount -= amount;
-            }
-            else
-            {
-                throw new BusinessException("Fondos insuficientes.");
-            }
+            account.OverdraftAmount = MAX_OVERDRAFT - account.BalanceAmount;
         }
-        else if (account.AccountType == 'C') // Cuenta Corriente
-        {
-            if (account.BalanceAmount + account.OverdraftAmount >= amount)
-            {
-                account.BalanceAmount -= amount;
-
-                if (account.OverdraftAmount > 0 && account.BalanceAmount < MAX_OVERDRAFT)
-                {
-                    account.OverdraftAmount = MAX_OVERDRAFT - account.BalanceAmount;
-                }
-                else
-                {
-                    account.OverdraftAmount = 0;
-                }
-            }
-            else
-            {
-                throw new BusinessException("Fondos insuficientes.");
-            }
-        }
-
-        await _accountRepository.UpdateAsync(account);
-        return account;
     }
 }
