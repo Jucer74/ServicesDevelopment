@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using MoneyBankService.Application.Dto;
 
+
 namespace MoneyBankService.Application.Validators;
 
 public class AccountValidator : AbstractValidator<AccountDto>

@@ -1,20 +1,22 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace MoneyBankService.Domain.Exceptions;
-
-[ExcludeFromCodeCoverage]
-public class InternalServerErrorException : BusinessException
+namespace MoneyBankService.Application.Exceptions
 {
-    public InternalServerErrorException()
+    [ExcludeFromCodeCoverage]
+    public class NotFoundException : BusinessException
     {
-    }
+        public NotFoundException()
+        {
+        }
 
-    public InternalServerErrorException(string message) : base(message)
-    {
-    }
+        public NotFoundException(string message)
+            : base(message)
+        {
+        }
 
-    public InternalServerErrorException(string message, Exception innerException)
-        : base(message, innerException)
-    {
+        public NotFoundException(string message, Exception innerException)
+            : base(message, innerException)
+        {
+        }
     }
 }

@@ -1,6 +1,9 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using MoneyBankService.Application.Dto;
 
-namespace MoneyBankService.Domain.Exceptions;
+
+namespace MoneyBankService.Application.Exceptions;
+
 
 [ExcludeFromCodeCoverage]
 public class BadRequestException : BusinessException
