@@ -1,20 +1,19 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using MoneyBankService.Domain.Common;
 
 namespace MoneyBankService.Domain.Entities
 {
-    public class Account
+    public class Account : EntityBase
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public char AccountType { get; set; } = 'A';
 
-        [Required]
-        [MaxLength(100)]
-        public string Name { get; set; }
+        public DateTime CreationDate { get; set; } = DateTime.Now;
 
-        [Required]
-        [Column(TypeName = "decimal(18, 2)")] // Especifica el tipo de dato para la base de datos
-        public decimal Balance { get; set; }
+        public string AccountNumber { get; set; } = null!;
+
+        public string OwnerName { get; set; } = null!;
+        public decimal BalanceAmount { get; set; } = 0;
+
+        public decimal OverdraftAmount { get; set; } = 0;
     }
 }

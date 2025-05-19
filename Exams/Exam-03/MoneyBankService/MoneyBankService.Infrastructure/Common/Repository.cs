@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MoneyBankService.Application.Common;
 using MoneyBankService.Domain.Common;
 using MoneyBankService.Domain.Exceptions;
 using MoneyBankService.Infrastructure.Context;
@@ -17,7 +18,11 @@ namespace MoneyBankService.Infrastructure.Common
 
         public async Task<T> AddAsync(T entity)
         {
-            _appDbContext.Set<T>().Add(entity);
+            if (entity is null)
+            {
+                throw new ArgumentNullException(nameof(entity), "Entity cannot be null");
+            }
+            await _appDbContext.Set<T>().AddAsync(entity);
             await _appDbContext.SaveChangesAsync();
             return entity;
         }
@@ -39,32 +44,33 @@ namespace MoneyBankService.Infrastructure.Common
 
         public async Task RemoveAsync(T entity)
         {
-            var id = entity?.Id;
+            var id = entity.Id;
             var original = await _appDbContext.Set<T>().FindAsync(id);
+
 
             if (original is null)
             {
-                throw new NotFoundException($"Item with Id={id} Not Found");
+                throw new NotFoundException($"Element [{id}] Not Found");
             }
 
-            _appDbContext.Set<T>().Remove(entity!);
+            _appDbContext.Set<T>().Remove(entity);
             await _appDbContext.SaveChangesAsync();
         }
 
         public async Task<T> UpdateAsync(T entity)
         {
-            var id = entity?.Id;
+            var id = entity.Id;
             var original = await _appDbContext.Set<T>().FindAsync(id);
 
             if (original is null)
             {
-                throw new NotFoundException($"Item with Id={id} Not Found");
+                throw new NotFoundException($"Element [{id}] Not Found");
             }
 
-            _appDbContext.Entry(original).CurrentValues.SetValues(entity!);
+            _appDbContext.Entry(original).CurrentValues.SetValues(entity);
             await _appDbContext.SaveChangesAsync();
 
-            return entity!;
+            return entity;
         }
     }
 }
