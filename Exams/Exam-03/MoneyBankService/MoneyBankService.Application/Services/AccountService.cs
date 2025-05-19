@@ -1,52 +1,178 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using AutoMapper;
-using MoneyBankService.Api.Dto;
-using MoneyBankService.Application.Interfaces;
+﻿using MoneyBankService.Application.Interfaces;
+using MoneyBankService.Application.Interfaces.Repositories;
 using MoneyBankService.Domain.Entities;
-using MoneyBankService.Domain.Interfaces;
+using MoneyBankService.Domain.Exceptions;
 
-namespace MoneyBankService.Application.Services
+namespace MoneyBankService.Application.Services;
+
+public class AccountService : IAccountService
 {
-    public class AccountService : IAccountService
+    private readonly IAccountRepository _accountRepository;
+    private const int MAX_OVERDRAFT = 1_000_000;
+
+    public AccountService(IAccountRepository accountRepository)
     {
-        private readonly IAccountRepository _accountRepository;
-        private readonly IMapper _mapper;
+        _accountRepository = accountRepository;
+    }
 
-        public AccountService(IAccountRepository accountRepository, IMapper mapper)
+    public async Task<List<Account>> GetAccounts(string? accountNumber = null)
+    {
+        if (string.IsNullOrEmpty(accountNumber))
         {
-            _accountRepository = accountRepository;
-            _mapper = mapper;
+            return (await _accountRepository.GetAllAsync()).ToList();
         }
 
-        public async Task<IEnumerable<AccountDto>> GetAllAccountsAsync()
+        return (await _accountRepository.GetAllAsync())
+            .Where(account => account.AccountNumber == accountNumber)
+            .ToList();
+    }
+
+    public async Task<Account> CreateAccount(Account account)
+    {
+        if (await AccountExists(account.AccountNumber))
         {
-            var accounts = await _accountRepository.GetAllAsync();
-            return _mapper.Map<IEnumerable<AccountDto>>(accounts);
+            throw new BadRequestException($"La cuenta con el número {account.AccountNumber} ya existe.");
         }
 
-        public async Task<AccountDto?> GetAccountByIdAsync(int id)
+        if (account.AccountType == 'C')
         {
-            var account = await _accountRepository.GetByIdAsync(id);
-            return _mapper.Map<AccountDto>(account);
+            account.BalanceAmount += MAX_OVERDRAFT;
         }
 
-        public async Task<AccountDto> CreateAccountAsync(AccountDto accountDto)
+        await _accountRepository.AddAsync(account);
+        return account;
+    }
+
+    public async Task<List<Account>> GetAllAccounts()
+    {
+        return (await _accountRepository.GetAllAsync()).ToList();
+    }
+
+    public async Task<Account> GetAccountById(int id)
+    {
+        var account = await _accountRepository.GetByIdAsync(id);
+        if (account is null)
         {
-            var account = _mapper.Map<Account>(accountDto);
-            var createdAccount = await _accountRepository.CreateAsync(account);
-            return _mapper.Map<AccountDto>(createdAccount);
+            throw new NotFoundException($"Account [{id}] Not Found");
+        }
+        return account;
+    }
+
+    public async Task<Account> UpdateAccount(int id, Account account)
+    {
+        if (id != account.Id)
+        {
+            throw new BadRequestException($"Id [{id}] is different to Account.Id [{account.Id}]");
         }
 
-        public async Task<bool> UpdateAccountAsync(int id, AccountDto accountDto)
+        var originalAccount = await _accountRepository.GetByIdAsync(id);
+        if (originalAccount is null)
         {
-            var account = _mapper.Map<Account>(accountDto);
-            return await _accountRepository.UpdateAsync(id, account);
+            throw new NotFoundException($"Account [{id}] Not Found");
         }
 
-        public async Task<bool> DeleteAccountAsync(int id)
+        if (!await AccountExists(account.AccountNumber))
         {
-            return await _accountRepository.DeleteAsync(id);
+            throw new BadRequestException($"Account with AccountNumber [{account.AccountNumber}] No Exists");
+        }
+        await _accountRepository.UpdateAsync(account);
+        return account;
+    }
+
+    public async Task DeleteAccount(int id)
+    {
+        var account = await _accountRepository.GetByIdAsync(id);
+        if (account is null)
+        {
+            throw new NotFoundException($"Account with Id=[{id}] Not Found");
+        }
+
+        await _accountRepository.RemoveAsync(account);
+    }
+
+    public async Task Deposit(int id, Transaction transaction)
+    {
+        if (id != transaction.Id)
+        {
+            throw new BadRequestException($"Id [{id}] is different to Transaction.Id [{transaction.Id}]");
+        }
+
+        var account = await _accountRepository.GetByIdAsync(id);
+        if (account == null)
+        {
+            throw new NotFoundException();
+        }
+
+        if (account.AccountNumber != transaction.AccountNumber)
+        {
+            throw new BadRequestException();
+        }
+
+        UpdateDeposit(account, transaction);
+        await _accountRepository.UpdateAsync(account);
+    }
+
+    public async Task Withdraw(int id, Transaction transaction)
+    {
+        if (id != transaction.Id)
+        {
+            throw new BadRequestException($"Id [{id}] is different to Transaction.Id [{transaction.Id}]");
+        }
+
+        var account = await _accountRepository.GetByIdAsync(id);
+        if (account == null)
+        {
+            throw new NotFoundException();
+        }
+
+        if (!await AccountExists(transaction.AccountNumber))
+        {
+            throw new BadRequestException($"La cuenta con el número {transaction.AccountNumber} no existe.");
+        }
+
+        if (account.BalanceAmount < transaction.ValueAmount)
+        {
+            throw new BadRequestException("Fondos Insuficientes");
+        }
+
+        UpdateWithdrawal(account, transaction);
+        await _accountRepository.UpdateAsync(account);
+    }
+
+    // Métodos privados
+
+    private async Task<bool> AccountExists(string accountNumber)
+    {
+        var existingAccount = (await _accountRepository.GetAllAsync())
+            .FirstOrDefault(a => a.AccountNumber == accountNumber);
+        return existingAccount != null;
+    }
+
+
+    private void UpdateDeposit(Account account, Transaction transaction)
+    {
+        account.BalanceAmount += transaction.ValueAmount;
+
+        if (account.AccountType == 'C')
+        {
+            if (account.OverdraftAmount > 0 && account.BalanceAmount < MAX_OVERDRAFT)
+            {
+                account.OverdraftAmount = MAX_OVERDRAFT - account.BalanceAmount;
+            }
+            else
+            {
+                account.OverdraftAmount = 0;
+            }
+        }
+    }
+
+    private void UpdateWithdrawal(Account account, Transaction transaction)
+    {
+        account.BalanceAmount -= transaction.ValueAmount;
+
+        if (account.AccountType == 'C' && account.BalanceAmount < MAX_OVERDRAFT)
+        {
+            account.OverdraftAmount = MAX_OVERDRAFT - account.BalanceAmount;
         }
     }
 }

@@ -1,14 +1,17 @@
-﻿using AutoMapper;
+﻿using MoneyBankService.Application.Dto;
 using MoneyBankService.Domain.Entities;
-using MoneyBankService.Api.Dto;
+using AutoMapper;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace MoneyBankService.Api.Mappers
+namespace MoneyBankService.Application.Mappers;
+
+public class MappingProfile : Profile
 {
-    public class AutoMapperProfile : Profile
+    public MappingProfile()
     {
-        public AutoMapperProfile()
-        {
-            CreateMap<Account, AccountDto>().ReverseMap();
-        }
+        CreateMap<AccountDto, Account>();
+        CreateMap<Account, AccountDto>();
+        CreateMap<TransactionDto, Transaction>();
+        CreateMap<Transaction, TransactionDto>();
     }
 }
