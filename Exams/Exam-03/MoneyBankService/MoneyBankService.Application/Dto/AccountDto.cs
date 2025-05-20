@@ -1,6 +1,4 @@
-﻿using MoneyBankService.Application.Dto;
-
-namespace MoneyBankService.Application.Dto;
+﻿namespace MoneyBankService.Application.Dto;
 
 public class AccountDto
 {
