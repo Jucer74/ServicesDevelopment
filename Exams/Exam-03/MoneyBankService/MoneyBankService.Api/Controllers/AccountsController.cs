@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using MoneyBankService.Api.Dto;
 using MoneyBankService.Application.Dto;
 using MoneyBankService.Application.Interfaces;
 using MoneyBankService.Domain.Entities;

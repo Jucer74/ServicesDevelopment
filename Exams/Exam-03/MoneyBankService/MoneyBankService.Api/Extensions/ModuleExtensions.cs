@@ -7,7 +7,6 @@ using MoneyBankService.Application.Validators;
 using MoneyBankService.Application.Services;
 using MoneyBankService.Infrastructure.Repositories;
 using MoneyBankService.Api.Validators;
-using MoneyBankService.Domain.Interfaces;
 using MoneyBankService.Application.Interfaces;
 
 namespace MoneyBankService.Api.Extensions;
@@ -24,7 +23,7 @@ public static class ModuleExtensions
 
     public static IServiceCollection AddRepositories(this IServiceCollection services)
     {
-        services.AddScoped<IAccountRepository, AccountRepository>();
+        services.AddScoped<Application.Interfaces.Repositories.IAccountRepository, AccountRepository>();
 
         return services;
     }
@@ -46,7 +45,7 @@ public static class ModuleExtensions
 
     public static IServiceCollection AddValidators(this IServiceCollection services)
     {
-        services.AddScoped<IValidator<AccountDto>, AccountValidator>();
+        services.AddScoped<IValidator<AccountDto>, Application.Validators.AccountValidator>();
 
         return services;
     }
