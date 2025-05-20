@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MoneyBankService.Application.Dto;
 using MoneyBankService.Application.Interfaces;
 using MoneyBankService.Domain.Entities;
+using MoneyBankService.Domain.Exceptions;
 
 namespace MoneyBankService.Api.Controllers
 {
