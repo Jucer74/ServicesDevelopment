@@ -6,7 +6,6 @@ using MoneyBankService.Application.Mappers;
 using MoneyBankService.Application.Validators;
 using MoneyBankService.Application.Services;
 using MoneyBankService.Infrastructure.Repositories;
-using MoneyBankService.Api.Validators;
 using MoneyBankService.Application.Interfaces;
 
 namespace MoneyBankService.Api.Extensions;

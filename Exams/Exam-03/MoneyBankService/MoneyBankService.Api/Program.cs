@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MoneyBankService.Api.Extensions;
 using MoneyBankService.Api.Middleware;
-using MoneyBankService.Api.Validators;
+using MoneyBankService.Application.Validators;
 using MoneyBankService.Application.Mappers;
 using MoneyBankService.Infrastructure.Context;
 
