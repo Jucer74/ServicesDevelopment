@@ -1,6 +1,0 @@
-@api.MoneyBankService_HostAddress = http://localhost:5062
-
-GET {{api.MoneyBankService_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
