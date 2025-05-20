@@ -1,8 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using MoneyBankService.Domain.Common;
 
 namespace MoneyBankService.Domain.Entities
 {
+    [Table("Accounts")]
     public class Account : EntityBase
     {
         public char AccountType { get; set; } = 'A';
