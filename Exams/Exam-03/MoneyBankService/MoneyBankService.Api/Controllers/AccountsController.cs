@@ -86,7 +86,7 @@ namespace MoneyBankService.Api.Controllers
             {
                 return BadRequest(new { Message = ex.Message });
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // Para errores no previstos, que siga siendo 500
                 return StatusCode(500, new { Message = "Ocurrió un error inesperado." });

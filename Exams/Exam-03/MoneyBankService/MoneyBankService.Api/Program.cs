@@ -20,9 +20,12 @@ builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
     {
         // Obtiene todos los errores del ModelState y los agrupa en una lista de cadenas.
         var errorDetails = context.ModelState
-            .Where(modelState => modelState.Value.Errors.Any()) // Solo las entradas con errores
-            .SelectMany(modelState => modelState.Value.Errors.Select(error => error.ErrorMessage)) // Extrae solo los mensajes de error
-            .ToList(); // Convierte en una lista de cadenas
+            .Where(kvp => kvp.Value != null && kvp.Value.Errors.Any())
+            .SelectMany(kvp => kvp.Value!.Errors.Select(error => error.ErrorMessage))
+            .ToList();
+
+
+        // Convierte en una lista de cadenas
 
         // Opcional: Si quieres un diccionario con el nombre del campo y sus errores:
         /*
