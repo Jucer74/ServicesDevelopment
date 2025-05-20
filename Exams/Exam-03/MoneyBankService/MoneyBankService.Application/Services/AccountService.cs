@@ -1,7 +1,7 @@
 ﻿using MoneyBankService.Application.Interfaces;
 using MoneyBankService.Application.Interfaces.Repositories;
 using MoneyBankService.Domain.Entities;
-using MoneyBankService.Domain.Exceptions;
+using MoneyBankService.Application.Exceptions;
 
 namespace MoneyBankService.Application.Services;
 

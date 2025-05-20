@@ -18,6 +18,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyBankService.Domain", "MoneyBankService.Domain\MoneyBankService.Domain.csproj", "{AC38985D-7B2C-4DC0-93C4-C0CE369FF4E5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyBankService.Infrastructure", "MoneyBankService.Infrastructure\MoneyBankService.Infrastructure.csproj", "{AB25E49B-AF92-40BA-B450-05ADBBC77659}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AC38985D-7B2C-4DC0-93C4-C0CE369FF4E5} = {AC38985D-7B2C-4DC0-93C4-C0CE369FF4E5}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,5 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using MoneyBankService.Domain.Exceptions;
+using MoneyBankService.Application.Exceptions;
 
 namespace MoneyBankService.Application.Exceptions;
 
