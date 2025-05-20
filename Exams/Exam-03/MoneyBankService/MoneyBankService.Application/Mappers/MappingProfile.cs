@@ -2,7 +2,6 @@
 using MoneyBankService.Domain.Entities;
 using AutoMapper;
 using FluentValidation;
-using FluentValidation.AspNetCore;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MoneyBankService.Application.Mappers;
