@@ -1,7 +1,4 @@
-﻿
-
-using MoneyBankService.Application.Dto;
-using MoneyBankService.Domain.Models;
+﻿using MoneyBankService.Domain.Models;
 
 namespace MoneyBankService.Application.Interfaces.Services;
 

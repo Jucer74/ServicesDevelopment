@@ -1,4 +1,4 @@
-﻿using MoneyBankService.Domain.Common;
+﻿using MoneyBankService.Application.Common;
 using MoneyBankService.Domain.Models;
 
 namespace MoneyBankService.Application.Interfaces.Repositories

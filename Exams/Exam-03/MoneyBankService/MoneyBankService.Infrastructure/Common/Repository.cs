@@ -2,6 +2,7 @@
 using MoneyBankService.Domain.Common;
 using MoneyBankService.Infrastructure.Context;
 using System.Linq.Expressions;
+using MoneyBankService.Application.Common;
 using MoneyBankService.Application.Exceptions;
 
 namespace MoneyBankService.Infrastructure.Common
