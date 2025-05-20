@@ -1,11 +1,15 @@
-﻿using MoneyBankService.Domain.Entities;
+﻿using MoneyBankService.Application.Interfaces.Repositories;
+using MoneyBankService.Domain.Entities;
 
 namespace MoneyBankService.Application.Interfaces;
 
 public interface IAccountService
 {
     Task<Account> CreateAccount(Account account);
-    Task<List<Account>> GetAllAccounts();
+     public  async Task<List<Account>> GetAllAccounts()
+    {
+        return (await IAccountRepository.GetAllAsync()).ToList();
+    }
 
     Task<Account> GetAccountById(int id);
 
