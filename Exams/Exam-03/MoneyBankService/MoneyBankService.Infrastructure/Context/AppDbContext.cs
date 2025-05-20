@@ -13,5 +13,5 @@ public class AppDbContext : DbContext
     {
     }
 
-    public DbSet<Account> Accounts { get; set; }
+    public DbSet<Account> Account { get; set; }
 }
