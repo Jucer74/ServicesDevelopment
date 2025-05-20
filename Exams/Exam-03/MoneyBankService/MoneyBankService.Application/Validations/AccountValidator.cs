@@ -13,6 +13,7 @@ namespace MoneyBankService.Application.Validations
                 .Must(x => x == 'A' || x == 'C')
                 .WithMessage("El tipo de cuenta solo puede ser 'A' (Ahorro) o 'C' (Corriente).");
 
+
             // Fecha de creación
             RuleFor(x => x.CreationDate)
                 .NotEmpty().WithMessage("La fecha de creación es obligatoria.")

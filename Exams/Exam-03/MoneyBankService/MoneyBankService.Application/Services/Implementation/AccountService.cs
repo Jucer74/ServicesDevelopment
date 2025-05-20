@@ -53,8 +53,7 @@ namespace MoneyBankService.Application.Services.Implementation
             var accounts = await _accountRepository.FindAsync(a => a.AccountNumber == accountNumber);
 
             var account = accounts.FirstOrDefault();
-            if (account == null)
-                throw new NotFoundException($"Cuenta con número [{accountNumber}] no encontrada.");
+            
 
             return _mapper.Map<AccountResultDto>(account);
         }
@@ -63,7 +62,6 @@ namespace MoneyBankService.Application.Services.Implementation
         {
             if (dto.BalanceAmount <= 0)
                 throw new BadRequestException("El Balance debe ser mayor a cero.");
-            // ✅ Verificar si ya existe una cuenta con el mismo número
             var existingAccount = await _accountRepository.FindAsync(a => a.AccountNumber == dto.AccountNumber);
             if (existingAccount.Any())
                 throw new BadRequestException("Ya existe una cuenta con ese número.");
@@ -90,8 +88,9 @@ namespace MoneyBankService.Application.Services.Implementation
             return _mapper.Map<AccountResultDto>(created);
         }
 
-        public async Task UpdateAsync(int id, AccountCreateDto dto)
+        public async Task UpdateAsync(int id, AccountResultDto dto)
         {
+            
 
             if (id <= 0)
                 throw new BadRequestException("ID inválido.");
@@ -148,23 +147,39 @@ namespace MoneyBankService.Application.Services.Implementation
         public async Task WithdrawAsync(int id, TransactionCreateDto transaction)
         {
             if (transaction.ValueAmount <= 0)
-                throw new NotFoundException("El valor del retiro debe ser mayor a cero.");
+                throw new BadRequestException("El valor del retiro debe ser mayor a cero.");
 
             var account = await _accountRepository.GetByIdAsync(id);
-            if (account == null || account.AccountNumber != transaction.AccountNumber)
+            if (account == null)
+                throw new NotFoundException("Cuenta no encontrada.");
+
+            if (account.AccountNumber != transaction.AccountNumber)
                 throw new BadRequestException("Cuenta no válida.");
 
-            if (transaction.ValueAmount > account.BalanceAmount)
-                throw new NotFoundException("Fondos Insuficientes.");
+            
+            decimal totalDisponible = account.AccountType == 'C'
+                ? account.BalanceAmount + account.OverdraftAmount
+                : account.BalanceAmount;
 
+            if (transaction.ValueAmount > totalDisponible)
+                throw new BadRequestException("Fondos Insuficientes.");
+
+           
             account.BalanceAmount -= transaction.ValueAmount;
 
-            if (account.AccountType == 'C' && account.OverdraftAmount > 0 && account.BalanceAmount < MAX_OVERDRAFT)
+           
+            if (account.AccountType == 'C')
             {
-                account.OverdraftAmount = MAX_OVERDRAFT - account.BalanceAmount;
+                if (account.BalanceAmount < MAX_OVERDRAFT)
+                {
+                    account.OverdraftAmount = MAX_OVERDRAFT - account.BalanceAmount;
+                }
             }
 
             await _accountRepository.UpdateAsync(account);
         }
+
+
+
     }
 }
