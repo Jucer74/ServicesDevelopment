@@ -1,4 +1,5 @@
-﻿using MoneyBankService.Application.Interfaces;
+﻿using MoneyBankService.Application.Exceptions;
+using MoneyBankService.Application.Interfaces;
 using MoneyBankService.Application.Interfaces.Repositories;
 using MoneyBankService.Domain.Entities;
 using MoneyBankService.Domain.Exceptions;
