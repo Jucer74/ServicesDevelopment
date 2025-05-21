@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MoneyBankService.Application.Common;
-using MoneyBankService.Application.Exceptions;
 using MoneyBankService.Domain.Common;
+using MoneyBankService.Domain.Exceptions;
 using MoneyBankService.Infrastructure.Context;
 using System.Linq.Expressions;
 

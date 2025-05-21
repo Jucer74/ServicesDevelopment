@@ -1,7 +1,7 @@
-﻿using MoneyBankService.Application.Exceptions;
-using MoneyBankService.Application.Interfaces;
+﻿using MoneyBankService.Application.Interfaces;
 using MoneyBankService.Application.Interfaces.Repositories;
 using MoneyBankService.Domain.Entities;
+using MoneyBankService.Domain.Exceptions;
 
 namespace MoneyBankService.Application.Services;
 
@@ -31,7 +31,7 @@ public class AccountService : IAccountService
     {
         if (await AccountExists(account.AccountNumber))
         {
-            throw new BadRequestException("Bad Request", new[] { $"La cuenta con el número {account.AccountNumber} ya existe." });
+            throw new BadRequestException($"La cuenta con el número {account.AccountNumber} ya existe.");
         }
 
         if (account.AccountType == 'C')
@@ -43,12 +43,17 @@ public class AccountService : IAccountService
         return account;
     }
 
+    public async Task<List<Account>> GetAllAccounts()
+    {
+        return (await _accountRepository.GetAllAsync()).ToList();
+    }
+
     public async Task<Account> GetAccountById(int id)
     {
         var account = await _accountRepository.GetByIdAsync(id);
         if (account is null)
         {
-            throw new NotFoundException("Not Found", new[] { $"Account [{id}] Not Found" });
+            throw new NotFoundException($"Account [{id}] Not Found");
         }
         return account;
     }
@@ -57,23 +62,19 @@ public class AccountService : IAccountService
     {
         if (id != account.Id)
         {
-            throw new BadRequestException("Bad Request", new[] { $"Id [{id}] is different to Account.Id [{account.Id}]" });
+            throw new BadRequestException($"Id [{id}] is different to Account.Id [{account.Id}]");
         }
 
         var originalAccount = await _accountRepository.GetByIdAsync(id);
         if (originalAccount is null)
         {
-            throw new NotFoundException("Not Found", new[] { $"Account [{id}] Not Found" });
+            throw new NotFoundException($"Account [{id}] Not Found");
         }
 
-        var existing = (await _accountRepository.GetAllAsync())
-            .FirstOrDefault(a => a.AccountNumber == account.AccountNumber);
-
-        if (existing == null || existing.Id != id)
+        if (!await AccountExists(account.AccountNumber))
         {
-            throw new BadRequestException("Bad Request", new[] { $"Account with AccountNumber [{account.AccountNumber}] No Exists or belongs to another account." });
+            throw new BadRequestException($"Account with AccountNumber [{account.AccountNumber}] No Exists");
         }
-
         await _accountRepository.UpdateAsync(account);
         return account;
     }
@@ -83,7 +84,7 @@ public class AccountService : IAccountService
         var account = await _accountRepository.GetByIdAsync(id);
         if (account is null)
         {
-            throw new NotFoundException("Not Found", new[] { $"Account with Id=[{id}] Not Found" });
+            throw new NotFoundException($"Account with Id=[{id}] Not Found");
         }
 
         await _accountRepository.RemoveAsync(account);
@@ -93,18 +94,18 @@ public class AccountService : IAccountService
     {
         if (id != transaction.Id)
         {
-            throw new BadRequestException("Bad Request", new[] { $"Id [{id}] is different to Transaction.Id [{transaction.Id}]" });
+            throw new BadRequestException($"Id [{id}] is different to Transaction.Id [{transaction.Id}]");
         }
 
         var account = await _accountRepository.GetByIdAsync(id);
         if (account == null)
         {
-            throw new NotFoundException("Not Found", new[] { $"Account with Id=[{id}] Not Found" });
+            throw new NotFoundException();
         }
 
         if (account.AccountNumber != transaction.AccountNumber)
         {
-            throw new BadRequestException("Bad Request", new[] { $"Transaction.AccountNumber no coincide con la cuenta" });
+            throw new BadRequestException();
         }
 
         UpdateDeposit(account, transaction);
@@ -115,28 +116,30 @@ public class AccountService : IAccountService
     {
         if (id != transaction.Id)
         {
-            throw new BadRequestException("Bad Request", new[] { $"Id [{id}] is different to Transaction.Id [{transaction.Id}]" });
+            throw new BadRequestException($"Id [{id}] is different to Transaction.Id [{transaction.Id}]");
         }
 
         var account = await _accountRepository.GetByIdAsync(id);
         if (account == null)
         {
-            throw new NotFoundException("Not Found", new[] { $"Account with Id=[{id}] Not Found" });
+            throw new NotFoundException();
         }
 
-        if (account.AccountNumber != transaction.AccountNumber)
+        if (!await AccountExists(transaction.AccountNumber))
         {
-            throw new BadRequestException("Bad Request", new[] { $"Transaction.AccountNumber no coincide con la cuenta" });
+            throw new BadRequestException($"La cuenta con el número {transaction.AccountNumber} no existe.");
         }
 
         if (account.BalanceAmount < transaction.ValueAmount)
         {
-            throw new BadRequestException("Bad Request", new[] { "Fondos Insuficientes" });
+            throw new BadRequestException("Fondos Insuficientes");
         }
 
         UpdateWithdrawal(account, transaction);
         await _accountRepository.UpdateAsync(account);
     }
+
+    // Métodos privados
 
     private async Task<bool> AccountExists(string accountNumber)
     {
@@ -144,6 +147,7 @@ public class AccountService : IAccountService
             .FirstOrDefault(a => a.AccountNumber == accountNumber);
         return existingAccount != null;
     }
+
 
     private void UpdateDeposit(Account account, Transaction transaction)
     {

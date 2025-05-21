@@ -1,5 +1,4 @@
-﻿using MoneyBankService.Application.Interfaces.Repositories;
-using MoneyBankService.Domain.Entities;
+﻿using MoneyBankService.Domain.Entities;
 
 namespace MoneyBankService.Application.Interfaces;
 
@@ -7,6 +6,7 @@ public interface IAccountService
 {
     Task<Account> CreateAccount(Account account);
     Task<List<Account>> GetAllAccounts();
+
     Task<Account> GetAccountById(int id);
 
     Task<Account> UpdateAccount(int id, Account account);

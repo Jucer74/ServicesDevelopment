@@ -1,26 +1,20 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using MoneyBankService.Application.Exceptions;
 
-namespace MoneyBankService.Application.Exceptions;
+namespace MoneyBankService.Domain.Exceptions;
 
-    [ExcludeFromCodeCoverage]
-    public class InternalServerErrorException : BusinessException
+[ExcludeFromCodeCoverage]
+public class InternalServerErrorException : BusinessException
+{
+    public InternalServerErrorException()
     {
-        // Constructor por defecto
-        public InternalServerErrorException()
-        {
-        }
-
-        // Constructor con mensaje
-        public InternalServerErrorException(string message)
-            : base(message)
-        {
-        }
-
-        // Constructor con mensaje y excepción interna
-        public InternalServerErrorException(string message, Exception innerException)
-            : base(message, innerException)
-        {
-        }
     }
 
+    public InternalServerErrorException(string message) : base(message)
+    {
+    }
+
+    public InternalServerErrorException(string message, Exception innerException)
+        : base(message, innerException)
+    {
+    }
+}
