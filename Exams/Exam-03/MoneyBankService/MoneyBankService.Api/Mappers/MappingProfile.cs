@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using MoneyBankService.Api.Dto;
+using MoneyBankService.Application.Dto;
 using MoneyBankService.Domain.Entities;
 
 namespace MoneyBankService.Api.Mappers;

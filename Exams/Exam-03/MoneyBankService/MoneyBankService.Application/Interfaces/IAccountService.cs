@@ -1,15 +1,14 @@
-﻿using MoneyBankService.Api.Dto;
+﻿using MoneyBankService.Application.Dto;
 
 namespace MoneyBankService.Application.Interfaces;
 
 public interface IAccountService
 {
-    Task<IEnumerable<AccountDto>> GetAllAsync();
-    Task<AccountDto> GetByIdAsync(int id);
-    Task<IEnumerable<AccountDto>> FindByAccountNumberAsync(string accountNumber);
-    Task<AccountDto> CreateAsync(AccountDto dto);
-    Task UpdateAsync(int id, AccountDto dto);
-    Task DeleteAsync(int id);
-    Task DepositAsync(int id, TransactionDto transaction);
-    Task WithdrawAsync(int id, TransactionDto transaction);
+    Task<IEnumerable<AccountDto>> GetAccountsAsync(string? accountNumber);
+    Task<AccountDto> GetAccountByIdAsync(int id);
+    Task<AccountDto> CreateAccountAsync(AccountDto dto);
+    Task UpdateAccountAsync(int id, AccountDto dto);
+    Task DeleteAccountAsync(int id);
+    Task DepositAsync(int id, TransactionDto dto);
+    Task WithdrawAsync(int id, TransactionDto dto);
 }

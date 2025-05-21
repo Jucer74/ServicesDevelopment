@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MoneyBankService.Application.Dto;
 using MoneyBankService.Application.Interfaces;
-using MoneyBankService.Api.Dto;
 
 namespace MoneyBankService.Api.Controllers;
 
@@ -8,72 +8,59 @@ namespace MoneyBankService.Api.Controllers;
 [ApiController]
 public class AccountsController : ControllerBase
 {
-    private readonly IAccountService _service;
+    private readonly IAccountService _accountService;
 
-    public AccountsController(IAccountService service)
+    public AccountsController(IAccountService accountService)
     {
-        _service = service;
+        _accountService = accountService;
     }
 
-    // GET: api/Accounts
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<AccountDto>>> GetAccounts([FromQuery] string? accountNumber)
+    public async Task<IActionResult> GetAccounts([FromQuery] string? accountNumber)
     {
-        if (!string.IsNullOrEmpty(accountNumber))
-        {
-            var filtered = await _service.FindByAccountNumberAsync(accountNumber);
-            return Ok(filtered);
-        }
-
-        var accounts = await _service.GetAllAsync();
-        return Ok(accounts);
+        var result = await _accountService.GetAccountsAsync(accountNumber);
+        return Ok(result);
     }
 
-    // GET: api/Accounts/5
     [HttpGet("{id}")]
-    public async Task<ActionResult<AccountDto>> GetAccount(int id)
+    public async Task<IActionResult> GetAccount(int id)
     {
-        var account = await _service.GetByIdAsync(id);
-        return Ok(account);
+        var result = await _accountService.GetAccountByIdAsync(id);
+        return Ok(result);
     }
 
-    // POST: api/Accounts
     [HttpPost]
-    public async Task<ActionResult<AccountDto>> PostAccount([FromBody] AccountDto dto)
+    public async Task<IActionResult> PostAccount([FromBody] AccountDto dto)
     {
-        var created = await _service.CreateAsync(dto);
-        return CreatedAtAction(nameof(GetAccount), new { id = created.Id }, created);
+        var result = await _accountService.CreateAccountAsync(dto);
+        return Ok(new { message = "Cuenta creada exitosamente", dto = result });
     }
 
-    // PUT: api/Accounts/5
     [HttpPut("{id}")]
     public async Task<IActionResult> PutAccount(int id, [FromBody] AccountDto dto)
     {
-        await _service.UpdateAsync(id, dto);
+        await _accountService.UpdateAccountAsync(id, dto);
         return NoContent();
     }
 
-    // DELETE: api/Accounts/5
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteAccount(int id)
     {
-        await _service.DeleteAsync(id);
+        await _accountService.DeleteAccountAsync(id);
         return NoContent();
     }
 
-    // PUT: api/Accounts/5/Deposit
     [HttpPut("{id}/Deposit")]
-    public async Task<IActionResult> Deposit(int id, [FromBody] TransactionDto transaction)
+    public async Task<IActionResult> Deposit(int id, [FromBody] TransactionDto dto)
     {
-        await _service.DepositAsync(id, transaction);
+        await _accountService.DepositAsync(id, dto);
         return NoContent();
     }
 
-    // PUT: api/Accounts/5/Withdrawal
     [HttpPut("{id}/Withdrawal")]
-    public async Task<IActionResult> Withdrawal(int id, [FromBody] TransactionDto transaction)
+    public async Task<IActionResult> Withdraw(int id, [FromBody] TransactionDto dto)
     {
-        await _service.WithdrawAsync(id, transaction);
+        await _accountService.WithdrawAsync(id, dto);
         return NoContent();
     }
 }

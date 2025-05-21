@@ -8,6 +8,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MoneyBankService.Domain\MoneyBankService.Domain.csproj" />
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MoneyBankService.Infrastructure\MoneyBankService.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

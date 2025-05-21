@@ -1,123 +1,154 @@
-﻿using AutoMapper;
+﻿using Microsoft.EntityFrameworkCore;
+using MoneyBankService.Application.Dto;
 using MoneyBankService.Application.Interfaces;
-using MoneyBankService.Api.Dto;
 using MoneyBankService.Domain.Entities;
-using MoneyBankService.Domain.Exceptions;
-using MoneyBankService.Domain.Interfaces.Repositories;
+using MoneyBankService.Infrastructure.Context;
 
 namespace MoneyBankService.Application.Services;
 
 public class AccountService : IAccountService
 {
-    private const decimal MAX_OVERDRAFT = 1_000_000;
-    private readonly IAccountRepository _repository;
-    private readonly IMapper _mapper;
+    private readonly AppDbContext _context;
+    private const decimal MAX_OVERDRAFT = 1000000m;
 
-    public AccountService(IAccountRepository repository, IMapper mapper)
+    public AccountService(AppDbContext context)
     {
-        _repository = repository;
-        _mapper = mapper;
+        _context = context;
     }
 
-    public async Task<IEnumerable<AccountDto>> GetAllAsync()
+    public async Task<IEnumerable<AccountDto>> GetAccountsAsync(string? accountNumber)
     {
-        var accounts = await _repository.GetAllAsync();
-        return _mapper.Map<IEnumerable<AccountDto>>(accounts);
-    }
+        var query = _context.Accounts.AsQueryable();
 
-    public async Task<AccountDto> GetByIdAsync(int id)
-    {
-        var account = await _repository.GetByIdAsync(id);
-        if (account == null)
-            throw new NotFoundException($"La cuenta con id [{id}] no existe");
-        return _mapper.Map<AccountDto>(account);
-    }
-
-    public async Task<IEnumerable<AccountDto>> FindByAccountNumberAsync(string accountNumber)
-    {
-        var accounts = await _repository.FindAsync(x => x.AccountNumber == accountNumber);
-        return _mapper.Map<IEnumerable<AccountDto>>(accounts);
-    }
-
-    public async Task<AccountDto> CreateAsync(AccountDto dto)
-    {
-        var exists = await _repository.FindAsync(x => x.AccountNumber == dto.AccountNumber);
-        if (exists.Any())
-            throw new BadRequestException($"La Cuenta [{dto.AccountNumber}] ya Existe");
-
-        if (dto.BalanceAmount <= 0)
-            throw new BadRequestException("El Balance debe ser mayor a cero");
-
-        var account = _mapper.Map<Account>(dto);
-
-        if (account.AccountType == 'C') // Corriente
+        if (!string.IsNullOrWhiteSpace(accountNumber))
         {
-            account.BalanceAmount += MAX_OVERDRAFT;
-            account.OverdraftAmount = 0;
+            query = query.Where(a => a.AccountNumber == accountNumber);
         }
 
-        var result = await _repository.AddAsync(account);
-        return _mapper.Map<AccountDto>(result);
+        var accounts = await query.ToListAsync();
+
+        return accounts.Select(a => new AccountDto
+        {
+            Id = a.Id,
+            AccountNumber = a.AccountNumber,
+            AccountType = a.AccountType,
+            OwnerName = a.OwnerName,
+            BalanceAmount = a.BalanceAmount,
+            OverdraftAmount = a.OverdraftAmount,
+            CreationDate = a.CreationDate
+        });
     }
 
-    public async Task UpdateAsync(int id, AccountDto dto)
+    public async Task<AccountDto> GetAccountByIdAsync(int id)
     {
-        if (id != dto.Id)
-            throw new BadRequestException("El Id proporcionado no coincide");
+        var account = await _context.Accounts.FindAsync(id) 
+                      ?? throw new Exception("Cuenta no encontrada");
 
-        var account = await _repository.GetByIdAsync(id);
-        if (account == null)
-            throw new NotFoundException($"La cuenta con id [{id}] no existe");
-
-        var updated = _mapper.Map<Account>(dto);
-        await _repository.UpdateAsync(updated);
+        return new AccountDto
+        {
+            Id = account.Id,
+            AccountNumber = account.AccountNumber,
+            AccountType = account.AccountType,
+            OwnerName = account.OwnerName,
+            BalanceAmount = account.BalanceAmount,
+            OverdraftAmount = account.OverdraftAmount,
+            CreationDate = account.CreationDate
+        };
     }
 
-    public async Task DeleteAsync(int id)
+    public async Task<AccountDto> CreateAccountAsync(AccountDto dto)
     {
-        var account = await _repository.GetByIdAsync(id);
-        if (account == null)
-            throw new NotFoundException($"La cuenta con id [{id}] no existe");
+        if (dto.BalanceAmount <= 0)
+            throw new Exception("El Balance debe ser mayor a cero");
 
-        await _repository.RemoveAsync(account);
+        var account = new Account
+        {
+            AccountNumber = dto.AccountNumber,
+            AccountType = dto.AccountType,
+            OwnerName = dto.OwnerName,
+            CreationDate = dto.CreationDate
+        };
+
+        if (dto.AccountType == 'C')
+        {
+            account.BalanceAmount = dto.BalanceAmount + MAX_OVERDRAFT;
+            account.OverdraftAmount = MAX_OVERDRAFT;
+        }
+        else
+        {
+            account.BalanceAmount = dto.BalanceAmount;
+        }
+
+        _context.Accounts.Add(account);
+        await _context.SaveChangesAsync();
+
+        dto.Id = account.Id;
+        dto.OverdraftAmount = account.OverdraftAmount;
+        dto.BalanceAmount = account.BalanceAmount;
+        return dto;
     }
 
-    public async Task DepositAsync(int id, TransactionDto transaction)
+    public async Task UpdateAccountAsync(int id, AccountDto dto)
     {
-        var account = await _repository.GetByIdAsync(id);
-        if (account == null)
-            throw new NotFoundException($"La cuenta con id [{id}] no existe");
+        var account = await _context.Accounts.FindAsync(id) 
+                      ?? throw new Exception("Cuenta no encontrada");
 
-        if (account.AccountNumber != transaction.AccountNumber)
-            throw new BadRequestException("El Numero de la Cuenta es Diferente al de la transacción");
+        account.AccountNumber = dto.AccountNumber;
+        account.AccountType = dto.AccountType;
+        account.OwnerName = dto.OwnerName;
+        account.BalanceAmount = dto.BalanceAmount;
+        account.OverdraftAmount = dto.OverdraftAmount;
+        account.CreationDate = dto.CreationDate;
 
-        account.BalanceAmount += transaction.ValueAmount;
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task DeleteAccountAsync(int id)
+    {
+        var account = await _context.Accounts.FindAsync(id) 
+                      ?? throw new Exception("Cuenta no encontrada");
+
+        _context.Accounts.Remove(account);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task DepositAsync(int id, TransactionDto dto)
+    {
+        var account = await _context.Accounts.FindAsync(id)
+                      ?? throw new Exception("Cuenta no encontrada");
+
+        account.BalanceAmount += dto.ValueAmount;
 
         if (account.AccountType == 'C')
         {
             if (account.OverdraftAmount > 0 && account.BalanceAmount < MAX_OVERDRAFT)
+            {
                 account.OverdraftAmount = MAX_OVERDRAFT - account.BalanceAmount;
+            }
             else
+            {
                 account.OverdraftAmount = 0;
+            }
         }
 
-        await _repository.UpdateAsync(account);
+        await _context.SaveChangesAsync();
     }
 
-    public async Task WithdrawAsync(int id, TransactionDto transaction)
+    public async Task WithdrawAsync(int id, TransactionDto dto)
     {
-        var account = await _repository.GetByIdAsync(id);
-        if (account == null)
-            throw new NotFoundException($"La cuenta con id [{id}] no existe");
+        var account = await _context.Accounts.FindAsync(id) 
+                      ?? throw new Exception("Cuenta no encontrada");
 
-        if (transaction.ValueAmount > account.BalanceAmount)
-            throw new BadRequestException("Fondos Insuficientes");
+        if (dto.ValueAmount > account.BalanceAmount)
+            throw new Exception("Fondos Insuficientes");
 
-        account.BalanceAmount -= transaction.ValueAmount;
+        account.BalanceAmount -= dto.ValueAmount;
 
         if (account.AccountType == 'C' && account.OverdraftAmount > 0 && account.BalanceAmount < MAX_OVERDRAFT)
+        {
             account.OverdraftAmount = MAX_OVERDRAFT - account.BalanceAmount;
+        }
 
-        await _repository.UpdateAsync(account);
+        await _context.SaveChangesAsync();
     }
 }
