@@ -10,11 +10,11 @@ namespace MoneyBankService.Application.Services
 {
     public class AccountService : IAccountService
     {
-        private readonly IBankAccountRepository _accountRepository;
+        private readonly IAccountRepository _accountRepository;
         private readonly IMapper _mapper;
         private const decimal MAX_OVERDRAFT = 1_000_000M;
 
-        public AccountService(IBankAccountRepository accountRepository, IMapper mapper)
+        public AccountService(IAccountRepository accountRepository, IMapper mapper)
         {
             _accountRepository = accountRepository ?? throw new ArgumentNullException(nameof(accountRepository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
