@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using UserManagement.Application.Interfaces;
 using UserManagement.Domain.Entities;
 using UserManagement.Domain.Exceptions;
-using System.Threading.Tasks;
 
 namespace UserManagement.Api.Controllers
 {
@@ -10,18 +9,18 @@ namespace UserManagement.Api.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IUserService _userService;
+        private readonly IUserService _UserService;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService UserService)
         {
-            _userService = userService;
+            _UserService = UserService;
         }
 
         // GET: api/<UserController>
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _userService.GetAllAsync());
+            return Ok(await _UserService.GetAllAsync());
         }
 
         // GET api/<UserController>/5
@@ -30,7 +29,7 @@ namespace UserManagement.Api.Controllers
         {
             try
             {
-                return Ok(await _userService.GetByIdAsync(id));
+                return Ok(await _UserService.GetByIdAsync(id));
             }
             catch (NotFoundException ex)
             {
@@ -40,18 +39,18 @@ namespace UserManagement.Api.Controllers
 
         // POST api/<UserController>
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] User user)
+        public async Task<IActionResult> Post([FromBody] User User)
         {
-            return Ok(await _userService.AddAsync(user));
+            return Ok(await _UserService.AddAsync(User));
         }
 
         // PUT api/<UserController>/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] User user)
+        public async Task<IActionResult> Put(int id, [FromBody] User User)
         {
             try
             {
-                return Ok(await _userService.UpdateAsync(id, user));
+                return Ok(await _UserService.UpdateAsync(id, User));
             }
             catch (BadRequestException ex)
             {
@@ -69,7 +68,7 @@ namespace UserManagement.Api.Controllers
         {
             try
             {
-                await _userService.RemoveAsync(id);
+                await _UserService.RemoveAsync(id);
                 return Ok();
             }
             catch (NotFoundException ex)

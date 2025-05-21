@@ -1,14 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MoneyBankService.Domain.Common;
-using MoneyBankService.Domain.Exceptions;
+using MoneyBankService.Application.Common;
+using MoneyBankService.Application.Exceptions;
 using MoneyBankService.Infrastructure.Context;
 using System.Linq.Expressions;
+using System;
 
 namespace MoneyBankService.Infrastructure.Common
 {
     public class Repository<T> : IRepository<T> where T : EntityBase
     {
-        private readonly AppDbContext _appDbContext;
+        protected readonly AppDbContext _appDbContext;
 
         public Repository(AppDbContext appDbContext)
         {
@@ -44,7 +46,7 @@ namespace MoneyBankService.Infrastructure.Common
 
             if (original is null)
             {
-                throw new NotFoundException($"Item with Id={id} Not Found");
+                throw new NotFoundException($"Account with Id={id} Not Found");
             }
 
             _appDbContext.Set<T>().Remove(entity!);
@@ -58,13 +60,18 @@ namespace MoneyBankService.Infrastructure.Common
 
             if (original is null)
             {
-                throw new NotFoundException($"Item with Id={id} Not Found");
+                throw new NotFoundException($"Account with Id={id} Not Found");
             }
 
             _appDbContext.Entry(original).CurrentValues.SetValues(entity!);
             await _appDbContext.SaveChangesAsync();
 
             return entity!;
+        }
+
+        public async Task<bool> ExistsAsync(Expression<Func<T, bool>> predicate)
+        {
+            return await _appDbContext.Set<T>().AnyAsync(predicate);
         }
     }
 }

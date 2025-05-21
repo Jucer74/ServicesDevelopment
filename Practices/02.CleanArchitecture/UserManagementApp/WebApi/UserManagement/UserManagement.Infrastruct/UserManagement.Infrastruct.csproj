@@ -7,7 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\UserManagement.Api\UserManagement.Api.csproj" />
+    <ProjectReference Include="..\UserManagement.Domain\UserManagement.Domain.csproj" />
   </ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.13" />
+		<PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="8.0.3" />
+	</ItemGroup>
+
 
 </Project>

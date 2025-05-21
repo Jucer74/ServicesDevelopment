@@ -1,5 +1,4 @@
-DELETE FROM `pricatdb`.`Products` WHERE Id >= 0;
-ALTER TABLE `pricatdb`.`Products` AUTO_INCREMENT = 1;
+
 INSERT INTO `pricatdb`.`Products` (`CategoryId`, `EanCode`, `Description`, `Unit`, `Price`)
 VALUES ( 1, '7707548516286', 'Arroz', 'Lb', 500.00);
 INSERT INTO `pricatdb`.`Products` (`CategoryId`, `EanCode`, `Description`, `Unit`, `Price`)

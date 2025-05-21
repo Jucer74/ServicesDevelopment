@@ -1,10 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using UserManagement.Application.Interfaces;
+﻿using UserManagement.Application.Interfaces;
 using UserManagement.Application.Services;
-using UserManagement.Domain.Common;
-using UserManagement.Domain.Entities;
 using UserManagement.Domain.Interfaces.Repositories;
-using UserManagement.Infrastruct.Common;
 using UserManagement.Infrastruct.Repositories;
 
 namespace UserManagement.Api.Extensions
@@ -22,7 +18,7 @@ namespace UserManagement.Api.Extensions
         public static IServiceCollection AddInfrastructureModules(this IServiceCollection services)
         {
             // Repositories
-            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserRepository, UserRepository>(); 
 
 
             return services;

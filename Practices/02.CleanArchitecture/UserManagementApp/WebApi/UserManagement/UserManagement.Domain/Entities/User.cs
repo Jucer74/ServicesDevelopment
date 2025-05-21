@@ -19,6 +19,4 @@ namespace UserManagement.Domain.Entities
         [Required]
         public string Username { get; set; }
     }
-    {
-    }
 }

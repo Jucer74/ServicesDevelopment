@@ -1,76 +1,74 @@
-﻿using System.Linq.Expressions;
-using UserManagement.Application.Interfaces;
+﻿using UserManagement.Application.Interfaces;
 using UserManagement.Domain.Entities;
+using UserManagement.Domain.Exceptions;
 using UserManagement.Domain.Interfaces.Repositories;
-using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace UserManagement.Application.Services
 {
     public class UserService : IUserService
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IUserRepository _UserRepository;
 
-        public UserService(IUserRepository userRepository)
+        public UserService(IUserRepository UserRepository)
         {
-            _userRepository = userRepository;
+            _UserRepository = UserRepository;
         }
+
         public async Task<User> AddAsync(User entity)
         {
-           return await _userRepository.AddAsync(entity);
+            return await _UserRepository.AddAsync(entity);
         }
 
-        public Task<IEnumerable<User>> FindAsync(Expression<Func<User, bool>> predicate)
+        public async Task<IEnumerable<User>> FindAsync(Expression<Func<User, bool>> predicate)
         {
-            return _userRepository.FindAsync(predicate);
+            return await _UserRepository.FindAsync(predicate);
         }
 
-        public Task<IEnumerable<User>> GetAllAsync()
+        public async Task<IEnumerable<User>> GetAllAsync()
         {
-            return _userRepository.GetAllAsync();
+            return await _UserRepository.GetAllAsync();
         }
 
-        public Task<User> GetByIdAsync(int id)
+        public async Task<User> GetByIdAsync(int id)
         {
-            var user = _userRepository.GetByIdAsync(id);
+            var User = await _UserRepository.GetByIdAsync(id);
 
-            if (user is null)
+            if (User is null)
             {
-                throw new Exception("User not found");
-            } 
+                throw new NotFoundException($"User with Id={id} Not Found");
+            }
 
-            return
+            return User;
         }
 
         public async Task RemoveAsync(int id)
         {
-            var user = _userRepository.GetByIdAsync(id);
+            var User = await _UserRepository.GetByIdAsync(id);
 
-            if (user is null)
+            if (User is null)
             {
-                throw new Exception("User not found");
+                throw new NotFoundException($"User with Id={id} Not Found");
             }
 
-            await _userRepository.RemoveAsync(user);
+            await _UserRepository.RemoveAsync(User);
         }
 
-        public Task UpdateAsync(int id, User entity)
+        public async Task<User> UpdateAsync(int id, User entity)
         {
             if (id != entity.Id)
             {
                 throw new BadRequestException($"The Id={id} not corresponding with Entity.Id={entity.Id}");
             }
 
-            var user = _userRepository.GetByIdAsync(id);
+            var User = await _UserRepository.GetByIdAsync(id);
 
-            if (user is null)
+            if (User is null)
             {
-                throw new DirectoryNotFoundException($"User with Id={id} Not Found");
+                throw new NotFoundException($"User with Id={id} Not Found");
             }
 
-            return _userRepository.UpdateAsync(entity);
+            return (await _UserRepository.UpdateAsync(entity));
         }
     }
 }

@@ -8,8 +8,13 @@ using MoneyBankService.Infrastructure.Context;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add the DB Context
-builder.Services.AddDbContext<AppDbContext>(options => options.UseMySQL(builder.Configuration.GetConnectionString("CnnStr")!));
-
+// Add DBContext
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseMySql(
+        builder.Configuration.GetConnectionString("CnnStr"),
+        ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("CnnStr"))
+    )
+);
 // Add services to the container.
 builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
 {
@@ -35,12 +40,8 @@ builder.Services.AddValidators();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 // Add the Exception Middleware Handler
 app.UseExceptionMiddleware();

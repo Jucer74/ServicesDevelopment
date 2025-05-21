@@ -1,9 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿// Importación de los namespaces necesarios
+using System.ComponentModel.DataAnnotations;  // Para usar atributos de validación de datos como [Key]
 
-namespace MoneyBankService.Domain.Common;
-
-public abstract class EntityBase
+namespace MoneyBankService.Domain.Common
 {
-    [Key]
-    public int Id { get; set; }
+    // Clase base que contiene propiedades comunes para todas las entidades
+    public class EntityBase
+    {
+        // Propiedad que representa el identificador único de la entidad
+        // El atributo [Key] indica que esta propiedad es la clave primaria en la base de datos
+        [Key]
+        public int Id { get; set; }
+    }
 }

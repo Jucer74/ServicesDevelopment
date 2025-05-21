@@ -3,7 +3,7 @@ using UserManagement.Domain.Interfaces.Repositories;
 using UserManagement.Infrastruct.Common;
 using UserManagement.Infrastruct.Context;
 
-namespace UserManagementPeople.Infrastruct.Repositories
+namespace UserManagement.Infrastruct.Repositories
 {
     public class UserRepository : Repository<User>, IUserRepository
     {

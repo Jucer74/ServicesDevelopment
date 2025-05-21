@@ -1,11 +1,8 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
 using UserManagement.Domain.Common;
+using UserManagement.Domain.Exceptions;
 using UserManagement.Infrastruct.Context;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace UserManagement.Infrastruct.Common
 {
@@ -30,6 +27,7 @@ namespace UserManagement.Infrastruct.Common
             return await _appDbContext.Set<T>().Where(predicate).ToListAsync<T>();
         }
 
+
         public async Task<IEnumerable<T>> GetAllAsync()
         {
             return await _appDbContext.Set<T>().ToListAsync<T>();
@@ -47,7 +45,7 @@ namespace UserManagement.Infrastruct.Common
 
             if (original is null)
             {
-                throw new NotFoundException($"Person with Id={id} Not Found");
+                throw new NotFoundException($"User with Id={id} Not Found");
             }
 
             _appDbContext.Set<T>().Remove(entity);
@@ -61,7 +59,7 @@ namespace UserManagement.Infrastruct.Common
 
             if (original is null)
             {
-                throw new NotFoundException($"Person with Id={id} Not Found");
+                throw new NotFoundException($"User with Id={id} Not Found");
             }
 
             _appDbContext.Entry(original).CurrentValues.SetValues(entity);

@@ -7,9 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\UserManagement.Api\UserManagement.Api.csproj" />
     <ProjectReference Include="..\UserManagement.Domain\UserManagement.Domain.csproj" />
-    <ProjectReference Include="..\UserManagement.Infrastruct\UserManagement.Infrastruct.csproj" />
   </ItemGroup>
 
 </Project>
