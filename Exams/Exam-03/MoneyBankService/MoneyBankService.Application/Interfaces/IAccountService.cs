@@ -6,11 +6,7 @@ namespace MoneyBankService.Application.Interfaces;
 public interface IAccountService
 {
     Task<Account> CreateAccount(Account account);
-     public  async Task<List<Account>> GetAllAccounts()
-    {
-        return (await IAccountRepository.GetAllAsync()).ToList();
-    }
-
+    Task<List<Account>> GetAllAccounts();
     Task<Account> GetAccountById(int id);
 
     Task<Account> UpdateAccount(int id, Account account);

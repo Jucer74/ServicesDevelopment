@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace MoneyBankService.Application.Exceptions
 {
-    public class InsufficientFundsException : Exception
+    public class InvalidTransactionException : ApplicationException
     {
-        public InsufficientFundsException(string message) : base(message) { }
+        public InvalidTransactionException(string message) : base(message) { }
     }
 }
 

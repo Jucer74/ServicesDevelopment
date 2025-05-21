@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MoneyBankService.Application.Dto;
 using MoneyBankService.Application.Interfaces;
 using MoneyBankService.Domain.Entities;
-using MoneyBankService.Domain.Exceptions;
+using Org.BouncyCastle.Asn1.Ocsp;
 
 namespace MoneyBankService.Api.Controllers
 {
@@ -73,24 +73,9 @@ namespace MoneyBankService.Api.Controllers
         [HttpPut("{id}/Withdrawal")]
         public async Task<IActionResult> Withdrawal(int id, [FromBody] Transaction transaction)
         {
-            try
-            {
-                await _accountService.Withdraw(id, transaction);
-                return NoContent();
-            }
-            catch (AccountNotFoundException ex)
-            {
-                return BadRequest(new { Message = ex.Message });
-            }
-            catch (InsufficientFundsException ex)
-            {
-                return BadRequest(new { Message = ex.Message });
-            }
-            catch (Exception)
-            {
-                // Para errores no previstos, que siga siendo 500
-                return StatusCode(500, new { Message = "Ocurrió un error inesperado." });
-            }
+
+            await _accountService.Withdraw(id, transaction);
+            return NoContent();
         }
     }
 }
