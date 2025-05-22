@@ -8,40 +8,25 @@ Utilizando .Net, Implemente una aplicacion de consola en para Soportar operacion
 
 Tome como *referencia* el siguiente diagrama de Clases:
 
-![Diagrama](https://github.com/Jucer74/ServicesDevelopment/tree/main/Exams/Exam-01/Images/Class-Diagram.png)
+![Diagrama](https://github.com/Jucer74/ServicesDevelopment/blob/main/Exams/Exam-01/Images/Class_Diagram.png)
 
 ## Cuenta Bancaria
 Define las propiedades principales de la cuenta asi:
 
-## IBankAcount 
+## BankAcount 
 **Propiedades**
  + AccountNumber  : string  => Numero de la Cuenta, Solo Digitos y longitud exacta de 10 digitos
  + AccountOwner   : string   => Nombre del Titular de la cuenta y longitud menor o igual a 50 caracteres
  + BalanceAmount  : decimal  => Valor Numerico mayor a cero
  + AccountType    : AccountType => Tipo de cuenta (Ahorros o Corriente) de tipo enum AccountType
                   1) Saving , 2) Checking
-
-**Metodos**
- + Deposit(amount: decimal) : void
-   Incrementa el valor del BalanceAmount con el valor pasado por parametro
- + Withdrawal (amount: decimal) : void
-   Decrementa el valor del BalanceAmount, restando el valor pasado  por parametro
- 
- ## Tipos de Cuentas Bancarias (Ahorros/Corriente)
- Heredan de **IBankAccount** he implementan los metodos correspondientes
- + SavingAccount : IBankAccount
-   Implementa las propiedades y Metodos de la Interface IBankAccount para manejar los datos de la cuenta de Ahorros
-
- + CheckingAccount : IBankAccount
-    + OverdraftAmount: decimal => Valor de Sobregiro 
-
-   Implemente las propiedades y metodos de la interface IBankAccount para manejar los datos de la cuenta corriente, adicionando la propiedad de OverdraftAmount (Valor de sobregiro), cuyo valor minimo por defecto seria de un millon (MIN_OVERDRAFT_AMOUNT=1.000.000), por lo que al momento de crear una cuenta corriente el valor del saldo (BalanceAmount) será igual al valor de la cuenta mas el valor minimo de siobregiro.
+ + OverdraftAmount  : decimal  => Valor Numerico mayor o igual cero
 
  **BankService**
   
 ## Metodos 
 
-+ CreateAccount (accountNumber: IBankAccount) : BankAccount
++ CreateAccount (bankAaccount: BankAccount) : BankAccount
   Adiciona una nueva cuenta a la lista general de Cuentas, validando que no exista, en cuyo caso muestra un menaje de que la cuenta ya existe
 
 + GetBalance(accountNumber: string): BankAccount
