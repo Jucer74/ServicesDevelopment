@@ -33,7 +33,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowAll", // Cambi� el nombre de la pol�tica para que sea m�s espec�fico
         policy =>
         {
-            policy.AllowAnyOrigin() // **Aseg�rate de que este sea el puerto correcto de tu React**
+              policy.AllowAnyOrigin() // **Aseg�rate de que este sea el puerto correcto de tu React**
                    .AllowAnyHeader()
                    .AllowAnyMethod();
         });
