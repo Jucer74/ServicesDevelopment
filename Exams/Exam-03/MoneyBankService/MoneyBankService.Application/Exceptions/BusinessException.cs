@@ -1,23 +1,24 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace MoneyBankService.Domain.Exceptions;
-
-/// <summary>
-/// Base Business Exception
-/// </summary>
-[ExcludeFromCodeCoverage]
-public class BusinessException : Exception
+namespace MoneyBankService.Domain.Exceptions
 {
-    public BusinessException()
+    /// <summary>
+    /// Base Business Exception
+    /// </summary>
+    [ExcludeFromCodeCoverage]
+    public class BusinessException : Exception
     {
-    }
+        public BusinessException()
+        {
+        }
 
-    public BusinessException(string message) : base(message)
-    {
-    }
+        public BusinessException(string message) : base(message)
+        {
+        }
 
-    public BusinessException(string message, Exception innerException)
-        : base(message, innerException)
-    {
+        public BusinessException(string message, Exception innerException)
+            : base(message, innerException)
+        {
+        }
     }
 }
