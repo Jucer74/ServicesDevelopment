@@ -45,17 +45,36 @@ public class AccountService : IAccountService
         return await _accountRepository.AddAsync(account);
     }
 
-    public async Task UpdateAccountAsync(int id, Account account)
+    public async Task<Account> UpdateAccountAsync(int id, Account account)
     {
-        var existingAccount = await _accountRepository.GetByIdAsync(id)
+        var existing = await _accountRepository.GetByIdAsync(id)
             ?? throw new NotFoundException("Cuenta no encontrada");
 
-        // Actualizar solo campos permitidos
-        existingAccount.OwnerName = account.OwnerName;
-        existingAccount.AccountType = account.AccountType;
+        // Si cambia número de cuenta, validar que exista
+        if (account.AccountNumber != existing.AccountNumber)
+        {
+            var found = await _accountRepository.GetByAccountNumberAsync(account.AccountNumber);
+            if (found is null)
+                throw new BusinessException($"La Cuenta [{account.AccountNumber}] No Existe");
+            existing.AccountNumber = account.AccountNumber;
+        }
 
-        await _accountRepository.UpdateAsync(existingAccount);
+        // Actualizar datos
+        existing.OwnerName = account.OwnerName;
+        existing.AccountType = account.AccountType;
+        existing.BalanceAmount = account.BalanceAmount;
+
+        // Ajustar sobregiro si es corriente
+        if (existing.AccountType == 'C')
+        {
+            existing.OverdraftAmount = existing.BalanceAmount < MaxOverdraft
+                ? MaxOverdraft - existing.BalanceAmount
+                : 0;
+        }
+
+        return await _accountRepository.UpdateAsync(existing);
     }
+
 
     public async Task DeleteAccountAsync(int id)
     {

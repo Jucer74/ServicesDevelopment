@@ -11,30 +11,16 @@ var builder = WebApplication.CreateBuilder(args);
 // 1. Configurar la conexión a la base de datos
 builder.Services.AddDbContext<AppDbContext>(options => options.UseMySQL(builder.Configuration.GetConnectionString("CnnStr")!));
 
-
-
 // 2. Registrar repositorio y servicio
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 
-// 3. Controllers + validación custom
-builder.Services
-    .AddControllers()
-    .ConfigureApiBehaviorOptions(options =>
-    {
-        options.InvalidModelStateResponseFactory = context =>
-        {
-            var errors = context.ModelState.Values
-                .SelectMany(v => v.Errors)
-                .Select(e => e.ErrorMessage)
-                .ToArray();
-            return new BadRequestObjectResult(new
-            {
-                errorType = "Bad Request",
-                errors = errors
-            });
-        };
-    });
+// 2. Suprimir filtro automático
+builder.Services.AddControllers(options =>
+{
+    // Reemplazar SuppressModelStateInvalidFilter con SuppressImplicitRequiredAttributeForNonNullableReferenceTypes
+    options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true;
+});
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -50,4 +36,5 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
+
 app.Run();
