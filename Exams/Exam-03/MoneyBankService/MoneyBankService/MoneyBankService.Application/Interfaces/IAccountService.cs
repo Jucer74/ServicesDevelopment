@@ -5,7 +5,7 @@ namespace MoneyBankService.Application.Interfaces
 {
     public interface IAccountService
     {
-        Task<IEnumerable<AccountDto>> GetAccountsAsync(string? accountNumber);
+        Task<IEnumerable<AccountDto>> GetAccountsAsync(string? AccountNumber);
         Task<AccountDto?> GetAccountByIdAsync(int id);
         Task<ServiceResult<AccountDto>> CreateAccountAsync(AccountDto accountDto);
         Task<ServiceResult> UpdateAccountAsync(AccountDto accountDto);

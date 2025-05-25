@@ -30,9 +30,9 @@ namespace MoneyBankService.Api.Validators
                 .WithMessage("El tipo de cuenta debe ser 'A' (Ahorros) o 'C' (Corriente)");
         }
 
-        private bool BeValidAccountType(char accountType)
+        private bool BeValidAccountType(char AccountType)
         {
-            return accountType == 'A' || accountType == 'C';
+            return AccountType == 'A' || AccountType == 'C';
         }
     }
 }

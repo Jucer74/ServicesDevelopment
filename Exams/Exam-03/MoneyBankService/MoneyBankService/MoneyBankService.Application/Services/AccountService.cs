@@ -20,11 +20,11 @@ namespace MoneyBankService.Application.Services
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public async Task<IEnumerable<AccountDto>> GetAccountsAsync(string? accountNumber)
+        public async Task<IEnumerable<AccountDto>> GetAccountsAsync(string? AccountNumber)
         {
             IEnumerable<BankAccount> accounts;
-            if (!string.IsNullOrEmpty(accountNumber))
-                accounts = await _accountRepository.FindAsync(x => x.Number == accountNumber);
+            if (!string.IsNullOrEmpty(AccountNumber))
+                accounts = await _accountRepository.FindAsync(x => x.AccountNumber == AccountNumber);
             else
                 accounts = await _accountRepository.GetAllAsync();
 
@@ -46,16 +46,16 @@ namespace MoneyBankService.Application.Services
                 return ServiceResult<AccountDto>.Fail("El Balance debe ser mayor a cero");
             }
 
-            var exists = (await _accountRepository.FindAsync(x => x.Number == accountDto.AccountNumber)).Any();
+            var exists = (await _accountRepository.FindAsync(x => x.AccountNumber == accountDto.AccountNumber)).Any();
             if (exists)
                 return ServiceResult<AccountDto>.Fail($"La Cuenta [{accountDto.AccountNumber}] ya Existe");
 
             var entity = _mapper.Map<BankAccount>(accountDto);
 
-            if (entity.Type == 'C')
+            if (entity.AccountType == 'C')
             {
-                entity.Balance += MAX_OVERDRAFT;
-                entity.OverdraftLimit = 0;
+                entity.BalanceAmount += MAX_OVERDRAFT;
+                entity.OverdraftAmount = 0;
             }
 
             var created = await _accountRepository.AddAsync(entity);
@@ -64,7 +64,7 @@ namespace MoneyBankService.Application.Services
 
         public async Task<ServiceResult> UpdateAccountAsync(AccountDto accountDto)
         {
-            var exists = (await _accountRepository.FindAsync(x => x.Number == accountDto.AccountNumber)).Any();
+            var exists = (await _accountRepository.FindAsync(x => x.AccountNumber == accountDto.AccountNumber)).Any();
             if (!exists)
                 return ServiceResult.Fail($"La Cuenta [{accountDto.AccountNumber}] No Existe");
 
@@ -89,21 +89,21 @@ namespace MoneyBankService.Application.Services
             if (account == null)
                 return ServiceResult.Fail("Cuenta no encontrada");
 
-            if (account.Number != transactionDto.AccountNumber)
+            if (account.AccountNumber != transactionDto.AccountNumber)
                 return ServiceResult.Fail("El Numero de la Cuenta es Diferente al de la transaccion");
 
-            account.Balance += transactionDto.ValueAmount;
+            account.BalanceAmount += transactionDto.ValueAmount;
 
-            if (account.Type == 'C')
+            if (account.AccountType == 'C')
             {
-                if (account.OverdraftLimit > 0 && account.Balance < MAX_OVERDRAFT)
-                    account.OverdraftLimit = MAX_OVERDRAFT - account.Balance;
+                if (account.OverdraftAmount > 0 && account.BalanceAmount < MAX_OVERDRAFT)
+                    account.OverdraftAmount = MAX_OVERDRAFT - account.BalanceAmount;
                 else
-                    account.OverdraftLimit = 0;
+                    account.OverdraftAmount = 0;
             }
             else
             {
-                account.OverdraftLimit = 0;
+                account.OverdraftAmount = 0;
             }
 
             await _accountRepository.UpdateAsync(account);
@@ -116,15 +116,15 @@ namespace MoneyBankService.Application.Services
             if (account == null)
                 return ServiceResult.Fail("Cuenta no encontrada");
 
-            if (account.Balance < transactionDto.ValueAmount)
+            if (account.BalanceAmount < transactionDto.ValueAmount)
                 return ServiceResult.Fail("Fondos Insuficientes");
 
-            account.Balance -= transactionDto.ValueAmount;
+            account.BalanceAmount -= transactionDto.ValueAmount;
 
-            if (account.Type == 'C' && account.OverdraftLimit > 0 && account.Balance < MAX_OVERDRAFT)
-                account.OverdraftLimit = MAX_OVERDRAFT - account.Balance;
+            if (account.AccountType == 'C' && account.OverdraftAmount > 0 && account.BalanceAmount < MAX_OVERDRAFT)
+                account.OverdraftAmount = MAX_OVERDRAFT - account.BalanceAmount;
             else
-                account.OverdraftLimit = 0;
+                account.OverdraftAmount = 0;
 
             await _accountRepository.UpdateAsync(account);
             return ServiceResult.Success();

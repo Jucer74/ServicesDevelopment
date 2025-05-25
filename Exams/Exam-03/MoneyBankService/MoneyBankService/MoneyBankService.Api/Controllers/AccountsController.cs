@@ -18,9 +18,9 @@ namespace MoneyBankService.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery] string? accountNumber)
+        public async Task<IActionResult> GetAll([FromQuery] string? AccountNumber)
         {
-            var accounts = await _accountService.GetAccountsAsync(accountNumber);
+            var accounts = await _accountService.GetAccountsAsync(AccountNumber);
             return Ok(accounts);
         }
 

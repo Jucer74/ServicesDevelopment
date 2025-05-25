@@ -1,0 +1,42 @@
+@model MoneyBankWeb_josoterad.Models.AccountDto
+
+@{
+    ViewData["Title"] = "Crear Cuenta";
+}
+
+<h1>Crear Cuenta</h1>
+
+<form asp-action="Create">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="form-group">
+        <label asp-for="AccountType"></label>
+        <select asp-for="AccountType" class="form-control">
+            <option value="A">Ahorros</option>
+            <option value="C">Corriente</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="AccountNumber"></label>
+        <input asp-for="AccountNumber" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="OwnerName"></label>
+        <input asp-for="OwnerName" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="BalanceAmount"></label>
+        <input asp-for="BalanceAmount" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="OverdraftAmount"></label>
+        <input asp-for="OverdraftAmount" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Guardar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>
