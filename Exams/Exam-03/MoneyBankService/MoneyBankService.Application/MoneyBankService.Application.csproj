@@ -7,12 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MoneyBankService.Domain\MoneyBankService.Domain.csproj" />
     <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="FluentValidation" Version="11.7.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MoneyBankService.Infrastructure\MoneyBankService.Infrastructure.csproj" />
+    <ProjectReference Include="..\MoneyBankService.Domain\MoneyBankService.Domain.csproj" />
   </ItemGroup>
 
 </Project>

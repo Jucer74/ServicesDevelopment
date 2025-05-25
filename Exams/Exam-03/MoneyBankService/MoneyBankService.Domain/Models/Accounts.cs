@@ -1,12 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using MoneyBankService.Domain.Common;
 
-namespace MoneyBankAPI.Models
+namespace MoneyBankService.Domain.Models
 {
-    public class Account
+    [Table("accounts")]
+    public class Account : EntityBase
     {
-        [Key]
-        public int Id { get; set; }
-
         [Required(ErrorMessage = "El campo Tipo de Cuenta es Requerido")]
         [RegularExpression("[AC]", ErrorMessage = "El campo Tipo de Cuenta solo permite (A o C)")]
         public char AccountType { get; set; } = 'A';

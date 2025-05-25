@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using MoneyBankService.Application.Dto;
-using MoneyBankService.Infrastructure.Context;
-using MoneyBankService.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using MoneyBankService.Application.Dtos;
+using MoneyBankService.Application.Interfaces.Services;
+using MoneyBankService.Domain.Models;
 
 namespace MoneyBankService.Api.Controllers
 {
@@ -10,155 +10,82 @@ namespace MoneyBankService.Api.Controllers
     [ApiController]
     public class AccountsController : ControllerBase
     {
-        private readonly AppDbContext _context;
-        private const decimal MAX_OVERDRAFT = 1000000m;
+        private const int MAX_OVERDRAFT = 1_000_000;
+        private readonly IAccountService _accountService;
+        private readonly IMapper _mapper;
 
-        public AccountsController(AppDbContext context)
+        public AccountsController(IAccountService accountService, IMapper mapper)
         {
-            _context = context;
+            _accountService = accountService;
+            _mapper = mapper;
         }
 
-        // GET: api/Accounts
+        // GET: /api/Accounts?accountNumber=123456
         [HttpGet]
         public async Task<IActionResult> GetAccounts([FromQuery] string? accountNumber)
         {
             if (!string.IsNullOrWhiteSpace(accountNumber))
             {
-                var accounts = await _context.Accounts
-                    .Where(a => a.AccountNumber == accountNumber)
-                    .ToListAsync();
-                return Ok(accounts);
+                var account = await _accountService.GetAccountByNumber(accountNumber);
+                return Ok(_mapper.Map<List<Account>, List<AccountDto>>(account));
+
             }
 
-            var allAccounts = await _context.Accounts.ToListAsync();
-            return Ok(allAccounts);
+            var accounts = await _accountService.GetAllAccounts();
+            return Ok(_mapper.Map<List<Account>, List<AccountDto>>(accounts));
         }
+
 
         // GET: api/Accounts/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetAccount(int id)
+        public async Task<IActionResult> GetAccountById(int id)
         {
-            var account = await _context.Accounts.FindAsync(id);
-            if (account == null)
-                return NotFound();
-
-            return Ok(account);
-        }
-
-        // POST: api/Accounts
-        [HttpPost]
-        public async Task<IActionResult> PostAccount([FromBody] AccountDto dto)
-        {
-            if (dto.BalanceAmount <= 0)
-                return BadRequest(new { message = "El Balance debe ser mayor a cero" });
-
-            var account = new Account
-            {
-                AccountNumber = dto.AccountNumber,
-                AccountType = dto.AccountType,
-                OwnerName = dto.OwnerName,
-                CreationDate = dto.CreationDate,
-                OverdraftAmount = dto.OverdraftAmount
-            };
-
-            if (dto.AccountType == 'C')
-            {
-                account.BalanceAmount = dto.BalanceAmount + MAX_OVERDRAFT;
-                account.OverdraftAmount = MAX_OVERDRAFT;
-            }
-            else
-            {
-                account.BalanceAmount = dto.BalanceAmount;
-            }
-
-            _context.Accounts.Add(account);
-            await _context.SaveChangesAsync();
-
-            return Ok(new { message = "Cuenta creada exitosamente", dto });
+            var account = await _accountService.GetAccountById(id);
+            return Ok(_mapper.Map<Account, AccountDto>(account));
         }
 
         // PUT: api/Accounts/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAccount(int id, [FromBody] AccountDto dto)
+        public async Task<IActionResult> Put(int id, [FromBody] AccountDto accountDto)
         {
-            var account = await _context.Accounts.FindAsync(id);
-            if (account == null)
-                return NotFound();
+            var account = await _accountService.UpdateAccount(id, _mapper.Map<AccountDto, Account>(accountDto));
+            return Ok(_mapper.Map<Account, AccountDto>(account));
+        }
 
-            account.AccountNumber = dto.AccountNumber;
-            account.AccountType = dto.AccountType;
-            account.OwnerName = dto.OwnerName;
-            account.BalanceAmount = dto.BalanceAmount;
-            account.OverdraftAmount = dto.OverdraftAmount;
-            account.CreationDate = dto.CreationDate;
-
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+        // POST: api/Accounts
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody] AccountDto accountDto)
+        {
+            var account = await _accountService.CreateAccount(_mapper.Map<AccountDto, Account>(accountDto));
+            return Ok(_mapper.Map<Account, AccountDto>(account));
         }
 
         // DELETE: api/Accounts/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAccount(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var account = await _context.Accounts.FindAsync(id);
-            if (account == null)
-                return NotFound();
-
-            _context.Accounts.Remove(account);
-            await _context.SaveChangesAsync();
-
+            await _accountService.DeleteAccount(id);
             return NoContent();
         }
 
-        // PUT: api/Accounts/{id}/Deposit
+
+        // PUT: api/Accounts/5/Deposit
         [HttpPut("{id}/Deposit")]
-        public async Task<IActionResult> Deposit(int id, [FromBody] TransactionDto dto)
+        public async Task<IActionResult> Deposit(int id, [FromBody] Transaction transaction)
         {
-            var account = await _context.Accounts.FindAsync(id);
-            if (account == null)
-                return NotFound();
 
-            account.BalanceAmount += dto.ValueAmount;
-
-            if (account.AccountType == 'C')
-            {
-                if (account.OverdraftAmount > 0 && account.BalanceAmount < MAX_OVERDRAFT)
-                {
-                    account.OverdraftAmount = MAX_OVERDRAFT - account.BalanceAmount;
-                }
-                else
-                {
-                    account.OverdraftAmount = 0;
-                }
-            }
-
-            await _context.SaveChangesAsync();
+            await _accountService.Deposit(id, transaction);
             return NoContent();
         }
 
-        // PUT: api/Accounts/{id}/Withdrawal
+        // PUT: api/Accounts/5/Withdrawal
         [HttpPut("{id}/Withdrawal")]
-        public async Task<IActionResult> Withdraw(int id, [FromBody] TransactionDto dto)
+        public async Task<IActionResult> Withdrawal(int id, [FromBody] Transaction transaction)
         {
-            var account = await _context.Accounts.FindAsync(id);
-            if (account == null)
-                return NotFound();
 
-            if (dto.ValueAmount > account.BalanceAmount)
-                return BadRequest(new { message = "Fondos Insuficientes" });
-
-            account.BalanceAmount -= dto.ValueAmount;
-
-            if (account.AccountType == 'C')
-            {
-                if (account.OverdraftAmount > 0 && account.BalanceAmount < MAX_OVERDRAFT)
-                {
-                    account.OverdraftAmount = MAX_OVERDRAFT - account.BalanceAmount;
-                }
-            }
-
-            await _context.SaveChangesAsync();
+            await _accountService.Withdrawal(id, transaction);
             return NoContent();
         }
     }

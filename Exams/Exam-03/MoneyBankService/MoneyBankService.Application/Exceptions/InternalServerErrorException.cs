@@ -1,6 +1,6 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 
-namespace MoneyBankService.Domain.Exceptions;
+namespace MoneyBankService.Application.Exceptions;
 
 [ExcludeFromCodeCoverage]
 public class InternalServerErrorException : BusinessException

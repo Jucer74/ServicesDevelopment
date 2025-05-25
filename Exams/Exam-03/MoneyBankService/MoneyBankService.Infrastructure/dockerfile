@@ -1,29 +1,30 @@
-# Build stage
+# Imagen base para ejecución
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
-EXPOSE 80
-EXPOSE 443
 
-# SDK image
+# Imagen base para construcción
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
+
+# Copiar solución y proyectos por separado para maximizar uso de caché
+COPY ["MoneyBankService.sln", "./"]
 COPY ["MoneyBankService.Api/MoneyBankService.Api.csproj", "MoneyBankService.Api/"]
 COPY ["MoneyBankService.Application/MoneyBankService.Application.csproj", "MoneyBankService.Application/"]
 COPY ["MoneyBankService.Domain/MoneyBankService.Domain.csproj", "MoneyBankService.Domain/"]
 COPY ["MoneyBankService.Infrastructure/MoneyBankService.Infrastructure.csproj", "MoneyBankService.Infrastructure/"]
 
-RUN dotnet restore "MoneyBankService.Api/MoneyBankService.Api.csproj"
+# Restaurar dependencias
+RUN dotnet restore "MoneyBankService.sln"
 
+# Copiar todo el contenido solo después de restaurar
 COPY . .
-WORKDIR "/src/MoneyBankService.Api"
-RUN dotnet build "MoneyBankService.Api.csproj" -c Release -o /app/build
 
-# Publish stage
-FROM build AS publish
+# Construir el proyecto en modo Release
+WORKDIR "/src/MoneyBankService.Api"
 RUN dotnet publish "MoneyBankService.Api.csproj" -c Release -o /app/publish
 
-# Final image
+# Imagen final con solo los archivos necesarios
 FROM base AS final
 WORKDIR /app
-COPY --from=publish /app/publish .
+COPY --from=build /app/publish .
 ENTRYPOINT ["dotnet", "MoneyBankService.Api.dll"]

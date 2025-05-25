@@ -1,12 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MoneyBankService.Domain.Entities;
+using MoneyBankService.Domain.Models;
 
-namespace MoneyBankService.Infrastructure.Context
+namespace MoneyBankService.Infrastructure.Context;
+
+public class AppDbContext : DbContext
 {
-    public class AppDbContext : DbContext
+    public AppDbContext()
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
-
-        public DbSet<Account> Accounts { get; set; } = null!;
     }
+
+    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+    {
+    }
+
+    public DbSet<Account> Accounts{ get; set; }
 }

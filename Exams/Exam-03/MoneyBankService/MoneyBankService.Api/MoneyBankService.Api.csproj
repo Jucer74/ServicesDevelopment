@@ -19,5 +19,3 @@
     <ProjectReference Include="..\MoneyBankService.Application\MoneyBankService.Application.csproj" />
     <ProjectReference Include="..\MoneyBankService.Infrastructure\MoneyBankService.Infrastructure.csproj" />
   </ItemGroup>
-
-</Project>

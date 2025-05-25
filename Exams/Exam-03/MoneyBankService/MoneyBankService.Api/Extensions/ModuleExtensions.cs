@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using FluentValidation;
-using MoneyBankService.Application.Dto;
-using MoneyBankService.Api.Mappers;
-using MoneyBankService.Api.Validators;
-using MoneyBankService.Application.Interfaces;
+using MoneyBankService.Application.Dtos;
+using MoneyBankService.Application.Mappers;
+using MoneyBankService.Application.Validators;
+using MoneyBankService.Application.Interfaces.Services;
 using MoneyBankService.Application.Services;
-using MoneyBankService.Domain.Interfaces.Repositories;
+using MoneyBankService.Application.Interfaces.Repositories;
 using MoneyBankService.Infrastructure.Repositories;
 
 namespace MoneyBankService.Api.Extensions;

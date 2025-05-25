@@ -1,6 +1,7 @@
-﻿using System.Linq.Expressions;
+using System.Linq.Expressions;
+using MoneyBankService.Domain.Common;
 
-namespace MoneyBankService.Domain.Common;
+namespace MoneyBankService.Application.Interfaces.Repositories;
 
 public interface IRepository<T> where T : EntityBase
 {
@@ -15,4 +16,6 @@ public interface IRepository<T> where T : EntityBase
     public Task<T> UpdateAsync(T entity);
 
     public Task RemoveAsync(T entity);
+    public Task<bool> ExistsByPropertyAsync(Expression<Func<T, bool>> predicate);
+    
 }

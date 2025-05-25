@@ -7,10 +7,10 @@ using MoneyBankService.Infrastructure.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add the DB Context
+// Add services to the container.
 builder.Services.AddDbContext<AppDbContext>(options => options.UseMySQL(builder.Configuration.GetConnectionString("CnnStr")!));
 
-// Add services to the container.
+
 builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
 {
     options.InvalidModelStateResponseFactory = context =>
@@ -20,14 +20,13 @@ builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
     };
 });
 
-// Add Fluent Validation
+//Add Mvc options
 builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Add Modules
 builder.Services.AddRepositories();
 builder.Services.AddServices();
 builder.Services.AddMapping();
@@ -51,4 +50,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
+app.Run("http://*:80");
