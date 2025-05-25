@@ -1,6 +1,6 @@
 import React from 'react';
 
-function AccountTable({ accounts, onEdit, onDelete }) {
+function AccountTable({ accounts, onEdit, onDelete, onDeposit, onWithdraw }) {
   return (
     <table border="1" cellPadding="10" style={{ width: "100%", background: "#e8e8e8" }}>
       <thead style={{ background: "#222", color: "#fff" }}>
@@ -26,6 +26,8 @@ function AccountTable({ accounts, onEdit, onDelete }) {
             <td>
               <button onClick={() => onEdit(account)}>Editar</button>
               <button onClick={() => onDelete(account.id)} style={{ marginLeft: 8 }}>Eliminar</button>
+              <button onClick={() => onDeposit(account)} style={{ marginLeft: 8 }}>Depositar</button>
+              <button onClick={() => onWithdraw(account)} style={{ marginLeft: 8 }}>Retirar</button>
             </td>
           </tr>
         ))}
