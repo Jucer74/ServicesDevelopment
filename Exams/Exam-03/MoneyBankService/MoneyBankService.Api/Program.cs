@@ -19,7 +19,7 @@ builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
         return new BadRequestObjectResult(errorDetails);
     };
 });
-
+Console.WriteLine(builder.Configuration.GetConnectionString("CnnStr"));
 // Add Fluent Validation
 builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
 
@@ -38,31 +38,46 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReactApp", policy =>
     {
-        policy.WithOrigins("http://localhost:5174") // Cambia esto al origen de tu aplicación React
+        policy.WithOrigins("http://localhost:5173") // Cambia esto al origen de tu aplicación React
             .AllowAnyMethod() // Permitir todos los métodos HTTP (GET, POST, PUT, DELETE, etc.)
             .AllowAnyHeader(); // Permitir todos los encabezados
     });
 });
 
+// Configurar el servidor Kestrel para escuchar en los puertos 80 y 443
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(80); // Puerto HTTP
+    options.ListenAnyIP(443); // Puerto HTTPS
+});
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+// if (app.Environment.IsDevelopment())
+// {
+//     app.UseSwagger();
+//     app.UseSwaggerUI();
+// }
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "MoneyBank API v1");
+    c.RoutePrefix = "swagger"; // Deja esto para acceder vía /swagger
+});
+
 
 // Add the Exception Middleware Handler
 app.UseExceptionMiddleware();
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
 app.MapControllers();
 
 app.UseCors("AllowReactApp");
+
+Console.WriteLine($"Environment: {app.Environment.EnvironmentName}");
 
 app.Run();

@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  db:
+    image: mysql:8.0
+    container_name: moneybank-db
+    environment:
+      MYSQL_ROOT_PASSWORD: qwer1234
+      MYSQL_DATABASE: moneybankdb
+      MYSQL_USER: moneybankuser
+      MYSQL_PASSWORD: M0n3yB4nkUs3r*01
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+volumes:
+  db_data:
