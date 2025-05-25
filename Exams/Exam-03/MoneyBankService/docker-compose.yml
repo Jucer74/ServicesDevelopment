@@ -1,0 +1,36 @@
+# ─ docker-compose.yml ─
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: moneybank-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "rootpassword"
+      MYSQL_DATABASE: "moneybankdb"
+      MYSQL_USER: "moneybankuser"
+      MYSQL_PASSWORD: "M0n3yB4nkUs3r*01"
+    ports:
+      - "3307:3306"                # para clientes externos (Workbench, etc.)
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./scripts:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD", "mysqladmin","ping","-h","localhost"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+
+  api:
+    build: .
+    container_name: moneybank-api
+    ports:
+      - "8080:80"                  # expone el Kestrel :80 en localhost:8080
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: "http://+:80"  
+      ConnectionStrings__CnnStr: "Server=mysql;Port=3306;Database=moneybankdb;User=moneybankuser;Password=M0n3yB4nkUs3r*01"
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+volumes:
+  mysql_data:
