@@ -32,7 +32,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
     {
-        policy.WithOrigins("http://localhost:3000") // <--- Aquí pon la URL de tu frontend. Agrega también la pública cuando lo subas.
+        policy.WithOrigins("http://localhost:3000", "http://moneybankweb-brianddia.s3-website.us-east-2.amazonaws.com") // <--- Aquí pon la URL de tu frontend. Agrega también la pública cuando lo subas.
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
