@@ -5,4 +5,5 @@ namespace MoneyBankService.Domain.Interfaces.Repositories;
 
 public interface IAccountRepository : IRepository<Account>
 {
+    Task<Account?> GetByAccountNumberAsync(string accountNumber);
 }

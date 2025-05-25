@@ -1,54 +1,41 @@
-using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MoneyBankService.Api.Extensions;
-using MoneyBankService.Api.Middleware;
+using MoneyBankService.Application.Interfaces;
+using MoneyBankService.Application.Services;
+using MoneyBankService.Domain.Interfaces.Repositories;
 using MoneyBankService.Infrastructure.Context;
+using MoneyBankService.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add the DB Context
-builder.Services.AddDbContext<AppDbContext>(options => options.UseMySQL(builder.Configuration.GetConnectionString("CnnStr")!));
+// 1) Base de datos
+builder.Services.AddDbContext<AppDbContext>(opts =>
+    opts.UseMySQL(builder.Configuration.GetConnectionString("CnnStr")!));
 
-// Add services to the container.
-builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
-{
-    options.InvalidModelStateResponseFactory = context =>
+// 2) Inyección de dependencias
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<IAccountService, AccountService>();
+
+// 3) Registrar Controllers y suprimir el filtro automático de validación de modelo
+builder.Services
+    .AddControllers()
+    .ConfigureApiBehaviorOptions(options =>
     {
-        var errorDetails = context.ConstructErrorMessages();
-        return new BadRequestObjectResult(errorDetails);
-    };
-});
+        options.SuppressModelStateInvalidFilter = true;
+    });
 
-// Add Fluent Validation
-builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
-
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Add Modules
-builder.Services.AddRepositories();
-builder.Services.AddServices();
-builder.Services.AddMapping();
-builder.Services.AddValidators();
-
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-// Add the Exception Middleware Handler
-app.UseExceptionMiddleware();
-
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();

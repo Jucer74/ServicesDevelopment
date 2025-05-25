@@ -1,70 +1,51 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MoneyBankService.Domain.Common;
-using MoneyBankService.Domain.Exceptions;
 using MoneyBankService.Infrastructure.Context;
 using System.Linq.Expressions;
 
-namespace MoneyBankService.Infrastructure.Common
+namespace MoneyBankService.Infrastructure.Common;
+
+public class Repository<T> : IRepository<T> where T : EntityBase
 {
-    public class Repository<T> : IRepository<T> where T : EntityBase
+    protected readonly AppDbContext _context;
+
+    public Repository(AppDbContext context)
     {
-        private readonly AppDbContext _appDbContext;
+        _context = context;
+    }
 
-        public Repository(AppDbContext appDbContext)
-        {
-            _appDbContext = appDbContext;
-        }
+    public async Task<T> AddAsync(T entity)
+    {
+        await _context.Set<T>().AddAsync(entity);
+        await _context.SaveChangesAsync();
+        return entity;
+    }
 
-        public async Task<T> AddAsync(T entity)
-        {
-            _appDbContext.Set<T>().Add(entity);
-            await _appDbContext.SaveChangesAsync();
-            return entity;
-        }
+    public async Task<IEnumerable<T>> GetAllAsync()
+        => await _context.Set<T>().AsNoTracking().ToListAsync();
 
-        public async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate)
-        {
-            return await _appDbContext.Set<T>().Where(predicate).ToListAsync<T>();
-        }
+    public async Task<T?> GetByIdAsync(int id)
+        => await _context.Set<T>().FindAsync(id);
 
-        public async Task<IEnumerable<T>> GetAllAsync()
-        {
-            return await _appDbContext.Set<T>().ToListAsync<T>();
-        }
+    public async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate)
+        => await _context.Set<T>().Where(predicate).AsNoTracking().ToListAsync();
 
-        public async Task<T> GetByIdAsync(int id)
-        {
-            return (await _appDbContext.Set<T>().FindAsync(id))!;
-        }
+    public async Task<T> UpdateAsync(T entity)
+    {
+        var existing = await _context.Set<T>().FindAsync(entity.Id);
+        if (existing == null) throw new KeyNotFoundException("Entidad no encontrada");
 
-        public async Task RemoveAsync(T entity)
-        {
-            var id = entity?.Id;
-            var original = await _appDbContext.Set<T>().FindAsync(id);
+        _context.Entry(existing).CurrentValues.SetValues(entity);
+        await _context.SaveChangesAsync();
+        return existing;
+    }
 
-            if (original is null)
-            {
-                throw new NotFoundException($"Item with Id={id} Not Found");
-            }
+    public async Task RemoveAsync(T entity)
+    {
+        var existing = await _context.Set<T>().FindAsync(entity.Id);
+        if (existing == null) throw new KeyNotFoundException("Entidad no encontrada");
 
-            _appDbContext.Set<T>().Remove(entity!);
-            await _appDbContext.SaveChangesAsync();
-        }
-
-        public async Task<T> UpdateAsync(T entity)
-        {
-            var id = entity?.Id;
-            var original = await _appDbContext.Set<T>().FindAsync(id);
-
-            if (original is null)
-            {
-                throw new NotFoundException($"Item with Id={id} Not Found");
-            }
-
-            _appDbContext.Entry(original).CurrentValues.SetValues(entity!);
-            await _appDbContext.SaveChangesAsync();
-
-            return entity!;
-        }
+        _context.Set<T>().Remove(existing);
+        await _context.SaveChangesAsync();
     }
 }
