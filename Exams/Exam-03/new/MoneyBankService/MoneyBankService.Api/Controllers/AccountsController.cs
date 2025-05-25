@@ -3,154 +3,169 @@ using MoneyBankService.Api.Dtos;
 using MoneyBankService.Application.Interfaces;
 using MoneyBankService.Domain.Entities;
 using MoneyBankService.Domain.Exceptions;
+using System.Linq;
 
-namespace MoneyBankService.Api.Controllers;
-
-[ApiController]
-[Route("api/[controller]")]
-public class AccountsController : ControllerBase
+namespace MoneyBankService.Api.Controllers
 {
-    private readonly IAccountService _svc;
-    public AccountsController(IAccountService svc) => _svc = svc;
-
-    // Devuelve 400 Bad Request -> { errorType: "Bad Request", errors: [...] }
-    private IActionResult BadRequestError(params string[] mensajes) =>
-        BadRequest(new { errorType = "Bad Request", errors = mensajes });
-
-    // Devuelve 404 Not Found -> { errorType: "Not Found", errors: [...] }
-    private IActionResult NotFoundError(params string[] mensajes) =>
-        NotFound(new { errorType = "Not Found", errors = mensajes });
-
-    // Para múltiples mensajes de validación:
-    private IActionResult BadRequestValidation(IEnumerable<string> mensajes) =>
-        BadRequest(new { errorType = "Bad Request", errors = mensajes.ToArray() });
-
-
-    [HttpGet]
-    public async Task<IActionResult> GetAll([FromQuery] string? accountNumber) =>
-        Ok(await _svc.GetAllAccountsAsync(accountNumber));
-
-
-    [HttpGet("{id:int}")]
-    public async Task<IActionResult> GetById(int id)
+    [ApiController]
+    [Route("api/[controller]")]
+    public class AccountsController : ControllerBase
     {
-        var a = await _svc.GetAccountByIdAsync(id);
-        if (a is null)
-            return NotFoundError("Cuenta no encontrada");  // Get_Account_By_Id_No_Exists_NotFound
-        return Ok(a);
-    }
+        private readonly IAccountService _svc;
+        public AccountsController(IAccountService svc) => _svc = svc;
 
-    [HttpPost]
-    public async Task<IActionResult> Create([FromBody] AccountCreateDto dto)
-    {
-        if (!ModelState.IsValid)
+        // 400 BadRequest para cualquier error (siempre camelCase)
+        private IActionResult BadRequestError(params string[] mensajes) =>
+            BadRequest(new { errorType = "Bad Request", errors = mensajes });
+
+        // 400 BadRequest para validaciones con IEnumerable
+        private IActionResult BadRequestValidation(IEnumerable<string> mensajes) =>
+            BadRequest(new { errorType = "Bad Request", errors = mensajes.ToArray() });
+
+        // 404 NotFound para NO ENCONTRADO (siempre camelCase)
+        private IActionResult NotFoundError(params string[] mensajes) =>
+            NotFound(new { errorType = "Not Found", errors = mensajes });
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll([FromQuery] string? accountNumber)
         {
-            var lista = ModelState.Values
-                .SelectMany(v => v.Errors)
-                .Select(e => e.ErrorMessage);
-            return BadRequestValidation(lista);
+            var cuentas = await _svc.GetAllAccountsAsync(accountNumber);
+            return Ok(cuentas);
         }
 
-        try
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetById(int id)
         {
-            var cuenta = new Account
+            var cuenta = await _svc.GetAccountByIdAsync(id);
+            if (cuenta is null)
+                return NotFoundError("Cuenta no encontrada");
+            return Ok(cuenta);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] AccountCreateDto dto)
+        {
+            // 1) Validación manual de DataAnnotations
+            if (!ModelState.IsValid)
             {
-                AccountType = dto.AccountType,
-                AccountNumber = dto.AccountNumber,
-                OwnerName = dto.OwnerName,
-                BalanceAmount = dto.BalanceAmount
-            };
-            var creada = await _svc.CreateAccountAsync(cuenta);
-            return Ok(creada);
-        }
-        catch (BusinessException ex)
-        {
-            // Create_Account_Exists_BadRequest
-            return BadRequestError(ex.Message);
-        }
-    }
+                var errores = ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage);
+                return BadRequestValidation(errores);
+            }
 
-    [HttpPut("{id:int}")]
-    public async Task<IActionResult> Update(int id, [FromBody] AccountDto dto)
-    {
-        if (id != dto.Id)
-            return BadRequestError("El ID no coincide");    // Update_Account_Diff_Id_BadRequest
-
-        try
-        {
-            var acct = new Account
+            // 2) Lógica de negocio
+            try
             {
-                Id = dto.Id,
-                AccountType = dto.AccountType,
-                AccountNumber = dto.AccountNumber,
-                OwnerName = dto.OwnerName,
-                BalanceAmount = dto.BalanceAmount
-            };
-            var updated = await _svc.UpdateAccountAsync(id, acct);
-            return Ok(updated);                              // Update_Account_Success
+                var cuenta = new Account
+                {
+                    AccountType = dto.AccountType,
+                    AccountNumber = dto.AccountNumber,
+                    OwnerName = dto.OwnerName,
+                    BalanceAmount = dto.BalanceAmount
+                };
+                var creada = await _svc.CreateAccountAsync(cuenta);
+                return Ok(creada);
+            }
+            catch (BusinessException ex)
+            {
+                return BadRequestError(ex.Message);
+            }
         }
-        catch (NotFoundException ex)
-        {
-            return NotFoundError(ex.Message);                // Update_Account_Id_NotFound
-        }
-        catch (BusinessException ex)
-        {
-            return BadRequestError(ex.Message);              // Update_Account_AccountNumber_NoExists_BadRequest
-        }
-    }
 
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> Update(int id, [FromBody] AccountDto dto)
+        {
+            // 1) Chequeo de ID
+            if (id != dto.Id)
+                return BadRequestError("El ID no coincide");
 
-    [HttpDelete("{id:int}")]
-    public async Task<IActionResult> Delete(int id)
-    {
-        try
-        {
-            await _svc.DeleteAccountAsync(id);
-            return NoContent();
-        }
-        catch (NotFoundException ex)
-        {
-            return NotFoundError(ex.Message);
-        }
-    }
+            // 2) Validación manual de DataAnnotations
+            if (!ModelState.IsValid)
+            {
+                var errores = ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage);
+                return BadRequestValidation(errores);
+            }
 
-    [HttpPut("{id:int}/Deposit")]
-    public async Task<IActionResult> Deposit(int id, [FromBody] TransactionDto dto)
-    {
-        if (id != dto.Id)
-            return BadRequestError("ID mismatch");         // Deposit_Account_Diff_Id_BadRequest
-        try
-        {
-            await _svc.DepositAsync(dto.Id, dto.ValueAmount);
-            return NoContent();                            // Deposit_Success
+            try
+            {
+                var cuenta = new Account
+                {
+                    Id = dto.Id,
+                    AccountType = dto.AccountType,
+                    AccountNumber = dto.AccountNumber,
+                    OwnerName = dto.OwnerName,
+                    BalanceAmount = dto.BalanceAmount
+                };
+                var actualizada = await _svc.UpdateAccountAsync(id, cuenta);
+                return Ok(actualizada);
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFoundError(ex.Message);
+            }
+            catch (BusinessException ex)
+            {
+                return BadRequestError(ex.Message);
+            }
         }
-        catch (NotFoundException ex)
-        {
-            return NotFoundError(ex.Message);              // Deposit_Account_Id_NotFound
-        }
-        catch (BusinessException ex)
-        {
-            return BadRequestError(ex.Message);            // Deposit_Account_AccountNumber_NoExists_BadRequest
-        }
-    }
 
-    [HttpPut("{id:int}/Withdrawal")]
-    public async Task<IActionResult> Withdraw(int id, [FromBody] TransactionDto dto)
-    {
-        if (id != dto.Id)
-            return BadRequestError("ID mismatch");         // Withdrawal_Account_Diff_Id_BadRequest
-        try
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> Delete(int id)
         {
-            await _svc.WithdrawAsync(dto.Id, dto.ValueAmount);
-            return NoContent();                            // Withdrawal_Success
+            try
+            {
+                await _svc.DeleteAccountAsync(id);
+                return NoContent();
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFoundError(ex.Message);
+            }
         }
-        catch (NotFoundException ex)
+
+        [HttpPut("{id:int}/Deposit")]
+        public async Task<IActionResult> Deposit(int id, [FromBody] TransactionDto dto)
         {
-            return NotFoundError(ex.Message);              // Withdrawal_Account_Id_NotFound
+            if (id != dto.Id)
+                return BadRequestError("ID mismatch");
+
+            try
+            {
+                await _svc.DepositAsync(dto.Id, dto.ValueAmount);
+                return NoContent();
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFoundError(ex.Message);
+            }
+            catch (BusinessException ex)
+            {
+                return BadRequestError(ex.Message);
+            }
         }
-        catch (BusinessException ex)
+
+        [HttpPut("{id:int}/Withdrawal")]
+        public async Task<IActionResult> Withdraw(int id, [FromBody] TransactionDto dto)
         {
-            return BadRequestError(ex.Message);            // Withdrawal_Saving_Account_Insufficient_Funds_BadRequest
+            if (id != dto.Id)
+                return BadRequestError("ID mismatch");
+
+            try
+            {
+                await _svc.WithdrawAsync(dto.Id, dto.ValueAmount);
+                return NoContent();
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFoundError(ex.Message);
+            }
+            catch (BusinessException ex)
+            {
+                return BadRequestError(ex.Message);
+            }
         }
     }
 }

@@ -8,19 +8,21 @@ using MoneyBankService.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 1. Configurar la conexión a la base de datos
-builder.Services.AddDbContext<AppDbContext>(options => options.UseMySQL(builder.Configuration.GetConnectionString("CnnStr")!));
+// 1) Base de datos
+builder.Services.AddDbContext<AppDbContext>(opts =>
+    opts.UseMySQL(builder.Configuration.GetConnectionString("CnnStr")!));
 
-// 2. Registrar repositorio y servicio
+// 2) Inyección de dependencias
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 
-// 2. Suprimir filtro automático
-builder.Services.AddControllers(options =>
-{
-    // Reemplazar SuppressModelStateInvalidFilter con SuppressImplicitRequiredAttributeForNonNullableReferenceTypes
-    options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true;
-});
+// 3) Registrar Controllers y suprimir el filtro automático de validación de modelo
+builder.Services
+    .AddControllers()
+    .ConfigureApiBehaviorOptions(options =>
+    {
+        options.SuppressModelStateInvalidFilter = true;
+    });
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -36,5 +38,4 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
-
 app.Run();
