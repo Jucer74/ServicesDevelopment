@@ -36,9 +36,9 @@ builder.Services.AddValidators();
 // Configurar CORS
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowReactApp", policy =>
+    options.AddPolicy("AllowAll", policy =>
     {
-        policy.WithOrigins("http://localhost:5173") // Cambia esto al origen de tu aplicación React
+        policy.AllowAnyOrigin() // Cambia esto al origen de tu aplicación React
             .AllowAnyMethod() // Permitir todos los métodos HTTP (GET, POST, PUT, DELETE, etc.)
             .AllowAnyHeader(); // Permitir todos los encabezados
     });
@@ -53,12 +53,7 @@ builder.WebHost.ConfigureKestrel(options =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-// if (app.Environment.IsDevelopment())
-// {
-//     app.UseSwagger();
-//     app.UseSwaggerUI();
-// }
+
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
@@ -71,13 +66,10 @@ app.UseSwaggerUI(c =>
 app.UseExceptionMiddleware();
 
 // app.UseHttpsRedirection();
+app.UseCors("AllowAll");
 
 app.UseAuthorization();
 
 app.MapControllers();
-
-app.UseCors("AllowReactApp");
-
-Console.WriteLine($"Environment: {app.Environment.EnvironmentName}");
 
 app.Run();
