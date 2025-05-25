@@ -29,11 +29,13 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+
+app.UseSwagger();
+app.UseSwaggerUI();
+
+
+// Escuchar en todas las interfaces
+builder.WebHost.UseUrls("http://*:80");
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
