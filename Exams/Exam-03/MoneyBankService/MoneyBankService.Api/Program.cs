@@ -27,9 +27,21 @@ builder.Services
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// 1. Configura la política de CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000") // <--- Aquí pon la URL de tu frontend. Agrega también la pública cuando lo subas.
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 var app = builder.Build();
 
-
+// 2. Usa la política de CORS
+app.UseCors("AllowFrontend");
 app.UseSwagger();
 app.UseSwaggerUI();
 
