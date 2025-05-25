@@ -1,4 +1,4 @@
-CREATE TABLE `moneybankdb`.`accounts` (
+CREATE TABLE `moneybankdb`.`Accounts` (
   `Id` INT NOT NULL AUTO_INCREMENT,
   `AccountType` VARCHAR(1) NOT NULL,
   `CreationDate` DATETIME NOT NULL,
