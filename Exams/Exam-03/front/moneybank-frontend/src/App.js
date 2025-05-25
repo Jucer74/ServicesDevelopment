@@ -1,56 +1,63 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import AccountTable from './components/AccountTable';
+import AccountForm from './components/AccountForm';
+import ATMLayout from './components/ATMLayout';
 
-// Cambia la URL por la de tu API en AWS App Runner
+// Cambia por la URL real de tu API en AWS App Runner
 const API_URL = "https://wizyub7ngd.us-east-2.awsapprunner.com/api/Accounts";
 
 function App() {
   const [accounts, setAccounts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [editingAccount, setEditingAccount] = useState(null);
 
-  useEffect(() => {
+  // Cargar cuentas
+  const fetchAccounts = () => {
+    setLoading(true);
     axios.get(API_URL)
-      .then(res => {
-        console.log("Datos recibidos de la API:", res.data);
-        setAccounts(res.data);
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error(err);
-        setLoading(false);
-      });
-  }, []);
+      .then(res => setAccounts(res.data))
+      .catch(() => alert("Error al cargar cuentas"))
+      .finally(() => setLoading(false));
+  };
+
+  useEffect(fetchAccounts, []);
+
+  // Crear o actualizar
+  const handleSubmit = (form) => {
+    if (editingAccount) {
+      axios.put(`${API_URL}/${form.id}`, form)
+        .then(fetchAccounts)
+        .catch(() => alert("Error al actualizar"));
+      setEditingAccount(null);
+    } else {
+      axios.post(API_URL, form)
+        .then(fetchAccounts)
+        .catch(() => alert("Error al crear"));
+    }
+  };
+
+  // Editar
+  const handleEdit = (account) => setEditingAccount(account);
+
+  // Eliminar
+  const handleDelete = (id) => {
+    if (window.confirm("¿Eliminar cuenta?")) {
+      axios.delete(`${API_URL}/${id}`)
+        .then(fetchAccounts)
+        .catch(() => alert("Error al eliminar"));
+    }
+  };
 
   return (
-    <div style={{ padding: "2rem" }}>
-      <h1>MoneyBank - Cuentas</h1>
-      {loading ? (
-        <p>Cargando cuentas...</p>
-      ) : (
-        <table border="1" cellPadding="10">
-          <thead>
-            <tr>
-              <th>Id</th>
-              <th>Número de Cuenta</th>
-              <th>Propietario</th>
-              <th>Tipo</th>
-              <th>Balance</th>
-            </tr>
-          </thead>
-          <tbody>
-            {accounts.map(account => (
-              <tr key={account.id}>
-                <td>{account.id}</td>
-                <td>{account.accountNumber}</td>
-                <td>{account.ownerName}</td>
-                <td>{account.accountType}</td>
-                <td>{account.balanceAmount}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
-    </div>
+    <ATMLayout>
+      <h1 style={{ textAlign: "center" }}>MoneyBank - Cuentas</h1>
+      <AccountForm onSubmit={handleSubmit} editingAccount={editingAccount} onCancel={() => setEditingAccount(null)} />
+      {loading
+        ? <p>Cargando...</p>
+        : <AccountTable accounts={accounts} onEdit={handleEdit} onDelete={handleDelete} />
+      }
+    </ATMLayout>
   );
 }
 
