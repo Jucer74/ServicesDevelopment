@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation;
-using MoneyBankService.Api.Dto;
+using MoneyBankService.Application.Dto;
 using MoneyBankService.Api.Mappers;
 using MoneyBankService.Api.Validators;
 using MoneyBankService.Application.Interfaces;

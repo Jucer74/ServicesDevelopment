@@ -10,11 +10,13 @@ public class ErrorDetails
     /// <summary>
     /// Error Type Description
     /// </summary>
+    [JsonProperty("errorType")]
     public string ErrorType { get; set; } = null!;
 
     /// <summary>
     /// Mesage Error or Exception Message
     /// </summary>
+    [JsonProperty("errors")]
     public List<string> Errors { get; set; } = null!;
 
     /// <summary>

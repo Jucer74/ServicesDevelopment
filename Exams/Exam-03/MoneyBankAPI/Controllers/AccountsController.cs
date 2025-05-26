@@ -5,8 +5,8 @@ using MoneyBankAPI.Models;
 
 namespace MoneyBankAPI.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class AccountsController : ControllerBase
     {
         private const int MAX_OVERDRAFT = 1_000_000;
@@ -19,6 +19,12 @@ namespace MoneyBankAPI.Controllers
         }
 
         // GET: api/Accounts
+        // GET: api/Accounts/{id}
+        // POST: api/Accounts
+        // PUT: api/Accounts/{id}
+        // DELETE: api/Accounts/{id}
+        // PUT: api/Accounts/{id}/Deposit
+        // PUT: api/Accounts/{id}/Withdrawal
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Account>>> GetAccounts([FromQuery]string accountNumber=null!)
         {
