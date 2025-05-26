@@ -1,0 +1,14 @@
+@* filepath: d:\Jose\Universidad\Semestre VII\Servicios\Corte I\ServicesDevelopment\Exams\Exam-03\MoneyBankWeb-josoterad\Views\Accounts\Deposit.cshtml *@
+@model MoneyBankWeb_davhergar.Models.TransactionDto
+
+<h2 class="text-center mb-4">Depósito</h2>
+<form asp-action="Deposit" method="post" class="mx-auto" style="max-width: 400px;">
+    <input type="hidden" asp-for="AccountNumber" />
+    <div class="mb-3">
+        <label class="form-label">Monto a depositar</label>
+        <input asp-for="ValueAmount" class="form-control" value="" autocomplete="off" />
+        <span asp-validation-for="ValueAmount" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-success fw-bold px-4">Depositar</button>
+    <a asp-action="Index" class="btn btn-outline-secondary ms-2">Volver</a>
+</form>

@@ -4,7 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>MoneyBamkWeb_josoterad</RootNamespace>
+    <RootNamespace>MoneyBankWeb_davhergar</RootNamespace>
   </PropertyGroup>
 
 </Project>

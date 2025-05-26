@@ -1,0 +1,30 @@
+@* filepath: d:\Jose\Universidad\Semestre VII\Servicios\Corte I\ServicesDevelopment\Exams\Exam-03\MoneyBankWeb-josoterad\Views\Accounts\Edit.cshtml *@
+@model MoneyBankWeb_davhergar.Models.AccountDto
+
+<h2 class="text-center mb-4">Editar Cuenta</h2>
+<form asp-action="Edit" method="post" class="mx-auto" style="max-width: 500px;">
+    <input type="hidden" asp-for="Id" />
+    <div class="mb-3">
+        <label class="form-label">Tipo de Cuenta</label>
+        <select asp-for="AccountType" class="form-select">
+            <option value="A">Ahorros</option>
+            <option value="C">Corriente</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Número de Cuenta</label>
+        <input asp-for="AccountNumber" class="form-control" readonly />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Propietario</label>
+        <input asp-for="OwnerName" class="form-control"/>
+        <span asp-validation-for="OwnerName" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Balance</label>
+        <input asp-for="BalanceAmount" class="form-control" value=""/>
+        <span asp-validation-for="BalanceAmount" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary fw-bold px-4">Guardar</button>
+    <a asp-action="Index" class="btn btn-outline-secondary ms-2">Volver</a>
+</form>

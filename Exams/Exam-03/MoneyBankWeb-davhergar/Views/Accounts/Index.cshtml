@@ -1,0 +1,38 @@
+@* filepath: d:\Jose\Universidad\Semestre VII\Servicios\Corte I\ServicesDevelopment\Exams\Exam-03\MoneyBankWeb-josoterad\Views\Accounts\Index.cshtml *@
+@model IEnumerable<MoneyBankWeb_davhergar.Models.AccountDto>
+
+<h2 class="text-center mb-4">Cuentas</h2>
+<p class="text-center">
+    <a asp-action="Create" class="btn btn-warning text-dark fw-bold px-4 mb-3" style="font-size:1.1rem;">
+        Crear Nueva Cuenta
+    </a>
+</p>
+<table class="table table-bordered table-striped align-middle text-center">
+    <thead class="table-dark">
+        <tr>
+            <th scope="col">Tipo</th>
+            <th scope="col">Número</th>
+            <th scope="col">Propietario</th>
+            <th scope="col">Balance</th>
+            <th scope="col">Sobregiro</th>
+            <th scope="col">Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+    <tr>
+        <td>@item.AccountType</td>
+        <td>@item.AccountNumber</td>
+        <td>@item.OwnerName</td>
+        <td>@item.BalanceAmount</td>
+        <td>@item.OverdraftAmount</td>
+        <td>
+            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-primary me-1">Editar</a>
+            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger me-1">Eliminar</a>
+            <a asp-action="Deposit" asp-route-id="@item.Id" class="btn btn-sm btn-success me-1">Depósito</a>
+            <a asp-action="Withdrawal" asp-route-id="@item.Id" class="btn btn-sm btn-secondary">Retiro</a>
+        </td>
+    </tr>
+}
+    </tbody>
+</table>

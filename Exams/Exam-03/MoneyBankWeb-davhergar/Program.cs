@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MoneyBankWeb_josoterad.Services;
+using MoneyBankWeb_davhergar.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

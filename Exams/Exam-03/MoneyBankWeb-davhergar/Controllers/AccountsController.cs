@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using MoneyBankWeb_josoterad.Models;
-using MoneyBankWeb_josoterad.Services;
+using MoneyBankWeb_davhergar.Models;
+using MoneyBankWeb_davhergar.Services;
 
-namespace MoneyBankWeb_josoterad.Controllers
+namespace MoneyBankWeb_davhergar.Controllers
 {
     public class AccountsController : Controller
     {

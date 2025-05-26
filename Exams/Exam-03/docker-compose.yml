@@ -29,7 +29,7 @@ services:
 
   web:
     build:
-      context: ./MoneyBankWeb-josoterad
+      context: ./MoneyBankWeb-davhergar
       dockerfile: Dockerfile
     container_name: moneybank-web
     depends_on:

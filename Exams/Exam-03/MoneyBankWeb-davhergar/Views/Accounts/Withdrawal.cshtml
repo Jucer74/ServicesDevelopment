@@ -1,0 +1,14 @@
+@* filepath: d:\Jose\Universidad\Semestre VII\Servicios\Corte I\ServicesDevelopment\Exams\Exam-03\MoneyBankWeb-josoterad\Views\Accounts\Withdrawal.cshtml *@
+@model MoneyBankWeb_davhergar.Models.TransactionDto
+
+<h2 class="text-center mb-4">Retiro</h2>
+<form asp-action="Withdrawal" method="post" class="mx-auto" style="max-width: 400px;">
+    <input type="hidden" asp-for="AccountNumber" />
+    <div class="mb-3">
+        <label class="form-label">Monto a retirar</label>
+        <input asp-for="ValueAmount" class="form-control" value=""/>
+        <span asp-validation-for="ValueAmount" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-secondary fw-bold px-4">Retirar</button>
+    <a asp-action="Index" class="btn btn-outline-secondary ms-2">Volver</a>
+</form>

@@ -2,9 +2,9 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using MoneyBankWeb_josoterad.Models;
+using MoneyBankWeb_davhergar.Models;
 
-namespace MoneyBankWeb_josoterad.Services
+namespace MoneyBankWeb_davhergar.Services
 {
     public class MoneyBankApiService
     {

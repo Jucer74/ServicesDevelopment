@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace MoneyBankWeb_josoterad.Models
+namespace MoneyBankWeb_davhergar.Models
 {
     public class TransactionDto
     {

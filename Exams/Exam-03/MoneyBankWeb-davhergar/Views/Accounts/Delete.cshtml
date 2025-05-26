@@ -1,0 +1,9 @@
+@* filepath: d:\Jose\Universidad\Semestre VII\Servicios\Corte I\ServicesDevelopment\Exams\Exam-03\MoneyBankWeb-josoterad\Views\Accounts\Delete.cshtml *@
+@model MoneyBankWeb_davhergar.Models.AccountDto
+
+<h2 class="text-center mb-4">Eliminar Cuenta</h2>
+<p class="text-center">¿Está seguro que desea eliminar la cuenta <strong>@Model.AccountNumber</strong>?</p>
+<form asp-action="Delete" asp-route-id="@Model.Id" method="post" class="text-center">
+    <button type="submit" class="btn btn-danger fw-bold px-4">Eliminar</button>
+    <a asp-action="Index" class="btn btn-outline-secondary ms-2">Cancelar</a>
+</form>
