@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   db:
     image: mysql:8.0
@@ -17,8 +15,8 @@ services:
 
   api:
     build:
-      context: .
-      dockerfile: MoneyBankService.Infrastructure/dockerfile
+      context: ./MoneyBankService
+      dockerfile: MoneyBankService.Infrastructure/Dockerfile
     container_name: moneybank_api
     depends_on:
       - db
@@ -26,3 +24,5 @@ services:
       - "8080:80"
     environment:
       ASPNETCORE_ENVIRONMENT: Development
+
+

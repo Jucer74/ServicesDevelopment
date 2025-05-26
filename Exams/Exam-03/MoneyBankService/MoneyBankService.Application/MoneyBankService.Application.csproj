@@ -15,4 +15,5 @@
     <ProjectReference Include="..\MoneyBankService.Domain\MoneyBankService.Domain.csproj" />
   </ItemGroup>
 
+
 </Project>
