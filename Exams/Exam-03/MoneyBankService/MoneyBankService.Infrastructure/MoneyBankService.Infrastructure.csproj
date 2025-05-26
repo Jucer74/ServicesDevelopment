@@ -8,15 +8,16 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MoneyBankService.Application\MoneyBankService.Application.csproj" />
+    <ProjectReference Include="..\MoneyBankService.Domain\MoneyBankService.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.5" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.5">
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.14">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.5">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.14">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

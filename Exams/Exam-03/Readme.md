@@ -1,5 +1,5 @@
 # Examen Tecnico
-Basandose en la API **MoneyBankAPI**, que se utiliza para soportar transacciones bancarias, Implemente un microservicio que utilice arquitectura Limpia, manejando los conceptos de DTO, Services, Models y el patron de Exception Middleware Ahndler, vistos en clase.
+Basandose en la API **MoneyBankAPI**, que se utiliza para soportar transacciones bancarias, Implemente un microservicio que utilice arquitectura Limpia, manejando los conceptos de DTO, Services, Models y el patron de Exception Middleware handler.
 
 Para ello Utilice como base el proyecto **MoneyBankService** e implemente el codigo necesario para completar las funcionalidades.
 

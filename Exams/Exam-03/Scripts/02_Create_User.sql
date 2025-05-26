@@ -1,4 +1,4 @@
 /*DROP USER 'moneybankuser'@'localhost' ;*/
-CREATE USER 'moneybankuser'@'localhost' IDENTIFIED BY 'M0n3yB4nkUs3r*01';
-GRANT ALL PRIVILEGES ON *.* TO 'moneybankuser'@'localhost' WITH GRANT OPTION;
+CREATE USER IF NOT EXISTS 'moneybankuser'@'%' IDENTIFIED BY 'M0n3yB4nkUs3r*01';
+GRANT ALL PRIVILEGES ON moneybankdb.* TO 'moneybankuser'@'%';
 FLUSH PRIVILEGES;
