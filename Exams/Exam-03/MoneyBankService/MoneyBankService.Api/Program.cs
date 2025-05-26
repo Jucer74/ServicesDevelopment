@@ -1,9 +1,9 @@
-using FluentValidation;
+﻿using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MoneyBankService.Api.Extensions;
-using MoneyBankService.Api.Middlewares;
+using MoneyBankService.Api.Middleware;
 using MoneyBankService.Application.Validations;
 using MoneyBankService.Infrastructure.Context;
 
@@ -11,6 +11,17 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add the DB Context
 builder.Services.AddDbContext<AppDbContext>(options => options.UseMySQL(builder.Configuration.GetConnectionString("CnnStr")!));
+var corsPolicy = "AllowFrontend";
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: corsPolicy, policy =>
+    {
+        policy.WithOrigins("http://127.0.0.1:5500")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
 
 // Add services to the container.
 builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
@@ -50,6 +61,8 @@ if (app.Environment.IsDevelopment())
 app.UseExceptionMiddleware();
 
 app.UseHttpsRedirection();
+// 🔐 CORS se aplica antes de autorización
+app.UseCors(corsPolicy);
 
 app.UseAuthorization();
 

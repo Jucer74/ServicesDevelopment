@@ -1,6 +1,4 @@
-﻿using MoneyBankService.Api.Middlewares;
-
-namespace MoneyBankService.Api.Middlewares
+﻿namespace MoneyBankService.Api.Middleware
 {
     /// <summary>
     /// Handler the exceptions

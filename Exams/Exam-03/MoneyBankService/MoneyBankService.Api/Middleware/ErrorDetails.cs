@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
-using System.Collections.Generic;
 
-namespace MoneyBankService.Api.Middlewares
+namespace MoneyBankService.Api.Middleware
 {
     public class ErrorDetails
     {

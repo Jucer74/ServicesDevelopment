@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoneyBankService - Administración de Cuentas</title>
+    <style>
+        :root {
+            --primary-color: #1e1e2f;
+            --secondary-color: #00b894;
+            --success-color: #2ecc71;
+            --danger-color: #e17055;
+            --warning-color: #fdcb6e;
+            --light-color: #f4f4f4;
+            --dark-color: #2d3436;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px 0;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            text-align: center;
+            font-size: 2.5rem;
+        }
+
+        .section {
+            background-color: white;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .section h2 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+        }
+
+        .btn-success:hover {
+            background-color: #219955;
+        }
+
+        .btn-danger {
+            background-color: var(--danger-color);
+        }
+
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+
+        .btn-warning {
+            background-color: var(--warning-color);
+        }
+
+        .btn-warning:hover {
+            background-color: #d68910;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .flex-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .flex-row>* {
+            flex: 1;
+        }
+
+        .account-type {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .account-type-A {
+            background-color: #d4edff;
+            color: #004085;
+        }
+
+        .account-type-C {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        @media (max-width: 768px) {
+            .flex-row {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <h1>MoneyBankService</h1>
+        </div>
+    </header>
+
+    <main class="container">
+        <div id="message" class="alert hidden"></div>
+
+        <section class="section">
+            <h2>Buscar Cuentas</h2>
+            <div class="form-group">
+                <label for="searchAccountNumber">Número de Cuenta:</label>
+                <input type="text" id="searchAccountNumber" placeholder="Ingrese el número de cuenta">
+            </div>
+            <button id="searchAccountBtn">Buscar Cuenta</button>
+            <button id="getAllAccountsBtn">Mostrar Todas las Cuentas</button>
+        </section>
+
+        <section class="section">
+            <h2>Lista de Cuentas</h2>
+            <div class="table-responsive">
+                <table id="accountsTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Número</th>
+                            <th>Tipo</th>
+                            <th>Titular</th>
+                            <th>Saldo</th>
+                            <th>Sobregiro</th>
+                            <th>Fecha Creación</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="accountsTableBody">
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Gestión de Cuentas</h2>
+            <form id="accountForm">
+                <input type="hidden" id="accountId">
+                <div class="flex-row">
+                    <div class="form-group">
+                        <label for="accountNumber">Número de Cuenta:</label>
+                        <input type="text" id="accountNumber" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="accountType">Tipo de Cuenta:</label>
+                        <select id="accountType" required>
+                            <option value="">Seleccione...</option>
+                            <option value="A">Ahorros</option>
+                            <option value="C">Corriente</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="ownerName">Nombre del Titular:</label>
+                    <input type="text" id="ownerName" required>
+                </div>
+                <div class="flex-row">
+                    <div class="form-group">
+                        <label for="balanceAmount">Saldo Inicial:</label>
+                        <input type="number" id="balanceAmount" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="overdraftAmount">Límite de Sobregiro:</label>
+                        <input type="number" id="overdraftAmount" step="0.01" value="0">
+                    </div>
+                </div>
+                <div class="flex-row">
+                    <button type="submit" id="saveAccountBtn">Guardar Cuenta</button>
+                    <button type="button" id="clearFormBtn">Limpiar Formulario</button>
+                </div>
+            </form>
+        </section>
+
+        <section class="section" id="transactionSection">
+            <h2>Transacciones</h2>
+            <form id="transactionForm">
+                <input type="hidden" id="transactionAccountId">
+                <div class="form-group">
+                    <label for="transactionAccountNumber">Número de Cuenta:</label>
+                    <input type="text" id="transactionAccountNumber" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="transactionAmount">Monto:</label>
+                    <input type="number" id="transactionAmount" step="0.01" min="0.01" required>
+                </div>
+                <div class="flex-row">
+                    <button type="button" id="depositBtn" class="btn-success">Depositar</button>
+                    <button type="button" id="withdrawalBtn" class="btn-danger">Retirar</button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Elementos del DOM
+            const messageDiv = document.getElementById('message');
+            const searchAccountNumber = document.getElementById('searchAccountNumber');
+            const searchAccountBtn = document.getElementById('searchAccountBtn');
+            const getAllAccountsBtn = document.getElementById('getAllAccountsBtn');
+            const accountsTableBody = document.getElementById('accountsTableBody');
+            const accountForm = document.getElementById('accountForm');
+            const accountIdInput = document.getElementById('accountId'); // Renombrado para claridad
+            const accountNumber = document.getElementById('accountNumber');
+            const accountType = document.getElementById('accountType');
+            const ownerName = document.getElementById('ownerName');
+            const balanceAmount = document.getElementById('balanceAmount');
+            const overdraftAmount = document.getElementById('overdraftAmount');
+            const saveAccountBtn = document.getElementById('saveAccountBtn');
+            const clearFormBtn = document.getElementById('clearFormBtn');
+            const transactionSection = document.getElementById('transactionSection');
+            const transactionForm = document.getElementById('transactionForm');
+            const transactionAccountId = document.getElementById('transactionAccountId');
+            const transactionAccountNumber = document.getElementById('transactionAccountNumber');
+            const transactionAmount = document.getElementById('transactionAmount');
+            const depositBtn = document.getElementById('depositBtn');
+            const withdrawalBtn = document.getElementById('withdrawalBtn');
+
+            // URL base de la API
+            const API_BASE_URL = 'http://3.138.32.14/api/Accounts';
+
+            // Mostrar mensaje
+            function showMessage(message, type = 'success') {
+                messageDiv.textContent = message;
+                messageDiv.className = `alert alert-${type}`;
+                messageDiv.classList.remove('hidden');
+
+                setTimeout(() => {
+                    messageDiv.classList.add('hidden');
+                }, 5000);
+            }
+
+            // Ocultar mensaje
+            function hideMessage() {
+                messageDiv.classList.add('hidden');
+            }
+
+            // Limpiar formulario
+            function clearForm() {
+                accountForm.reset();
+                accountIdInput.value = ''; // Usar la variable renombrada
+                transactionAccountId.value = '';
+                transactionAccountNumber.value = '';
+                transactionForm.reset();
+                saveAccountBtn.textContent = 'Crear Cuenta';
+            }
+
+            // Formatear fecha
+            function formatDate(dateString) {
+                const date = new Date(dateString);
+                return date.toLocaleDateString('es-ES');
+            }
+
+            // Formatear moneda
+            function formatCurrency(amount) {
+                return new Intl.NumberFormat('es-CO', {
+                    style: 'currency',
+                    currency: 'COP',
+                    minimumFractionDigits: 2
+                }).format(amount);
+            }
+
+            // Obtener tipo de cuenta
+            function getAccountTypeName(type) {
+                return type === 'A' ? 'Ahorros' : 'Corriente';
+            }
+
+            // Cargar todas las cuentas
+            async function loadAllAccounts() {
+                try {
+                    const response = await fetch(API_BASE_URL);
+                    if (!response.ok) throw new Error('Error al cargar las cuentas');
+
+                    const accounts = await response.json();
+                    renderAccounts(accounts);
+                } catch (error) {
+                    showMessage(error.message, 'error');
+                }
+            }
+
+            // Buscar cuenta por número
+            async function searchAccountByNumber() {
+                const number = searchAccountNumber.value.trim();
+                if (!number) {
+                    showMessage('Por favor ingrese un número de cuenta', 'error');
+                    return;
+                }
+
+                try {
+                    // Asumiendo que la API puede buscar por AccountNumber directamente en la URL o que devuelve una lista para filtrar
+                    // Si la API espera /api/Accounts/ByNumber/{number} o algo así, esto necesitaría ajuste.
+                    // Por ahora, se asume que el backend filtra por el query param.
+                    const response = await fetch(`${API_BASE_URL}?AccountNumber=${number}`);
+                    if (!response.ok) throw new Error('Error al buscar la cuenta. Código: ' + response.status);
+
+                    const accounts = await response.json(); // La API podría devolver un array incluso si es un solo resultado.
+                    if (accounts.length === 0) {
+                        showMessage('Cuenta no encontrada.', 'warning');
+                    } else {
+                        showMessage('Cuenta(s) encontrada(s).');
+                    }
+                    renderAccounts(accounts);
+
+                } catch (error) {
+                    showMessage(error.message, 'error');
+                }
+            }
+
+            // Renderizar cuentas en la tabla
+            function renderAccounts(accounts) {
+                accountsTableBody.innerHTML = '';
+
+                if (!accounts || accounts.length === 0) {
+                    accountsTableBody.innerHTML = '<tr><td colspan="8">No se encontraron cuentas</td></tr>';
+                    return;
+                }
+
+                accounts.forEach(account => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${account.id}</td>
+                        <td>${account.accountNumber}</td>
+                        <td><span class="account-type account-type-${account.accountType}">${getAccountTypeName(account.accountType)}</span></td>
+                        <td>${account.ownerName}</td>
+                        <td>${formatCurrency(account.balanceAmount)}</td>
+                        <td>${formatCurrency(account.overdraftAmount)}</td>
+                        <td>${formatDate(account.creationDate)}</td>
+                        <td>
+                            <button class="edit-btn" data-id="${account.id}">Editar</button>
+                            <button class="delete-btn" data-id="${account.id}">Eliminar</button>
+                            <button class="transact-btn" data-id="${account.id}" data-number="${account.accountNumber}">Transacción</button>
+                        </td>
+                    `;
+                    accountsTableBody.appendChild(row);
+                });
+
+                // Agregar event listeners a los botones
+                document.querySelectorAll('.edit-btn').forEach(btn => {
+                    btn.addEventListener('click', () => editAccount(btn.dataset.id));
+                });
+
+                document.querySelectorAll('.delete-btn').forEach(btn => {
+                    btn.addEventListener('click', () => deleteAccount(btn.dataset.id));
+                });
+
+                document.querySelectorAll('.transact-btn').forEach(btn => {
+                    btn.addEventListener('click', () => prepareTransaction(btn.dataset.id, btn.dataset.number));
+                });
+            }
+
+            // Editar cuenta
+            async function editAccount(id) {
+                try {
+                    const response = await fetch(`${API_BASE_URL}/${id}`);
+                    if (!response.ok) throw new Error('Error al cargar la cuenta para editar');
+
+                    const account = await response.json();
+
+                    accountIdInput.value = account.id; // Usar la variable renombrada
+                    accountNumber.value = account.accountNumber;
+                    accountType.value = account.accountType;
+                    ownerName.value = account.ownerName;
+                    balanceAmount.value = account.balanceAmount;
+                    overdraftAmount.value = account.overdraftAmount;
+
+                    saveAccountBtn.textContent = 'Actualizar Cuenta';
+                    showMessage('Cuenta cargada para edición');
+                    accountNumber.focus(); // Para que el usuario pueda ver que se cargó
+                } catch (error) {
+                    showMessage(error.message, 'error');
+                }
+            }
+
+            // Preparar transacción
+            function prepareTransaction(id, accNumber) { // accNumber en lugar de accountNumber para evitar conflicto de nombres
+                transactionAccountId.value = id;
+                transactionAccountNumber.value = accNumber; // Usar el parámetro
+                transactionAmount.value = ''; // Limpiar monto anterior
+                transactionSection.scrollIntoView({ behavior: 'smooth' });
+                showMessage('Complete los datos de la transacción para la cuenta: ' + accNumber);
+                transactionAmount.focus();
+            }
+
+            // Eliminar cuenta
+            async function deleteAccount(id) {
+                if (!confirm('¿Está seguro de eliminar esta cuenta?')) return;
+
+                try {
+                    const response = await fetch(`${API_BASE_URL}/${id}`, {
+                        method: 'DELETE'
+                    });
+
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        throw new Error(`Error al eliminar la cuenta: ${errorText || response.status}`);
+                    }
+
+                    showMessage('Cuenta eliminada correctamente');
+                    loadAllAccounts();
+                } catch (error) {
+                    showMessage(error.message, 'error');
+                }
+            }
+
+            // Guardar cuenta (crear o actualizar)
+            async function saveAccount(e) {
+                e.preventDefault();
+
+                const currentAccountId = accountIdInput.value; // Usar la variable renombrada
+                const accountData = {
+                    accountNumber: accountNumber.value,
+                    accountType: accountType.value,
+                    ownerName: ownerName.value,
+                    balanceAmount: parseFloat(balanceAmount.value),
+                    overdraftAmount: parseFloat(overdraftAmount.value) || 0
+                };
+
+                // Si es una actualización (PUT), incluir el ID en el objeto accountData
+                if (currentAccountId) {
+                    accountData.id = parseInt(currentAccountId); // Asegurarse que el ID es un número si la API lo espera así
+                }
+
+
+                const url = currentAccountId ? `${API_BASE_URL}/${currentAccountId}` : API_BASE_URL;
+                const method = currentAccountId ? 'PUT' : 'POST';
+
+                try {
+                    const response = await fetch(url, {
+                        method: method,
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(accountData)
+                    });
+
+                    if (!response.ok) {
+                        const errorData = await response.json().catch(() => ({ message: response.statusText }));
+                        throw new Error(errorData.message || errorData.title || 'Error al guardar la cuenta');
+                    }
+
+                    if (method === 'POST') {
+                        const result = await response.json();
+                        showMessage(`Cuenta creada correctamente con ID: ${result.id}`);
+                    } else {
+                        showMessage('Cuenta actualizada correctamente');
+                    }
+
+                    clearForm();
+                    loadAllAccounts();
+                } catch (error) {
+                    showMessage(error.message, 'error');
+                }
+            }
+
+            // Realizar depósito
+            async function makeDeposit() {
+                const amount = parseFloat(transactionAmount.value);
+                const currentTransactionAccountId = transactionAccountId.value; // ID de la cuenta para la URL
+                const currentTransactionAccountNumber = transactionAccountNumber.value; // Número de cuenta para el payload
+
+                if (!currentTransactionAccountId) {
+                    showMessage('No se ha seleccionado una cuenta para la transacción.', 'error');
+                    return;
+                }
+                if (!amount || amount <= 0) {
+                    showMessage('El monto debe ser mayor que cero', 'error');
+                    return;
+                }
+
+                const transactionData = {
+                    id: parseInt(currentTransactionAccountId), // MODIFICADO: Usar el ID de la cuenta actual
+                    accountNumber: currentTransactionAccountNumber,
+                    valueAmount: amount
+                };
+
+                try {
+                    const response = await fetch(`${API_BASE_URL}/${currentTransactionAccountId}/Deposit`, { // Usar el ID de la cuenta en la URL
+                        method: 'PUT', // O POST, según la API. PUT es común para "actualizar" el saldo
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(transactionData)
+                    });
+
+                    if (!response.ok) {
+                        const errorData = await response.json().catch(() => ({ "Errors": [response.statusText] }));
+                        const errorMessage = errorData.Errors ? errorData.Errors.join(', ') : (errorData.message || 'Error al realizar el depósito');
+                        throw new Error(errorMessage);
+                    }
+
+                    showMessage('Depósito realizado correctamente');
+                    transactionAmount.value = '';
+                    loadAllAccounts(); // Recargar para ver el saldo actualizado
+                } catch (error) {
+                    showMessage(error.message, 'error');
+                }
+            }
+
+            // Realizar retiro
+            async function makeWithdrawal() {
+                const amount = parseFloat(transactionAmount.value);
+                const currentTransactionAccountId = transactionAccountId.value; // ID de la cuenta para la URL
+                const currentTransactionAccountNumber = transactionAccountNumber.value; // Número de cuenta para el payload
+
+                if (!currentTransactionAccountId) {
+                    showMessage('No se ha seleccionado una cuenta para la transacción.', 'error');
+                    return;
+                }
+
+                if (!amount || amount <= 0) {
+                    showMessage('El monto debe ser mayor que cero', 'error');
+                    return;
+                }
+
+                const transactionData = {
+                    id: parseInt(currentTransactionAccountId), // MODIFICADO: Usar el ID de la cuenta actual
+                    accountNumber: currentTransactionAccountNumber,
+                    valueAmount: amount
+                };
+
+                try {
+                    const response = await fetch(`${API_BASE_URL}/${currentTransactionAccountId}/Withdrawal`, { // Usar el ID de la cuenta en la URL
+                        method: 'PUT', // O POST, según la API.
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(transactionData)
+                    });
+
+                    if (!response.ok) {
+                        const errorData = await response.json().catch(() => ({ "Errors": [response.statusText] }));
+                        const errorMessage = errorData.Errors ? errorData.Errors.join(', ') : (errorData.message || 'Error al realizar el retiro');
+                        throw new Error(errorMessage);
+                    }
+
+                    showMessage('Retiro realizado correctamente');
+                    transactionAmount.value = '';
+                    loadAllAccounts(); // Recargar para ver el saldo actualizado
+                } catch (error) {
+                    showMessage(error.message, 'error');
+                }
+            }
+
+            // Event listeners
+            searchAccountBtn.addEventListener('click', searchAccountByNumber);
+            getAllAccountsBtn.addEventListener('click', loadAllAccounts);
+            accountForm.addEventListener('submit', saveAccount);
+            clearFormBtn.addEventListener('click', clearForm);
+            depositBtn.addEventListener('click', makeDeposit);
+            withdrawalBtn.addEventListener('click', makeWithdrawal);
+
+            // Cargar todas las cuentas al iniciar
+            loadAllAccounts();
+        });
+    </script>
+</body>
+
+</html>

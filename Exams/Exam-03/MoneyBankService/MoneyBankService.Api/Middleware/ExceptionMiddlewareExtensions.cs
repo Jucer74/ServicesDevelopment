@@ -1,10 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Net;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
-using MoneyBankService.Api.Middlewares;
 using MoneyBankService.Application.Exceptions;
-using System.Net;
 
-namespace MoneyBankService.Api.Middlewares
+namespace MoneyBankService.Api.Middleware
 {
     /// <summary>
     /// Extend the handler to capture the Exceptions

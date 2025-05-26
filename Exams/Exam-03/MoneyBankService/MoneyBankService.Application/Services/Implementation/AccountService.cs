@@ -60,11 +60,11 @@ namespace MoneyBankService.Application.Services.Implementation
 
         public async Task<AccountResultDto> CreateAsync(AccountCreateDto dto)
         {
-            if (dto.BalanceAmount <= 0)
-                throw new BadRequestException("El Balance debe ser mayor a cero.");
             var existingAccount = await _accountRepository.FindAsync(a => a.AccountNumber == dto.AccountNumber);
             if (existingAccount.Any())
                 throw new BadRequestException("Ya existe una cuenta con ese número.");
+            if (dto.BalanceAmount <= 0)
+                throw new BadRequestException("El Balance debe ser mayor a cero.");
 
             var entity = _mapper.Map<Account>(dto);
 

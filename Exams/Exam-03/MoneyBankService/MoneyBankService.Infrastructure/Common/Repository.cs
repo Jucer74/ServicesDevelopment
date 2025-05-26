@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using MoneyBankService.Application.Common.Interfaces;
-using MoneyBankService.Domain.Entities.Base;
 using MoneyBankService.Application.Exceptions;
+using MoneyBankService.Domain.Entities.Base;
 using MoneyBankService.Infrastructure.Context;
 
 
@@ -23,7 +18,7 @@ namespace MoneyBankService.Infrastructure.Common
             _appDbContext = appDbContext;
         }
 
-        public async Task AddAsync(T entity) 
+        public async Task AddAsync(T entity)
         {
             _appDbContext.Set<T>().Add(entity);
             await _appDbContext.SaveChangesAsync();
@@ -58,7 +53,7 @@ namespace MoneyBankService.Infrastructure.Common
             await _appDbContext.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(T entity) 
+        public async Task UpdateAsync(T entity)
         {
             var id = entity?.Id;
             var original = await _appDbContext.Set<T>().FindAsync(id);
