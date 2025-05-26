@@ -1,0 +1,42 @@
+name: Build and Deploy Docker Image
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest  # GitHub-hosted runner
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Log in to Docker Hub
+      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+    - name: Build Docker image
+      run: docker build -t ${{ secrets.DOCKER_USERNAME }}/dotnet-api:latest .
+
+    - name: Push Docker image
+      run: docker push ${{ secrets.DOCKER_USERNAME }}/dotnet-api:latest
+
+  deploy:
+    needs: build-and-push
+    runs-on: [self-hosted]  # EC2 intance
+
+    steps:
+    - name: Log in to Docker Hub
+      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+    - name: Pull latest image
+      run: docker pull ${{ secrets.DOCKER_USERNAME }}/dotnet-api:latest
+
+    - name: Stop and remove old container
+      run: |
+        docker stop dotnet-api || true
+        docker rm dotnet-api || true
+
+    - name: Run new container
+      run: docker run -d --name dotnet-api --network awsdeploy -p 80:80 ${{ secrets.DOCKER_USERNAME }}/dotnet-api:latest

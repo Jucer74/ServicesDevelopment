@@ -3,13 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MoneyBankService.Api.Extensions;
 using MoneyBankService.Api.Middleware;
-using System.Text.Json; // Asegúrate de que este using esté presente
+using System.Text.Json; 
 using MoneyBankService.Infrastructure.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add the DB Context
-var connectionString = builder.Configuration.GetConnectionString("CnnStr"); // Obtén la cadena de conexión
+var connectionString = builder.Configuration.GetConnectionString("CnnStr"); // Obtï¿½n la cadena de conexiï¿½n
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)) // Sintaxis correcta para Pomelo
 );
@@ -42,6 +42,9 @@ builder.Services.AddRepositories();
 builder.Services.AddServices();
 builder.Services.AddMapping();
 builder.Services.AddValidators();
+
+
+builder.WebHost.UseUrls("http://*:80");
 
 var app = builder.Build();
 
