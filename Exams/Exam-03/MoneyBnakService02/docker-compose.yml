@@ -6,10 +6,9 @@ services:
     container_name: moneybankdb
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: admin123
+      MYSQL_ROOT_PASSWORD: juan234ego
       MYSQL_DATABASE: moneybankdb
-      MYSQL_USER: admin
-      MYSQL_PASSWORD: admin123
+      MYSQL_PASSWORD: juan234ego
     ports:
       - "3307:3306"
     networks:
@@ -20,13 +19,13 @@ services:
   api:
     build: 
       context: .
-      dockerfile: MoneyBankService02.Api/Dockerfile
+      dockerfile: MoneyBnakService02.Api/Dockerfile
     container_name: moneybank-api
     restart: always
     depends_on:
       - db
     environment:
-      ConnectionStrings__DefaultConnection: "Server=db;Database=moneybankdb;User=admin;Password=admin123;"
+      ConnectionStrings__DefaultConnection: "Server=db;Database=moneybankdb;User=root;Password=juan234ego;"
     ports:
       - "8080:8080"
     networks:

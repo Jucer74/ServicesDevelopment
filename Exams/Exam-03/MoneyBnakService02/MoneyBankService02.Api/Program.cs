@@ -5,15 +5,21 @@ using MoneyBankService02.Infrastructure.Context;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ?? REGISTRAR DbContext con MySQL
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "MoneyBank API", Version = "v1" });
+    c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
+});
+
+
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseMySql(
         builder.Configuration.GetConnectionString("DefaultConnection"),
         new MySqlServerVersion(new Version(8, 0, 30)))); 
-// ?? AGREGAR SERVICIOS Y VALIDACIONES
 builder.Services.AddControllers()
     .ConfigureApiBehaviorOptions(options =>
     {
@@ -30,7 +36,6 @@ builder.Services.AddApplicationModules();
 
 var app = builder.Build();
 
-// ?? CONFIGURAR MIDDLEWARES
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -38,7 +43,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseExceptionMiddleware();
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();
