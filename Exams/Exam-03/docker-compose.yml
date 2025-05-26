@@ -1,7 +1,9 @@
+version: '3.9'
+
 services:
-  db:
+  mysql:
     image: mysql:8.0
-    container_name: mysql_moneybank
+    container_name: mysql
     restart: always
     ports:
       - "3306:3306"
@@ -11,18 +13,22 @@ services:
       MYSQL_USER: moneybankuser
       MYSQL_PASSWORD: M0n3yB4nkUs3r*01
     volumes:
-      - ./Scripts/init_all.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./scripts:/docker-entrypoint-initdb.d
+    networks:
+      - moneybank-network
 
-  api:
+  moneybankservice.api:
     build:
-      context: ./MoneyBankService
-      dockerfile: MoneyBankService.Infrastructure/Dockerfile
-    container_name: moneybank_api
-    depends_on:
-      - db
+      context: .
+      dockerfile: MoneyBankService.Api/Dockerfile
+    container_name: moneybankservice.api
     ports:
       - "8080:80"
-    environment:
-      ASPNETCORE_ENVIRONMENT: Development
+    depends_on:
+      - mysql
+    networks:
+      - moneybank-network
 
-
+networks:
+  moneybank-network:
+    driver: bridge
