@@ -1,18 +1,29 @@
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.HttpsPolicy; // Asegúrate de esta directiva
 using Microsoft.EntityFrameworkCore;
 using MoneyBankService.Api.Extensions;
 using MoneyBankService.Api.Middleware;
 using MoneyBankService.Infrastructure.Context;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add the DB Context
+// Configurar el puerto HTTPS para la redirección vía DI.
+builder.Services.Configure<HttpsRedirectionOptions>(options =>
+{
+    options.HttpsPort = 7001;
+});
+
+// Configura la base de datos usando la cadena "DefaultConnection"
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
-    new MySqlServerVersion(new Version(8, 0, 36))));
+        new MySqlServerVersion(new Version(8, 0, 42)),
+        mySqlOptions => mySqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null)
+    )
+);
 
-// Add services to the container.
+// Resto de configuraciones...
 builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
 {
     options.InvalidModelStateResponseFactory = context =>
@@ -22,49 +33,42 @@ builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
     };
 });
 
-// Add Fluent Validation
 builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
-
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-// Add Modules
 builder.Services.AddRepositories();
 builder.Services.AddServices();
 builder.Services.AddMapping();
 builder.Services.AddValidators();
 
-// ? Agrega CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
     {
-        policy.WithOrigins("http://localhost:7300") // Cambia según tu puerto real del frontend
+        policy.WithOrigins("http://localhost:7300")
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
 });
-
+builder.Services.Configure<HttpsRedirectionOptions>(options =>
+{
+    options.HttpsPort = 7001;
+});
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Pipeline HTTP
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-// Add the Exception Middleware Handler
 app.UseExceptionMiddleware();
 
+// Aquí se llama USEHTTPSREDIRECTION SIN argumentos
 app.UseHttpsRedirection();
 
-// ? Habilita CORS
-app.UseCors("AllowAll");
-
+app.UseCors("AllowFrontend");
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();

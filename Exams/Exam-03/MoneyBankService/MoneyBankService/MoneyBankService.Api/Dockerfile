@@ -4,10 +4,12 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 USER $APP_UID
 WORKDIR /app
-EXPOSE 8080
-EXPOSE 8081
+EXPOSE 7000
+EXPOSE 7001
 
-
+ENV ASPNETCORE_URLS="https://+:7001;http://+:7000"
+ENV ASPNETCORE_Kestrel__Certificates__Default__Password="your-password"
+ENV ASPNETCORE_Kestrel__Certificates__Default__Path="/root/.aspnet/https/aspnetapp.pfx"
 # Esta fase se usa para compilar el proyecto de servicio
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
