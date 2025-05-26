@@ -14,13 +14,28 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<BankAccount>(entity =>
         {
             entity.HasKey(e => e.Id);
-            entity.Property(e => e.AccountNumber).IsRequired().HasMaxLength(10);
-            entity.Property(e => e.OwnerName).IsRequired().HasMaxLength(100);
-            entity.Property(e => e.BalanceAmount).HasPrecision(18, 2);
+            entity.Property(e => e.AccountType)
+                .IsRequired()
+                .HasColumnType("CHAR(1)");
+
+            entity.Property(e => e.CreationDate)
+                .HasColumnType("DATETIME");
+
+            entity.Property(e => e.AccountNumber)
+                .IsRequired()
+                .HasMaxLength(10);
+
+            entity.Property(e => e.OwnerName)
+                .IsRequired()
+                .HasMaxLength(100);
+
+            entity.Property(e => e.BalanceAmount)
+                .HasPrecision(18, 2);
+
+            entity.Property(e => e.OverdraftAmount)
+                .HasPrecision(18, 2);
         });
 
         base.OnModelCreating(modelBuilder);
     }
 }
-
-

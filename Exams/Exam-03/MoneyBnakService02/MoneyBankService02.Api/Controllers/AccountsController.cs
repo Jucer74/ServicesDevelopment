@@ -6,6 +6,7 @@ using MoneyBankService02.Application.Common;
 
 namespace MoneyBankService02.Api.Controllers;
 
+[ApiExplorerSettings(IgnoreApi = false)]
 [ApiController]
 [Route("api/[controller]")]
 public class AccountsController : ControllerBase
