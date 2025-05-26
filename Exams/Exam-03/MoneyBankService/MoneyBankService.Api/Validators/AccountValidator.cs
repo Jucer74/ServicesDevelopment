@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using MoneyBankService.Application.Dto;
+using MoneyBankService.Application.Dtos;
 
 namespace MoneyBankService.Api.Validators;
 
