@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoneyBank</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Gestión de Cuentas Bancarias</h1>
+    </header>
+
+    <main>
+        <section id="all-accounts-section">
+            <h2>Todas las Cuentas</h2>
+            <button id="load-accounts-btn">Cargar Cuentas</button>
+            <div id="accounts-loading" style="display: none;">Cargando...</div>
+            <table id="accounts-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Número de Cuenta</th>
+                        <th>Propietario</th>
+                        <th>Tipo</th>
+                        <th>Saldo Actual (Fondos Propios)</th>
+                        <th>Sobregiro Utilizado</th>
+                        <th>Cupo Sobregiro Disponible</th>
+                        <th>Fecha Creación</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="accounts-table-body">
+                    </tbody>
+            </table>
+        </section>
+
+        <hr>
+
+        <section id="form-section">
+            <h2 id="form-title">Crear Nueva Cuenta</h2>
+            <form id="account-form">
+                <input type="hidden" id="accountId">
+                <div>
+                    <label for="accountNumber">Número de Cuenta (10 dígitos):</label>
+                    <input type="text" id="accountNumber" name="accountNumber" required maxlength="10" pattern="\d{10}" title="Debe ser un número de 10 dígitos.">
+                </div>
+                <div>
+                    <label for="ownerName">Nombre del Propietario:</label>
+                    <input type="text" id="ownerName" name="ownerName" required maxlength="100">
+                </div>
+                <div>
+                    <label for="accountType">Tipo de Cuenta:</label>
+                    <select id="accountType" name="accountType" required>
+                        <option value="A">Ahorros (A)</option>
+                        <option value="C">Corriente (C)</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="balanceAmount">Saldo Inicial (Aporte Propio):</label>
+                    <input type="number" id="balanceAmount" name="balanceAmount" step="0.01" required min="0.01">
+                </div>
+                <button type="submit" id="save-account-btn">Guardar Cuenta</button>
+                <button type="button" id="clear-form-btn">Limpiar Formulario</button>
+            </form>
+            <div id="form-feedback" style="margin-top: 10px;"></div>
+        </section>
+
+        <hr>
+        
+        <section id="transaction-section">
+            <h2>Realizar Transacción</h2>
+            <form id="transaction-form">
+                <div>
+                    <label for="transactionAccountId">ID de Cuenta para Transacción:</label>
+                    <input type="number" id="transactionAccountId" required>
+                </div>
+                <div>
+                    <label for="transactionAccountNumber">Número de Cuenta (para verificación):</label>
+                    <input type="text" id="transactionAccountNumber" required maxlength="10" pattern="\d{10}" title="Debe ser un número de 10 dígitos.">
+                </div>
+                <div>
+                    <label for="transactionValue">Monto de la Transacción:</label>
+                    <input type="number" id="transactionValue" step="0.01" required min="0.01">
+                </div>
+                <button type="button" id="deposit-btn">Depositar</button>
+                <button type="button" id="withdraw-btn">Retirar</button>
+            </form>
+            <div id="transaction-feedback" style="margin-top: 10px;"></div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 MoneyBank Service</p>
+    </footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
