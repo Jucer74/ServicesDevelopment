@@ -3,22 +3,32 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MoneyBankService.Api.Extensions;
 using MoneyBankService.Api.Middleware;
+using System.Text.Json; // Asegúrate de que este using esté presente
 using MoneyBankService.Infrastructure.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add the DB Context
-builder.Services.AddDbContext<AppDbContext>(options => options.UseMySQL(builder.Configuration.GetConnectionString("CnnStr")!));
+var connectionString = builder.Configuration.GetConnectionString("CnnStr"); // Obtén la cadena de conexión
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)) // Sintaxis correcta para Pomelo
+);
 
 // Add services to the container.
-builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
-{
-    options.InvalidModelStateResponseFactory = context =>
+builder.Services.AddControllers()
+    .AddJsonOptions(options => 
     {
-        var errorDetails = context.ConstructErrorMessages();
-        return new BadRequestObjectResult(errorDetails);
-    };
-});
+        
+       // options.JsonSerializerOptions.PropertyNamingPolicy = null;
+    })
+    .ConfigureApiBehaviorOptions(options =>
+    {
+        options.InvalidModelStateResponseFactory = context =>
+        {
+            var errorDetails = context.ConstructErrorMessages();
+            return new BadRequestObjectResult(errorDetails);
+        };
+    });
 
 // Add Fluent Validation
 builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();

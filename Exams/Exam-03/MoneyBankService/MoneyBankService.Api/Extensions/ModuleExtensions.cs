@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation;
-using MoneyBankService.Api.Dto;
+using MoneyBankService.Application.Dto; 
 using MoneyBankService.Api.Mappers;
 using MoneyBankService.Api.Validators;
 using MoneyBankService.Application.Interfaces;
@@ -8,44 +8,39 @@ using MoneyBankService.Application.Services;
 using MoneyBankService.Domain.Interfaces.Repositories;
 using MoneyBankService.Infrastructure.Repositories;
 
-namespace MoneyBankService.Api.Extensions;
-
-public static class ModuleExtensions
+namespace MoneyBankService.Api.Extensions
 {
-
-    public static IServiceCollection AddServices(this IServiceCollection services)
+    public static class ModuleExtensions
     {
-        services.AddScoped<IAccountService, AccountService>();
-
-        return services;
-    }
-
-    public static IServiceCollection AddRepositories(this IServiceCollection services)
-    {
-        services.AddScoped<IAccountRepository, AccountRepository>();
-
-        return services;
-    }
-
-
-    public static IServiceCollection AddMapping(this IServiceCollection services)
-    {
-        // Auto Mapper Configurations
-        var mapperConfig = new MapperConfiguration(mc =>
+        public static IServiceCollection AddServices(this IServiceCollection services)
         {
-            mc.AddProfile(new MappingProfile());
-        });
+            services.AddScoped<IAccountService, AccountService>();
+            return services;
+        }
 
-        IMapper mapper = mapperConfig.CreateMapper();
-        services.AddSingleton(mapper);
+        public static IServiceCollection AddRepositories(this IServiceCollection services)
+        {
+            services.AddScoped<IAccountRepository, AccountRepository>();
+            return services;
+        }
 
-        return services;
-    }
+        public static IServiceCollection AddMapping(this IServiceCollection services)
+        {
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
 
-    public static IServiceCollection AddValidators(this IServiceCollection services)
-    {
-        services.AddScoped<IValidator<AccountDto>, AccountValidator>();
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
+            return services;
+        }
 
-        return services;
+        public static IServiceCollection AddValidators(this IServiceCollection services)
+        {
+            services.AddScoped<IValidator<AccountDto>, AccountValidator>();
+            services.AddScoped<IValidator<TransactionDto>, TransactionValidator>(); 
+            return services;
+        }
     }
 }

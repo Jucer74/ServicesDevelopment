@@ -1,6 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using MoneyBankService.Application.Dto;
+using MoneyBankService.Application.Interfaces;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using MoneyBankService.Api.Middleware; // <--- ASEGÚRATE DE TENER ESTE USING
+using Microsoft.AspNetCore.Http;      // <--- Y ESTE USING PARA StatusCodes
 
 namespace MoneyBankService.Api.Controllers
 {
@@ -8,36 +12,95 @@ namespace MoneyBankService.Api.Controllers
     [ApiController]
     public class AccountsController : ControllerBase
     {
-        // GET: api/<AccountsController>
+        private readonly IAccountService _accountService;
+
+        public AccountsController(IAccountService accountService)
+        {
+            _accountService = accountService;
+        }
+
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<ActionResult<IEnumerable<AccountDto>>> GetAccounts([FromQuery] string? accountNumber = null)
         {
-            return new string[] { "value1", "value2" };
+            if (!string.IsNullOrEmpty(accountNumber))
+            {
+                var accountsByNumber = await _accountService.GetAccountsByAccountNumberAsync(accountNumber);
+                return Ok(accountsByNumber);
+            }
+
+            var accounts = await _accountService.GetAllAccountsAsync();
+            return Ok(accounts);
         }
 
-        // GET api/<AccountsController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<ActionResult<AccountDto>> GetAccount(int id)
         {
-            return "value";
+            var account = await _accountService.GetAccountByIdAsync(id);
+            if (account == null)
+            {
+                // --- MODIFICACIÓN AQUÍ ---
+                var errorResponse = new ErrorDetails
+                {
+                    ErrorType = "Not Found", // Esto será PascalCase por la definición en ErrorDetails
+                    Errors = new List<string> { $"Account with Id={id} Not Found" }
+                };
+                // Devuelve un ContentResult para usar la serialización de Newtonsoft.Json de ErrorDetails.ToString()
+                return new ContentResult
+                {
+                    Content = errorResponse.ToString(),
+                    ContentType = "application/json",
+                    StatusCode = StatusCodes.Status404NotFound
+                };
+                // --- FIN DE LA MODIFICACIÓN ---
+            }
+            return Ok(account); // Esto usará System.Text.Json (configurado para camelCase en Program.cs)
         }
 
-        // POST api/<AccountsController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<ActionResult<AccountDto>> PostAccount(AccountDto accountDto)
         {
+            var createdAccount = await _accountService.CreateAccountAsync(accountDto);
+            return Ok(createdAccount);
         }
 
-        // PUT api/<AccountsController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> PutAccount(int id, AccountDto accountDto)
         {
+            var updatedAccount = await _accountService.UpdateAccountAsync(id, accountDto);
+            return Ok(updatedAccount);
         }
 
-        // DELETE api/<AccountsController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> DeleteAccount(int id)
         {
+            var success = await _accountService.DeleteAccountAsync(id);
+            if (success)
+            {
+                return NoContent();
+            }
+            return BadRequest("Delete operation failed for an unknown reason.");
+        }
+
+        [HttpPut("{id}/Deposit")]
+        public async Task<IActionResult> Deposit(int id, TransactionDto transactionDto)
+        {
+            var success = await _accountService.DepositAsync(id, transactionDto);
+            if (success)
+            {
+                return NoContent();
+            }
+            return BadRequest("Deposit operation failed for an unknown reason.");
+        }
+
+        [HttpPut("{id}/Withdrawal")]
+        public async Task<IActionResult> Withdrawal(int id, TransactionDto transactionDto)
+        {
+            var success = await _accountService.WithdrawAsync(id, transactionDto);
+            if (success)
+            {
+                return NoContent();
+            }
+            return BadRequest("Withdrawal operation failed for an unknown reason.");
         }
     }
 }

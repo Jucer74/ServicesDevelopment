@@ -1,23 +1,36 @@
 ﻿using FluentValidation;
-using MoneyBankService.Api.Dto;
+using MoneyBankService.Application.Dto;
 
-namespace MoneyBankService.Api.Validators;
-
-public class AccountValidator: AbstractValidator<AccountDto>
+namespace MoneyBankService.Api.Validators
 {
-    public AccountValidator()
+    public class AccountValidator : AbstractValidator<AccountDto>
     {
-        // TODO: Implement the Validation Rules
+        public AccountValidator()
+        {
+            RuleFor(account => account.AccountType)
+                .NotEmpty().WithMessage("El campo Tipo de Cuenta es Requerido.")
+                
+                .Must(type => type == 'A' || type == 'C').WithMessage("El campo Tipo de Cuenta solo permite (A o C)."); 
 
-        //RuleFor(m => m.FIELD)
-        //    .NotEmpty()
-        //    .WithMessage("El campo FIELD es Requerido.")
-        //    .MaximumLength(50)
-        //    .WithMessage("El campo FIELD tiene una longitud maxima de 10 caracteres")
-        //    .Matches(@"\d{10}")
-        //    .WithMessage("El campo FIELD Solo Acepta Numeros")
-        //    .GreaterThan("0")
-        //    .WithMessage("El campo FIELD debe ser mayor a cero");
+            RuleFor(account => account.AccountNumber)
+                .NotEmpty().WithMessage("El campo Numero de la Cuenta es Requerido.")
+                .Length(10).WithMessage("El campo Numero de La Cuenta debe tener una longitud de 10 caracteres.")
+                .Matches(@"^\d{10}$").WithMessage("El campo Numero de la Cuenta Solo Acepta Numeros y debe tener 10 dígitos.");
 
+            RuleFor(account => account.OwnerName)
+                .NotEmpty().WithMessage("El campo Nombre del Propietario es Requerido.")
+                .MaximumLength(100).WithMessage("El campo Nombre del Propietario tiene una longitud maxima de 100 caracteres.");
+
+            RuleFor(account => account.BalanceAmount)
+                .NotEmpty().WithMessage("El campo Balance es Requerido.")
+               
+                .PrecisionScale(18, 2, false).WithMessage("El campo Balance debe tener una precisión máxima de 18 dígitos y 2 decimales.");
+
+
+            RuleFor(account => account.OverdraftAmount)
+
+        .GreaterThanOrEqualTo(0).WithMessage("El campo Sobregiro no puede ser negativo.") 
+        .PrecisionScale(18, 2, false).WithMessage("El campo Sobregiro debe tener una precisión máxima de 18 dígitos y 2 decimales.");
+        }
     }
 }
