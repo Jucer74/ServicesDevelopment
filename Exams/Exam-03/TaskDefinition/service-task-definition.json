@@ -1,0 +1,38 @@
+{
+  "family": "moneybank-service-task",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "256",
+  "memory": "512",
+  "containerDefinitions": [
+    {
+      "name": "moneybank-service",
+      "image": "ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/moneybank-service:latest",
+      "portMappings": [
+        {
+          "containerPort": 80,
+          "protocol": "tcp"
+        }
+      ],
+      "essential": true,
+      "environment": [
+        {
+          "name": "ASPNETCORE_ENVIRONMENT",
+          "value": "Production"
+        },
+        {
+          "name": "ConnectionStrings__DefaultConnection",
+          "value": "Server=MYSQL_ENDPOINT;Port=3306;Database=moneybankdb;User=moneybankuser;Password=M0n3yB4nkUs3r*01"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/moneybank-service",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
+    }
+  ]
+}

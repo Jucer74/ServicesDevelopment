@@ -1,0 +1,243 @@
+/* App.css - Mejorado para una interfaz bancaria con tema azul (más reducido) */
+
+/* Importar Google Fonts - Inter */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif; /* Fuente moderna y limpia */
+    background-color: #f0f2f5; /* Fondo gris claro para un aspecto limpio */
+    margin: 0;
+    padding: 0;
+    line-height: 1.5; /* Legibilidad mejorada, ligeramente más compacto */
+    color: #343a40; /* Gris oscuro para el texto principal */
+}
+
+.App {
+    max-width: 800px; /* Ancho máximo reducido para un diseño más compacto */
+    margin: 30px auto; /* Centrado con margen superior/inferior reducido */
+    padding: 2rem; /* Relleno más generoso, pero ajustado */
+    background-color: white;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.07); /* Sombra ligeramente más sutil */
+    border-radius: 14px; /* Borde-radio ligeramente reducido */
+    border: 1px solid #e0e0e0; /* Borde sutil */
+}
+
+h1 {
+    text-align: center;
+    color: #172a4d; /* Azul primario profundo de banco */
+    font-size: 2.4rem; /* Más pequeño para un diseño más compacto */
+    font-weight: 700; /* Negrita */
+    margin-bottom: 2rem; /* Más espacio debajo del encabezado */
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid #e0e0e0; /* Separador sutil */
+}
+
+h2 {
+    color: #343a40; /* Gris más oscuro para los títulos de sección */
+    font-size: 1.6rem; /* Ligeramente más pequeño */
+    font-weight: 600; /* Semi-negrita */
+    margin-top: 2rem; /* Más espacio encima del encabezado */
+    margin-bottom: 1rem; /* Más compacto */
+}
+
+.opciones-menu select {
+    width: 100%;
+    padding: 0.6rem 0.8rem; /* Relleno reducido */
+    font-size: 1rem; /* Fuente estándar */
+    margin-top: 0.5rem;
+    border: 1px solid #c0c0c0; /* Color de borde más suave */
+    border-radius: 8px; /* Esquinas más redondeadas */
+    appearance: none; /* Elimina el estilo predeterminado del navegador */
+    background-color: #ffffff;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%236c757d%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-25.7-23.1L147.2%20141.2%2031%2046.2a17.6%2017.6%200%200%200-25.7%2023.1l136.2%20136.2a17.6%2017.6%200%200%200%2025.7%200z%22%2F%3E%3C%2Fsvg%3E'); /* Flecha personalizada */
+    background-repeat: no-repeat;
+    background-position: right 0.8rem center;
+    background-size: 12px; /* Tamaño de flecha más pequeño */
+    cursor: pointer;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.opciones-menu select:focus {
+    border-color: #007bff; /* Resaltado al enfocar */
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2); /* Anillo de enfoque sutil */
+    outline: none;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem; /* Margen ajustado */
+    color: #495057; /* Color de etiqueta ligeramente más oscuro */
+    font-weight: 500; /* Peso medio */
+    font-size: 0.95rem; /* Ligeramente más pequeño */
+}
+
+input {
+    display: block;
+    width: 100%;
+    padding: 0.6rem 0.8rem; /* Relleno reducido */
+    margin-top: 0.4rem;
+    border: 1px solid #c0c0c0; /* Color de borde más suave */
+    border-radius: 6px; /* Esquinas más redondeadas */
+    font-size: 1rem; /* Fuente estándar */
+    color: #343a40;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus {
+    border-color: #007bff; /* Resaltado al enfocar */
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2); /* Anillo de enfoque sutil */
+    outline: none;
+}
+
+button {
+    background-color: #007bff; /* Azul secundario de banco */
+    color: white;
+    padding: 0.8rem 1.5rem; /* Relleno reducido */
+    font-size: 1rem; /* Fuente estándar */
+    font-weight: 600; /* Semi-negrita */
+    border: none;
+    border-radius: 8px; /* Esquinas más redondeadas */
+    cursor: pointer;
+    margin-top: 1.2rem; /* Más espacio encima del botón */
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 3px 8px rgba(0, 123, 255, 0.2); /* Sombra sutil para profundidad */
+}
+
+button:hover {
+    background-color: #0056b3; /* Azul más oscuro al pasar el ratón */
+    transform: translateY(-1px); /* Efecto de elevación ligera */
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3); /* Sombra mejorada al pasar el ratón */
+}
+
+button:active {
+    transform: translateY(0); /* Reiniciar al hacer clic */
+    box-shadow: 0 1px 3px rgba(0, 123, 255, 0.2); /* Sombra más pequeña al activar */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1.2rem; /* Más espacio encima de la tabla */
+    background-color: white;
+    border-radius: 10px; /* Esquinas redondeadas para la tabla */
+    overflow: hidden; /* Asegura que las esquinas redondeadas se apliquen al contenido */
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04); /* Sombra sutil para tablas */
+}
+
+table th, table td {
+    border: 1px solid #e9ecef; /* Borde más claro para las celdas de la tabla */
+    padding: 0.8rem; /* Relleno reducido en las celdas */
+    text-align: left;
+}
+
+table th {
+    background-color: #f5f7fa; /* Azul-gris claro para el encabezado */
+    font-weight: 600; /* Encabezado semi-negrita */
+    color: #343a40;
+    font-size: 0.95rem; /* Ligeramente más pequeño */
+}
+
+table td {
+    color: #343a40;
+    font-size: 0.9rem; /* Ligeramente más pequeño */
+}
+
+.selected-account {
+    margin-top: 2rem; /* Más espacio encima */
+    padding: 1.2rem; /* Relleno reducido */
+    background-color: #e6f2ff; /* Fondo azul muy claro (similar al de la imagen pero en azul) */
+    border-left: 4px solid #007bff; /* Borde azul secundario prominente, ligeramente más delgado */
+    border-radius: 8px; /* Esquinas redondeadas */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04); /* Sombra sutil */
+}
+
+.selected-account p {
+    margin: 0.6rem 0; /* Margen ajustado para los párrafos dentro */
+    color: #343a40;
+    font-size: 0.95rem; /* Ligeramente más pequeño */
+}
+
+p {
+    color: #343a40;
+    font-size: 0.95rem; /* Ligeramente más pequeño */
+}
+
+/* Ajustes responsivos */
+@media (max-width: 768px) {
+    .App {
+        margin: 15px auto;
+        padding: 1.2rem;
+        border-radius: 10px;
+    }
+
+    h1 {
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+    }
+
+    h2 {
+        font-size: 1.4rem;
+        margin-top: 1.5rem;
+    }
+
+    .opciones-menu select,
+    input {
+        padding: 0.5rem 0.7rem;
+        font-size: 0.9rem;
+    }
+
+    button {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.95rem;
+        width: 100%; /* Botón de ancho completo en pantallas pequeñas */
+    }
+
+    table th,
+    table td {
+        padding: 0.7rem;
+        font-size: 0.85rem;
+    }
+
+    .selected-account {
+        padding: 0.9rem;
+        margin-top: 1.5rem;
+    }
+
+    .selected-account p {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .App {
+        padding: 0.8rem;
+        margin: 10px auto;
+    }
+
+    h1 {
+        font-size: 1.6rem;
+        margin-bottom: 1rem;
+    }
+
+    h2 {
+        font-size: 1.2rem;
+        margin-top: 1rem;
+    }
+
+    .opciones-menu select,
+    input,
+    button {
+        font-size: 0.85rem;
+        padding: 0.4rem 0.6rem;
+    }
+
+    table th,
+    table td {
+        padding: 0.5rem;
+        font-size: 0.8rem;
+    }
+
+    .selected-account {
+        padding: 0.7rem;
+    }
+}

@@ -1,0 +1,46 @@
+{
+  "family": "moneybank-mysql-task",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "512",
+  "memory": "1024",
+  "containerDefinitions": [
+    {
+      "name": "mysql",
+      "image": "915043506123.dkr.ecr.us-east-1.amazonaws.com/moneybank-mysql:latest",
+      "portMappings": [
+        {
+          "containerPort": 3306,
+          "protocol": "tcp"
+        }
+      ],
+      "essential": true,
+      "environment": [
+        {
+          "name": "MYSQL_ROOT_PASSWORD",
+          "value": "r00tP@ssw0rd"
+        },
+        {
+          "name": "MYSQL_DATABASE",
+          "value": "moneybankdb"
+        },
+        {
+          "name": "MYSQL_USER",
+          "value": "moneybankuser"
+        },
+        {
+          "name": "MYSQL_PASSWORD",
+          "value": "M0n3yB4nkUs3r*01"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/moneybank-mysql",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
+    }
+  ]
+}
