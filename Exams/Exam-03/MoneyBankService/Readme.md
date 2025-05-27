@@ -1,6 +1,6 @@
 # MoneyBank API & Sitio Web
 
-Este repositorio documenta los recursos disponibles para interactuar y probar la API de **MoneyBank**, así como acceder al sitio web que la consume.
+Este Readme documenta los recursos disponibles para interactuar y probar la API de **MoneyBank**, así como acceder al sitio web que la consume.
 
 ## 🔗 Enlaces útiles
 
