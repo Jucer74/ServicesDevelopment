@@ -7,17 +7,17 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
 # Copiar solución y proyectos por separado para maximizar uso de caché
-COPY ["MoneyBankService.sln", "./"]
-COPY ["MoneyBankService.Api/MoneyBankService.Api.csproj", "MoneyBankService.Api/"]
-COPY ["MoneyBankService.Application/MoneyBankService.Application.csproj", "MoneyBankService.Application/"]
-COPY ["MoneyBankService.Domain/MoneyBankService.Domain.csproj", "MoneyBankService.Domain/"]
-COPY ["MoneyBankService.Infrastructure/MoneyBankService.Infrastructure.csproj", "MoneyBankService.Infrastructure/"]
+COPY ["MoneyBankService/MoneyBankService.sln", "./"]
+COPY ["MoneyBankService/MoneyBankService.Api/MoneyBankService.Api.csproj", "MoneyBankService.Api/"]
+COPY ["MoneyBankService/MoneyBankService.Application/MoneyBankService.Application.csproj", "MoneyBankService.Application/"]
+COPY ["MoneyBankService/MoneyBankService.Domain/MoneyBankService.Domain.csproj", "MoneyBankService.Domain/"]
+COPY ["MoneyBankService/MoneyBankService.Infrastructure/MoneyBankService.Infrastructure.csproj", "MoneyBankService.Infrastructure/"]
 
 # Restaurar dependencias
 RUN dotnet restore "MoneyBankService.sln"
 
 # Copiar todo el contenido solo después de restaurar
-COPY . .
+COPY MoneyBankService/ .
 
 # Construir el proyecto en modo Release
 WORKDIR "/src/MoneyBankService.Api"

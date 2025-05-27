@@ -20,7 +20,7 @@ services:
   moneybankservice.api:
     build:
       context: .
-      dockerfile: MoneyBankService.Api/Dockerfile
+      dockerfile: MoneyBankService/Dockerfile
     container_name: moneybankservice.api
     ports:
       - "8080:80"
