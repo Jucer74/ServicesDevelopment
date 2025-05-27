@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using MoneyBankService.Api.Extensions;
 using MoneyBankService.Api.Middleware;
 using MoneyBankService.Infrastructure.Context;
+using Microsoft.AspNetCore.HttpOverrides;
+using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,17 +47,27 @@ builder.Services.AddServices();
 builder.Services.AddMapping();
 builder.Services.AddValidators();
 
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+//if (app.Environment.IsDevelopment())
+//{
+//    app.UseSwagger();
+//    app.UseSwaggerUI();
+//}
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "MoneyBankService API V1");
+    c.RoutePrefix = "swagger"; // Set Swagger UI at the app's root
+});
 
 // Add the Exception Middleware Handler
 app.UseExceptionMiddleware();
+
+app.UseForwardedHeaders();
 
 app.UseHttpsRedirection();
 
