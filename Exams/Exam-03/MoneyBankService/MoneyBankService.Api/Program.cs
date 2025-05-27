@@ -45,9 +45,8 @@ app.UseCors("AllowFrontend");
 app.UseSwagger();
 app.UseSwaggerUI();
 
-
 // Escuchar en todas las interfaces
-builder.WebHost.UseUrls("http://*:80");
+//builder.WebHost.UseUrls("http://*:80");
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
