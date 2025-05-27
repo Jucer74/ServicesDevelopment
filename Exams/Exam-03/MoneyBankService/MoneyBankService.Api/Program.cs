@@ -51,4 +51,5 @@ app.MapControllers();
 app.MapGet("/", () => Results.Redirect("/swagger"));
 
 // Hacer que escuche en el puerto 80 (ya lo haces bien)
-app.Run("http://*:80");
+//app.Run("http://*:80");
+app.Run();
