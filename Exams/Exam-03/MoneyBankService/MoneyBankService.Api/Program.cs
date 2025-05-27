@@ -1,3 +1,4 @@
+using System.Configuration;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -8,7 +9,10 @@ using MoneyBankService.Infrastructure.Context;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add the DB Context
-builder.Services.AddDbContext<AppDbContext>(options => options.UseMySQL(builder.Configuration.GetConnectionString("CnnStr")!));
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 // Add services to the container.
 builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
@@ -33,14 +37,36 @@ builder.Services.AddServices();
 builder.Services.AddMapping();
 builder.Services.AddValidators();
 
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReactApp",
+        policy =>
+        {
+            policy.AllowAnyOrigin() // Corrected method name
+                   .AllowAnyHeader()
+                   .AllowAnyMethod();
+        });
+});
+
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+// Ensure the database is created
+using (var scope = app.Services.CreateScope())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    dbContext.Database.EnsureCreated(); // Esto crea la DB y las tablas si no existen
 }
+
+// Configure the HTTP request pipeline.
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "MoneyBankService API V1");
+    c.RoutePrefix = "swagger"; // Set Swagger UI at the app's root
+});
+
 
 // Add the Exception Middleware Handler
 app.UseExceptionMiddleware();
@@ -50,5 +76,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseCors("AllowReactApp");
 
 app.Run();
