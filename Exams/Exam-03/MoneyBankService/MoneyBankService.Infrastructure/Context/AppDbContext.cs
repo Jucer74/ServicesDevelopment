@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MoneyBankService.Domain.Entities;
+using MoneyBankService.Domain.Models;
 
 namespace MoneyBankService.Infrastructure.Context;
 
@@ -13,5 +13,5 @@ public class AppDbContext : DbContext
     {
     }
 
-    public DbSet<Account> Account{ get; set; }
+    public DbSet<Account> Accounts{ get; set; }
 }

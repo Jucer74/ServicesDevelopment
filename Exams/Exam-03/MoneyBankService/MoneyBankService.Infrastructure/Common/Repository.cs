@@ -1,14 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
+using MoneyBankService.Application.Exceptions;
+using MoneyBankService.Application.Interfaces.Repositories;
 using MoneyBankService.Domain.Common;
-using MoneyBankService.Domain.Exceptions;
 using MoneyBankService.Infrastructure.Context;
-using System.Linq.Expressions;
 
 namespace MoneyBankService.Infrastructure.Common
 {
     public class Repository<T> : IRepository<T> where T : EntityBase
     {
-        private readonly AppDbContext _appDbContext;
+        protected readonly AppDbContext _appDbContext;
 
         public Repository(AppDbContext appDbContext)
         {
@@ -65,6 +66,10 @@ namespace MoneyBankService.Infrastructure.Common
             await _appDbContext.SaveChangesAsync();
 
             return entity!;
+        }
+        public async Task<bool> ExistsByPropertyAsync(Expression<Func<T, bool>> predicate)
+        {
+            return await _appDbContext.Set<T>().AnyAsync(predicate);
         }
     }
 }

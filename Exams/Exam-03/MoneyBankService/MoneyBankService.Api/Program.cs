@@ -7,10 +7,10 @@ using MoneyBankService.Infrastructure.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add the DB Context
-builder.Services.AddDbContext<AppDbContext>(options => options.UseMySQL(builder.Configuration.GetConnectionString("CnnStr")!));
-
 // Add services to the container.
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseMySQL(builder.Configuration.GetConnectionString("CnnStr")!));
+
 builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
 {
     options.InvalidModelStateResponseFactory = context =>
@@ -20,14 +20,13 @@ builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
     };
 });
 
-// Add Fluent Validation
+// Add FluentValidation
 builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// Swagger siempre habilitado
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Add Modules
 builder.Services.AddRepositories();
 builder.Services.AddServices();
 builder.Services.AddMapping();
@@ -35,20 +34,22 @@ builder.Services.AddValidators();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+// HABILITAR SWAGGER EN TODOS LOS ENTORNOS
+app.UseSwagger();
+app.UseSwaggerUI();
 
-// Add the Exception Middleware Handler
+// ELIMINAR HTTPS REDIRECTION PARA DOCKER
+// app.UseHttpsRedirection(); // ⚠️ Esto rompe en contenedor Docker si no hay puerto 443
+
 app.UseExceptionMiddleware();
-
-app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
 app.MapControllers();
 
+// Redirigir root a Swagger (opcional)
+app.MapGet("/", () => Results.Redirect("/swagger"));
+
+// Hacer que escuche en el puerto 80 (ya lo haces bien)
+//app.Run("http://*:80");
 app.Run();
