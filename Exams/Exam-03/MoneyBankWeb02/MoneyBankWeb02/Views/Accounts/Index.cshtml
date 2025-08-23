@@ -1,0 +1,42 @@
+﻿@model List<MoneyBankWeb02.Models.AccountDto>
+
+@{
+    ViewData["Title"] = "Lista de Cuentas";
+    Layout = "_Layout"; // Se utiliza el layout compartido
+}
+
+<h1>Lista de Cuentas</h1>
+<table border="1" cellpadding="5" cellspacing="0">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tipo</th>
+            <th>Número</th>
+            <th>Propietario</th>
+            <th>Balance</th>
+            <th>Overdraft</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Any())
+        {
+            foreach (var account in Model)
+            {
+                <tr>
+                    <td>@account.Id</td>
+                    <td>@account.AccountType</td>
+                    <td>@account.AccountNumber</td>
+                    <td>@account.OwnerName</td>
+                    <td>@account.BalanceAmount</td>
+                    <td>@account.OverdraftAmount</td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="6">No hay cuentas disponibles.</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,44 @@
+version: "3.8"
+
+services:
+  mysql-db:
+    image: mysql:8.0
+    container_name: moneybank-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: juan234ego
+      MYSQL_DATABASE: moneybankdb
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - moneybank-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: .
+      dockerfile: MoneyBankService.Api/Dockerfile
+    container_name: moneybank-api
+    environment:
+      ASPNETCORE_URLS: "http://+:7001"
+      ConnectionStrings__DefaultConnection: "Server=mysql-db;Database=moneybankdb;User=root;Password=juan234ego;"
+    depends_on:
+      mysql-db:
+        condition: service_healthy
+    ports:
+      - "7001:7001"
+      - "7000:7000"
+    networks:
+      - moneybank-network
+
+volumes:
+  mysql_data:
+
+networks:
+  moneybank-network:
+    driver: bridge

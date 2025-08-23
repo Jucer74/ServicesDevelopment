@@ -1,0 +1,19 @@
+@model MoneyBankWeb_josoterad.Models.TransactionDto
+
+@{
+    ViewData["Title"] = "Depositar Fondos";
+}
+
+<h1>Depositar Fondos</h1>
+
+<form asp-action="Deposit">
+    <input type="hidden" asp-for="AccountNumber" />
+
+    <div class="form-group">
+        <label asp-for="ValueAmount"></label>
+        <input asp-for="ValueAmount" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-success">Depositar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>

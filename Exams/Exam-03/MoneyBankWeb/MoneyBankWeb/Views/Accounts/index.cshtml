@@ -1,0 +1,43 @@
+﻿@model IEnumerable<MoneyBankWeb_josoterad.Models.AccountDto>
+
+    @{
+    ViewData["Title"] = "Cuentas";
+    }
+
+    <h1>Cuentas</h1>
+
+    <p>
+        <a asp-action="Create">Crear nueva cuenta</a>
+    </p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Tipo</th>
+                <th>Número</th>
+                <th>Propietario</th>
+                <th>Balance</th>
+                <th>Sobregiro</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var cuenta in Model)
+            {
+            <tr>
+                <td>@cuenta.AccountType</td>
+                <td>@cuenta.AccountNumber</td>
+                <td>@cuenta.OwnerName</td>
+                <td>@cuenta.BalanceAmount</td>
+                <td>@cuenta.OverdraftAmount</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@cuenta.Id">Detalles</a> |
+                    <a asp-action="Edit" asp-route-id="@cuenta.Id">Editar</a> |
+                    <a asp-action="Deposit" asp-route-id="@cuenta.Id">Depositar</a> |
+                    <a asp-action="Withdraw" asp-route-id="@cuenta.Id">Retirar</a> |
+                    <a asp-action="Delete" asp-route-id="@cuenta.Id">Eliminar</a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
