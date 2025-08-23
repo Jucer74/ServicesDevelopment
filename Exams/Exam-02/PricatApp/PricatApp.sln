@@ -18,10 +18,16 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pricat.Api", "Pricat.Api\Pricat.Api.csproj", "{25129CF7-CF0F-478F-8B56-32CCD2C827D3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pricat.Application", "Pricat.Application\Pricat.Application.csproj", "{FF4F6541-AD85-43CA-AF79-5D178AB03482}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8C566123-BFC1-43F1-9CAC-F435EB4F5833} = {8C566123-BFC1-43F1-9CAC-F435EB4F5833}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pricat.Domain", "Pricat.Domain\Pricat.Domain.csproj", "{8C566123-BFC1-43F1-9CAC-F435EB4F5833}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pricat.Infrastructure", "Pricat.Infrastructure\Pricat.Infrastructure.csproj", "{0E733016-8DB2-4C91-8141-FACE0E0E03AB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FF4F6541-AD85-43CA-AF79-5D178AB03482} = {FF4F6541-AD85-43CA-AF79-5D178AB03482}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

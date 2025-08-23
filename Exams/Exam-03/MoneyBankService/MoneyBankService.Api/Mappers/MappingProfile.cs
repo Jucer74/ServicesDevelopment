@@ -1,19 +1,24 @@
 ﻿using AutoMapper;
-using MoneyBankService.Api.Dto;
+using MoneyBankService.Application.Dto; // Namespace actualizado para DTOs
 using MoneyBankService.Domain.Entities;
 
-namespace MoneyBankService.Api.Mappers;
-
-public class MappingProfile : Profile
+namespace MoneyBankService.Api.Mappers
 {
-    public MappingProfile()
+    public class MappingProfile : Profile
     {
-        CreateMap<AccountDto, Account>();
-        CreateMap<Account, AccountDto>();
-        // TODO: Implement de Mapping ForMembers
-        //CreateMap<TransactionDto, Account>()
-        //    .ForMember(acc => acc.Id, opt => opt.MapFrom(trx => trx.Id));
-        //    .ForMember( ....... Oher Fields
+        public MappingProfile()
+        {
+            // Mapeo bidireccional entre Account y AccountDto
+            CreateMap<Account, AccountDto>().ReverseMap();
 
+          
+            /*
+            CreateMap<TransactionDto, Account>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                // .ForMember(dest => dest.BalanceAmount, opt => opt.Ignore()) 
+                
+                ;
+            */
+        }
     }
 }
